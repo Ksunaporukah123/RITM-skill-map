@@ -139,9 +139,39 @@ interface CaseChampionshipParticipant {
   id: string;
   employeeName: string; // ФИО участника
   eventId: string; // ID мероприятия (кейс-чемпионата)
+  direction?: string; // Направление
   status: "registered" | "participated" | "winner" | "prize_winner"; // Статус: зарегистрирован, участвовал, победитель, призёр
   comments?: string; // Комментарии к участию
 }
+
+// Список направлений для кейс-чемпионатов
+const CASE_CHAMPIONSHIP_DIRECTIONS = [
+  "Аудит",
+  "Информационная безопасность",
+  "Информационные технологии",
+  "Инфраструктура и ГЧП",
+  "Казначейство",
+  "Коммуникация и маркетинг",
+  "Корпоративный бизнес",
+  "МСБ",
+  "Прямые инвестиции",
+  "Риски",
+  "Розничный бизнес",
+  "Транзационный бизнес",
+  "Устойчивое развитие",
+  "Ценообразование",
+  "Юриспруденция",
+  "Agile и эффективность",
+  "HR",
+  "Рынки капитала",
+  "Закупки и тендерные процедуры",
+  "БКО",
+  "Корпоративная экосистема",
+  "Операционное сопровождение",
+  "Финансы и контроль",
+  "Цифровые продукты и розничная экосистема",
+  "Эквайринг",
+] as const;
 
 // Тип для целевого практиканта
 interface TargetPractitioner {
@@ -1408,14 +1438,14 @@ const mockUniversities: University[] = [
       return practitioners;
     })(),
     caseChampionshipParticipants: [
-      { id: "ccp-hse-1", employeeName: "Белова Анастасия Игоревна", eventId: "event-hse-3", status: "winner", comments: "Отличное выступление на финальном этапе. Демонстрировала глубокое понимание финансового моделирования." },
-      { id: "ccp-hse-2", employeeName: "Громов Кирилл Александрович", eventId: "event-hse-3", status: "prize_winner", comments: "Показал хорошие аналитические навыки при решении кейса." },
-      { id: "ccp-hse-3", employeeName: "Денисова Полина Сергеевна", eventId: "event-hse-3", status: "prize_winner" },
-      { id: "ccp-hse-4", employeeName: "Егоров Станислав Дмитриевич", eventId: "event-hse-3", status: "participated" },
-      { id: "ccp-hse-5", employeeName: "Жукова Виктория Андреевна", eventId: "event-hse-3", status: "participated", comments: "Активное участие в командной работе." },
-      { id: "ccp-hse-6", employeeName: "Захаров Артём Олегович", eventId: "event-hse-3", status: "participated" },
-      { id: "ccp-hse-7", employeeName: "Ильина Светлана Владимировна", eventId: "event-hse-6", status: "registered" },
-      { id: "ccp-hse-8", employeeName: "Калинин Роман Петрович", eventId: "event-hse-6", status: "registered" },
+      { id: "ccp-hse-1", employeeName: "Белова Анастасия Игоревна", eventId: "event-hse-3", direction: "Финансы и контроль", status: "winner", comments: "Отличное выступление на финальном этапе. Демонстрировала глубокое понимание финансового моделирования." },
+      { id: "ccp-hse-2", employeeName: "Громов Кирилл Александрович", eventId: "event-hse-3", direction: "Информационные технологии", status: "prize_winner", comments: "Показал хорошие аналитические навыки при решении кейса." },
+      { id: "ccp-hse-3", employeeName: "Денисова Полина Сергеевна", eventId: "event-hse-3", direction: "Информационная безопасность", status: "prize_winner" },
+      { id: "ccp-hse-4", employeeName: "Егоров Станислав Дмитриевич", eventId: "event-hse-3", direction: "Информационные технологии", status: "participated" },
+      { id: "ccp-hse-5", employeeName: "Жукова Виктория Андреевна", eventId: "event-hse-3", direction: "Операционное сопровождение", status: "participated", comments: "Активное участие в командной работе." },
+      { id: "ccp-hse-6", employeeName: "Захаров Артём Олегович", eventId: "event-hse-3", direction: "Розничный бизнес", status: "participated" },
+      { id: "ccp-hse-7", employeeName: "Ильина Светлана Владимировна", eventId: "event-hse-6", direction: "Корпоративный бизнес", status: "registered" },
+      { id: "ccp-hse-8", employeeName: "Калинин Роман Петрович", eventId: "event-hse-6", direction: "Риски", status: "registered" },
     ],
     targetPractitioners: [
       { id: "tp-hse-1", employeeName: "Соколов Дмитрий Петрович", targetStartDate: "2025-02-01", targetEndDate: "2025-05-31", department: "Департамент автоматизации внутренних сервисов", practiceSupervisor: "Иванов Иван Иванович", comments: "Запланирована целевая практика для изучения банковских процессов." },
@@ -2483,6 +2513,10 @@ export default function UniversitiesPage() {
   const [newParticipant, setNewParticipant] = useState({
     employeeName: "",
     eventId: "",
+    eventName: "",
+    eventStartDate: "",
+    eventEndDate: "",
+    direction: "",
     status: "registered" as "registered" | "participated" | "winner" | "prize_winner",
     comments: "",
   });
@@ -2510,6 +2544,8 @@ export default function UniversitiesPage() {
     practiceSupervisor: string;
     practiceStatus: "not_meets" | "meets" | "exceeds";
     comment: string;
+    isTarget: boolean;
+    responsibleEmployee: string;
   } | null>(null);
   
   // Состояние для редактирования участника кейс-чемпионата
@@ -2519,6 +2555,10 @@ export default function UniversitiesPage() {
     universityId: string;
     employeeName: string;
     eventId: string;
+    eventName: string;
+    eventStartDate: string;
+    eventEndDate: string;
+    direction: string;
     status: "registered" | "participated" | "winner" | "prize_winner";
     comments?: string;
   } | null>(null);
@@ -2562,12 +2602,18 @@ export default function UniversitiesPage() {
   const [participantsFilterDialogOpen, setParticipantsFilterDialogOpen] = useState(false);
   const [participantsFilters, setParticipantsFilters] = useState<{
     employeeName: string;
-    eventIds: string[];
+    eventName: string;
+    eventStartDate: string;
+    eventEndDate: string;
+    directions: string[];
     statuses: ("registered" | "participated" | "winner" | "prize_winner")[];
     comments: string;
   }>({
     employeeName: "",
-    eventIds: [],
+    eventName: "",
+    eventStartDate: "",
+    eventEndDate: "",
+    directions: [],
     statuses: [],
     comments: "",
   });
@@ -2623,6 +2669,18 @@ export default function UniversitiesPage() {
   // Состояние для модального окна комментария практиканта
   const [commentDialogOpen, setCommentDialogOpen] = useState(false);
   const [commentDialogPractitioner, setCommentDialogPractitioner] = useState<{ universityId: string; practitionerId: string; comment: string } | null>(null);
+  
+  // Состояние для модального окна с информацией о практиканте
+  const [practitionerInfoDialogOpen, setPractitionerInfoDialogOpen] = useState(false);
+  const [selectedPractitionerInfo, setSelectedPractitionerInfo] = useState<{ universityId: string; practitioner: Practitioner } | null>(null);
+  
+  // Состояние для модального окна с информацией об участнике кейс-чемпионата
+  const [participantInfoDialogOpen, setParticipantInfoDialogOpen] = useState(false);
+  const [selectedParticipantInfo, setSelectedParticipantInfo] = useState<{ universityId: string; participant: CaseChampionshipParticipant } | null>(null);
+  
+  // Состояние для модального окна с информацией о стипендианте
+  const [scholarInfoDialogOpen, setScholarInfoDialogOpen] = useState(false);
+  const [selectedScholarInfo, setSelectedScholarInfo] = useState<{ universityId: string; scholar: NamedScholar } | null>(null);
   
   // Состояние для модального окна комментария участника кейс-чемпионата
   const [commentDialogParticipantOpen, setCommentDialogParticipantOpen] = useState(false);
@@ -3823,14 +3881,42 @@ export default function UniversitiesPage() {
   
   // Добавление участника кейс-чемпионата
   const handleAddCaseChampionshipParticipant = (universityId: string) => {
-    if (!newParticipant.employeeName.trim() || !newParticipant.eventId) {
+    if (!newParticipant.employeeName.trim() || !newParticipant.eventName.trim() || !newParticipant.eventStartDate || !newParticipant.eventEndDate) {
       return;
+    }
+    
+    // Создаем новое мероприятие, если его еще нет
+    let eventId = newParticipant.eventId;
+    if (!eventId) {
+      const newEventId = `event-${Date.now()}`;
+      const newEvent: Event = {
+        id: newEventId,
+        type: "caseChampionships",
+        date: newParticipant.eventStartDate,
+        endDate: newParticipant.eventEndDate,
+        status: "completed",
+        responsiblePerson: [],
+        comments: newParticipant.eventName.trim(),
+      };
+      
+      setUniversities(universities.map(u => {
+        if (u.id === universityId) {
+          return {
+            ...u,
+            events: [...(u.events || []), newEvent],
+          };
+        }
+        return u;
+      }));
+      
+      eventId = newEventId;
     }
     
     const participant: CaseChampionshipParticipant = {
       id: `ccp-${Date.now()}`,
       employeeName: newParticipant.employeeName.trim(),
-      eventId: newParticipant.eventId,
+      eventId: eventId,
+      direction: newParticipant.direction || undefined,
       status: newParticipant.status,
       comments: newParticipant.comments?.trim() || undefined,
     };
@@ -3848,6 +3934,10 @@ export default function UniversitiesPage() {
     setNewParticipant({
       employeeName: "",
       eventId: "",
+      eventName: "",
+      eventStartDate: "",
+      eventEndDate: "",
+      direction: "",
       status: "registered",
       comments: "",
     });
@@ -3866,6 +3956,8 @@ export default function UniversitiesPage() {
       practiceSupervisor: practitioner.practiceSupervisor || "",
       practiceStatus: practitioner.practiceStatus || "meets",
       comment: practitioner.comment || "",
+      isTarget: practitioner.isTarget || false,
+      responsibleEmployee: practitioner.responsibleEmployee || "",
     });
     setEditPractitionerDialogOpen(true);
   };
@@ -3889,6 +3981,8 @@ export default function UniversitiesPage() {
                   practiceSupervisor: editingPractitioner.practiceSupervisor.trim() || undefined,
                   practiceStatus: editingPractitioner.practiceStatus,
                   comment: editingPractitioner.comment.trim() || undefined,
+                  isTarget: editingPractitioner.isTarget,
+                  responsibleEmployee: editingPractitioner.isTarget && editingPractitioner.responsibleEmployee.trim() ? editingPractitioner.responsibleEmployee.trim() : undefined,
                 }
               : p
           ),
@@ -3918,11 +4012,18 @@ export default function UniversitiesPage() {
   
   // Начать редактирование участника кейс-чемпионата
   const handleStartEditParticipant = (universityId: string, participant: CaseChampionshipParticipant) => {
+    const university = universities.find(u => u.id === universityId);
+    const event = university?.events?.find(e => e.id === participant.eventId);
+    
     setEditingParticipant({
       id: participant.id,
       universityId,
       employeeName: participant.employeeName,
       eventId: participant.eventId,
+      eventName: event?.comments || "",
+      eventStartDate: event?.date || "",
+      eventEndDate: event?.endDate || "",
+      direction: participant.direction || "",
       status: participant.status,
       comments: participant.comments || "",
     });
@@ -3933,21 +4034,56 @@ export default function UniversitiesPage() {
   const handleSaveEditParticipant = () => {
     if (!editingParticipant) return;
     
+    if (!editingParticipant.employeeName.trim() || !editingParticipant.eventName.trim() || !editingParticipant.eventStartDate || !editingParticipant.eventEndDate) {
+      return;
+    }
+    
     setUniversities(universities.map(u => {
-      if (u.id === editingParticipant.universityId && u.caseChampionshipParticipants) {
+      if (u.id === editingParticipant.universityId) {
+        // Обновляем мероприятие, если оно существует
+        const updatedEvents = u.events?.map(e => 
+          e.id === editingParticipant.eventId && e.type === "caseChampionships"
+            ? {
+                ...e,
+                comments: editingParticipant.eventName.trim(),
+                date: editingParticipant.eventStartDate,
+                endDate: editingParticipant.eventEndDate,
+              }
+            : e
+        ) || [];
+        
+        // Если мероприятие не найдено, создаем новое
+        if (!u.events?.find(e => e.id === editingParticipant.eventId)) {
+          const newEvent: Event = {
+            id: editingParticipant.eventId,
+            type: "caseChampionships",
+            date: editingParticipant.eventStartDate,
+            endDate: editingParticipant.eventEndDate,
+            status: "completed",
+            responsiblePerson: [],
+            comments: editingParticipant.eventName.trim(),
+          };
+          updatedEvents.push(newEvent);
+        }
+        
+        // Обновляем участника
+        const updatedParticipants = u.caseChampionshipParticipants?.map(p => 
+          p.id === editingParticipant.id 
+            ? {
+                ...p,
+                employeeName: editingParticipant.employeeName.trim(),
+                eventId: editingParticipant.eventId,
+                direction: editingParticipant.direction || undefined,
+                status: editingParticipant.status,
+                comments: editingParticipant.comments?.trim() || undefined,
+              }
+            : p
+        ) || [];
+        
         return {
           ...u,
-          caseChampionshipParticipants: u.caseChampionshipParticipants.map(p => 
-            p.id === editingParticipant.id 
-              ? {
-                  ...p,
-                  employeeName: editingParticipant.employeeName.trim(),
-                  eventId: editingParticipant.eventId,
-                  status: editingParticipant.status,
-                  comments: editingParticipant.comments?.trim() || undefined,
-                }
-              : p
-          ),
+          events: updatedEvents,
+          caseChampionshipParticipants: updatedParticipants,
         };
       }
       return u;
@@ -7740,9 +7876,9 @@ export default function UniversitiesPage() {
                                             </div>
                                           </div>
                                           
-                                          {/* Фильтр по типу практиканта */}
+                                          {/* Фильтр по типу практики */}
                                           <div className="space-y-2">
-                                            <Label className="text-sm font-medium">Тип практиканта</Label>
+                                            <Label className="text-sm font-medium">Тип практики</Label>
                                             <Select
                                               value={practitionersFilters.isTarget}
                                               onValueChange={(value) => setPractitionersFilters({ ...practitionersFilters, isTarget: value as "all" | "target" | "regular" })}
@@ -7752,15 +7888,15 @@ export default function UniversitiesPage() {
                                               </SelectTrigger>
                                               <SelectContent>
                                                 <SelectItem value="all">Все</SelectItem>
-                                                <SelectItem value="target">Целевые</SelectItem>
-                                                <SelectItem value="regular">Обычные</SelectItem>
+                                                <SelectItem value="target">Целевая</SelectItem>
+                                                <SelectItem value="regular">Общий набор</SelectItem>
                                               </SelectContent>
                                             </Select>
                                           </div>
                                           
                                           {/* Фильтр по ответственному лицу у целевых */}
                                           <div className="space-y-2">
-                                            <Label className="text-sm font-medium">Ответственное лицо (целевые)</Label>
+                                            <Label className="text-sm font-medium">Ответственное лицо (целевая)</Label>
                                             <div className="space-y-1.5 max-h-32 overflow-y-auto">
                                               {(() => {
                                                 const uniqueResponsible = Array.from(new Set(
@@ -7892,6 +8028,39 @@ export default function UniversitiesPage() {
                                                 />
                                               </div>
                                               <div className="space-y-2">
+                                                <Label htmlFor="practitioner-practice-type">Тип практики *</Label>
+                                                <Select
+                                                  value={newPractitioner.isTarget ? "target" : "regular"}
+                                                  onValueChange={(value) => {
+                                                    const isTarget = value === "target";
+                                                    setNewPractitioner({ 
+                                                      ...newPractitioner, 
+                                                      isTarget: isTarget,
+                                                      responsibleEmployee: isTarget ? newPractitioner.responsibleEmployee : ""
+                                                    });
+                                                  }}
+                                                >
+                                                  <SelectTrigger id="practitioner-practice-type">
+                                                    <SelectValue />
+                                                  </SelectTrigger>
+                                                  <SelectContent>
+                                                    <SelectItem value="regular">Общий набор</SelectItem>
+                                                    <SelectItem value="target">Целевая</SelectItem>
+                                                  </SelectContent>
+                                                </Select>
+                                              </div>
+                                              {newPractitioner.isTarget && (
+                                                <div className="space-y-2">
+                                                  <Label htmlFor="practitioner-responsible">Ответственный сотрудник</Label>
+                                                  <Input
+                                                    id="practitioner-responsible"
+                                                    placeholder="ФИО ответственного сотрудника"
+                                                    value={newPractitioner.responsibleEmployee}
+                                                    onChange={(e) => setNewPractitioner({ ...newPractitioner, responsibleEmployee: e.target.value })}
+                                                  />
+                                                </div>
+                                              )}
+                                              <div className="space-y-2">
                                                 <Label htmlFor="practitioner-status">Статус</Label>
                                                 <Select
                                                   value={newPractitioner.practiceStatus}
@@ -7907,27 +8076,6 @@ export default function UniversitiesPage() {
                                                   </SelectContent>
                                                 </Select>
                                               </div>
-                                              <div className="flex items-center space-x-2">
-                                                <Checkbox
-                                                  id="practitioner-is-target"
-                                                  checked={newPractitioner.isTarget}
-                                                  onCheckedChange={(checked) => setNewPractitioner({ ...newPractitioner, isTarget: checked === true, responsibleEmployee: checked ? newPractitioner.responsibleEmployee : "" })}
-                                                />
-                                                <Label htmlFor="practitioner-is-target" className="text-sm font-medium cursor-pointer">
-                                                  Целевой практикант
-                                                </Label>
-                                              </div>
-                                              {newPractitioner.isTarget && (
-                                                <div className="space-y-2">
-                                                  <Label htmlFor="practitioner-responsible">Ответственный сотрудник</Label>
-                                                  <Input
-                                                    id="practitioner-responsible"
-                                                    placeholder="ФИО ответственного сотрудника"
-                                                    value={newPractitioner.responsibleEmployee}
-                                                    onChange={(e) => setNewPractitioner({ ...newPractitioner, responsibleEmployee: e.target.value })}
-                                                  />
-                                                </div>
-                                              )}
                                             </div>
                                             <DialogFooter>
                                               <Button variant="outline" onClick={() => setAddPractitionerDialogOpen(false)}>
@@ -8013,10 +8161,10 @@ export default function UniversitiesPage() {
                                       });
                                     });
                                     
-                                    // Фильтр по типу практиканта
+                                    // Фильтр по типу практики
                                     if (practitionersFilters.isTarget !== "all") {
                                       activeFilters.push({
-                                        label: practitionersFilters.isTarget === "target" ? "Тип: Целевые" : "Тип: Обычные",
+                                        label: practitionersFilters.isTarget === "target" ? "Тип практики: Целевая" : "Тип практики: Общий набор",
                                         onRemove: () => setPractitionersFilters({ ...practitionersFilters, isTarget: "all" }),
                                       });
                                     }
@@ -8062,6 +8210,7 @@ export default function UniversitiesPage() {
                                     <TableHeader>
                                       <TableRow className="bg-muted/50">
                                         <TableHead className="w-[240px]">ФИО</TableHead>
+                                        <TableHead className="w-[150px]">Тип практики</TableHead>
                                         <TableHead className="w-[200px]">Период прохождения практики</TableHead>
                                         <TableHead className="w-[250px]">Подразделение</TableHead>
                                         <TableHead className="w-[220px]">Руководитель практики</TableHead>
@@ -8086,24 +8235,37 @@ export default function UniversitiesPage() {
                                             return `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`;
                                           };
                                           return (
-                                          <TableRow key={practitioner.id}>
+                                          <TableRow 
+                                            key={practitioner.id}
+                                            className="cursor-pointer hover:bg-muted/50"
+                                            onClick={() => {
+                                              setSelectedPractitionerInfo({ universityId: university.id, practitioner });
+                                              setPractitionerInfoDialogOpen(true);
+                                            }}
+                                          >
                                               <TableCell className="px-4 whitespace-normal">
-                                                <div className="flex items-center gap-2">
-                                                  {practitioner.isTarget && (
-                                                    <Tooltip>
-                                                      <TooltipTrigger asChild>
-                                                        <Star className="h-4 w-4 text-yellow-500 fill-yellow-500 shrink-0 cursor-help" />
-                                                      </TooltipTrigger>
-                                                      <TooltipContent>
-                                                        <p>
-                                                          <span className="font-medium">Ответственное лицо:</span>{" "}
-                                                          {practitioner.responsibleEmployee || "Не указан"}
-                                                        </p>
-                                                      </TooltipContent>
-                                                    </Tooltip>
-                                                  )}
-                                                  <span className="font-medium">{practitioner.employeeName}</span>
-                                                </div>
+                                                <span className="font-medium">{practitioner.employeeName}</span>
+                                              </TableCell>
+                                              <TableCell className="px-4 whitespace-normal">
+                                                {practitioner.isTarget ? (
+                                                  <Tooltip>
+                                                    <TooltipTrigger asChild>
+                                                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 cursor-help">
+                                                        Целевая
+                                                      </Badge>
+                                                    </TooltipTrigger>
+                                                    <TooltipContent>
+                                                      <p>
+                                                        <span className="font-medium">Ответственное лицо:</span>{" "}
+                                                        {practitioner.responsibleEmployee || "Не указан"}
+                                                      </p>
+                                                    </TooltipContent>
+                                                  </Tooltip>
+                                                ) : (
+                                                  <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-200">
+                                                    Общий набор
+                                                  </Badge>
+                                                )}
                                               </TableCell>
                                               <TableCell className="px-4 whitespace-normal">
                                                 {formatDate(practitioner.practiceStartDate)}-{formatDate(practitioner.practiceEndDate)}
@@ -8156,7 +8318,10 @@ export default function UniversitiesPage() {
                                                     variant="ghost"
                                                     size="icon"
                                                     className="h-8 w-8"
-                                                    onClick={() => handleOpenCommentDialog(university.id, practitioner.id, practitioner.comment)}
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      handleOpenCommentDialog(university.id, practitioner.id, practitioner.comment);
+                                                    }}
                                                   >
                                                     <MessageSquare className={`h-4 w-4 ${practitioner.comment ? 'text-primary' : 'text-muted-foreground'}`} />
                                                   </Button>
@@ -8167,7 +8332,10 @@ export default function UniversitiesPage() {
                                                   variant="ghost"
                                                   size="icon"
                                                   className="h-8 w-8"
-                                                  onClick={() => handleStartEditPractitioner(university.id, practitioner)}
+                                                  onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleStartEditPractitioner(university.id, practitioner);
+                                                  }}
                                                 >
                                                   <Pencil className="h-4 w-4" />
                                                 </Button>
@@ -8297,8 +8465,35 @@ export default function UniversitiesPage() {
                                   }
                                   
                                   // Фильтр по кейс-чемпионату
-                                  if (participantsFilters.eventIds.length > 0 && !participantsFilters.eventIds.includes(participant.eventId)) {
-                                    return false;
+                                  if (participantsFilters.eventName) {
+                                    const event = university.events?.find(e => e.id === participant.eventId);
+                                    const eventName = event?.comments || "";
+                                    const searchEventName = participantsFilters.eventName.toLowerCase();
+                                    if (!eventName.toLowerCase().includes(searchEventName)) {
+                                      return false;
+                                    }
+                                  }
+                                  
+                                  // Фильтр по датам проведения кейс-чемпионата
+                                  if (participantsFilters.eventStartDate || participantsFilters.eventEndDate) {
+                                    const event = university.events?.find(e => e.id === participant.eventId);
+                                    if (event) {
+                                      if (participantsFilters.eventStartDate && event.date < participantsFilters.eventStartDate) {
+                                        return false;
+                                      }
+                                      if (participantsFilters.eventEndDate && event.endDate > participantsFilters.eventEndDate) {
+                                        return false;
+                                      }
+                                    } else {
+                                      return false;
+                                    }
+                                  }
+                                  
+                                  // Фильтр по направлению
+                                  if (participantsFilters.directions.length > 0) {
+                                    if (!participant.direction || !participantsFilters.directions.includes(participant.direction)) {
+                                      return false;
+                                    }
                                   }
                                   
                                   // Фильтр по статусу
@@ -8339,7 +8534,9 @@ export default function UniversitiesPage() {
                                           {(() => {
                                             const activeFiltersCount = 
                                               (participantsFilters.employeeName ? 1 : 0) +
-                                              participantsFilters.eventIds.length +
+                                              (participantsFilters.eventName ? 1 : 0) +
+                                              (participantsFilters.eventStartDate || participantsFilters.eventEndDate ? 1 : 0) +
+                                              participantsFilters.directions.length +
                                               participantsFilters.statuses.length +
                                               (participantsFilters.comments ? 1 : 0);
                                             return activeFiltersCount > 0 ? (
@@ -8368,41 +8565,66 @@ export default function UniversitiesPage() {
                                           {/* Фильтр по кейс-чемпионату */}
                                           <div className="space-y-2">
                                             <Label className="text-sm font-medium">Кейс-чемпионат</Label>
+                                            <Input
+                                              placeholder="Поиск по названию кейс-чемпионата..."
+                                              value={participantsFilters.eventName}
+                                              onChange={(e) => setParticipantsFilters({ ...participantsFilters, eventName: e.target.value })}
+                                            />
+                                          </div>
+                                          
+                                          {/* Фильтр по периоду проведения кейс-чемпионата */}
+                                          <div className="space-y-2">
+                                            <Label className="text-sm font-medium">Период проведения кейс-чемпионата</Label>
+                                            <div className="flex items-center gap-2">
+                                              <Input
+                                                type="date"
+                                                placeholder="От"
+                                                value={participantsFilters.eventStartDate}
+                                                onChange={(e) => setParticipantsFilters({ ...participantsFilters, eventStartDate: e.target.value })}
+                                                className="w-full"
+                                              />
+                                              <span className="text-sm text-muted-foreground">—</span>
+                                              <Input
+                                                type="date"
+                                                placeholder="До"
+                                                value={participantsFilters.eventEndDate}
+                                                onChange={(e) => setParticipantsFilters({ ...participantsFilters, eventEndDate: e.target.value })}
+                                                className="w-full"
+                                              />
+                                            </div>
+                                          </div>
+                                          
+                                          {/* Фильтр по направлению */}
+                                          <div className="space-y-2">
+                                            <Label className="text-sm font-medium">Направление</Label>
                                             <div className="space-y-1.5 max-h-32 overflow-y-auto">
-                                              {(() => {
-                                                const formatDate = (dateStr: string) => {
-                                                  const [year, month, day] = dateStr.split('-').map(Number);
-                                                  return `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`;
-                                                };
-                                                const caseChampionshipEvents = university.events?.filter(e => e.type === "caseChampionships") || [];
-                                                return caseChampionshipEvents.map((event) => (
-                                                  <div key={event.id} className="flex items-center space-x-2">
-                                                    <Checkbox
-                                                      id={`filter-participant-event-${event.id}`}
-                                                      checked={participantsFilters.eventIds.includes(event.id)}
-                                                      onCheckedChange={(checked) => {
-                                                        if (checked) {
-                                                          setParticipantsFilters({
-                                                            ...participantsFilters,
-                                                            eventIds: [...participantsFilters.eventIds, event.id],
-                                                          });
-                                                        } else {
-                                                          setParticipantsFilters({
-                                                            ...participantsFilters,
-                                                            eventIds: participantsFilters.eventIds.filter((id) => id !== event.id),
-                                                          });
-                                                        }
-                                                      }}
-                                                    />
-                                                    <Label
-                                                      htmlFor={`filter-participant-event-${event.id}`}
-                                                      className="text-sm font-normal cursor-pointer"
-                                                    >
-                                                      {event.comments || "Кейс-чемпионат"} ({formatDate(event.date)})
-                                                    </Label>
-                                                  </div>
-                                                ));
-                                              })()}
+                                              {CASE_CHAMPIONSHIP_DIRECTIONS.map((direction) => (
+                                                <div key={direction} className="flex items-center space-x-2">
+                                                  <Checkbox
+                                                    id={`filter-participant-direction-${direction}`}
+                                                    checked={participantsFilters.directions.includes(direction)}
+                                                    onCheckedChange={(checked) => {
+                                                      if (checked) {
+                                                        setParticipantsFilters({
+                                                          ...participantsFilters,
+                                                          directions: [...participantsFilters.directions, direction],
+                                                        });
+                                                      } else {
+                                                        setParticipantsFilters({
+                                                          ...participantsFilters,
+                                                          directions: participantsFilters.directions.filter((d) => d !== direction),
+                                                        });
+                                                      }
+                                                    }}
+                                                  />
+                                                  <Label
+                                                    htmlFor={`filter-participant-direction-${direction}`}
+                                                    className="text-sm font-normal cursor-pointer"
+                                                  >
+                                                    {direction}
+                                                  </Label>
+                                                </div>
+                                              ))}
                                             </div>
                                           </div>
                                           
@@ -8462,7 +8684,10 @@ export default function UniversitiesPage() {
                                             onClick={() => {
                                               setParticipantsFilters({
                                                 employeeName: "",
-                                                eventIds: [],
+                                                eventName: "",
+                                                eventStartDate: "",
+                                                eventEndDate: "",
+                                                directions: [],
                                                 statuses: [],
                                                 comments: "",
                                               });
@@ -8502,28 +8727,51 @@ export default function UniversitiesPage() {
                                                 />
                                               </div>
                                               <div className="space-y-2">
-                                                <Label htmlFor="participant-event">Кейс-чемпионат *</Label>
+                                                <Label htmlFor="participant-direction">Направление</Label>
                                                 <Select
-                                                  value={newParticipant.eventId}
-                                                  onValueChange={(value) => setNewParticipant({ ...newParticipant, eventId: value })}
+                                                  value={newParticipant.direction}
+                                                  onValueChange={(value) => setNewParticipant({ ...newParticipant, direction: value })}
                                                 >
-                                                  <SelectTrigger id="participant-event">
-                                                    <SelectValue placeholder="Выберите кейс-чемпионат" />
+                                                  <SelectTrigger id="participant-direction">
+                                                    <SelectValue placeholder="Выберите направление" />
                                                   </SelectTrigger>
                                                   <SelectContent>
-                                                    {university.events?.filter(e => e.type === "caseChampionships").map((event) => {
-                                                      const formatDate = (dateStr: string) => {
-                                                        const [year, month, day] = dateStr.split('-').map(Number);
-                                                        return `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`;
-                                                      };
-                                                      return (
-                                                        <SelectItem key={event.id} value={event.id}>
-                                                          {event.comments || "Кейс-чемпионат"} ({formatDate(event.date)})
-                                                        </SelectItem>
-                                                      );
-                                                    })}
+                                                    {CASE_CHAMPIONSHIP_DIRECTIONS.map((direction) => (
+                                                      <SelectItem key={direction} value={direction}>
+                                                        {direction}
+                                                      </SelectItem>
+                                                    ))}
                                                   </SelectContent>
                                                 </Select>
+                                              </div>
+                                              <div className="space-y-2">
+                                                <Label htmlFor="participant-event-name">Кейс-чемпионат *</Label>
+                                                <Input
+                                                  id="participant-event-name"
+                                                  placeholder="Название кейс-чемпионата"
+                                                  value={newParticipant.eventName}
+                                                  onChange={(e) => setNewParticipant({ ...newParticipant, eventName: e.target.value })}
+                                                />
+                                              </div>
+                                              <div className="grid grid-cols-2 gap-4">
+                                                <div className="space-y-2">
+                                                  <Label htmlFor="participant-event-start-date">Дата начала *</Label>
+                                                  <Input
+                                                    id="participant-event-start-date"
+                                                    type="date"
+                                                    value={newParticipant.eventStartDate}
+                                                    onChange={(e) => setNewParticipant({ ...newParticipant, eventStartDate: e.target.value })}
+                                                  />
+                                                </div>
+                                                <div className="space-y-2">
+                                                  <Label htmlFor="participant-event-end-date">Дата окончания *</Label>
+                                                  <Input
+                                                    id="participant-event-end-date"
+                                                    type="date"
+                                                    value={newParticipant.eventEndDate}
+                                                    onChange={(e) => setNewParticipant({ ...newParticipant, eventEndDate: e.target.value })}
+                                                  />
+                                                </div>
                                               </div>
                                               <div className="space-y-2">
                                                 <Label htmlFor="participant-status">Статус *</Label>
@@ -8559,7 +8807,7 @@ export default function UniversitiesPage() {
                                               </Button>
                                               <Button 
                                                 onClick={() => handleAddCaseChampionshipParticipant(university.id)}
-                                                disabled={!newParticipant.employeeName.trim() || !newParticipant.eventId}
+                                                disabled={!newParticipant.employeeName.trim() || !newParticipant.eventName.trim() || !newParticipant.eventStartDate || !newParticipant.eventEndDate}
                                               >
                                                 Добавить
                                               </Button>
@@ -8581,23 +8829,41 @@ export default function UniversitiesPage() {
                                         });
                                       }
                                       
-                                      // Фильтр по кейс-чемпионатам
-                                      participantsFilters.eventIds.forEach((eventId) => {
-                                        const event = university.events?.find(e => e.id === eventId);
-                                        const formatDate = (dateStr: string) => {
-                                          if (!dateStr) return "";
-                                          const [year, month, day] = dateStr.split('-').map(Number);
+                                      // Фильтр по кейс-чемпионату
+                                      if (participantsFilters.eventName) {
+                                        activeFilters.push({
+                                          label: `Кейс-чемпионат: ${participantsFilters.eventName}`,
+                                          onRemove: () => setParticipantsFilters({ ...participantsFilters, eventName: "" }),
+                                        });
+                                      }
+                                      
+                                      // Фильтр по периоду проведения кейс-чемпионата
+                                      if (participantsFilters.eventStartDate || participantsFilters.eventEndDate) {
+                                        const formatDate = (dateString: string) => {
+                                          if (!dateString) return "";
+                                          const [year, month, day] = dateString.split('-').map(Number);
                                           return `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`;
                                         };
-                                        if (event) {
-                                          activeFilters.push({
-                                            label: `Кейс-чемпионат: ${event.comments || "Кейс-чемпионат"} (${formatDate(event.date)})`,
-                                            onRemove: () => setParticipantsFilters({
-                                              ...participantsFilters,
-                                              eventIds: participantsFilters.eventIds.filter((id) => id !== eventId),
-                                            }),
-                                          });
-                                        }
+                                        const dateLabel = participantsFilters.eventStartDate && participantsFilters.eventEndDate
+                                          ? `Период проведения: ${formatDate(participantsFilters.eventStartDate)} - ${formatDate(participantsFilters.eventEndDate)}`
+                                          : participantsFilters.eventStartDate
+                                          ? `Период проведения: с ${formatDate(participantsFilters.eventStartDate)}`
+                                          : `Период проведения: до ${formatDate(participantsFilters.eventEndDate)}`;
+                                        activeFilters.push({
+                                          label: dateLabel,
+                                          onRemove: () => setParticipantsFilters({ ...participantsFilters, eventStartDate: "", eventEndDate: "" }),
+                                        });
+                                      }
+                                      
+                                      // Фильтр по направлению
+                                      participantsFilters.directions.forEach((direction) => {
+                                        activeFilters.push({
+                                          label: `Направление: ${direction}`,
+                                          onRemove: () => setParticipantsFilters({
+                                            ...participantsFilters,
+                                            directions: participantsFilters.directions.filter((d) => d !== direction),
+                                          }),
+                                        });
                                       });
                                       
                                       // Фильтр по статусу
@@ -8655,7 +8921,9 @@ export default function UniversitiesPage() {
                                       <TableHeader>
                                         <TableRow className="bg-muted/50">
                                           <TableHead className="w-[300px]">ФИО</TableHead>
+                                          <TableHead className="w-[250px]">Направление</TableHead>
                                           <TableHead className="w-[350px]">Кейс-чемпионат</TableHead>
+                                          <TableHead className="w-[200px]">Период проведения кейс чемпионата</TableHead>
                                           <TableHead className="w-[150px] text-center">Статус</TableHead>
                                           <TableHead className="w-[80px] text-center">Действия</TableHead>
                                         </TableRow>
@@ -8689,18 +8957,36 @@ export default function UniversitiesPage() {
                                             }
                                           };
                                           return (
-                                            <TableRow key={participant.id}>
+                                            <TableRow 
+                                              key={participant.id}
+                                              className="cursor-pointer hover:bg-muted/50"
+                                              onClick={() => {
+                                                setSelectedParticipantInfo({ universityId: university.id, participant });
+                                                setParticipantInfoDialogOpen(true);
+                                              }}
+                                            >
                                               <TableCell className="font-medium">{participant.employeeName}</TableCell>
                                               <TableCell>
+                                                {participant.direction ? (
+                                                  <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                                                    {participant.direction}
+                                                  </Badge>
+                                                ) : (
+                                                  <span className="text-muted-foreground">—</span>
+                                                )}
+                                              </TableCell>
+                                              <TableCell className="whitespace-normal break-words">
                                                 {event ? (
-                                                  <div className="flex flex-col">
-                                                    <span>{event.comments || "Кейс-чемпионат"}</span>
-                                                    <span className="text-sm text-muted-foreground">
-                                                      {formatDate(event.date)} - {formatDate(event.endDate)}
-                                                    </span>
-                                                  </div>
+                                                  <span>{event.comments || "Кейс-чемпионат"}</span>
                                                 ) : (
                                                   <span className="text-muted-foreground">Мероприятие не найдено</span>
+                                                )}
+                                              </TableCell>
+                                              <TableCell>
+                                                {event ? (
+                                                  <span>{formatDate(event.date)} - {formatDate(event.endDate)}</span>
+                                                ) : (
+                                                  <span className="text-muted-foreground">—</span>
                                                 )}
                                               </TableCell>
                                               <TableCell className="text-center">
@@ -8710,7 +8996,10 @@ export default function UniversitiesPage() {
                                                     variant="ghost"
                                                     size="icon"
                                                     className="h-8 w-8"
-                                                    onClick={() => handleOpenParticipantCommentDialog(university.id, participant.id, participant.comments)}
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      handleOpenParticipantCommentDialog(university.id, participant.id, participant.comments);
+                                                    }}
                                                   >
                                                     <MessageSquare className={`h-4 w-4 ${participant.comments ? 'text-primary' : 'text-muted-foreground'}`} />
                                                   </Button>
@@ -8721,7 +9010,10 @@ export default function UniversitiesPage() {
                                                   variant="ghost"
                                                   size="icon"
                                                   className="h-8 w-8"
-                                                  onClick={() => handleStartEditParticipant(university.id, participant)}
+                                                  onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleStartEditParticipant(university.id, participant);
+                                                  }}
                                                 >
                                                   <Pencil className="h-4 w-4" />
                                                 </Button>
@@ -8731,7 +9023,7 @@ export default function UniversitiesPage() {
                                             })
                                           ) : (
                                             <TableRow>
-                                              <TableCell colSpan={4} className="text-center text-muted-foreground py-8">
+                                              <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
                                                 Участники не найдены
                                               </TableCell>
                                             </TableRow>
@@ -9024,7 +9316,14 @@ export default function UniversitiesPage() {
                                           </TableHeader>
                                           <TableBody>
                                             {filteredScholars.map((scholar) => (
-                                              <TableRow key={scholar.id}>
+                                              <TableRow 
+                                                key={scholar.id}
+                                                className="cursor-pointer hover:bg-muted/50"
+                                                onClick={() => {
+                                                  setSelectedScholarInfo({ universityId: university.id, scholar });
+                                                  setScholarInfoDialogOpen(true);
+                                                }}
+                                              >
                                                 <TableCell className="font-medium">{scholar.employeeName}</TableCell>
                                                 <TableCell>{scholar.scholarshipName}</TableCell>
                                                 <TableCell>
@@ -9035,7 +9334,10 @@ export default function UniversitiesPage() {
                                                     variant="ghost"
                                                     size="icon"
                                                     className="h-8 w-8"
-                                                    onClick={() => handleOpenScholarCommentDialog(university.id, scholar.id, scholar.comments)}
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      handleOpenScholarCommentDialog(university.id, scholar.id, scholar.comments);
+                                                    }}
                                                   >
                                                     <MessageSquare className={`h-4 w-4 ${scholar.comments ? 'text-primary' : 'text-muted-foreground'}`} />
                                                   </Button>
@@ -9045,7 +9347,10 @@ export default function UniversitiesPage() {
                                                     variant="ghost"
                                                     size="icon"
                                                     className="h-8 w-8"
-                                                    onClick={() => handleStartEditNamedScholar(university.id, scholar)}
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      handleStartEditNamedScholar(university.id, scholar);
+                                                    }}
                                                   >
                                                     <Pencil className="h-4 w-4" />
                                                   </Button>
@@ -9178,6 +9483,39 @@ export default function UniversitiesPage() {
                                         />
                                       </div>
                                       <div className="space-y-2">
+                                        <Label htmlFor="edit-practitioner-practice-type">Тип практики *</Label>
+                                        <Select
+                                          value={editingPractitioner.isTarget ? "target" : "regular"}
+                                          onValueChange={(value) => {
+                                            const isTarget = value === "target";
+                                            setEditingPractitioner({ 
+                                              ...editingPractitioner, 
+                                              isTarget: isTarget,
+                                              responsibleEmployee: isTarget ? editingPractitioner.responsibleEmployee : ""
+                                            });
+                                          }}
+                                        >
+                                          <SelectTrigger id="edit-practitioner-practice-type">
+                                            <SelectValue />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="regular">Общий набор</SelectItem>
+                                            <SelectItem value="target">Целевые</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      </div>
+                                      {editingPractitioner.isTarget && (
+                                        <div className="space-y-2">
+                                          <Label htmlFor="edit-practitioner-responsible">Ответственный сотрудник</Label>
+                                          <Input
+                                            id="edit-practitioner-responsible"
+                                            placeholder="ФИО ответственного сотрудника"
+                                            value={editingPractitioner.responsibleEmployee}
+                                            onChange={(e) => setEditingPractitioner({ ...editingPractitioner, responsibleEmployee: e.target.value })}
+                                          />
+                                        </div>
+                                      )}
+                                      <div className="space-y-2">
                                         <Label htmlFor="edit-practitioner-status">Статус</Label>
                                         <Select
                                           value={editingPractitioner.practiceStatus}
@@ -9253,6 +9591,226 @@ export default function UniversitiesPage() {
                                 </DialogContent>
                               </Dialog>
                               
+                              {/* Модальное окно с информацией о практиканте */}
+                              <Dialog open={practitionerInfoDialogOpen} onOpenChange={setPractitionerInfoDialogOpen}>
+                                <DialogContent className="max-w-2xl">
+                                  <DialogHeader>
+                                    <DialogTitle>Информация о практиканте</DialogTitle>
+                                  </DialogHeader>
+                                  {selectedPractitionerInfo && (() => {
+                                    const practitioner = selectedPractitionerInfo.practitioner;
+                                    const university = universities.find(u => u.id === selectedPractitionerInfo.universityId);
+                                    const intern = university?.internList?.find(i => i.employeeName === practitioner.employeeName && i.status === "active");
+                                    const formatDate = (dateString: string) => {
+                                      if (!dateString) return "";
+                                      const [year, month, day] = dateString.split('-').map(Number);
+                                      return `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`;
+                                    };
+                                    
+                                    return (
+                                      <div className="space-y-6 py-4">
+                                        {/* Основная информация */}
+                                        <div className="space-y-4">
+                                          <div>
+                                            <h3 className="text-lg font-semibold mb-2">{practitioner.employeeName}</h3>
+                                          </div>
+                                          
+                                          {/* Статус сотрудника */}
+                                          <div className="space-y-2">
+                                            <Label className="text-sm font-medium">Статус сотрудника</Label>
+                                            {intern ? (
+                                              <div className="space-y-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                                                <div className="flex items-center gap-2">
+                                                  <CheckCircle2 className="h-5 w-5 text-green-600" />
+                                                  <span className="font-medium text-green-700 dark:text-green-400">Является сотрудником на текущий момент</span>
+                                                </div>
+                                                <div className="grid grid-cols-1 gap-3 mt-3">
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Подразделение:</span>
+                                                    <p className="font-medium">{intern.department}</p>
+                                                  </div>
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Должность:</span>
+                                                    <p className="font-medium">{intern.position}</p>
+                                                  </div>
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Дата приема на работу:</span>
+                                                    <p className="font-medium">{formatDate(intern.hireDate)}</p>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            ) : (
+                                              <div className="p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg border border-gray-200 dark:border-gray-800">
+                                                <div className="flex items-center gap-2">
+                                                  <AlertCircle className="h-5 w-5 text-gray-600" />
+                                                  <span className="text-gray-700 dark:text-gray-400">Не является сотрудником на текущий момент</span>
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
+                                          
+                                          {/* Информация о стажировке */}
+                                          <div className="space-y-2">
+                                            <Label className="text-sm font-medium">Стажировка в банке</Label>
+                                            {practitioner.internshipInBank ? (
+                                              <div className="space-y-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                                                <div className="flex items-center gap-2">
+                                                  <CheckCircle2 className="h-5 w-5 text-blue-600" />
+                                                  <span className="font-medium text-blue-700 dark:text-blue-400">Проходил стажировку</span>
+                                                </div>
+                                                {practitioner.internshipStartDate && practitioner.internshipEndDate && (
+                                                  <div className="mt-3">
+                                                    <span className="text-sm text-muted-foreground">Период стажировки:</span>
+                                                    <p className="font-medium">
+                                                      {formatDate(practitioner.internshipStartDate)} - {formatDate(practitioner.internshipEndDate)}
+                                                    </p>
+                                                  </div>
+                                                )}
+                                              </div>
+                                            ) : (
+                                              <div className="p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg border border-gray-200 dark:border-gray-800">
+                                                <div className="flex items-center gap-2">
+                                                  <AlertCircle className="h-5 w-5 text-gray-600" />
+                                                  <span className="text-gray-700 dark:text-gray-400">Не проходил стажировку в банке</span>
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    );
+                                  })()}
+                                  <DialogFooter>
+                                    <Button variant="outline" onClick={() => setPractitionerInfoDialogOpen(false)}>
+                                      Закрыть
+                                    </Button>
+                                  </DialogFooter>
+                                </DialogContent>
+                              </Dialog>
+                              
+                              {/* Модальное окно с информацией об участнике кейс-чемпионата */}
+                              <Dialog open={participantInfoDialogOpen} onOpenChange={setParticipantInfoDialogOpen}>
+                                <DialogContent className="max-w-2xl">
+                                  <DialogHeader>
+                                    <DialogTitle>Информация об участнике кейс-чемпионата</DialogTitle>
+                                  </DialogHeader>
+                                  {selectedParticipantInfo && (() => {
+                                    const participant = selectedParticipantInfo.participant;
+                                    const university = universities.find(u => u.id === selectedParticipantInfo.universityId);
+                                    const intern = university?.internList?.find(i => i.employeeName === participant.employeeName && i.status === "active");
+                                    const event = university?.events?.find(e => e.id === participant.eventId);
+                                    const formatDate = (dateString: string) => {
+                                      if (!dateString) return "";
+                                      const [year, month, day] = dateString.split('-').map(Number);
+                                      return `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`;
+                                    };
+                                    
+                                    return (
+                                      <div className="space-y-6 py-4">
+                                        {/* Основная информация */}
+                                        <div className="space-y-4">
+                                          <div>
+                                            <h3 className="text-lg font-semibold mb-2">{participant.employeeName}</h3>
+                                          </div>
+                                          
+                                          {/* Информация о кейс-чемпионате */}
+                                          {event && (
+                                            <div className="space-y-2">
+                                              <Label className="text-sm font-medium">Кейс-чемпионат</Label>
+                                              <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                                                <p className="font-medium">{event.comments || "Кейс-чемпионат"}</p>
+                                                <p className="text-sm text-muted-foreground mt-1">
+                                                  Период: {formatDate(event.date)} - {formatDate(event.endDate)}
+                                                </p>
+                                              </div>
+                                            </div>
+                                          )}
+                                          
+                                          {/* Направление */}
+                                          {participant.direction && (
+                                            <div className="space-y-2">
+                                              <Label className="text-sm font-medium">Направление</Label>
+                                              <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                                                <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">
+                                                  {participant.direction}
+                                                </Badge>
+                                              </div>
+                                            </div>
+                                          )}
+                                          
+                                          {/* Статус сотрудника */}
+                                          <div className="space-y-2">
+                                            <Label className="text-sm font-medium">Статус сотрудника</Label>
+                                            {intern ? (
+                                              <div className="space-y-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                                                <div className="flex items-center gap-2">
+                                                  <CheckCircle2 className="h-5 w-5 text-green-600" />
+                                                  <span className="font-medium text-green-700 dark:text-green-400">Является сотрудником на текущий момент</span>
+                                                </div>
+                                                <div className="grid grid-cols-1 gap-3 mt-3">
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Подразделение:</span>
+                                                    <p className="font-medium">{intern.department}</p>
+                                                  </div>
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Должность:</span>
+                                                    <p className="font-medium">{intern.position}</p>
+                                                  </div>
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Дата приема на работу:</span>
+                                                    <p className="font-medium">{formatDate(intern.hireDate)}</p>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            ) : (
+                                              <div className="p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg border border-gray-200 dark:border-gray-800">
+                                                <div className="flex items-center gap-2">
+                                                  <AlertCircle className="h-5 w-5 text-gray-600" />
+                                                  <span className="text-gray-700 dark:text-gray-400">Не является сотрудником на текущий момент</span>
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
+                                          
+                                          {/* Информация о стажировке */}
+                                          <div className="space-y-2">
+                                            <Label className="text-sm font-medium">Стажировка в банке</Label>
+                                            {intern?.internshipInBank ? (
+                                              <div className="space-y-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                                                <div className="flex items-center gap-2">
+                                                  <CheckCircle2 className="h-5 w-5 text-blue-600" />
+                                                  <span className="font-medium text-blue-700 dark:text-blue-400">Проходил стажировку</span>
+                                                </div>
+                                                {intern.internshipStartDate && intern.internshipEndDate && (
+                                                  <div className="mt-3">
+                                                    <span className="text-sm text-muted-foreground">Период стажировки:</span>
+                                                    <p className="font-medium">
+                                                      {formatDate(intern.internshipStartDate)} - {formatDate(intern.internshipEndDate)}
+                                                    </p>
+                                                  </div>
+                                                )}
+                                              </div>
+                                            ) : (
+                                              <div className="p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg border border-gray-200 dark:border-gray-800">
+                                                <div className="flex items-center gap-2">
+                                                  <AlertCircle className="h-5 w-5 text-gray-600" />
+                                                  <span className="text-gray-700 dark:text-gray-400">Не проходил стажировку в банке</span>
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    );
+                                  })()}
+                                  <DialogFooter>
+                                    <Button variant="outline" onClick={() => setParticipantInfoDialogOpen(false)}>
+                                      Закрыть
+                                    </Button>
+                                  </DialogFooter>
+                                </DialogContent>
+                              </Dialog>
+                              
                               {/* Модальное окно редактирования участника кейс-чемпионата */}
                               <Dialog open={editParticipantDialogOpen} onOpenChange={setEditParticipantDialogOpen}>
                                 <DialogContent className="max-w-md">
@@ -9270,28 +9828,51 @@ export default function UniversitiesPage() {
                                         />
                                       </div>
                                       <div className="space-y-2">
-                                        <Label htmlFor="edit-participant-event">Кейс-чемпионат *</Label>
+                                        <Label htmlFor="edit-participant-direction">Направление</Label>
                                         <Select
-                                          value={editingParticipant.eventId}
-                                          onValueChange={(value) => setEditingParticipant({ ...editingParticipant, eventId: value })}
+                                          value={editingParticipant.direction}
+                                          onValueChange={(value) => setEditingParticipant({ ...editingParticipant, direction: value })}
                                         >
-                                          <SelectTrigger id="edit-participant-event">
-                                            <SelectValue placeholder="Выберите кейс-чемпионат" />
+                                          <SelectTrigger id="edit-participant-direction">
+                                            <SelectValue placeholder="Выберите направление" />
                                           </SelectTrigger>
                                           <SelectContent>
-                                            {university.events?.filter(e => e.type === "caseChampionships").map((event) => {
-                                              const formatDate = (dateStr: string) => {
-                                                const [year, month, day] = dateStr.split('-').map(Number);
-                                                return `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`;
-                                              };
-                                              return (
-                                                <SelectItem key={event.id} value={event.id}>
-                                                  {event.comments || "Кейс-чемпионат"} ({formatDate(event.date)})
-                                                </SelectItem>
-                                              );
-                                            })}
+                                            {CASE_CHAMPIONSHIP_DIRECTIONS.map((direction) => (
+                                              <SelectItem key={direction} value={direction}>
+                                                {direction}
+                                              </SelectItem>
+                                            ))}
                                           </SelectContent>
                                         </Select>
+                                      </div>
+                                      <div className="space-y-2">
+                                        <Label htmlFor="edit-participant-event-name">Кейс-чемпионат *</Label>
+                                        <Input
+                                          id="edit-participant-event-name"
+                                          placeholder="Название кейс-чемпионата"
+                                          value={editingParticipant.eventName}
+                                          onChange={(e) => setEditingParticipant({ ...editingParticipant, eventName: e.target.value })}
+                                        />
+                                      </div>
+                                      <div className="grid grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                          <Label htmlFor="edit-participant-event-start-date">Дата начала *</Label>
+                                          <Input
+                                            id="edit-participant-event-start-date"
+                                            type="date"
+                                            value={editingParticipant.eventStartDate}
+                                            onChange={(e) => setEditingParticipant({ ...editingParticipant, eventStartDate: e.target.value })}
+                                          />
+                                        </div>
+                                        <div className="space-y-2">
+                                          <Label htmlFor="edit-participant-event-end-date">Дата окончания *</Label>
+                                          <Input
+                                            id="edit-participant-event-end-date"
+                                            type="date"
+                                            value={editingParticipant.eventEndDate}
+                                            onChange={(e) => setEditingParticipant({ ...editingParticipant, eventEndDate: e.target.value })}
+                                          />
+                                        </div>
                                       </div>
                                       <div className="space-y-2">
                                         <Label htmlFor="edit-participant-status">Статус *</Label>
@@ -9335,7 +9916,7 @@ export default function UniversitiesPage() {
                                       </Button>
                                       <Button 
                                         onClick={handleSaveEditParticipant}
-                                        disabled={!editingParticipant?.employeeName.trim() || !editingParticipant?.eventId}
+                                        disabled={!editingParticipant?.employeeName.trim() || !editingParticipant?.eventName.trim() || !editingParticipant?.eventStartDate || !editingParticipant?.eventEndDate}
                                       >
                                         Сохранить
                                       </Button>
@@ -9534,6 +10115,114 @@ export default function UniversitiesPage() {
                                     </Button>
                                     <Button onClick={() => handleUpdateScholarComment(commentDialogScholar?.comment || "")}>
                                       Сохранить
+                                    </Button>
+                                  </DialogFooter>
+                                </DialogContent>
+                              </Dialog>
+                              
+                              {/* Модальное окно с информацией о стипендианте */}
+                              <Dialog open={scholarInfoDialogOpen} onOpenChange={setScholarInfoDialogOpen}>
+                                <DialogContent className="max-w-2xl">
+                                  <DialogHeader>
+                                    <DialogTitle>Информация о стипендианте</DialogTitle>
+                                  </DialogHeader>
+                                  {selectedScholarInfo && (() => {
+                                    const scholar = selectedScholarInfo.scholar;
+                                    const university = universities.find(u => u.id === selectedScholarInfo.universityId);
+                                    const intern = university?.internList?.find(i => i.employeeName === scholar.employeeName && i.status === "active");
+                                    const formatDate = (dateString: string) => {
+                                      if (!dateString) return "";
+                                      const [year, month, day] = dateString.split('-').map(Number);
+                                      return `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`;
+                                    };
+                                    
+                                    return (
+                                      <div className="space-y-6 py-4">
+                                        {/* Основная информация */}
+                                        <div className="space-y-4">
+                                          <div>
+                                            <h3 className="text-lg font-semibold mb-2">{scholar.employeeName}</h3>
+                                          </div>
+                                          
+                                          {/* Информация о стипендии */}
+                                          <div className="space-y-2">
+                                            <Label className="text-sm font-medium">Стипендия</Label>
+                                            <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                                              <p className="font-medium">{scholar.scholarshipName}</p>
+                                              <p className="text-sm text-muted-foreground mt-1">
+                                                Дата назначения: {formatDate(scholar.appointmentDate)}
+                                              </p>
+                                            </div>
+                                          </div>
+                                          
+                                          {/* Статус сотрудника */}
+                                          <div className="space-y-2">
+                                            <Label className="text-sm font-medium">Статус сотрудника</Label>
+                                            {intern ? (
+                                              <div className="space-y-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                                                <div className="flex items-center gap-2">
+                                                  <CheckCircle2 className="h-5 w-5 text-green-600" />
+                                                  <span className="font-medium text-green-700 dark:text-green-400">Является сотрудником на текущий момент</span>
+                                                </div>
+                                                <div className="grid grid-cols-1 gap-3 mt-3">
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Подразделение:</span>
+                                                    <p className="font-medium">{intern.department}</p>
+                                                  </div>
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Должность:</span>
+                                                    <p className="font-medium">{intern.position}</p>
+                                                  </div>
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Дата приема на работу:</span>
+                                                    <p className="font-medium">{formatDate(intern.hireDate)}</p>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            ) : (
+                                              <div className="p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg border border-gray-200 dark:border-gray-800">
+                                                <div className="flex items-center gap-2">
+                                                  <AlertCircle className="h-5 w-5 text-gray-600" />
+                                                  <span className="text-gray-700 dark:text-gray-400">Не является сотрудником на текущий момент</span>
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
+                                          
+                                          {/* Информация о стажировке */}
+                                          <div className="space-y-2">
+                                            <Label className="text-sm font-medium">Стажировка в банке</Label>
+                                            {intern?.internshipInBank ? (
+                                              <div className="space-y-3 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                                                <div className="flex items-center gap-2">
+                                                  <CheckCircle2 className="h-5 w-5 text-blue-600" />
+                                                  <span className="font-medium text-blue-700 dark:text-blue-400">Проходил стажировку</span>
+                                                </div>
+                                                {intern.internshipStartDate && intern.internshipEndDate && (
+                                                  <div className="mt-3">
+                                                    <span className="text-sm text-muted-foreground">Период стажировки:</span>
+                                                    <p className="font-medium">
+                                                      {formatDate(intern.internshipStartDate)} - {formatDate(intern.internshipEndDate)}
+                                                    </p>
+                                                  </div>
+                                                )}
+                                              </div>
+                                            ) : (
+                                              <div className="p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg border border-gray-200 dark:border-gray-800">
+                                                <div className="flex items-center gap-2">
+                                                  <AlertCircle className="h-5 w-5 text-gray-600" />
+                                                  <span className="text-gray-700 dark:text-gray-400">Не проходил стажировку в банке</span>
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    );
+                                  })()}
+                                  <DialogFooter>
+                                    <Button variant="outline" onClick={() => setScholarInfoDialogOpen(false)}>
+                                      Закрыть
                                     </Button>
                                   </DialogFooter>
                                 </DialogContent>
