@@ -424,11 +424,6 @@ export function UniversityReporting({ universities }: UniversityReportingProps) 
     return format ? formats[format] || format : "—";
   };
 
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return "—";
-    return new Date(dateString).toLocaleDateString("ru-RU");
-  };
-
   const formatCurrency = (amount?: number) => {
     if (!amount) return "—";
     return new Intl.NumberFormat("ru-RU", { style: "currency", currency: "RUB", maximumFractionDigits: 0 }).format(amount);
@@ -1056,9 +1051,9 @@ export function UniversityReporting({ universities }: UniversityReportingProps) 
                       <TableCell className="px-4 whitespace-normal">{contract.universityName}</TableCell>
                       <TableCell className="px-4 whitespace-normal">{getContractTypeName(contract.type)}</TableCell>
                       <TableCell className="px-4 whitespace-normal">{contract.number || "—"}</TableCell>
-                      <TableCell className="px-4 whitespace-normal">{formatDate(contract.date)}</TableCell>
+                      <TableCell className="px-4 whitespace-normal">{formatDateOrDefault(contract.date)}</TableCell>
                       <TableCell className="px-4 whitespace-normal">
-                        {contract.period ? `${formatDate(contract.period.start)} — ${formatDate(contract.period.end)}` : "—"}
+                        {contract.period ? `${formatDateOrDefault(contract.period.start)} — ${formatDateOrDefault(contract.period.end)}` : "—"}
                       </TableCell>
                       <TableCell className="px-4 whitespace-normal">{contract.contractBranch || "—"}</TableCell>
                       <TableCell className="px-4 whitespace-normal">
@@ -1397,8 +1392,8 @@ export function UniversityReporting({ universities }: UniversityReportingProps) 
                     <TableRow key={`${event.universityId}-${event.id}`}>
                       <TableCell className="px-4 whitespace-normal">{event.universityName}</TableCell>
                       <TableCell className="px-4 whitespace-normal">{getEventTypeName(event.type)}</TableCell>
-                      <TableCell className="px-4 whitespace-normal">{formatDate(event.date)}</TableCell>
-                      <TableCell className="px-4 whitespace-normal">{formatDate(event.endDate)}</TableCell>
+                      <TableCell className="px-4 whitespace-normal">{formatDateOrDefault(event.date)}</TableCell>
+                      <TableCell className="px-4 whitespace-normal">{formatDateOrDefault(event.endDate)}</TableCell>
                       <TableCell className="px-4 whitespace-normal">
                         <Badge variant="outline" className={
                           event.status === "completed" ? "bg-green-50 text-green-700 border-green-300 dark:bg-green-900/20 dark:text-green-200 dark:border-green-700" :
@@ -1691,7 +1686,7 @@ export function UniversityReporting({ universities }: UniversityReportingProps) 
                           <TableCell className="px-4 whitespace-normal">{intern.age}</TableCell>
                           <TableCell className="px-4 whitespace-normal">{intern.position}</TableCell>
                           <TableCell className="px-4 whitespace-normal">{intern.department}</TableCell>
-                          <TableCell className="px-4 whitespace-normal">{formatDate(intern.hireDate)}</TableCell>
+                          <TableCell className="px-4 whitespace-normal">{formatDateOrDefault(intern.hireDate)}</TableCell>
                           <TableCell className="px-4 whitespace-normal">
                             <Badge variant="outline" className={
                               intern.status === "active" ? "bg-green-50 text-green-700 border-green-300 dark:bg-green-900/20 dark:text-green-200 dark:border-green-700" :
@@ -1972,7 +1967,7 @@ export function UniversityReporting({ universities }: UniversityReportingProps) 
                           <TableCell className="px-4 whitespace-normal">{pract.universityName}</TableCell>
                           <TableCell className="px-4 whitespace-normal">{pract.employeeName}</TableCell>
                           <TableCell className="px-4 whitespace-normal">{pract.position}</TableCell>
-                          <TableCell className="px-4 whitespace-normal">{formatDate(pract.practiceStartDate)} — {formatDate(pract.practiceEndDate)}</TableCell>
+                          <TableCell className="px-4 whitespace-normal">{formatDateOrDefault(pract.practiceStartDate)} — {formatDateOrDefault(pract.practiceEndDate)}</TableCell>
                           <TableCell className="px-4 whitespace-normal">{pract.practiceSupervisor || "—"}</TableCell>
                           <TableCell className="px-4 whitespace-normal">
                             <Badge variant="outline" className={
@@ -2309,7 +2304,7 @@ export function UniversityReporting({ universities }: UniversityReportingProps) 
                     <TableRow key={`${project.universityId}-${project.id}`}>
                       <TableCell className="px-4 whitespace-normal">{project.universityName}</TableCell>
                       <TableCell className="px-4 whitespace-normal">{project.projectName}</TableCell>
-                      <TableCell className="px-4 whitespace-normal">{formatDate(project.date)}</TableCell>
+                      <TableCell className="px-4 whitespace-normal">{formatDateOrDefault(project.date)}</TableCell>
                       <TableCell className="px-4 whitespace-normal">{project.branch || "—"}</TableCell>
                       <TableCell className="px-4 whitespace-normal">{formatCurrency(project.fundingAmount)}</TableCell>
                       <TableCell className="px-4 whitespace-normal">{getSupportFormatName(project.supportFormat)}</TableCell>

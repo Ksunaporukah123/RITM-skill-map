@@ -215,3 +215,70 @@ export function getAllErrors(errors: z.ZodError): string[] {
   return errors.issues.map((err) => err.message);
 }
 
+/**
+ * Проверяет, что строка не пустая после trim
+ */
+export function isNotEmpty(value: string | undefined | null): boolean {
+  return !!value && value.trim().length > 0;
+}
+
+/**
+ * Проверяет, что все поля в объекте не пустые
+ */
+export function areFieldsNotEmpty(obj: Record<string, string | undefined | null>, fields: string[]): boolean {
+  return fields.every(field => isNotEmpty(obj[field] as string));
+}
+
+/**
+ * Проверяет валидность email
+ */
+export function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+/**
+ * Проверяет валидность телефона (российский формат)
+ */
+export function isValidPhone(phone: string): boolean {
+  const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+  return phoneRegex.test(phone) && phone.replace(/\D/g, '').length >= 10;
+}
+
+/**
+ * Проверяет валидность ИНН (10 или 12 цифр)
+ */
+export function isValidINN(inn: string): boolean {
+  const cleanINN = inn.replace(/\D/g, '');
+  return cleanINN.length === 10 || cleanINN.length === 12;
+}
+
+/**
+ * Проверяет валидность даты в формате YYYY-MM-DD
+ */
+export function isValidDate(dateString: string): boolean {
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(dateString)) return false;
+  
+  const date = new Date(dateString);
+  return !isNaN(date.getTime());
+}
+
+/**
+ * Проверяет, что дата не в прошлом
+ */
+export function isNotPastDate(dateString: string): boolean {
+  const date = new Date(dateString);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return date >= today;
+}
+
+/**
+ * Проверяет, что endDate >= startDate
+ */
+export function isValidDateRange(startDate: string, endDate: string): boolean {
+  return new Date(startDate) <= new Date(endDate);
+}
+
+

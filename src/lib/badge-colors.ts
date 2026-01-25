@@ -260,3 +260,36 @@ export function getAgreementBadgeColor(status: string): string {
 export function getCooperationLineBadgeColor(line: "drp" | "bko" | "cntr"): string {
   return BADGE_COLORS[line];
 }
+
+/**
+ * Получает вариант badge для статуса KPI (Goals Kold)
+ * Всегда возвращает "outline" для единообразия
+ */
+export function getKPIStatusBadgeVariant(_status: string | undefined): "outline" {
+  return "outline";
+}
+
+/**
+ * Получает CSS классы для badge статуса KPI (Goals Kold)
+ * Использует прозрачность для визуального отличия
+ */
+export function getKPIStatusBadgeClassName(status: string | undefined): string {
+  if (!status) return "";
+  const baseColor = getAgreementBadgeColor(status);
+  
+  if (status.includes("согласован")) {
+    return baseColor
+      .replace("dark:bg-green-900", "dark:bg-green-950/30")
+      .replace("dark:text-green-200", "dark:text-green-400");
+  }
+  if (status.includes("отклонен")) {
+    return baseColor
+      .replace("dark:bg-red-900", "dark:bg-red-950/30")
+      .replace("dark:text-red-200", "dark:text-red-400");
+  }
+  if (status.includes("выставление")) {
+    return "bg-blue-500/10 text-blue-700 border-blue-500/20 dark:bg-blue-500/20 dark:text-blue-400";
+  }
+  
+  return baseColor;
+}

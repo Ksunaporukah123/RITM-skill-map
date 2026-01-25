@@ -9,19 +9,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ReadinessIndicator } from "./readiness-indicator";
 import type { Successor } from "@/types/succession";
 import { Edit, Trash2, FileText, Calendar } from "lucide-react";
-// Простая функция форматирования даты
-const formatDate = (dateString: string): string => {
-  try {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("ru-RU", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-  } catch {
-    return dateString;
-  }
-};
+import { formatDateLocale } from "@/lib/date-utils";
+import { getInitials } from "@/lib/name-utils";
 
 interface SuccessorCardProps {
   successor: Successor;
@@ -52,15 +41,6 @@ export function SuccessorCard({
   onDelete,
   onViewPlan,
 }: SuccessorCardProps) {
-  const getInitials = (name?: string) => {
-    if (!name) return "?";
-    const parts = name.split(" ");
-    if (parts.length >= 2) {
-      return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
-    }
-    return name.substring(0, 2).toUpperCase();
-  };
-
   return (
     <Card className="hover:shadow-md transition-shadow">
       <CardHeader>
@@ -122,7 +102,7 @@ export function SuccessorCard({
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Calendar className="h-4 w-4" />
             <span>
-              Готовность: {formatDate(successor.estimatedReadinessDate)}
+              Готовность: {formatDateLocale(successor.estimatedReadinessDate)}
             </span>
           </div>
         )}

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import type { MouseEvent } from "react";
@@ -386,13 +386,6 @@ export default function GoalsKoldPage() {
   const handleSelectTeam = (team: Team) => {
     setSelectedTeam(team);
     setSelectedStream(null); // Сбрасываем выбор стрима при выборе команды
-  };
-
-  // Расчет completionPercent и evaluationPercent
-  const calculateKPIMetrics = (plan: number, fact: number, weight: number) => {
-    const completionPercent = plan !== 0 ? (fact / plan) * 100 : 0;
-    const evaluationPercent = Math.min(completionPercent * (weight / 100), weight * 1.2); // Максимум 120% от веса
-    return { completionPercent, evaluationPercent };
   };
 
   // Открытие диалога добавления КПЭ

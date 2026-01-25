@@ -13,29 +13,9 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Target, ChevronDown, ChevronRight, Plus, Edit, Trash2, GripVertical, History } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { calculateKPIMetrics } from "@/lib/goals-kold/utils";
+import { calculateKPIMetrics, calculateIntegralKPI } from "@/lib/goals-kold/utils";
 import type { KPI, Stream } from "@/types/goals-kold";
-import { getAgreementBadgeColor } from "@/lib/badge-colors";
-
-const getStatusBadgeVariant = (status: string | undefined): "outline" => {
-  return "outline";
-};
-
-const getStatusBadgeClassName = (status: string | undefined) => {
-  if (!status) return "";
-  const baseColor = getAgreementBadgeColor(status);
-  // Для Goals Kold используем прозрачность для визуального отличия
-  if (status.includes("согласован")) {
-    return baseColor.replace("dark:bg-green-900", "dark:bg-green-950/30").replace("dark:text-green-200", "dark:text-green-400");
-  }
-  if (status.includes("отклонен")) {
-    return baseColor.replace("dark:bg-red-900", "dark:bg-red-950/30").replace("dark:text-red-200", "dark:text-red-400");
-  }
-  if (status.includes("выставление")) {
-    return "bg-blue-500/10 text-blue-700 border-blue-500/20 dark:bg-blue-500/20 dark:text-blue-400";
-  }
-  return baseColor;
-};
+import { getKPIStatusBadgeVariant, getKPIStatusBadgeClassName } from "@/lib/badge-colors";
 
 interface ITLeaderKPICardsProps {
   stream: Stream;
@@ -97,7 +77,7 @@ export function ITLeaderKPICards({
     const quarter = `q${quarterNum}-${selectedITLeaderYear}`;
     const currentKPIs = itLeaderKPIs[stream.id]?.[quarter] || [];
     const isEditMode = isEditModeITLeader[quarter] || false;
-    const integralKPI = currentKPIs.reduce((sum: number, kpi: KPI) => sum + kpi.evaluationPercent, 0);
+    const integralKPI = calculateIntegralKPI(currentKPIs);
 
     const handleUpdateKPI = (kpiId: string, field: string, value: string | number) => {
       onUpdateKPIInTable(kpiId, field, value, "quarterly", quarter);
@@ -243,8 +223,8 @@ export function ITLeaderKPICards({
                     <TableCell className="text-center">
                       {kpi.planStatus ? (
                         <Badge 
-                          variant={getStatusBadgeVariant(kpi.planStatus)} 
-                          className={cn("text-xs", getStatusBadgeClassName(kpi.planStatus))}
+                          variant={getKPIStatusBadgeVariant(kpi.planStatus)} 
+                          className={cn("text-xs", getKPIStatusBadgeClassName(kpi.planStatus))}
                         >
                           {kpi.planStatus}
                         </Badge>
@@ -267,8 +247,8 @@ export function ITLeaderKPICards({
                     <TableCell className="text-center">
                       {kpi.factStatus ? (
                         <Badge 
-                          variant={getStatusBadgeVariant(kpi.factStatus) as any} 
-                          className={cn("text-xs", getStatusBadgeClassName(kpi.factStatus))}
+                          variant={getKPIStatusBadgeVariant(kpi.factStatus) as any} 
+                          className={cn("text-xs", getKPIStatusBadgeClassName(kpi.factStatus))}
                         >
                           {kpi.factStatus}
                         </Badge>
@@ -452,8 +432,8 @@ export function ITLeaderKPICards({
                 <Label className="text-xs text-muted-foreground">Статус ПЛАН</Label>
                 {selectedKPI.planStatus ? (
                   <Badge 
-                    variant={getStatusBadgeVariant(selectedKPI.planStatus)} 
-                    className={cn("text-xs", getStatusBadgeClassName(selectedKPI.planStatus))}
+                    variant={getKPIStatusBadgeVariant(selectedKPI.planStatus)} 
+                    className={cn("text-xs", getKPIStatusBadgeClassName(selectedKPI.planStatus))}
                   >
                     {selectedKPI.planStatus}
                   </Badge>
@@ -465,8 +445,8 @@ export function ITLeaderKPICards({
                 <Label className="text-xs text-muted-foreground">Статус ФАКТ</Label>
                 {selectedKPI.factStatus ? (
                   <Badge 
-                    variant={getStatusBadgeVariant(selectedKPI.factStatus) as any} 
-                    className={cn("text-xs", getStatusBadgeClassName(selectedKPI.factStatus))}
+                    variant={getKPIStatusBadgeVariant(selectedKPI.factStatus) as any} 
+                    className={cn("text-xs", getKPIStatusBadgeClassName(selectedKPI.factStatus))}
                   >
                     {selectedKPI.factStatus}
                   </Badge>

@@ -20,7 +20,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Target, Users, FileText, Table as TableIcon, Search, X, ChevronDown, ChevronRight, Building2, UserCircle, Plus, Pencil, Trash2, BarChart3, Edit, Filter, GripVertical, FolderOpen, LayoutDashboard, Ruler, Calculator, AlertCircle, ChevronLeft, ChevronsLeft, ChevronsRight, ArrowUp, ArrowDown, Calendar, CheckCircle2, XCircle, Eye, History, Download, Upload, FileSpreadsheet } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getAgreementBadgeColor } from "@/lib/badge-colors";
+import { getKPIStatusBadgeVariant, getKPIStatusBadgeClassName } from "@/lib/badge-colors";
 import type { Leader, Stream, Team, KPI, AttachedFile } from "@/types/goals-kold";
 import { getInitials, formatDate, calculateKPIMetrics } from "@/lib/goals-kold/utils";
 import { mockStreamKPIs, mockQuarterlyKPIsData, mockITLeaderKPIsData, generateMockStreams, mockStreams } from "@/lib/goals-kold/mock-data";
@@ -36,29 +36,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/contexts/toast-context";
 import * as XLSX from "xlsx";
-
-// Функции для стилизации статусов
-const getStatusBadgeVariant = (status: string | undefined) => {
-  return "outline";
-};
-
-// Использует централизованные цвета из badge-colors.ts
-// Для Goals Kold оставляем специальную прозрачность для визуального отличия
-const getStatusBadgeClassName = (status: string | undefined) => {
-  if (!status) return "";
-  const baseColor = getAgreementBadgeColor(status);
-  // Для Goals Kold используем прозрачность для визуального отличия
-  if (status.includes("согласован")) {
-    return baseColor.replace("dark:bg-green-900", "dark:bg-green-950/30").replace("dark:text-green-200", "dark:text-green-400");
-  }
-  if (status.includes("отклонен")) {
-    return baseColor.replace("dark:bg-red-900", "dark:bg-red-950/30").replace("dark:text-red-200", "dark:text-red-400");
-  }
-  if (status.includes("выставление")) {
-    return "bg-blue-500/10 text-blue-700 border-blue-500/20 dark:bg-blue-500/20 dark:text-blue-400";
-  }
-  return baseColor;
-};
 
 // Компонент для ввода плана/факта с поддержкой запятой и без автоподстановки 0
 function PlanFactInput({ value, onChange }: { value: number; onChange: (value: number) => void }) {
@@ -1253,13 +1230,6 @@ export default function GoalsKoldPage() {
   const handleSelectTeam = (team: Team) => {
     setSelectedTeam(team);
     setSelectedStream(null); // Сбрасываем выбор стрима при выборе команды
-  };
-
-  // Расчет completionPercent и evaluationPercent
-  const calculateKPIMetrics = (plan: number, fact: number, weight: number) => {
-    const completionPercent = plan !== 0 ? (fact / plan) * 100 : 0;
-    const evaluationPercent = Math.min(completionPercent * (weight / 100), weight * 1.2); // Максимум 120% от веса
-    return { completionPercent, evaluationPercent };
   };
 
   // Открытие диалога добавления КПЭ
@@ -2805,8 +2775,8 @@ export default function GoalsKoldPage() {
                             <TableCell>
                               <div className="flex items-center justify-center gap-2">
                                 <Badge 
-                                  variant={getStatusBadgeVariant(kpi.planStatus) as any}
-                                  className={cn("text-xs", getStatusBadgeClassName(kpi.planStatus))}
+                                  variant={getKPIStatusBadgeVariant(kpi.planStatus) as any}
+                                  className={cn("text-xs", getKPIStatusBadgeClassName(kpi.planStatus))}
                                 >
                                   {kpi.planStatus || "—"}
                                 </Badge>
@@ -2883,8 +2853,8 @@ export default function GoalsKoldPage() {
                             <TableCell>
                               <div className="flex items-center justify-center gap-2">
                                 <Badge 
-                                  variant={getStatusBadgeVariant(kpi.factStatus) as any}
-                                  className={cn("text-xs", getStatusBadgeClassName(kpi.factStatus))}
+                                  variant={getKPIStatusBadgeVariant(kpi.factStatus) as any}
+                                  className={cn("text-xs", getKPIStatusBadgeClassName(kpi.factStatus))}
                                 >
                                   {kpi.factStatus || "—"}
                                 </Badge>
@@ -5087,8 +5057,8 @@ export default function GoalsKoldPage() {
                   <div className="flex items-center gap-2 flex-wrap">
                     {selectedPfkTableKPI.planStatus ? (
                       <Badge 
-                        variant={getStatusBadgeVariant(selectedPfkTableKPI.planStatus) as any} 
-                        className={cn("text-xs", getStatusBadgeClassName(selectedPfkTableKPI.planStatus))}
+                        variant={getKPIStatusBadgeVariant(selectedPfkTableKPI.planStatus) as any} 
+                        className={cn("text-xs", getKPIStatusBadgeClassName(selectedPfkTableKPI.planStatus))}
                       >
                         {selectedPfkTableKPI.planStatus}
                       </Badge>
@@ -5170,8 +5140,8 @@ export default function GoalsKoldPage() {
                   <div className="flex items-center gap-2 flex-wrap">
                     {selectedPfkTableKPI.factStatus ? (
                       <Badge 
-                        variant={getStatusBadgeVariant(selectedPfkTableKPI.factStatus) as any} 
-                        className={cn("text-xs", getStatusBadgeClassName(selectedPfkTableKPI.factStatus))}
+                        variant={getKPIStatusBadgeVariant(selectedPfkTableKPI.factStatus) as any} 
+                        className={cn("text-xs", getKPIStatusBadgeClassName(selectedPfkTableKPI.factStatus))}
                       >
                         {selectedPfkTableKPI.factStatus}
                       </Badge>

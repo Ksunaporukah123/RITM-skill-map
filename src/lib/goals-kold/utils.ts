@@ -3,32 +3,23 @@
  */
 
 import type { Leader, KPI } from "@/types/goals-kold";
+import { formatDate as formatDateUtil } from "@/lib/date-utils";
+import { getInitials as getInitialsUtil } from "@/lib/name-utils";
 
 /**
  * Получение инициалов из ФИО или объекта Leader
+ * @deprecated Используйте getInitials из @/lib/name-utils
  */
 export const getInitials = (fullNameOrLeader: string | Leader): string => {
   const fullName = typeof fullNameOrLeader === "string" ? fullNameOrLeader : fullNameOrLeader.name;
-  const parts = fullName.trim().split(" ");
-  if (parts.length >= 2) {
-    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
-  } else if (parts.length === 1) {
-    return parts[0][0].toUpperCase();
-  }
-  return "??";
+  return getInitialsUtil(fullName);
 };
 
 /**
  * Форматирование даты в формат дд.мм.гггг
+ * @deprecated Используйте formatDate из @/lib/date-utils
  */
-export const formatDate = (dateString: string | undefined): string => {
-  if (!dateString) return "";
-  const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
-  return `${day}.${month}.${year}`;
-};
+export const formatDate = formatDateUtil;
 
 /**
  * Расчет метрик КПЭ: completionPercent и evaluationPercent
@@ -63,5 +54,14 @@ export const createKPIWithMetrics = (
     completionPercent,
     evaluationPercent,
   };
+};
+
+/**
+ * Расчет интегрального КПЭ (сумма всех evaluationPercent)
+ * @param kpis - Массив КПЭ
+ * @returns Интегральное значение КПЭ
+ */
+export const calculateIntegralKPI = (kpis: KPI[]): number => {
+  return kpis.reduce((sum: number, kpi: KPI) => sum + kpi.evaluationPercent, 0);
 };
 

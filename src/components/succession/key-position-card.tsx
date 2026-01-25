@@ -16,6 +16,7 @@ import {
 import type { KeyPosition, Successor } from "@/types/succession";
 import { AlertCircle, Users, Edit, Trash2, UserPlus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getInitials } from "@/lib/name-utils";
 
 interface KeyPositionCardProps {
   position: KeyPosition;
@@ -42,15 +43,6 @@ export function KeyPositionCard({
         current.readinessLevel > best.readinessLevel ? current : best
       )
     : null;
-
-  const getInitials = (name?: string) => {
-    if (!name) return "?";
-    const parts = name.split(" ");
-    if (parts.length >= 2) {
-      return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
-    }
-    return name.substring(0, 2).toUpperCase();
-  };
 
   return (
     <Card className="hover:shadow-md transition-shadow">
