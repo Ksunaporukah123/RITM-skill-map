@@ -9399,6 +9399,37 @@ export default function UniversitiesPage() {
                                               </div>
                                             )}
                                           </div>
+
+                                          {/* Информация о практике */}
+                                          <div className="space-y-2">
+                                            <Label className="text-sm font-medium">Практика в банке</Label>
+                                            <div className="space-y-3 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                                              <div className="flex items-center gap-2">
+                                                <CheckCircle2 className="h-5 w-5 text-purple-600" />
+                                                <span className="font-medium text-purple-700 dark:text-purple-400">Проходил практику</span>
+                                              </div>
+                                              <div className="grid grid-cols-1 gap-3 mt-3">
+                                                <div>
+                                                  <span className="text-sm text-muted-foreground">Период практики:</span>
+                                                  <p className="font-medium">
+                                                    {formatDate(practitioner.practiceStartDate)} - {formatDate(practitioner.practiceEndDate)}
+                                                  </p>
+                                                </div>
+                                                <div>
+                                                  <span className="text-sm text-muted-foreground">Тип практики:</span>
+                                                  <p className="font-medium">
+                                                    {practitioner.isTarget ? "Целевая" : "Общий набор"}
+                                                  </p>
+                                                </div>
+                                                {practitioner.isTarget && practitioner.responsibleEmployee && (
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Ответственный сотрудник:</span>
+                                                    <p className="font-medium">{practitioner.responsibleEmployee}</p>
+                                                  </div>
+                                                )}
+                                              </div>
+                                            </div>
+                                          </div>
                                         </div>
                                       </div>
                                     );
@@ -9421,6 +9452,7 @@ export default function UniversitiesPage() {
                                     const participant = selectedParticipantInfo.participant;
                                     const university = universities.find(u => u.id === selectedParticipantInfo.universityId);
                                     const intern = university?.internList?.find(i => i.employeeName === participant.employeeName && i.status === "active");
+                                    const practice = university?.practitionerList?.find(p => p.employeeName === participant.employeeName);
                                     const event = university?.events?.find(e => e.id === participant.eventId);
                                     const formatDate = (dateString: string) => {
                                       if (!dateString) return "";
@@ -9518,6 +9550,46 @@ export default function UniversitiesPage() {
                                                 <div className="flex items-center gap-2">
                                                   <AlertCircle className="h-5 w-5 text-gray-600" />
                                                   <span className="text-gray-700 dark:text-gray-400">Не проходил стажировку в банке</span>
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
+
+                                          {/* Информация о практике */}
+                                          <div className="space-y-2">
+                                            <Label className="text-sm font-medium">Практика в банке</Label>
+                                            {practice ? (
+                                              <div className="space-y-3 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                                                <div className="flex items-center gap-2">
+                                                  <CheckCircle2 className="h-5 w-5 text-purple-600" />
+                                                  <span className="font-medium text-purple-700 dark:text-purple-400">Проходил практику</span>
+                                                </div>
+                                                <div className="grid grid-cols-1 gap-3 mt-3">
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Период практики:</span>
+                                                    <p className="font-medium">
+                                                      {formatDate(practice.practiceStartDate)} - {formatDate(practice.practiceEndDate)}
+                                                    </p>
+                                                  </div>
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Тип практики:</span>
+                                                    <p className="font-medium">
+                                                      {practice.isTarget ? "Целевая" : "Общий набор"}
+                                                    </p>
+                                                  </div>
+                                                  {practice.isTarget && practice.responsibleEmployee && (
+                                                    <div>
+                                                      <span className="text-sm text-muted-foreground">Ответственный сотрудник:</span>
+                                                      <p className="font-medium">{practice.responsibleEmployee}</p>
+                                                    </div>
+                                                  )}
+                                                </div>
+                                              </div>
+                                            ) : (
+                                              <div className="p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg border border-gray-200 dark:border-gray-800">
+                                                <div className="flex items-center gap-2">
+                                                  <AlertCircle className="h-5 w-5 text-gray-600" />
+                                                  <span className="text-gray-700 dark:text-gray-400">Не проходил практику в банке</span>
                                                 </div>
                                               </div>
                                             )}
@@ -9853,6 +9925,7 @@ export default function UniversitiesPage() {
                                     const scholar = selectedScholarInfo.scholar;
                                     const university = universities.find(u => u.id === selectedScholarInfo.universityId);
                                     const intern = university?.internList?.find(i => i.employeeName === scholar.employeeName && i.status === "active");
+                                    const practice = university?.practitionerList?.find(p => p.employeeName === scholar.employeeName);
                                     const formatDate = (dateString: string) => {
                                       if (!dateString) return "";
                                       const [year, month, day] = dateString.split('-').map(Number);
@@ -9935,6 +10008,46 @@ export default function UniversitiesPage() {
                                                 <div className="flex items-center gap-2">
                                                   <AlertCircle className="h-5 w-5 text-gray-600" />
                                                   <span className="text-gray-700 dark:text-gray-400">Не проходил стажировку в банке</span>
+                                                </div>
+                                              </div>
+                                            )}
+                                          </div>
+
+                                          {/* Информация о практике */}
+                                          <div className="space-y-2">
+                                            <Label className="text-sm font-medium">Практика в банке</Label>
+                                            {practice ? (
+                                              <div className="space-y-3 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+                                                <div className="flex items-center gap-2">
+                                                  <CheckCircle2 className="h-5 w-5 text-purple-600" />
+                                                  <span className="font-medium text-purple-700 dark:text-purple-400">Проходил практику</span>
+                                                </div>
+                                                <div className="grid grid-cols-1 gap-3 mt-3">
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Период практики:</span>
+                                                    <p className="font-medium">
+                                                      {formatDate(practice.practiceStartDate)} - {formatDate(practice.practiceEndDate)}
+                                                    </p>
+                                                  </div>
+                                                  <div>
+                                                    <span className="text-sm text-muted-foreground">Тип практики:</span>
+                                                    <p className="font-medium">
+                                                      {practice.isTarget ? "Целевая" : "Общий набор"}
+                                                    </p>
+                                                  </div>
+                                                  {practice.isTarget && practice.responsibleEmployee && (
+                                                    <div>
+                                                      <span className="text-sm text-muted-foreground">Ответственный сотрудник:</span>
+                                                      <p className="font-medium">{practice.responsibleEmployee}</p>
+                                                    </div>
+                                                  )}
+                                                </div>
+                                              </div>
+                                            ) : (
+                                              <div className="p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg border border-gray-200 dark:border-gray-800">
+                                                <div className="flex items-center gap-2">
+                                                  <AlertCircle className="h-5 w-5 text-gray-600" />
+                                                  <span className="text-gray-700 dark:text-gray-400">Не проходил практику в банке</span>
                                                 </div>
                                               </div>
                                             )}

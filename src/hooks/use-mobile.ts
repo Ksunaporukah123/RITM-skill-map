@@ -6,22 +6,15 @@ const MOBILE_BREAKPOINT = 768;
  * Хук для определения мобильного устройства
  * 
  * Использует matchMedia API для эффективного отслеживания изменений размера экрана.
+ * Начинает с false для предотвращения ошибок гидратации SSR.
  * 
  * @returns {boolean} true если ширина экрана меньше MOBILE_BREAKPOINT
  */
 export function useIsMobile(): boolean {
-  const [isMobile, setIsMobile] = React.useState<boolean>(() => {
-    if (typeof window === "undefined") {
-      return false;
-    }
-    return window.innerWidth < MOBILE_BREAKPOINT;
-  });
+  // Всегда начинаем с false для SSR, обновляем после монтирования
+  const [isMobile, setIsMobile] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
     
     // Используем matches из MediaQueryList вместо проверки innerWidth
@@ -29,7 +22,7 @@ export function useIsMobile(): boolean {
       setIsMobile(e.matches);
     };
 
-    // Инициализируем значение
+    // Инициализируем значение после монтирования
     setIsMobile(mql.matches);
 
     // Современный API для matchMedia
