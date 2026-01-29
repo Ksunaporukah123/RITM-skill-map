@@ -42,15 +42,15 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} antialiased`}
+        className={`${geistSans.variable} antialiased h-screen overflow-hidden`}
       >
         <AppProviders>
           <SidebarProvider>
             <AppSidebar />
             <SidebarInset className="h-screen z-0 flex flex-col overflow-hidden">
-              <AuroraBackground className="flex-1 w-full overflow-y-auto flex flex-col">
+              <AuroraBackground className="flex-1 w-full min-h-0 overflow-hidden flex flex-col">
                 <AppHeader />
-                <div className="flex flex-1 flex-col gap-4 p-4 pt-6 overflow-x-hidden">
+                <div className="flex flex-1 flex-col min-h-0 gap-4 p-4 pt-6 overflow-hidden">
                   {children}
                 </div>
               </AuroraBackground>

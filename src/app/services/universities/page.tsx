@@ -270,26 +270,8 @@ const mockUniversities: University[] = [
       },
     ],
     events: [
-      {
-        id: "event-mgu-1",
-        type: "careerDays",
-        date: "2024-02-10",
-        endDate: "2024-02-12",
-        status: "completed",
-        responsiblePerson: ["person-1"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-        comments: "Дни карьеры для студентов факультета вычислительной математики и кибернетики.",
-      },
-      {
-        id: "event-mgu-2",
-        type: "expertParticipation",
-        date: "2024-06-15",
-        endDate: "2024-06-15",
-        status: "completed",
-        responsiblePerson: ["person-2"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
-        comments: "Участие в качестве эксперта на защите магистерских диссертаций.",
-      },
+      { id: "event-mgu-1", type: "careerDays", date: "2024-02-10", endDate: "2024-02-12", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов факультета вычислительной математики и кибернетики.", cooperationLine: "drp", addedAt: "2024-01-25", addedBy: "Иванова Е.С." },
+      { id: "event-mgu-2", type: "expertParticipation", date: "2024-06-15", endDate: "2024-06-15", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите магистерских диссертаций.", cooperationLine: "bko", addedAt: "2024-06-01", addedBy: "Петров А.В." },
     ],
     careerDays: true,
     expertParticipation: true,
@@ -413,26 +395,8 @@ const mockUniversities: University[] = [
       },
     ],
     events: [
-      {
-        id: "event-spbgu-1",
-        type: "careerDays",
-        date: "2024-03-20",
-        endDate: "2024-03-22",
-        status: "completed",
-        responsiblePerson: ["person-3"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-        comments: "Дни карьеры для студентов экономического факультета СПбГУ.",
-      },
-      {
-        id: "event-spbgu-2",
-        type: "caseChampionships",
-        date: "2024-05-25",
-        endDate: "2024-05-27",
-        status: "completed",
-        responsiblePerson: ["person-4"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
-        comments: "Кейс-чемпионат по финансовому моделированию.",
-      },
+      { id: "event-spbgu-1", type: "careerDays", date: "2024-03-20", endDate: "2024-03-22", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов экономического факультета СПбГУ.", cooperationLine: "bko", addedAt: "2024-03-05", addedBy: "Смирнова О.И." },
+      { id: "event-spbgu-2", type: "caseChampionships", date: "2024-05-25", endDate: "2024-05-27", status: "completed", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по финансовому моделированию.", cooperationLine: "cntr", addedAt: "2024-05-10", addedBy: "Козлов Д.П." },
     ],
     careerDays: true,
     expertParticipation: false,
@@ -510,36 +474,9 @@ const mockUniversities: University[] = [
       },
     ],
     events: [
-      {
-        id: "event-mfti-1",
-        type: "expertParticipation",
-        date: "2024-04-05",
-        endDate: "2024-04-05",
-        status: "completed",
-        responsiblePerson: ["person-5"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-        comments: "Участие в качестве эксперта на конференции по машинному обучению.",
-      },
-      {
-        id: "event-mfti-2",
-        type: "caseChampionships",
-        date: "2024-06-01",
-        endDate: "2024-06-03",
-        status: "completed",
-        responsiblePerson: ["person-6"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face",
-        comments: "Кейс-чемпионат по разработке финансовых алгоритмов.",
-      },
-      {
-        id: "event-mfti-3",
-        type: "expertParticipation",
-        date: "2024-11-10",
-        endDate: "2024-11-10",
-        status: "planned",
-        responsiblePerson: ["person-7"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-        comments: "Планируется участие в качестве эксперта на защите дипломных проектов.",
-      },
+      { id: "event-mfti-1", type: "expertParticipation", date: "2024-04-05", endDate: "2024-04-05", status: "completed", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на конференции по машинному обучению.", cooperationLine: "drp", addedAt: "2024-03-20", addedBy: "Соколов А.Н." },
+      { id: "event-mfti-2", type: "caseChampionships", date: "2024-06-01", endDate: "2024-06-03", status: "completed", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по разработке финансовых алгоритмов.", cooperationLine: "bko", addedAt: "2024-05-15", addedBy: "Волкова М.К." },
+      { id: "event-mfti-3", type: "expertParticipation", date: "2024-11-10", endDate: "2024-11-10", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на защите дипломных проектов.", cooperationLine: "cntr", addedAt: "2024-10-28", addedBy: "Новиков Р.С." },
     ],
     careerDays: false,
     expertParticipation: true,
@@ -719,76 +656,36 @@ const mockUniversities: University[] = [
       },
     ],
     events: [
-      {
-        id: "event-hse-1",
-        type: "careerDays",
-        date: "2024-03-15",
-        endDate: "2024-03-17",
-        status: "completed",
-        responsiblePerson: ["person-1"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-        comments: "Проведены дни карьеры для студентов экономического факультета. Участвовало более 150 студентов.",
-      },
-      {
-        id: "event-hse-2",
-        type: "expertParticipation",
-        date: "2024-04-20",
-        endDate: "2024-04-20",
-        status: "completed",
-        responsiblePerson: ["person-2"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
-        comments: "Участие в качестве эксперта на защите дипломных работ по направлению 'Финансы и кредит'.",
-      },
-      {
-        id: "event-hse-3",
-        type: "caseChampionships",
-        date: "2024-05-10",
-        endDate: "2024-05-12",
-        status: "completed",
-        responsiblePerson: ["person-3"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-        comments: "Кейс-чемпионат по банковскому делу. Победила команда студентов 3 курса.",
-      },
-      {
-        id: "event-hse-4",
-        type: "careerDays",
-        date: "2024-09-25",
-        endDate: "2024-09-27",
-        status: "planned",
-        responsiblePerson: ["person-4"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-        comments: "Запланированы дни карьеры для студентов IT-направления. Ожидается участие 200+ студентов.",
-      },
-      {
-        id: "event-hse-5",
-        type: "expertParticipation",
-        date: "2024-10-15",
-        endDate: "2024-10-15",
-        status: "planned",
-        responsiblePerson: ["person-5"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-        comments: "Планируется участие в качестве эксперта на конференции по финансовым технологиям.",
-      },
-      {
-        id: "event-hse-6",
-        type: "caseChampionships",
-        date: "2024-11-20",
-        endDate: "2024-11-22",
-        status: "planned",
-        responsiblePerson: ["person-6"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
-        comments: "Организация кейс-чемпионата по управлению рисками в банковской сфере.",
-      },
-      {
-        id: "event-hse-7",
-        type: "careerDays",
-        date: "2024-12-05",
-        endDate: "2024-12-07",
-        status: "planned",
-        responsiblePerson: ["person-7"],
-        responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face",
-        comments: "Дни карьеры для выпускников магистратуры. Фокус на карьерные возможности в банковском секторе.",
-      },
+      { id: "event-hse-1", type: "careerDays", date: "2024-03-15", endDate: "2024-03-17", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Проведены дни карьеры для студентов экономического факультета. Участвовало более 150 студентов.", cooperationLine: "drp", addedAt: "2024-03-01", addedBy: "Иванова Е.С." },
+      { id: "event-hse-2", type: "expertParticipation", date: "2024-04-20", endDate: "2024-04-20", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите дипломных работ по направлению 'Финансы и кредит'.", cooperationLine: "bko", addedAt: "2024-04-05", addedBy: "Петров А.В." },
+      { id: "event-hse-3", type: "caseChampionships", date: "2024-05-10", endDate: "2024-05-12", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по банковскому делу. Победила команда студентов 3 курса.", cooperationLine: "cntr", addedAt: "2024-04-25", addedBy: "Смирнова О.И." },
+      { id: "event-hse-4", type: "careerDays", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Запланированы дни карьеры для студентов IT-направления. Ожидается участие 200+ студентов.", cooperationLine: "drp", addedAt: "2024-09-10", addedBy: "Козлов Д.П." },
+      { id: "event-hse-5", type: "expertParticipation", date: "2024-10-15", endDate: "2024-10-15", status: "planned", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на конференции по финансовым технологиям.", cooperationLine: "bko", addedAt: "2024-09-30", addedBy: "Соколов А.Н." },
+      { id: "event-hse-6", type: "caseChampionships", date: "2024-11-20", endDate: "2024-11-22", status: "planned", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Организация кейс-чемпионата по управлению рисками в банковской сфере.", cooperationLine: "cntr", addedAt: "2024-11-05", addedBy: "Волкова М.К." },
+      { id: "event-hse-7", type: "careerDays", date: "2024-12-05", endDate: "2024-12-07", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для выпускников магистратуры. Фокус на карьерные возможности в банковском секторе.", cooperationLine: "drp", addedAt: "2024-11-20", addedBy: "Новиков Р.С." },
+      { id: "event-hse-8", type: "meeting", date: "2024-01-15", endDate: "2024-01-15", status: "completed", responsiblePerson: ["person-1"], comments: "Встреча с руководством факультета по вопросам сотрудничества.", cooperationLine: "bko", addedAt: "2024-01-08", addedBy: "Морозова Т.И." },
+      { id: "event-hse-9", type: "communication", date: "2024-02-01", endDate: "2024-02-01", status: "completed", responsiblePerson: ["person-2"], comments: "Презентация программ стажировок для студентов 2 курса.", cooperationLine: "cntr", addedAt: "2024-01-22", addedBy: "Лебедева А.С." },
+      { id: "event-hse-10", type: "expertParticipation", date: "2024-02-20", endDate: "2024-02-20", status: "completed", responsiblePerson: ["person-3"], comments: "Экспертиза проектов по направлению «Финансовые технологии».", cooperationLine: "drp", addedAt: "2024-02-12", addedBy: "Федорова М.Д." },
+      { id: "event-hse-11", type: "caseChampionships", date: "2024-03-01", endDate: "2024-03-03", status: "completed", responsiblePerson: ["person-4"], comments: "Кейс-чемпионат по корпоративным финансам.", cooperationLine: "bko", addedAt: "2024-02-18", addedBy: "Иванова Е.С." },
+      { id: "event-hse-12", type: "careerDays", date: "2024-04-05", endDate: "2024-04-07", status: "completed", responsiblePerson: ["person-5"], comments: "Дни карьеры для магистрантов программы «Финансы».", cooperationLine: "cntr", addedAt: "2024-03-22", addedBy: "Петров А.В." },
+      { id: "event-hse-13", type: "meeting", date: "2024-04-18", endDate: "2024-04-18", status: "completed", responsiblePerson: ["person-6"], comments: "Совещание по плану совместных мероприятий на 2024 год.", cooperationLine: "drp", addedAt: "2024-04-08", addedBy: "Смирнова О.И." },
+      { id: "event-hse-14", type: "communication", date: "2024-05-05", endDate: "2024-05-05", status: "completed", responsiblePerson: ["person-7"], comments: "Вебинар о карьерных возможностях в банке.", cooperationLine: "bko", addedAt: "2024-04-28", addedBy: "Козлов Д.П." },
+      { id: "event-hse-15", type: "expertParticipation", date: "2024-05-22", endDate: "2024-05-22", status: "completed", responsiblePerson: ["person-1"], comments: "Участие в жюри олимпиады по экономике.", cooperationLine: "cntr", addedAt: "2024-05-12", addedBy: "Соколов А.Н." },
+      { id: "event-hse-16", type: "caseChampionships", date: "2024-06-10", endDate: "2024-06-12", status: "in_progress", responsiblePerson: ["person-2"], comments: "Кейс-чемпионат по риск-менеджменту. Регистрация открыта.", cooperationLine: "drp", addedAt: "2024-05-28", addedBy: "Волкова М.К." },
+      { id: "event-hse-17", type: "careerDays", date: "2024-07-01", endDate: "2024-07-03", status: "planned", responsiblePerson: ["person-3"], comments: "Летняя школа «Карьера в банке» для студентов.", cooperationLine: "bko", addedAt: "2024-06-18", addedBy: "Новиков Р.С." },
+      { id: "event-hse-18", type: "meeting", date: "2024-07-15", endDate: "2024-07-15", status: "planned", responsiblePerson: ["person-4"], comments: "Планирование осенних мероприятий с кафедрой банковского дела.", cooperationLine: "cntr", addedAt: "2024-07-05", addedBy: "Морозова Т.И." },
+      { id: "event-hse-19", type: "communication", date: "2024-08-20", endDate: "2024-08-20", status: "planned", responsiblePerson: ["person-5"], comments: "Онлайн-встреча с кураторами студенческих групп.", cooperationLine: "drp", addedAt: "2024-08-08", addedBy: "Лебедева А.С." },
+      { id: "event-hse-20", type: "expertParticipation", date: "2024-09-10", endDate: "2024-09-10", status: "planned", responsiblePerson: ["person-6"], comments: "Экспертиза магистерских работ по направлению БКО.", cooperationLine: "bko", addedAt: "2024-08-28", addedBy: "Федорова М.Д." },
+      { id: "event-hse-21", type: "caseChampionships", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-7"], comments: "Кейс-чемпионат по устойчивому развитию и ESG.", cooperationLine: "cntr", addedAt: "2024-09-12", addedBy: "Иванова Е.С." },
+      { id: "event-hse-22", type: "careerDays", date: "2024-10-10", endDate: "2024-10-12", status: "planned", responsiblePerson: ["person-1"], comments: "Осенние дни карьеры для бакалавров 4 курса.", cooperationLine: "drp", addedAt: "2024-09-26", addedBy: "Петров А.В." },
+      { id: "event-hse-23", type: "meeting", date: "2024-10-25", endDate: "2024-10-25", status: "planned", responsiblePerson: ["person-2"], comments: "Подведение итогов года сотрудничества.", cooperationLine: "bko", addedAt: "2024-10-14", addedBy: "Смирнова О.И." },
+      { id: "event-hse-24", type: "communication", date: "2024-11-05", endDate: "2024-11-05", status: "planned", responsiblePerson: ["person-3"], comments: "Информационная рассылка о стажировках 2025.", cooperationLine: "cntr", addedAt: "2024-10-25", addedBy: "Козлов Д.П." },
+      { id: "event-hse-25", type: "expertParticipation", date: "2024-11-18", endDate: "2024-11-18", status: "planned", responsiblePerson: ["person-4"], comments: "Участие в конференции «Банк и университет».", cooperationLine: "drp", addedAt: "2024-11-05", addedBy: "Соколов А.Н." },
+      { id: "event-hse-26", type: "caseChampionships", date: "2024-12-02", endDate: "2024-12-04", status: "planned", responsiblePerson: ["person-5"], comments: "Зимний кейс-чемпионат по цифровым продуктам.", cooperationLine: "bko", addedAt: "2024-11-20", addedBy: "Волкова М.К." },
+      { id: "event-hse-27", type: "careerDays", date: "2024-12-15", endDate: "2024-12-17", status: "planned", responsiblePerson: ["person-6"], comments: "Дни карьеры для выпускников бакалавриата.", cooperationLine: "cntr", addedAt: "2024-12-02", addedBy: "Новиков Р.С." },
+      { id: "event-hse-28", type: "meeting", date: "2025-01-20", endDate: "2025-01-20", status: "planned", responsiblePerson: ["person-7"], comments: "Стартовая встреча по плану мероприятий 2025.", cooperationLine: "drp", addedAt: "2025-01-10", addedBy: "Морозова Т.И." },
+      { id: "event-hse-29", type: "communication", date: "2025-02-10", endDate: "2025-02-10", status: "planned", responsiblePerson: ["person-1"], comments: "Презентация летних стажировок для магистрантов.", cooperationLine: "bko", addedAt: "2025-01-28", addedBy: "Лебедева А.С." },
+      { id: "event-hse-30", type: "expertParticipation", date: "2025-03-05", endDate: "2025-03-05", status: "planned", responsiblePerson: ["person-2"], comments: "Экспертная сессия по тематике ЦНТР.", cooperationLine: "cntr", addedAt: "2025-02-22", addedBy: "Федорова М.Д." },
     ],
     careerDays: true,
     expertParticipation: true,
@@ -2045,7 +1942,7 @@ export default function UniversitiesPage() {
   // Состояние для администрирования
   const [universities, setUniversities] = useState<University[]>(mockUniversities);
   const [selectedUniversity, setSelectedUniversity] = useState<string | null>(null);
-  const [universityDetailTab, setUniversityDetailTab] = useState<"general" | "contracts" | "events" | "staff" | "bko" | "cntr">("general");
+  const [universityDetailTab, setUniversityDetailTab] = useState<"general" | "contracts" | "eventsFeed" | "events" | "staff" | "bko" | "cntr">("general");
   const [generalSubTab, setGeneralSubTab] = useState<"main" | "branches">("main");
   const [staffSubTab, setStaffSubTab] = useState<"interns" | "practitioners">("interns");
   const [cntrSubTab, setCntrSubTab] = useState<"infrastructure" | "projects" | "accelerator" | "events" | "agreements" | "educational">("infrastructure");
@@ -2183,7 +2080,42 @@ export default function UniversitiesPage() {
   // Состояние для пагинации стажеров
   const [internsCurrentPage, setInternsCurrentPage] = useState(1);
   const [internsItemsPerPage, setInternsItemsPerPage] = useState(10);
-  
+
+  // Состояние для пагинации ленты мероприятий
+  const [eventsFeedCurrentPage, setEventsFeedCurrentPage] = useState(1);
+  const [eventsFeedItemsPerPage, setEventsFeedItemsPerPage] = useState(10);
+  // Фильтры ленты мероприятий (линия, тип, календарный год)
+  const [eventsFeedFilters, setEventsFeedFilters] = useState<{
+    cooperationLine: "drp" | "bko" | "cntr" | null;
+    type: Event["type"] | null;
+    year: number | null;
+  }>({ cooperationLine: null, type: null, year: null });
+  // Коллапс строк в ленте мероприятий: Set id = свёрнута
+  const [collapsedEventsFeed, setCollapsedEventsFeed] = useState<Set<string>>(new Set());
+  const handleEventsFeedToggle = useCallback((eventId: string) => {
+    setCollapsedEventsFeed((prev) => {
+      const next = new Set(prev);
+      if (next.has(eventId)) next.delete(eventId);
+      else next.add(eventId);
+      return next;
+    });
+  }, []);
+
+  // При открытии вкладки «Лента мероприятий» или смене ВУЗа — все строки свёрнуты, фильтры сброшены
+  useEffect(() => {
+    if (!selectedUniversity || universityDetailTab !== "eventsFeed") return;
+    const university = universities.find((u) => u.id === selectedUniversity);
+    const eventIds = university?.events?.map((e) => e.id) ?? [];
+    setCollapsedEventsFeed(new Set(eventIds));
+    setEventsFeedFilters({ cooperationLine: null, type: null, year: null });
+    setEventsFeedCurrentPage(1);
+  }, [selectedUniversity, universityDetailTab, universities]);
+
+  // Сброс страницы при смене фильтров ленты мероприятий
+  useEffect(() => {
+    setEventsFeedCurrentPage(1);
+  }, [eventsFeedFilters]);
+
   // Состояние для фильтров стажеров
   const [internsFilterDialogOpen, setInternsFilterDialogOpen] = useState(false);
   const [internsFilters, setInternsFilters] = useState<{
@@ -2549,6 +2481,7 @@ export default function UniversitiesPage() {
     status: "planned" | "in_progress" | "completed";
     comments: string;
     responsiblePerson: string[];
+    cooperationLine: "drp" | "bko" | "cntr" | "";
   }>({
     type: "",
     date: "",
@@ -2556,6 +2489,7 @@ export default function UniversitiesPage() {
     status: "planned",
     comments: "",
     responsiblePerson: [],
+    cooperationLine: "",
   });
   
   // Состояние для модального окна добавления студентов
@@ -3383,6 +3317,8 @@ export default function UniversitiesPage() {
       status: newEvent.status,
       comments: newEvent.comments.trim() || undefined,
       responsiblePerson: newEvent.responsiblePerson,
+      cooperationLine: newEvent.cooperationLine || undefined,
+      addedAt: new Date().toISOString().split("T")[0],
     };
     const university = universities.find(u => u.id === universityId);
     if (university) {
@@ -3390,7 +3326,7 @@ export default function UniversitiesPage() {
       setUniversities(universities.map(u => 
         u.id === universityId ? { ...u, events: updatedEvents } : u
       ));
-      setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [] });
+      setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
       setIsEventDialogOpen(false);
     }
   };
@@ -3408,6 +3344,7 @@ export default function UniversitiesPage() {
         status: event.status,
         comments: event.comments || "",
         responsiblePerson: event.responsiblePerson,
+        cooperationLine: event.cooperationLine || "",
       });
       setIsEventDialogOpen(true);
     }
@@ -3422,14 +3359,14 @@ export default function UniversitiesPage() {
       .find(u => u.id === editingEvent.universityId)
       ?.events?.map(e => 
         e.id === editingEvent.event.id 
-          ? { ...e, type: newEvent.type as "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication", date: newEvent.date, endDate: newEvent.endDate, status: newEvent.status, comments: newEvent.comments.trim() || undefined, responsiblePerson: newEvent.responsiblePerson }
+          ? { ...e, type: newEvent.type as "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication", date: newEvent.date, endDate: newEvent.endDate, status: newEvent.status, comments: newEvent.comments.trim() || undefined, responsiblePerson: newEvent.responsiblePerson, cooperationLine: newEvent.cooperationLine || undefined }
           : e
       ) || [];
     setUniversities(universities.map(u => 
       u.id === editingEvent.universityId ? { ...u, events: updatedEvents } : u
     ));
     setEditingEvent(null);
-    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [] });
+    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
     setIsEventDialogOpen(false);
   };
 
@@ -3620,6 +3557,8 @@ export default function UniversitiesPage() {
         status: "completed",
         responsiblePerson: [],
         comments: newParticipant.eventName.trim(),
+        cooperationLine: undefined,
+        addedAt: new Date().toISOString().split("T")[0],
       };
       
       setUniversities(universities.map(u => {
@@ -3785,6 +3724,8 @@ export default function UniversitiesPage() {
             status: "completed",
             responsiblePerson: [],
             comments: editingParticipant.eventName.trim(),
+            cooperationLine: undefined,
+            addedAt: new Date().toISOString().split("T")[0],
           };
           updatedEvents.push(newEvent);
         }
@@ -4649,18 +4590,10 @@ export default function UniversitiesPage() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Заголовок */}
-      <div className="space-y-4">
-        <div>
-          <h1 className="text-4xl font-bold text-foreground mb-2">Единая платформа по работе с ВУЗами</h1>
-          <p className="text-muted-foreground">
-            Управление партнерствами с образовательными учреждениями
-          </p>
-      </div>
-
+    <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
+      <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
         {/* Вкладки */}
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "universities" | "internships" | "reporting" | "dashboard")} className="w-full">
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "universities" | "internships" | "reporting" | "dashboard")} className="flex flex-col flex-1 min-h-0 overflow-hidden w-full">
           <TabsList variant="grid4">
             <TabsTrigger value="universities">ВУЗы</TabsTrigger>
             <TabsTrigger value="internships">Стажировки</TabsTrigger>
@@ -4668,9 +4601,9 @@ export default function UniversitiesPage() {
             <TabsTrigger value="dashboard">Дэшборд</TabsTrigger>
         </TabsList>
 
-          <TabsContent value="universities" className="mt-4 space-y-4">
+          <TabsContent value="universities" className="mt-4 flex flex-col flex-1 min-h-0 overflow-hidden space-y-4 data-[state=inactive]:hidden">
             {/* Поиск и фильтры для ВУЗов */}
-            <div className="flex items-center gap-4">
+            <div className="flex flex-shrink-0 items-center gap-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -4750,7 +4683,7 @@ export default function UniversitiesPage() {
                     if (activeFilters.length === 0) return null;
                     
                     return (
-                      <div className="flex flex-wrap items-center gap-2">
+                      <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
                         {activeFilters.map((filter, index) => (
                           <Badge
                             key={index}
@@ -4795,10 +4728,10 @@ export default function UniversitiesPage() {
               </CardContent>
             </Card>
           ) : (
-            <div className="flex gap-4 min-h-[calc(100vh-280px)] w-full overflow-x-hidden">
+            <div className="flex gap-4 w-full min-h-0" style={{ height: "calc(100vh - 15rem)" }}>
               {/* Левая колонка - список ВУЗов */}
-              <div className="w-[20rem] flex-shrink-0 flex flex-col border rounded-lg overflow-hidden bg-card h-[calc(100vh-280px)]">
-                <div className="p-2 border-b bg-muted/30">
+              <div className="w-[20rem] flex-shrink-0 flex flex-col border rounded-lg overflow-hidden bg-card h-full">
+                <div className="p-2 border-b bg-muted/30 shrink-0">
                   <div className="flex items-center justify-between gap-2">
                           <div className="flex items-center gap-2">
                       <h3 className="font-semibold text-sm">ВУЗы</h3>
@@ -4821,7 +4754,7 @@ export default function UniversitiesPage() {
                             </Button>
                                 </div>
                             </div>
-                <div className="flex-1 overflow-y-auto">
+                <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain">
                   <div className="space-y-1 p-2">
                     {sortedUniversitiesList.map((university) => (
                       <div key={university.id} className="space-y-1">
@@ -4929,7 +4862,7 @@ export default function UniversitiesPage() {
                         </div>
                         
               {/* Правая колонка - детальная информация о ВУЗе */}
-              <div className="flex-1 min-w-0 overflow-y-auto overflow-x-hidden h-[calc(100vh-280px)]">
+              <div className="flex-1 min-w-0 min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain h-full rounded-lg border bg-card">
                 {selectedUniversity ? (() => {
                   const university = universities.find(u => u.id === selectedUniversity);
                   if (!university) return null;
@@ -5058,9 +4991,10 @@ export default function UniversitiesPage() {
                     <Separator />
                     <CardContent className="overflow-x-hidden">
                       <Tabs value={universityDetailTab} onValueChange={(v) => setUniversityDetailTab(v as typeof universityDetailTab)} className="w-full">
-                        <TabsList className="grid w-full grid-cols-6">
+                        <TabsList className="grid w-full grid-cols-7">
                           <TabsTrigger value="general">Общая информация</TabsTrigger>
                           <TabsTrigger value="contracts">Договорная база</TabsTrigger>
+                          <TabsTrigger value="eventsFeed">Лента мероприятий</TabsTrigger>
                           <TabsTrigger value="events">Мероприятия</TabsTrigger>
                           <TabsTrigger value="staff">Кадровые показатели</TabsTrigger>
                           <TabsTrigger value="bko">Договорная база БКО</TabsTrigger>
@@ -6154,6 +6088,457 @@ export default function UniversitiesPage() {
                             )}
                           </div>
                         </TabsContent>
+
+                        {/* Таб: Лента мероприятий */}
+                        <TabsContent value="eventsFeed" className="space-y-4 mt-4 outline-none focus:outline-none focus-visible:outline-none ring-0 focus-visible:ring-0 [&:focus]:outline-none [&:focus]:ring-0">
+                          <div className="space-y-4 outline-none">
+                            {(() => {
+                              const eventTypeLabels: Record<Event["type"], string> = {
+                                careerDays: "Дни карьеры",
+                                expertParticipation: "Экспертное участие",
+                                caseChampionships: "Кейс-чемпионат",
+                                meeting: "Встреча",
+                                communication: "Коммуникация",
+                              };
+                              const eventTypeBadgeColors: Record<Event["type"], string> = {
+                                careerDays: "bg-blue-100 text-blue-700 border-blue-300 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700",
+                                expertParticipation: "bg-purple-100 text-purple-700 border-purple-300 dark:bg-purple-900 dark:text-purple-200 dark:border-purple-700",
+                                caseChampionships: "bg-green-100 text-green-700 border-green-300 dark:bg-green-900 dark:text-green-200 dark:border-green-700",
+                                meeting: "bg-gray-100 text-gray-700 border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700",
+                                communication: "bg-cyan-100 text-cyan-700 border-cyan-300 dark:bg-cyan-900 dark:text-cyan-200 dark:border-cyan-700",
+                              };
+                              const formatDate = (dateStr: string) => {
+                                if (!dateStr) return "—";
+                                const [year, month, day] = dateStr.split("-").map(Number);
+                                return `${String(day).padStart(2, "0")}.${String(month).padStart(2, "0")}.${year}`;
+                              };
+                              const eventStatusLabels: Record<Event["status"], string> = {
+                                planned: "Запланировано",
+                                in_progress: "В процессе",
+                                completed: "Проведено",
+                              };
+                              const allEvents = university.events || [];
+                              const byCooperationLine = {
+                                drp: allEvents.filter((e) => e.cooperationLine === "drp").length,
+                                bko: allEvents.filter((e) => e.cooperationLine === "bko").length,
+                                cntr: allEvents.filter((e) => e.cooperationLine === "cntr").length,
+                              };
+                              const byType = {
+                                careerDays: allEvents.filter((e) => e.type === "careerDays").length,
+                                expertParticipation: allEvents.filter((e) => e.type === "expertParticipation").length,
+                                caseChampionships: allEvents.filter((e) => e.type === "caseChampionships").length,
+                                meeting: allEvents.filter((e) => e.type === "meeting").length,
+                                communication: allEvents.filter((e) => e.type === "communication").length,
+                              };
+                              const yearsMap = allEvents.reduce<Record<number, number>>((acc, e) => {
+                                const y = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
+                                if (y) acc[y] = (acc[y] || 0) + 1;
+                                return acc;
+                              }, {});
+                              const yearsSorted = Object.keys(yearsMap).map(Number).sort((a, b) => a - b);
+                              const eventsList = allEvents.filter((e) => {
+                                if (eventsFeedFilters.cooperationLine && e.cooperationLine !== eventsFeedFilters.cooperationLine) return false;
+                                if (eventsFeedFilters.type && e.type !== eventsFeedFilters.type) return false;
+                                if (eventsFeedFilters.year != null) {
+                                  const eventYear = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
+                                  if (eventYear !== eventsFeedFilters.year) return false;
+                                }
+                                return true;
+                              });
+                              return allEvents.length > 0 ? (
+                                <>
+                                  <div className="flex flex-wrap items-center gap-4 mb-4">
+                                    <Card className="p-3 flex-[0.75] min-w-[140px]">
+                                      <div className="space-y-2">
+                                        <Label className="text-base font-semibold">Линия сотрудничества</Label>
+                                        <div className="flex flex-wrap gap-3">
+                                          {(["drp", "bko", "cntr"] as const).map((line) => {
+                                            const count = byCooperationLine[line] ?? 0;
+                                            const isActive = eventsFeedFilters.cooperationLine === line;
+                                            return (
+                                              <div key={line} className="text-base">
+                                                <span className="text-muted-foreground">{getCooperationLineLabel(line)}: </span>
+                                                <Badge
+                                                  variant="outline"
+                                                  className={cn(
+                                                    "cursor-pointer",
+                                                    getCooperationLineBadgeColor(line),
+                                                    isActive && "ring-4 ring-primary"
+                                                  )}
+                                                  onClick={() => {
+                                                    setEventsFeedFilters((p) => ({
+                                                      ...p,
+                                                      cooperationLine: p.cooperationLine === line ? null : line,
+                                                    }));
+                                                    setEventsFeedCurrentPage(1);
+                                                  }}
+                                                >
+                                                  {count}
+                                                </Badge>
+                                              </div>
+                                            );
+                                          })}
+                                        </div>
+                                      </div>
+                                    </Card>
+                                    <Card className="p-3 flex-[2.5] min-w-[340px]">
+                                      <div className="space-y-2">
+                                        <Label className="text-base font-semibold">Тип мероприятия</Label>
+                                        <div className="flex flex-wrap gap-3">
+                                          <div className="text-base">
+                                            <span className="text-muted-foreground">Дни карьеры: </span>
+                                            <Badge
+                                              variant="outline"
+                                              className={cn(
+                                                "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600 cursor-pointer",
+                                                eventsFeedFilters.type === "careerDays" && "ring-4 ring-blue-600"
+                                              )}
+                                              onClick={() => {
+                                                setEventsFeedFilters((p) => ({ ...p, type: p.type === "careerDays" ? null : "careerDays" }));
+                                                setEventsFeedCurrentPage(1);
+                                              }}
+                                            >
+                                              {byType.careerDays}
+                                            </Badge>
+                                          </div>
+                                          <div className="text-base">
+                                            <span className="text-muted-foreground">Экспертное участие: </span>
+                                            <Badge
+                                              variant="outline"
+                                              className={cn(
+                                                "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600 cursor-pointer",
+                                                eventsFeedFilters.type === "expertParticipation" && "ring-4 ring-purple-600"
+                                              )}
+                                              onClick={() => {
+                                                setEventsFeedFilters((p) => ({ ...p, type: p.type === "expertParticipation" ? null : "expertParticipation" }));
+                                                setEventsFeedCurrentPage(1);
+                                              }}
+                                            >
+                                              {byType.expertParticipation}
+                                            </Badge>
+                                          </div>
+                                          <div className="text-base">
+                                            <span className="text-muted-foreground">Кейс-чемпионат: </span>
+                                            <Badge
+                                              variant="outline"
+                                              className={cn(
+                                                "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600 cursor-pointer",
+                                                eventsFeedFilters.type === "caseChampionships" && "ring-4 ring-green-600"
+                                              )}
+                                              onClick={() => {
+                                                setEventsFeedFilters((p) => ({ ...p, type: p.type === "caseChampionships" ? null : "caseChampionships" }));
+                                                setEventsFeedCurrentPage(1);
+                                              }}
+                                            >
+                                              {byType.caseChampionships}
+                                            </Badge>
+                                          </div>
+                                          <div className="text-base">
+                                            <span className="text-muted-foreground">Встреча: </span>
+                                            <Badge
+                                              variant="outline"
+                                              className={cn(
+                                                "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600 cursor-pointer",
+                                                eventsFeedFilters.type === "meeting" && "ring-4 ring-gray-600"
+                                              )}
+                                              onClick={() => {
+                                                setEventsFeedFilters((p) => ({ ...p, type: p.type === "meeting" ? null : "meeting" }));
+                                                setEventsFeedCurrentPage(1);
+                                              }}
+                                            >
+                                              {byType.meeting}
+                                            </Badge>
+                                          </div>
+                                          <div className="text-base">
+                                            <span className="text-muted-foreground">Коммуникация: </span>
+                                            <Badge
+                                              variant="outline"
+                                              className={cn(
+                                                "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600 cursor-pointer",
+                                                eventsFeedFilters.type === "communication" && "ring-4 ring-cyan-600"
+                                              )}
+                                              onClick={() => {
+                                                setEventsFeedFilters((p) => ({ ...p, type: p.type === "communication" ? null : "communication" }));
+                                                setEventsFeedCurrentPage(1);
+                                              }}
+                                            >
+                                              {byType.communication}
+                                            </Badge>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </Card>
+                                    <Card className="p-3 flex-[0.75] min-w-[140px]">
+                                      <div className="space-y-2">
+                                        <Label className="text-base font-semibold">Период проведения</Label>
+                                        <div className="flex flex-wrap gap-3">
+                                          {yearsSorted.length > 0 ? (
+                                            yearsSorted.map((year) => {
+                                              const count = yearsMap[year] ?? 0;
+                                              const isActive = eventsFeedFilters.year === year;
+                                              return (
+                                                <div key={year} className="text-base">
+                                                  <span className="text-muted-foreground">{year}: </span>
+                                                  <Badge
+                                                    variant="outline"
+                                                    className={cn(
+                                                      "cursor-pointer bg-muted hover:bg-muted/80",
+                                                      isActive && "ring-4 ring-primary"
+                                                    )}
+                                                    onClick={() => {
+                                                      setEventsFeedFilters((p) => ({ ...p, year: p.year === year ? null : year }));
+                                                      setEventsFeedCurrentPage(1);
+                                                    }}
+                                                  >
+                                                    {count}
+                                                  </Badge>
+                                                </div>
+                                              );
+                                            })
+                                          ) : (
+                                            <span className="text-sm text-muted-foreground">Нет данных</span>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </Card>
+                                  </div>
+                                  <div className="mb-2">
+                                    <div className="text-sm text-muted-foreground">
+                                      Найдено: <span className="font-semibold text-foreground">{eventsList.length}</span>{" "}
+                                      {eventsList.length === 1 ? "мероприятие" : eventsList.length > 1 && eventsList.length < 5 ? "мероприятия" : "мероприятий"}
+                                      {eventsList.length !== allEvents.length && (
+                                        <span className="ml-1">из {allEvents.length}</span>
+                                      )}
+                                    </div>
+                                  </div>
+                                  <div className="border rounded-lg overflow-hidden">
+                                    <Table>
+                                      <TableHeader>
+                                        <TableRow className="bg-muted/50">
+                                          <TableHead className="w-10 px-2"></TableHead>
+                                          <TableHead className="w-[180px]">Линия сотрудничества</TableHead>
+                                          <TableHead className="w-[180px]">Тип мероприятия</TableHead>
+                                          <TableHead className="w-[200px]">Период проведения</TableHead>
+                                          <TableHead className="w-[140px]">Статус</TableHead>
+                                        </TableRow>
+                                      </TableHeader>
+                                      <TableBody>
+                                        {(() => {
+                                          if (eventsList.length === 0) {
+                                            return (
+                                              <TableRow>
+                                                <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                                                  Мероприятия не найдены по выбранным фильтрам
+                                                </TableCell>
+                                              </TableRow>
+                                            );
+                                          }
+                                          const startIndex = (eventsFeedCurrentPage - 1) * eventsFeedItemsPerPage;
+                                          const endIndex = startIndex + eventsFeedItemsPerPage;
+                                          const paginatedEvents = eventsList.slice(startIndex, endIndex);
+                                          return paginatedEvents.map((event) => {
+                                            const isCollapsed = collapsedEventsFeed.has(event.id);
+                                            const toggleCollapsed = () => {
+                                              setCollapsedEventsFeed((prev) => {
+                                                const next = new Set(prev);
+                                                if (next.has(event.id)) next.delete(event.id);
+                                                else next.add(event.id);
+                                                return next;
+                                              });
+                                            };
+                                            return (
+                                              <Fragment key={event.id}>
+                                                <TableRow className="align-top">
+                                                  <TableCell className="w-10 px-2 py-2 align-middle">
+                                                    <Button
+                                                      variant="ghost"
+                                                      size="icon"
+                                                      className="h-7 w-7 shrink-0"
+                                                      onClick={toggleCollapsed}
+                                                      title={isCollapsed ? "Развернуть" : "Свернуть"}
+                                                    >
+                                                      {isCollapsed ? (
+                                                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                                                      ) : (
+                                                        <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                                                      )}
+                                                    </Button>
+                                                  </TableCell>
+                                                  <TableCell className="px-4 py-2 whitespace-normal">
+                                                    {event.cooperationLine ? (
+                                                      <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(event.cooperationLine))}>
+                                                        {getCooperationLineLabel(event.cooperationLine)}
+                                                      </Badge>
+                                                    ) : (
+                                                      "—"
+                                                    )}
+                                                  </TableCell>
+                                                  <TableCell className="px-4 py-2 whitespace-normal">
+                                                    <Badge variant="outline" className={cn("text-xs", eventTypeBadgeColors[event.type])}>
+                                                      {eventTypeLabels[event.type]}
+                                                    </Badge>
+                                                  </TableCell>
+                                                  <TableCell className="px-4 py-2 whitespace-normal">
+                                                    {formatDate(event.date)} — {formatDate(event.endDate)}
+                                                  </TableCell>
+                                                  <TableCell className="px-4 py-2 whitespace-normal">
+                                                    <Badge variant="outline" className={cn("text-xs", getStatusBadgeColor(event.status))}>
+                                                      {eventStatusLabels[event.status]}
+                                                    </Badge>
+                                                  </TableCell>
+                                                </TableRow>
+                                                {!isCollapsed && (
+                                                  <TableRow className="bg-muted/30 hover:bg-muted/30">
+                                                    <TableCell colSpan={5} className="px-4 py-3 text-sm">
+                                                      <div className="space-y-2 pl-8">
+                                                        <div>
+                                                          <span className="font-medium text-muted-foreground">Комментарий: </span>
+                                                          <span className="text-foreground whitespace-pre-wrap">{event.comments || "—"}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2 flex-wrap">
+                                                          <span className="font-medium text-muted-foreground">Контактное лицо ВУЗ:</span>
+                                                          {university.universityContacts?.length > 0 ? (
+                                                            <div className="flex flex-wrap gap-x-4 gap-y-1">
+                                                              {university.universityContacts.map((contact, index) => (
+                                                                <span key={index} className="text-foreground">
+                                                                  {contact.name}
+                                                                  {contact.position ? ` (${contact.position})` : ""}
+                                                                </span>
+                                                              ))}
+                                                            </div>
+                                                          ) : university.universityContact?.name ? (
+                                                            <span className="text-foreground">
+                                                              {university.universityContact.name}
+                                                              {university.universityContact.position ? ` (${university.universityContact.position})` : ""}
+                                                            </span>
+                                                          ) : (
+                                                            <span className="text-muted-foreground">Не указано</span>
+                                                          )}
+                                                        </div>
+                                                        <div className="flex items-center gap-2 flex-wrap">
+                                                          <span className="font-medium text-muted-foreground">Ответственное лицо Банк:</span>
+                                                          {event.responsiblePerson?.length > 0 ? (
+                                                            <div className="flex items-center gap-2 flex-wrap">
+                                                              {event.responsiblePerson.map((personId, index) => {
+                                                                const person = responsiblePersons.find((p) => p.value === personId);
+                                                                return person ? (
+                                                                  <span key={index} className="text-sm font-medium">{person.label}</span>
+                                                                ) : null;
+                                                              })}
+                                                            </div>
+                                                          ) : (
+                                                            <span className="text-muted-foreground">Не указано</span>
+                                                          )}
+                                                        </div>
+                                                        <div className="border-t pt-2 mt-2 flex flex-wrap gap-x-6 gap-y-1 text-muted-foreground">
+                                                          <span>Дата добавления: {event.addedAt ? formatDate(event.addedAt) : "—"}</span>
+                                                          {event.addedBy && <span>Кто добавил: {event.addedBy}</span>}
+                                                        </div>
+                                                      </div>
+                                                    </TableCell>
+                                                  </TableRow>
+                                                )}
+                                              </Fragment>
+                                            );
+                                          });
+                                        })()}
+                                      </TableBody>
+                                    </Table>
+                                  </div>
+                                  <div className="flex items-center justify-between px-2">
+                                    <div className="flex items-center gap-2">
+                                      <Label htmlFor="events-feed-items-per-page" className="text-sm text-muted-foreground">
+                                        Показать:
+                                      </Label>
+                                      <Select
+                                        value={eventsFeedItemsPerPage.toString()}
+                                        onValueChange={(value) => {
+                                          setEventsFeedItemsPerPage(Number(value));
+                                          setEventsFeedCurrentPage(1);
+                                        }}
+                                      >
+                                        <SelectTrigger id="events-feed-items-per-page" className="w-[80px]">
+                                          <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          <SelectItem value="10">10</SelectItem>
+                                          <SelectItem value="25">25</SelectItem>
+                                          <SelectItem value="50">50</SelectItem>
+                                          <SelectItem value="100">100</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                      <span className="text-sm text-muted-foreground">из {eventsList.length}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-sm text-muted-foreground">
+                                        Страница {eventsFeedCurrentPage} из {Math.ceil(eventsList.length / eventsFeedItemsPerPage) || 1}
+                                      </span>
+                                      <div className="flex items-center gap-1">
+                                        <Button
+                                          variant="outline"
+                                          size="icon"
+                                          className="h-8 w-8"
+                                          onClick={() => setEventsFeedCurrentPage(1)}
+                                          disabled={eventsFeedCurrentPage === 1}
+                                        >
+                                          <ChevronsLeft className="h-4 w-4" />
+                                        </Button>
+                                        <Button
+                                          variant="outline"
+                                          size="icon"
+                                          className="h-8 w-8"
+                                          onClick={() => setEventsFeedCurrentPage(eventsFeedCurrentPage - 1)}
+                                          disabled={eventsFeedCurrentPage === 1}
+                                        >
+                                          <ChevronLeft className="h-4 w-4" />
+                                        </Button>
+                                        <Button
+                                          variant="outline"
+                                          size="icon"
+                                          className="h-8 w-8"
+                                          onClick={() => setEventsFeedCurrentPage(eventsFeedCurrentPage + 1)}
+                                          disabled={eventsFeedCurrentPage >= Math.ceil(eventsList.length / eventsFeedItemsPerPage)}
+                                        >
+                                          <ChevronRight className="h-4 w-4" />
+                                        </Button>
+                                        <Button
+                                          variant="outline"
+                                          size="icon"
+                                          className="h-8 w-8"
+                                          onClick={() => setEventsFeedCurrentPage(Math.ceil(eventsList.length / eventsFeedItemsPerPage) || 1)}
+                                          disabled={eventsFeedCurrentPage >= Math.ceil(eventsList.length / eventsFeedItemsPerPage)}
+                                        >
+                                          <ChevronsRight className="h-4 w-4" />
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </>
+                              ) : (
+                                <div className="border rounded-lg overflow-hidden">
+                                  <Table>
+                                    <TableHeader>
+                                      <TableRow className="bg-muted/50">
+                                        <TableHead className="w-10 px-2"></TableHead>
+                                        <TableHead className="w-[180px]">Линия сотрудничества</TableHead>
+                                        <TableHead className="w-[180px]">Тип мероприятия</TableHead>
+                                        <TableHead className="w-[200px]">Период проведения</TableHead>
+                                        <TableHead className="w-[140px]">Статус</TableHead>
+                                      </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                      <TableRow>
+                                        <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                                          Мероприятия не добавлены
+                                        </TableCell>
+                                      </TableRow>
+                                    </TableBody>
+                                  </Table>
+                                </div>
+                              );
+                            })()}
+                          </div>
+                        </TabsContent>
                         
                         {/* Таб 3: Мероприятия */}
                         <TabsContent value="events" className="space-y-4 mt-4">
@@ -6316,7 +6701,7 @@ export default function UniversitiesPage() {
                               <Button
                                 onClick={() => {
                                   setEditingEvent(null);
-                                  setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [] });
+                                  setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
                                   setIsEventDialogOpen(true);
                                 }}
                                 disabled={!selectedUniversity}
@@ -13055,7 +13440,7 @@ export default function UniversitiesPage() {
             setIsEventDialogOpen(open);
             if (!open) {
               setEditingEvent(null);
-              setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [] });
+              setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
             }
           }}>
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -13164,7 +13549,23 @@ export default function UniversitiesPage() {
                         <SelectItem value="completed">Проведено</SelectItem>
                         </SelectContent>
                       </Select>
-                    </div>
+                  </div>
+                  <div className="flex-1 space-y-2">
+                    <Label htmlFor="event-cooperation-line-dialog">Линия сотрудничества</Label>
+                    <Select
+                      value={newEvent.cooperationLine || ""}
+                      onValueChange={(value) => setNewEvent({ ...newEvent, cooperationLine: value as "drp" | "bko" | "cntr" | "" })}
+                    >
+                      <SelectTrigger id="event-cooperation-line-dialog" className="w-full">
+                        <SelectValue placeholder="ДРП, БКО или ЦНТР" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="drp">ДРП</SelectItem>
+                        <SelectItem value="bko">БКО</SelectItem>
+                        <SelectItem value="cntr">ЦНТР</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
                   <div className="space-y-2">
                   <div className="flex items-center gap-1">
@@ -13212,7 +13613,7 @@ export default function UniversitiesPage() {
                   onClick={() => {
                     setIsEventDialogOpen(false);
                     setEditingEvent(null);
-                    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [] });
+                    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
                   }}
                 >
                   Отмена
