@@ -6118,19 +6118,41 @@ export default function UniversitiesPage() {
                                 completed: "Проведено",
                               };
                               const allEvents = university.events || [];
+                              // Для каждого блока — мероприятия, отфильтрованные по двум другим критериям (чтобы блоки сужали варианты)
+                              const eventsForLineBlock = allEvents.filter((e) => {
+                                if (eventsFeedFilters.type && e.type !== eventsFeedFilters.type) return false;
+                                if (eventsFeedFilters.year != null) {
+                                  const eventYear = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
+                                  if (eventYear !== eventsFeedFilters.year) return false;
+                                }
+                                return true;
+                              });
+                              const eventsForTypeBlock = allEvents.filter((e) => {
+                                if (eventsFeedFilters.cooperationLine && e.cooperationLine !== eventsFeedFilters.cooperationLine) return false;
+                                if (eventsFeedFilters.year != null) {
+                                  const eventYear = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
+                                  if (eventYear !== eventsFeedFilters.year) return false;
+                                }
+                                return true;
+                              });
+                              const eventsForYearBlock = allEvents.filter((e) => {
+                                if (eventsFeedFilters.cooperationLine && e.cooperationLine !== eventsFeedFilters.cooperationLine) return false;
+                                if (eventsFeedFilters.type && e.type !== eventsFeedFilters.type) return false;
+                                return true;
+                              });
                               const byCooperationLine = {
-                                drp: allEvents.filter((e) => e.cooperationLine === "drp").length,
-                                bko: allEvents.filter((e) => e.cooperationLine === "bko").length,
-                                cntr: allEvents.filter((e) => e.cooperationLine === "cntr").length,
+                                drp: eventsForLineBlock.filter((e) => e.cooperationLine === "drp").length,
+                                bko: eventsForLineBlock.filter((e) => e.cooperationLine === "bko").length,
+                                cntr: eventsForLineBlock.filter((e) => e.cooperationLine === "cntr").length,
                               };
                               const byType = {
-                                careerDays: allEvents.filter((e) => e.type === "careerDays").length,
-                                expertParticipation: allEvents.filter((e) => e.type === "expertParticipation").length,
-                                caseChampionships: allEvents.filter((e) => e.type === "caseChampionships").length,
-                                meeting: allEvents.filter((e) => e.type === "meeting").length,
-                                communication: allEvents.filter((e) => e.type === "communication").length,
+                                careerDays: eventsForTypeBlock.filter((e) => e.type === "careerDays").length,
+                                expertParticipation: eventsForTypeBlock.filter((e) => e.type === "expertParticipation").length,
+                                caseChampionships: eventsForTypeBlock.filter((e) => e.type === "caseChampionships").length,
+                                meeting: eventsForTypeBlock.filter((e) => e.type === "meeting").length,
+                                communication: eventsForTypeBlock.filter((e) => e.type === "communication").length,
                               };
-                              const yearsMap = allEvents.reduce<Record<number, number>>((acc, e) => {
+                              const yearsMap = eventsForYearBlock.reduce<Record<number, number>>((acc, e) => {
                                 const y = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
                                 if (y) acc[y] = (acc[y] || 0) + 1;
                                 return acc;
@@ -6152,7 +6174,9 @@ export default function UniversitiesPage() {
                                       <div className="space-y-2">
                                         <Label className="text-base font-semibold">Линия сотрудничества</Label>
                                         <div className="flex flex-wrap gap-3">
-                                          {(["drp", "bko", "cntr"] as const).map((line) => {
+                                          {(["drp", "bko", "cntr"] as const)
+                                            .filter((line) => (byCooperationLine[line] ?? 0) > 0 || eventsFeedFilters.cooperationLine === line)
+                                            .map((line) => {
                                             const count = byCooperationLine[line] ?? 0;
                                             const isActive = eventsFeedFilters.cooperationLine === line;
                                             return (
@@ -6185,86 +6209,36 @@ export default function UniversitiesPage() {
                                       <div className="space-y-2">
                                         <Label className="text-base font-semibold">Тип мероприятия</Label>
                                         <div className="flex flex-wrap gap-3">
-                                          <div className="text-base">
-                                            <span className="text-muted-foreground">Дни карьеры: </span>
+                                          {[
+                                            { key: "careerDays" as const, label: "Дни карьеры", count: byType.careerDays, ring: "ring-blue-600" },
+                                            { key: "expertParticipation" as const, label: "Экспертное участие", count: byType.expertParticipation, ring: "ring-purple-600" },
+                                            { key: "caseChampionships" as const, label: "Кейс-чемпионат", count: byType.caseChampionships, ring: "ring-green-600" },
+                                            { key: "meeting" as const, label: "Встреча", count: byType.meeting, ring: "ring-gray-600" },
+                                            { key: "communication" as const, label: "Коммуникация", count: byType.communication, ring: "ring-cyan-600" },
+                                          ]
+                                            .filter((item) => item.count > 0 || eventsFeedFilters.type === item.key)
+                                            .map(({ key, label, count, ring }) => (
+                                          <div key={key} className="text-base">
+                                            <span className="text-muted-foreground">{label}: </span>
                                             <Badge
                                               variant="outline"
                                               className={cn(
-                                                "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600 cursor-pointer",
-                                                eventsFeedFilters.type === "careerDays" && "ring-4 ring-blue-600"
+                                                key === "careerDays" && "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600 cursor-pointer",
+                                                key === "expertParticipation" && "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600 cursor-pointer",
+                                                key === "caseChampionships" && "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600 cursor-pointer",
+                                                key === "meeting" && "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600 cursor-pointer",
+                                                key === "communication" && "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600 cursor-pointer",
+                                                eventsFeedFilters.type === key && ring
                                               )}
                                               onClick={() => {
-                                                setEventsFeedFilters((p) => ({ ...p, type: p.type === "careerDays" ? null : "careerDays" }));
+                                                setEventsFeedFilters((p) => ({ ...p, type: p.type === key ? null : key }));
                                                 setEventsFeedCurrentPage(1);
                                               }}
                                             >
-                                              {byType.careerDays}
+                                              {count}
                                             </Badge>
                                           </div>
-                                          <div className="text-base">
-                                            <span className="text-muted-foreground">Экспертное участие: </span>
-                                            <Badge
-                                              variant="outline"
-                                              className={cn(
-                                                "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600 cursor-pointer",
-                                                eventsFeedFilters.type === "expertParticipation" && "ring-4 ring-purple-600"
-                                              )}
-                                              onClick={() => {
-                                                setEventsFeedFilters((p) => ({ ...p, type: p.type === "expertParticipation" ? null : "expertParticipation" }));
-                                                setEventsFeedCurrentPage(1);
-                                              }}
-                                            >
-                                              {byType.expertParticipation}
-                                            </Badge>
-                                          </div>
-                                          <div className="text-base">
-                                            <span className="text-muted-foreground">Кейс-чемпионат: </span>
-                                            <Badge
-                                              variant="outline"
-                                              className={cn(
-                                                "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600 cursor-pointer",
-                                                eventsFeedFilters.type === "caseChampionships" && "ring-4 ring-green-600"
-                                              )}
-                                              onClick={() => {
-                                                setEventsFeedFilters((p) => ({ ...p, type: p.type === "caseChampionships" ? null : "caseChampionships" }));
-                                                setEventsFeedCurrentPage(1);
-                                              }}
-                                            >
-                                              {byType.caseChampionships}
-                                            </Badge>
-                                          </div>
-                                          <div className="text-base">
-                                            <span className="text-muted-foreground">Встреча: </span>
-                                            <Badge
-                                              variant="outline"
-                                              className={cn(
-                                                "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600 cursor-pointer",
-                                                eventsFeedFilters.type === "meeting" && "ring-4 ring-gray-600"
-                                              )}
-                                              onClick={() => {
-                                                setEventsFeedFilters((p) => ({ ...p, type: p.type === "meeting" ? null : "meeting" }));
-                                                setEventsFeedCurrentPage(1);
-                                              }}
-                                            >
-                                              {byType.meeting}
-                                            </Badge>
-                                          </div>
-                                          <div className="text-base">
-                                            <span className="text-muted-foreground">Коммуникация: </span>
-                                            <Badge
-                                              variant="outline"
-                                              className={cn(
-                                                "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600 cursor-pointer",
-                                                eventsFeedFilters.type === "communication" && "ring-4 ring-cyan-600"
-                                              )}
-                                              onClick={() => {
-                                                setEventsFeedFilters((p) => ({ ...p, type: p.type === "communication" ? null : "communication" }));
-                                                setEventsFeedCurrentPage(1);
-                                              }}
-                                            >
-                                              {byType.communication}
-                                            </Badge>
-                                          </div>
+                                            ))}
                                         </div>
                                       </div>
                                     </Card>
