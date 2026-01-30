@@ -656,36 +656,36 @@ const mockUniversities: University[] = [
       },
     ],
     events: [
-      { id: "event-hse-1", type: "careerDays", date: "2024-03-15", endDate: "2024-03-17", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Проведены дни карьеры для студентов экономического факультета. Участвовало более 150 студентов.", cooperationLine: "drp", addedAt: "2024-03-01", addedBy: "Иванова Е.С." },
-      { id: "event-hse-2", type: "expertParticipation", date: "2024-04-20", endDate: "2024-04-20", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите дипломных работ по направлению 'Финансы и кредит'.", cooperationLine: "bko", addedAt: "2024-04-05", addedBy: "Петров А.В." },
-      { id: "event-hse-3", type: "caseChampionships", date: "2024-05-10", endDate: "2024-05-12", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по банковскому делу. Победила команда студентов 3 курса.", cooperationLine: "cntr", addedAt: "2024-04-25", addedBy: "Смирнова О.И." },
-      { id: "event-hse-4", type: "careerDays", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Запланированы дни карьеры для студентов IT-направления. Ожидается участие 200+ студентов.", cooperationLine: "drp", addedAt: "2024-09-10", addedBy: "Козлов Д.П." },
-      { id: "event-hse-5", type: "expertParticipation", date: "2024-10-15", endDate: "2024-10-15", status: "planned", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на конференции по финансовым технологиям.", cooperationLine: "bko", addedAt: "2024-09-30", addedBy: "Соколов А.Н." },
-      { id: "event-hse-6", type: "caseChampionships", date: "2024-11-20", endDate: "2024-11-22", status: "planned", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Организация кейс-чемпионата по управлению рисками в банковской сфере.", cooperationLine: "cntr", addedAt: "2024-11-05", addedBy: "Волкова М.К." },
-      { id: "event-hse-7", type: "careerDays", date: "2024-12-05", endDate: "2024-12-07", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для выпускников магистратуры. Фокус на карьерные возможности в банковском секторе.", cooperationLine: "drp", addedAt: "2024-11-20", addedBy: "Новиков Р.С." },
-      { id: "event-hse-8", type: "meeting", date: "2024-01-15", endDate: "2024-01-15", status: "completed", responsiblePerson: ["person-1"], comments: "Встреча с руководством факультета по вопросам сотрудничества.", cooperationLine: "bko", addedAt: "2024-01-08", addedBy: "Морозова Т.И." },
-      { id: "event-hse-9", type: "communication", date: "2024-02-01", endDate: "2024-02-01", status: "completed", responsiblePerson: ["person-2"], comments: "Презентация программ стажировок для студентов 2 курса.", cooperationLine: "cntr", addedAt: "2024-01-22", addedBy: "Лебедева А.С." },
-      { id: "event-hse-10", type: "expertParticipation", date: "2024-02-20", endDate: "2024-02-20", status: "completed", responsiblePerson: ["person-3"], comments: "Экспертиза проектов по направлению «Финансовые технологии».", cooperationLine: "drp", addedAt: "2024-02-12", addedBy: "Федорова М.Д." },
-      { id: "event-hse-11", type: "caseChampionships", date: "2024-03-01", endDate: "2024-03-03", status: "completed", responsiblePerson: ["person-4"], comments: "Кейс-чемпионат по корпоративным финансам.", cooperationLine: "bko", addedAt: "2024-02-18", addedBy: "Иванова Е.С." },
-      { id: "event-hse-12", type: "careerDays", date: "2024-04-05", endDate: "2024-04-07", status: "completed", responsiblePerson: ["person-5"], comments: "Дни карьеры для магистрантов программы «Финансы».", cooperationLine: "cntr", addedAt: "2024-03-22", addedBy: "Петров А.В." },
-      { id: "event-hse-13", type: "meeting", date: "2024-04-18", endDate: "2024-04-18", status: "completed", responsiblePerson: ["person-6"], comments: "Совещание по плану совместных мероприятий на 2024 год.", cooperationLine: "drp", addedAt: "2024-04-08", addedBy: "Смирнова О.И." },
-      { id: "event-hse-14", type: "communication", date: "2024-05-05", endDate: "2024-05-05", status: "completed", responsiblePerson: ["person-7"], comments: "Вебинар о карьерных возможностях в банке.", cooperationLine: "bko", addedAt: "2024-04-28", addedBy: "Козлов Д.П." },
-      { id: "event-hse-15", type: "expertParticipation", date: "2024-05-22", endDate: "2024-05-22", status: "completed", responsiblePerson: ["person-1"], comments: "Участие в жюри олимпиады по экономике.", cooperationLine: "cntr", addedAt: "2024-05-12", addedBy: "Соколов А.Н." },
-      { id: "event-hse-16", type: "caseChampionships", date: "2024-06-10", endDate: "2024-06-12", status: "in_progress", responsiblePerson: ["person-2"], comments: "Кейс-чемпионат по риск-менеджменту. Регистрация открыта.", cooperationLine: "drp", addedAt: "2024-05-28", addedBy: "Волкова М.К." },
-      { id: "event-hse-17", type: "careerDays", date: "2024-07-01", endDate: "2024-07-03", status: "planned", responsiblePerson: ["person-3"], comments: "Летняя школа «Карьера в банке» для студентов.", cooperationLine: "bko", addedAt: "2024-06-18", addedBy: "Новиков Р.С." },
-      { id: "event-hse-18", type: "meeting", date: "2024-07-15", endDate: "2024-07-15", status: "planned", responsiblePerson: ["person-4"], comments: "Планирование осенних мероприятий с кафедрой банковского дела.", cooperationLine: "cntr", addedAt: "2024-07-05", addedBy: "Морозова Т.И." },
-      { id: "event-hse-19", type: "communication", date: "2024-08-20", endDate: "2024-08-20", status: "planned", responsiblePerson: ["person-5"], comments: "Онлайн-встреча с кураторами студенческих групп.", cooperationLine: "drp", addedAt: "2024-08-08", addedBy: "Лебедева А.С." },
-      { id: "event-hse-20", type: "expertParticipation", date: "2024-09-10", endDate: "2024-09-10", status: "planned", responsiblePerson: ["person-6"], comments: "Экспертиза магистерских работ по направлению БКО.", cooperationLine: "bko", addedAt: "2024-08-28", addedBy: "Федорова М.Д." },
-      { id: "event-hse-21", type: "caseChampionships", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-7"], comments: "Кейс-чемпионат по устойчивому развитию и ESG.", cooperationLine: "cntr", addedAt: "2024-09-12", addedBy: "Иванова Е.С." },
-      { id: "event-hse-22", type: "careerDays", date: "2024-10-10", endDate: "2024-10-12", status: "planned", responsiblePerson: ["person-1"], comments: "Осенние дни карьеры для бакалавров 4 курса.", cooperationLine: "drp", addedAt: "2024-09-26", addedBy: "Петров А.В." },
-      { id: "event-hse-23", type: "meeting", date: "2024-10-25", endDate: "2024-10-25", status: "planned", responsiblePerson: ["person-2"], comments: "Подведение итогов года сотрудничества.", cooperationLine: "bko", addedAt: "2024-10-14", addedBy: "Смирнова О.И." },
-      { id: "event-hse-24", type: "communication", date: "2024-11-05", endDate: "2024-11-05", status: "planned", responsiblePerson: ["person-3"], comments: "Информационная рассылка о стажировках 2025.", cooperationLine: "cntr", addedAt: "2024-10-25", addedBy: "Козлов Д.П." },
-      { id: "event-hse-25", type: "expertParticipation", date: "2024-11-18", endDate: "2024-11-18", status: "planned", responsiblePerson: ["person-4"], comments: "Участие в конференции «Банк и университет».", cooperationLine: "drp", addedAt: "2024-11-05", addedBy: "Соколов А.Н." },
-      { id: "event-hse-26", type: "caseChampionships", date: "2024-12-02", endDate: "2024-12-04", status: "planned", responsiblePerson: ["person-5"], comments: "Зимний кейс-чемпионат по цифровым продуктам.", cooperationLine: "bko", addedAt: "2024-11-20", addedBy: "Волкова М.К." },
-      { id: "event-hse-27", type: "careerDays", date: "2024-12-15", endDate: "2024-12-17", status: "planned", responsiblePerson: ["person-6"], comments: "Дни карьеры для выпускников бакалавриата.", cooperationLine: "cntr", addedAt: "2024-12-02", addedBy: "Новиков Р.С." },
-      { id: "event-hse-28", type: "meeting", date: "2025-01-20", endDate: "2025-01-20", status: "planned", responsiblePerson: ["person-7"], comments: "Стартовая встреча по плану мероприятий 2025.", cooperationLine: "drp", addedAt: "2025-01-10", addedBy: "Морозова Т.И." },
-      { id: "event-hse-29", type: "communication", date: "2025-02-10", endDate: "2025-02-10", status: "planned", responsiblePerson: ["person-1"], comments: "Презентация летних стажировок для магистрантов.", cooperationLine: "bko", addedAt: "2025-01-28", addedBy: "Лебедева А.С." },
-      { id: "event-hse-30", type: "expertParticipation", date: "2025-03-05", endDate: "2025-03-05", status: "planned", responsiblePerson: ["person-2"], comments: "Экспертная сессия по тематике ЦНТР.", cooperationLine: "cntr", addedAt: "2025-02-22", addedBy: "Федорова М.Д." },
+      { id: "event-hse-1", type: "careerDays", date: "2024-03-15", endDate: "2024-03-17", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Проведены дни карьеры для студентов экономического факультета. В мероприятии приняли участие более 150 студентов 3-4 курсов. Были организованы мастер-классы по подготовке резюме, тренинги по прохождению собеседований и презентации карьерных треков в банке. Особый интерес вызвала секция по работе с корпоративными клиентами.", cooperationLine: "drp", addedAt: "2024-03-01", addedBy: "Иванова Е.С." },
+      { id: "event-hse-2", type: "expertParticipation", date: "2024-04-20", endDate: "2024-04-20", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите дипломных работ по направлению 'Финансы и кредит'. Оценено 12 выпускных работ, из которых 4 рекомендованы к публикации. Дана обратная связь по практической применимости исследований в банковской сфере. Три студента получили приглашение на стажировку.", cooperationLine: "bko", addedAt: "2024-04-05", addedBy: "Петров А.В." },
+      { id: "event-hse-3", type: "caseChampionships", date: "2024-05-10", endDate: "2024-05-12", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по банковскому делу. В финал вышли 8 команд из 24 участвовавших. Победила команда студентов 3 курса с проектом по оптимизации процессов кредитования МСБ. Призовой фонд составил 300 000 рублей. Все финалисты получили приоритетное право на стажировку.", cooperationLine: "cntr", addedAt: "2024-04-25", addedBy: "Смирнова О.И." },
+      { id: "event-hse-4", type: "careerDays", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Запланированы дни карьеры для студентов IT-направления. Ожидается участие более 200 студентов. В программе: хакатон по разработке финтех-решений, воркшопы по машинному обучению в банкинге, нетворкинг-сессии с техническими лидерами банка. Подготовлены специальные треки для backend и frontend разработчиков.", cooperationLine: "drp", addedAt: "2024-09-10", addedBy: "Козлов Д.П." },
+      { id: "event-hse-5", type: "expertParticipation", date: "2024-10-15", endDate: "2024-10-15", status: "planned", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на международной конференции по финансовым технологиям. Запланирован доклад на тему «Трансформация банковских продуктов в эпоху AI». Ожидается участие представителей 15 университетов и 20 финансовых организаций. Будет организована панельная дискуссия с Q&A сессией.", cooperationLine: "bko", addedAt: "2024-09-30", addedBy: "Соколов А.Н." },
+      { id: "event-hse-6", type: "caseChampionships", date: "2024-11-20", endDate: "2024-11-22", status: "planned", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Организация кейс-чемпионата по управлению рисками в банковской сфере. Тематика включает кредитные, операционные и рыночные риски. Приглашены команды из 10 ведущих вузов страны. Общий призовой фонд — 500 000 рублей. Победители получат возможность пройти стажировку в департаменте риск-менеджмента.", cooperationLine: "cntr", addedAt: "2024-11-05", addedBy: "Волкова М.К." },
+      { id: "event-hse-7", type: "careerDays", date: "2024-12-05", endDate: "2024-12-07", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для выпускников магистратуры. Фокус на карьерные возможности в банковском секторе для специалистов с углублённой подготовкой. Запланированы индивидуальные консультации с HR-партнёрами, экскурсии в офисы банка, презентации лидерских программ развития. Ожидается участие 80+ магистрантов.", cooperationLine: "drp", addedAt: "2024-11-20", addedBy: "Новиков Р.С." },
+      { id: "event-hse-8", type: "meeting", date: "2024-01-15", endDate: "2024-01-15", status: "completed", responsiblePerson: ["person-1"], comments: "Встреча с руководством факультета по вопросам расширения сотрудничества. Обсуждены новые форматы взаимодействия: создание совместной магистерской программы, организация практикумов на базе банка, привлечение преподавателей в качестве консультантов. Подписан протокол о намерениях на 2024 год.", cooperationLine: "bko", addedAt: "2024-01-08", addedBy: "Морозова Т.И." },
+      { id: "event-hse-9", type: "communication", date: "2024-02-01", endDate: "2024-02-01", status: "completed", responsiblePerson: ["person-2"], comments: "Презентация программ стажировок для студентов 2 курса. Проведена в формате онлайн-вебинара с интерактивными элементами. Подключились 180 студентов. Представлены 8 направлений стажировок, условия участия, карьерные перспективы. Получено 45 заявок на участие в отборе непосредственно после мероприятия.", cooperationLine: "cntr", addedAt: "2024-01-22", addedBy: "Лебедева А.С." },
+      { id: "event-hse-10", type: "expertParticipation", date: "2024-02-20", endDate: "2024-02-20", status: "completed", responsiblePerson: ["person-3"], comments: "Экспертиза студенческих проектов по направлению «Финансовые технологии». Рассмотрено 15 проектов на различных стадиях готовности. Даны рекомендации по доработке для 8 команд. Три проекта отобраны для пилотирования в рамках акселератора банка. Выделено менторское сопровождение для перспективных команд.", cooperationLine: "drp", addedAt: "2024-02-12", addedBy: "Федорова М.Д." },
+      { id: "event-hse-11", type: "caseChampionships", date: "2024-03-01", endDate: "2024-03-03", status: "completed", responsiblePerson: ["person-4"], comments: "Кейс-чемпионат по корпоративным финансам. Участвовало 20 команд, в финал вышли 6 лучших. Кейс был посвящён оптимизации структуры капитала крупного промышленного холдинга. Победители получили денежные призы и приглашение на летнюю стажировку в инвестиционном блоке банка.", cooperationLine: "bko", addedAt: "2024-02-18", addedBy: "Иванова Е.С." },
+      { id: "event-hse-12", type: "careerDays", date: "2024-04-05", endDate: "2024-04-07", status: "completed", responsiblePerson: ["person-5"], comments: "Дни карьеры для магистрантов программы «Финансы». Трёхдневное мероприятие включало: день знакомства с корпоративной культурой, день погружения в бизнес-процессы, день карьерного планирования. Участвовало 65 магистрантов. 28 из них подали заявки на позиции junior-аналитиков.", cooperationLine: "cntr", addedAt: "2024-03-22", addedBy: "Петров А.В." },
+      { id: "event-hse-13", type: "meeting", date: "2024-04-18", endDate: "2024-04-18", status: "completed", responsiblePerson: ["person-6"], comments: "Совещание по плану совместных мероприятий на 2024 год. Утверждён календарь из 24 мероприятий. Согласованы бюджеты на кейс-чемпионаты, дни карьеры и научные конференции. Определены ответственные лица с обеих сторон. Запланированы ежеквартальные статус-встречи для контроля выполнения.", cooperationLine: "drp", addedAt: "2024-04-08", addedBy: "Смирнова О.И." },
+      { id: "event-hse-14", type: "communication", date: "2024-05-05", endDate: "2024-05-05", status: "completed", responsiblePerson: ["person-7"], comments: "Вебинар о карьерных возможностях в банке для студентов всех направлений. Спикеры — руководители ключевых подразделений банка. Охвачены темы: розничный бизнес, корпоративный блок, IT, риски, операционная деятельность. Зарегистрировалось 250 участников, средняя продолжительность просмотра — 75 минут.", cooperationLine: "bko", addedAt: "2024-04-28", addedBy: "Козлов Д.П." },
+      { id: "event-hse-15", type: "expertParticipation", date: "2024-05-22", endDate: "2024-05-22", status: "completed", responsiblePerson: ["person-1"], comments: "Участие в жюри олимпиады по экономике среди студентов. Оценивались решения кейсов по макроэкономике и финансовым рынкам. В олимпиаде приняли участие 120 студентов из 8 вузов. Вручены специальные призы от банка трём лучшим участникам с приглашением на экскурсию в головной офис.", cooperationLine: "cntr", addedAt: "2024-05-12", addedBy: "Соколов А.Н." },
+      { id: "event-hse-16", type: "caseChampionships", date: "2024-06-10", endDate: "2024-06-12", status: "in_progress", responsiblePerson: ["person-2"], comments: "Кейс-чемпионат по риск-менеджменту в активной фазе. Регистрация завершена — подано 32 заявки от команд. Кейс посвящён разработке модели оценки кредитного риска для сегмента МСБ. Полуфиналы пройдут онлайн, финал — очно в офисе банка. Призовой фонд — 400 000 рублей.", cooperationLine: "drp", addedAt: "2024-05-28", addedBy: "Волкова М.К." },
+      { id: "event-hse-17", type: "careerDays", date: "2024-07-01", endDate: "2024-07-03", status: "planned", responsiblePerson: ["person-3"], comments: "Летняя школа «Карьера в банке» для студентов 1-3 курсов. Интенсивная трёхдневная программа: лекции от топ-менеджеров, бизнес-симуляции, работа в командах над мини-проектами. Планируется участие 100 студентов. Лучшие участники получат возможность досрочного зачисления в кадровый резерв.", cooperationLine: "bko", addedAt: "2024-06-18", addedBy: "Новиков Р.С." },
+      { id: "event-hse-18", type: "meeting", date: "2024-07-15", endDate: "2024-07-15", status: "planned", responsiblePerson: ["person-4"], comments: "Планирование осенних мероприятий с кафедрой банковского дела. На повестке: согласование тем для гостевых лекций, обсуждение формата осеннего кейс-чемпионата, планирование совместной научной конференции. Участвуют заведующий кафедрой, ведущие преподаватели и представители HR-блока банка.", cooperationLine: "cntr", addedAt: "2024-07-05", addedBy: "Морозова Т.И." },
+      { id: "event-hse-19", type: "communication", date: "2024-08-20", endDate: "2024-08-20", status: "planned", responsiblePerson: ["person-5"], comments: "Онлайн-встреча с кураторами студенческих групп перед началом учебного года. Цель — информирование о программах сотрудничества банка с университетом, планах на семестр, возможностях для студентов. Кураторы получат информационные материалы для распространения среди студентов.", cooperationLine: "drp", addedAt: "2024-08-08", addedBy: "Лебедева А.С." },
+      { id: "event-hse-20", type: "expertParticipation", date: "2024-09-10", endDate: "2024-09-10", status: "planned", responsiblePerson: ["person-6"], comments: "Экспертиза магистерских работ по направлению БКО. Планируется оценка 18 работ на тему управления банковскими операциями и клиентским опытом. Эксперты дадут развёрнутую обратную связь и рекомендации по развитию исследований. Лучшие работы будут рекомендованы к публикации в отраслевых журналах.", cooperationLine: "bko", addedAt: "2024-08-28", addedBy: "Федорова М.Д." },
+      { id: "event-hse-21", type: "caseChampionships", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-7"], comments: "Кейс-чемпионат по устойчивому развитию и ESG в банковской сфере. Актуальная тематика привлекает повышенный интерес студентов. Планируется участие команд из 12 вузов. Кейс разработан совместно с ESG-подразделением банка. Призёры получат возможность стажировки в проектах устойчивого развития.", cooperationLine: "cntr", addedAt: "2024-09-12", addedBy: "Иванова Е.С." },
+      { id: "event-hse-22", type: "careerDays", date: "2024-10-10", endDate: "2024-10-12", status: "planned", responsiblePerson: ["person-1"], comments: "Осенние дни карьеры для бакалавров 4 курса — целевой аудитории для программы Graduate Recruitment. Программа включает: ярмарку вакансий, speed-dating с руководителями подразделений, воркшопы по soft skills. Ожидается участие 180+ студентов. Цель — закрыть 40 позиций молодых специалистов.", cooperationLine: "drp", addedAt: "2024-09-26", addedBy: "Петров А.В." },
+      { id: "event-hse-23", type: "meeting", date: "2024-10-25", endDate: "2024-10-25", status: "planned", responsiblePerson: ["person-2"], comments: "Подведение итогов года сотрудничества с руководством факультета. Будут представлены метрики эффективности: количество проведённых мероприятий, охват студентов, конверсия в стажёры и сотрудники. Обсуждение планов на 2025 год и новых форматов сотрудничества.", cooperationLine: "bko", addedAt: "2024-10-14", addedBy: "Смирнова О.И." },
+      { id: "event-hse-24", type: "communication", date: "2024-11-05", endDate: "2024-11-05", status: "planned", responsiblePerson: ["person-3"], comments: "Информационная рассылка о программах стажировок 2025 года. Охват — все студенты 2-4 курсов профильных направлений (около 1500 человек). В рассылке: описание программ, сроки подачи заявок, истории успеха прошлых стажёров. Запланирована серия reminder-писем.", cooperationLine: "cntr", addedAt: "2024-10-25", addedBy: "Козлов Д.П." },
+      { id: "event-hse-25", type: "expertParticipation", date: "2024-11-18", endDate: "2024-11-18", status: "planned", responsiblePerson: ["person-4"], comments: "Участие в межвузовской конференции «Банк и университет: модели эффективного партнёрства». Запланирован доклад о лучших практиках сотрудничества и совместной подготовки кадров. Ожидается участие представителей 25 вузов и 15 банков. Хорошая площадка для обмена опытом.", cooperationLine: "drp", addedAt: "2024-11-05", addedBy: "Соколов А.Н." },
+      { id: "event-hse-26", type: "caseChampionships", date: "2024-12-02", endDate: "2024-12-04", status: "planned", responsiblePerson: ["person-5"], comments: "Зимний кейс-чемпионат по цифровым продуктам и инновациям в банкинге. Кейс разработан продуктовыми командами банка на основе реальных бизнес-задач. Участники предложат решения по улучшению мобильного приложения и внедрению новых цифровых сервисов. Призовой фонд — 350 000 рублей.", cooperationLine: "bko", addedAt: "2024-11-20", addedBy: "Волкова М.К." },
+      { id: "event-hse-27", type: "careerDays", date: "2024-12-15", endDate: "2024-12-17", status: "planned", responsiblePerson: ["person-6"], comments: "Дни карьеры для выпускников бакалавриата — завершающее крупное мероприятие года. Программа адаптирована под студентов, заканчивающих обучение зимой. Особый фокус на программы management trainee и позиции с быстрым карьерным ростом. Планируется участие 120 студентов.", cooperationLine: "cntr", addedAt: "2024-12-02", addedBy: "Новиков Р.С." },
+      { id: "event-hse-28", type: "meeting", date: "2025-01-20", endDate: "2025-01-20", status: "planned", responsiblePerson: ["person-7"], comments: "Стартовая встреча по плану мероприятий 2025 года. Презентация стратегии работы с вузами, утверждение календаря мероприятий, распределение бюджетов и ответственных. Планируется расширить сотрудничество — добавить 3 новых формата мероприятий и увеличить охват студентов на 30%.", cooperationLine: "drp", addedAt: "2025-01-10", addedBy: "Морозова Т.И." },
+      { id: "event-hse-29", type: "communication", date: "2025-02-10", endDate: "2025-02-10", status: "planned", responsiblePerson: ["person-1"], comments: "Презентация летних стажировок для магистрантов первого года обучения. Онлайн-формат с возможностью задать вопросы напрямую HR-специалистам и бывшим стажёрам. Представлены 12 направлений стажировок с описанием задач, команд и карьерных перспектив. Ожидается 150+ участников.", cooperationLine: "bko", addedAt: "2025-01-28", addedBy: "Лебедева А.С." },
+      { id: "event-hse-30", type: "expertParticipation", date: "2025-03-05", endDate: "2025-03-05", status: "planned", responsiblePerson: ["person-2"], comments: "Экспертная сессия по тематике ЦНТР — центров научно-технологического развития. Обсуждение перспективных направлений сотрудничества: совместные R&D проекты, создание лабораторий, привлечение студентов к исследовательской работе. Участвуют представители научного блока университета и инновационного подразделения банка.", cooperationLine: "cntr", addedAt: "2025-02-22", addedBy: "Федорова М.Д." },
     ],
     careerDays: true,
     expertParticipation: true,
@@ -6166,6 +6166,11 @@ export default function UniversitiesPage() {
                                   if (eventYear !== eventsFeedFilters.year) return false;
                                 }
                                 return true;
+                              }).sort((a, b) => {
+                                // Сортировка по дате: новые сверху
+                                const dateA = a.date ? new Date(a.date).getTime() : 0;
+                                const dateB = b.date ? new Date(b.date).getTime() : 0;
+                                return dateB - dateA;
                               });
                               return allEvents.length > 0 ? (
                                 <>
@@ -6285,34 +6290,39 @@ export default function UniversitiesPage() {
                                       )}
                                     </div>
                                   </div>
-                                  <div className="border rounded-lg overflow-hidden">
-                                    <Table>
-                                      <TableHeader>
-                                        <TableRow className="bg-muted/50">
-                                          <TableHead className="w-10 px-2"></TableHead>
-                                          <TableHead className="w-[180px]">Линия сотрудничества</TableHead>
-                                          <TableHead className="w-[180px]">Тип мероприятия</TableHead>
-                                          <TableHead className="w-[200px]">Период проведения</TableHead>
-                                          <TableHead className="w-[140px]">Статус</TableHead>
-                                        </TableRow>
-                                      </TableHeader>
-                                      <TableBody>
-                                        {(() => {
-                                          if (eventsList.length === 0) {
-                                            return (
-                                              <TableRow>
-                                                <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
-                                                  Мероприятия не найдены по выбранным фильтрам
-                                                </TableCell>
-                                              </TableRow>
-                                            );
-                                          }
-                                          const startIndex = (eventsFeedCurrentPage - 1) * eventsFeedItemsPerPage;
-                                          const endIndex = startIndex + eventsFeedItemsPerPage;
-                                          const paginatedEvents = eventsList.slice(startIndex, endIndex);
-                                          return paginatedEvents.map((event) => {
-                                            const isCollapsed = collapsedEventsFeed.has(event.id);
-                                            const toggleCollapsed = () => {
+                                  {(() => {
+                                    if (eventsList.length === 0) {
+                                      return (
+                                        <Card className="p-6">
+                                          <p className="text-center text-muted-foreground">
+                                            Мероприятия не найдены по выбранным фильтрам
+                                          </p>
+                                        </Card>
+                                      );
+                                    }
+                                    const startIndex = (eventsFeedCurrentPage - 1) * eventsFeedItemsPerPage;
+                                    const endIndex = startIndex + eventsFeedItemsPerPage;
+                                    const paginatedEvents = eventsList.slice(startIndex, endIndex);
+                                    
+                                    // Цвет маркера по линии сотрудничества (соответствует цветам баджей)
+                                    const getMarkerColor = (line?: "drp" | "bko" | "cntr") => {
+                                      switch (line) {
+                                        case "drp": return "bg-blue-500";
+                                        case "bko": return "bg-purple-500";
+                                        case "cntr": return "bg-cyan-500";
+                                        default: return "bg-gray-400";
+                                      }
+                                    };
+                                    
+                                    return (
+                                      <div className="relative">
+                                        {/* Вертикальная линия таймлайна */}
+                                        <div className="absolute left-[70px] top-0 bottom-0 w-px bg-border" />
+                                        
+                                        <div className="space-y-0">
+                                          {paginatedEvents.map((event, index) => {
+                                            const isExpanded = !collapsedEventsFeed.has(event.id);
+                                            const toggleExpanded = () => {
                                               setCollapsedEventsFeed((prev) => {
                                                 const next = new Set(prev);
                                                 if (next.has(event.id)) next.delete(event.id);
@@ -6320,105 +6330,145 @@ export default function UniversitiesPage() {
                                                 return next;
                                               });
                                             };
+                                            const isLast = index === paginatedEvents.length - 1;
+                                            
                                             return (
-                                              <Fragment key={event.id}>
-                                                <TableRow className="align-top">
-                                                  <TableCell className="w-10 px-2 py-2 align-middle">
-                                                    <Button
-                                                      variant="ghost"
-                                                      size="icon"
-                                                      className="h-7 w-7 shrink-0"
-                                                      onClick={toggleCollapsed}
-                                                      title={isCollapsed ? "Развернуть" : "Свернуть"}
-                                                    >
-                                                      {isCollapsed ? (
-                                                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                                                      ) : (
-                                                        <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                                                      )}
-                                                    </Button>
-                                                  </TableCell>
-                                                  <TableCell className="px-4 py-2 whitespace-normal">
-                                                    {event.cooperationLine ? (
-                                                      <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(event.cooperationLine))}>
-                                                        {getCooperationLineLabel(event.cooperationLine)}
-                                                      </Badge>
-                                                    ) : (
-                                                      "—"
+                                              <div key={event.id} className="relative flex gap-3">
+                                                {/* Левая колонка: дата */}
+                                                <div className="w-[60px] shrink-0 text-right pt-3">
+                                                  <div className="text-sm font-semibold text-foreground">
+                                                    {formatDate(event.date).split(".").slice(0, 2).join(".")}
+                                                  </div>
+                                                  <div className="text-sm text-muted-foreground">
+                                                    {event.date?.slice(0, 4)}
+                                                  </div>
+                                                </div>
+                                                
+                                                {/* Маркер на линии */}
+                                                <div className="relative flex flex-col items-center">
+                                                  <div className={cn(
+                                                    "w-4 h-4 rounded-full border-2 border-background z-10 mt-3",
+                                                    getMarkerColor(event.cooperationLine)
+                                                  )} />
+                                                  {!isLast && (
+                                                    <div className="flex-1 w-px bg-border" />
+                                                  )}
+                                                </div>
+                                                
+                                                {/* Карточка события */}
+                                                <div className={cn("flex-1 pb-4", isLast && "pb-0")}>
+                                                  <Card
+                                                    className={cn(
+                                                      "p-3 cursor-pointer transition-all hover:shadow-sm hover:border-primary/30",
+                                                      isExpanded && "border-primary/40"
                                                     )}
-                                                  </TableCell>
-                                                  <TableCell className="px-4 py-2 whitespace-normal">
-                                                    <Badge variant="outline" className={cn("text-xs", eventTypeBadgeColors[event.type])}>
-                                                      {eventTypeLabels[event.type]}
-                                                    </Badge>
-                                                  </TableCell>
-                                                  <TableCell className="px-4 py-2 whitespace-normal">
-                                                    {formatDate(event.date)} — {formatDate(event.endDate)}
-                                                  </TableCell>
-                                                  <TableCell className="px-4 py-2 whitespace-normal">
-                                                    <Badge variant="outline" className={cn("text-xs", getStatusBadgeColor(event.status))}>
-                                                      {eventStatusLabels[event.status]}
-                                                    </Badge>
-                                                  </TableCell>
-                                                </TableRow>
-                                                {!isCollapsed && (
-                                                  <TableRow className="bg-muted/30 hover:bg-muted/30">
-                                                    <TableCell colSpan={5} className="px-4 py-3 text-sm">
-                                                      <div className="space-y-2 pl-8">
-                                                        <div>
-                                                          <span className="font-medium text-muted-foreground">Комментарий: </span>
-                                                          <span className="text-foreground whitespace-pre-wrap">{event.comments || "—"}</span>
-                                                        </div>
-                                                        <div className="flex items-center gap-2 flex-wrap">
-                                                          <span className="font-medium text-muted-foreground">Контактное лицо ВУЗ:</span>
-                                                          {university.universityContacts?.length > 0 ? (
-                                                            <div className="flex flex-wrap gap-x-4 gap-y-1">
-                                                              {university.universityContacts.map((contact, index) => (
-                                                                <span key={index} className="text-foreground">
-                                                                  {contact.name}
-                                                                  {contact.position ? ` (${contact.position})` : ""}
-                                                                </span>
-                                                              ))}
-                                                            </div>
-                                                          ) : university.universityContact?.name ? (
-                                                            <span className="text-foreground">
-                                                              {university.universityContact.name}
-                                                              {university.universityContact.position ? ` (${university.universityContact.position})` : ""}
-                                                            </span>
-                                                          ) : (
-                                                            <span className="text-muted-foreground">Не указано</span>
+                                                    onClick={toggleExpanded}
+                                                  >
+                                                    <div className="space-y-2">
+                                                      {/* Заголовок: баджи в одну строку */}
+                                                      <div className="flex items-center justify-between gap-2 flex-wrap">
+                                                        <div className="flex items-center gap-1.5">
+                                                          {event.cooperationLine && (
+                                                            <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(event.cooperationLine))}>
+                                                              {getCooperationLineLabel(event.cooperationLine)}
+                                                            </Badge>
                                                           )}
+                                                          <Badge variant="outline" className={cn("text-xs", eventTypeBadgeColors[event.type])}>
+                                                            {eventTypeLabels[event.type]}
+                                                          </Badge>
+                                                          <span className="text-xs text-muted-foreground">
+                                                            {formatDate(event.date)} — {formatDate(event.endDate)}
+                                                          </span>
                                                         </div>
-                                                        <div className="flex items-center gap-2 flex-wrap">
-                                                          <span className="font-medium text-muted-foreground">Ответственное лицо Банк:</span>
-                                                          {event.responsiblePerson?.length > 0 ? (
-                                                            <div className="flex items-center gap-2 flex-wrap">
-                                                              {event.responsiblePerson.map((personId, index) => {
-                                                                const person = responsiblePersons.find((p) => p.value === personId);
-                                                                return person ? (
-                                                                  <span key={index} className="text-sm font-medium">{person.label}</span>
-                                                                ) : null;
-                                                              })}
-                                                            </div>
+                                                        <div className="flex items-center gap-1.5">
+                                                          <Badge variant="outline" className={cn("text-xs", getStatusBadgeColor(event.status))}>
+                                                            {eventStatusLabels[event.status]}
+                                                          </Badge>
+                                                          {isExpanded ? (
+                                                            <ChevronDown className="h-4 w-4 text-muted-foreground" />
                                                           ) : (
-                                                            <span className="text-muted-foreground">Не указано</span>
+                                                            <ChevronRight className="h-4 w-4 text-muted-foreground" />
                                                           )}
-                                                        </div>
-                                                        <div className="border-t pt-2 mt-2 flex flex-wrap gap-x-6 gap-y-1 text-muted-foreground">
-                                                          <span>Дата добавления: {event.addedAt ? formatDate(event.addedAt) : "—"}</span>
-                                                          {event.addedBy && <span>Кто добавил: {event.addedBy}</span>}
                                                         </div>
                                                       </div>
-                                                    </TableCell>
-                                                  </TableRow>
-                                                )}
-                                              </Fragment>
+
+                                                      {/* Комментарий */}
+                                                      {event.comments && (
+                                                        <p className={cn(
+                                                          "text-sm leading-relaxed",
+                                                          !isExpanded && "line-clamp-1 text-muted-foreground",
+                                                          isExpanded && "text-foreground"
+                                                        )}>
+                                                          {event.comments}
+                                                        </p>
+                                                      )}
+
+                                                      {/* Развёрнутая информация */}
+                                                      {isExpanded && (
+                                                        <div className="pt-2.5 mt-2 border-t space-y-2.5">
+                                                          {/* Контактное лицо ВУЗ */}
+                                                          <div className="flex gap-2 text-sm">
+                                                            <Building2 className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                                                            <div>
+                                                              <span className="text-muted-foreground">ВУЗ: </span>
+                                                              {university.universityContacts?.length > 0 ? (
+                                                                university.universityContacts.map((contact, idx) => (
+                                                                  <span key={idx}>
+                                                                    {idx > 0 && ", "}
+                                                                    <span className="font-medium">{contact.name}</span>
+                                                                    {contact.position && <span className="text-muted-foreground"> ({contact.position})</span>}
+                                                                  </span>
+                                                                ))
+                                                              ) : university.universityContact?.name ? (
+                                                                <span>
+                                                                  <span className="font-medium">{university.universityContact.name}</span>
+                                                                  {university.universityContact.position && <span className="text-muted-foreground"> ({university.universityContact.position})</span>}
+                                                                </span>
+                                                              ) : (
+                                                                <span className="text-muted-foreground">—</span>
+                                                              )}
+                                                            </div>
+                                                          </div>
+
+                                                          {/* Ответственное лицо Банк */}
+                                                          <div className="flex gap-2 text-sm">
+                                                            <UserCheck className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                                                            <div>
+                                                              <span className="text-muted-foreground">Банк: </span>
+                                                              {event.responsiblePerson?.length > 0 ? (
+                                                                event.responsiblePerson.map((personId, idx) => {
+                                                                  const person = responsiblePersons.find((p) => p.value === personId);
+                                                                  return person ? (
+                                                                    <span key={idx}>
+                                                                      {idx > 0 && ", "}
+                                                                      <span className="font-medium">{person.label}</span>
+                                                                    </span>
+                                                                  ) : null;
+                                                                })
+                                                              ) : (
+                                                                <span className="text-muted-foreground">—</span>
+                                                              )}
+                                                            </div>
+                                                          </div>
+
+                                                          {/* Метаданные */}
+                                                          <div className="flex items-center justify-end gap-2 pt-2 border-t text-xs text-muted-foreground">
+                                                            <Clock className="h-3.5 w-3.5" />
+                                                            <span>{event.addedAt ? formatDate(event.addedAt) : "—"}</span>
+                                                            {event.addedBy && <span>• {event.addedBy}</span>}
+                                                          </div>
+                                                        </div>
+                                                      )}
+                                                    </div>
+                                                  </Card>
+                                                </div>
+                                              </div>
                                             );
-                                          });
-                                        })()}
-                                      </TableBody>
-                                    </Table>
-                                  </div>
+                                          })}
+                                        </div>
+                                      </div>
+                                    );
+                                  })()}
                                   <div className="flex items-center justify-between px-2">
                                     <div className="flex items-center gap-2">
                                       <Label htmlFor="events-feed-items-per-page" className="text-sm text-muted-foreground">
@@ -6489,26 +6539,11 @@ export default function UniversitiesPage() {
                                   </div>
                                 </>
                               ) : (
-                                <div className="border rounded-lg overflow-hidden">
-                                  <Table>
-                                    <TableHeader>
-                                      <TableRow className="bg-muted/50">
-                                        <TableHead className="w-10 px-2"></TableHead>
-                                        <TableHead className="w-[180px]">Линия сотрудничества</TableHead>
-                                        <TableHead className="w-[180px]">Тип мероприятия</TableHead>
-                                        <TableHead className="w-[200px]">Период проведения</TableHead>
-                                        <TableHead className="w-[140px]">Статус</TableHead>
-                                      </TableRow>
-                                    </TableHeader>
-                                    <TableBody>
-                                      <TableRow>
-                                        <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
-                                          Мероприятия не добавлены
-                                        </TableCell>
-                                      </TableRow>
-                                    </TableBody>
-                                  </Table>
-                                </div>
+                                <Card className="p-6">
+                                  <p className="text-center text-muted-foreground">
+                                    Мероприятия не добавлены
+                                  </p>
+                                </Card>
                               );
                             })()}
                           </div>
