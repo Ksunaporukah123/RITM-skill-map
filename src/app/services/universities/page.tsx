@@ -255,7 +255,8 @@ const mockUniversities: University[] = [
         date: "2020-03-15",
         period: { start: "2020-03-15", end: "2025-03-14" },
         asddLink: "https://asdd.example.com/contract/2020-001",
-        contractBranch: "Головной офис"
+        contractBranch: "Головной офис",
+        cooperationLine: "drp"
       },
       { 
         id: "cont-2", 
@@ -266,12 +267,13 @@ const mockUniversities: University[] = [
         date: "2021-06-10",
         period: { start: "2021-06-10", end: "2026-06-09" },
         asddLink: "https://asdd.example.com/contract/2021-045",
-        contractBranch: "Московский филиал"
+        contractBranch: "Московский филиал",
+        cooperationLine: "bko"
       },
     ],
     events: [
-      { id: "event-mgu-1", type: "careerDays", date: "2024-02-10", endDate: "2024-02-12", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов факультета вычислительной математики и кибернетики.", cooperationLine: "drp", addedAt: "2024-01-25", addedBy: "Иванова Е.С." },
-      { id: "event-mgu-2", type: "expertParticipation", date: "2024-06-15", endDate: "2024-06-15", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите магистерских диссертаций.", cooperationLine: "bko", addedAt: "2024-06-01", addedBy: "Петров А.В." },
+      { id: "event-mgu-1", type: "careerDays", date: "2024-02-10", endDate: "2024-02-12", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов факультета вычислительной математики и кибернетики.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-01-25", addedBy: "Иванова Е.С." },
+      { id: "event-mgu-2", type: "expertParticipation", date: "2024-06-15", endDate: "2024-06-15", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите магистерских диссертаций.", cooperationLine: "bko", branch: "Московский филиал", addedAt: "2024-06-01", addedBy: "Петров А.В." },
     ],
     careerDays: true,
     expertParticipation: true,
@@ -381,7 +383,8 @@ const mockUniversities: University[] = [
         date: "2019-09-01",
         period: { start: "2019-09-01", end: "2024-08-31" },
         asddLink: "https://asdd.example.com/contract/2019-078",
-        contractBranch: "Санкт-Петербургский филиал"
+        contractBranch: "Санкт-Петербургский филиал",
+        cooperationLine: "bko"
       },
       { 
         id: "cont-4", 
@@ -391,12 +394,13 @@ const mockUniversities: University[] = [
         number: "Д-2022-012",
         date: "2022-02-20",
         period: { start: "2022-02-20", end: "2027-02-19" },
-        contractBranch: "Головной офис"
+        contractBranch: "Головной офис",
+        cooperationLine: "cntr"
       },
     ],
     events: [
-      { id: "event-spbgu-1", type: "careerDays", date: "2024-03-20", endDate: "2024-03-22", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов экономического факультета СПбГУ.", cooperationLine: "bko", addedAt: "2024-03-05", addedBy: "Смирнова О.И." },
-      { id: "event-spbgu-2", type: "caseChampionships", date: "2024-05-25", endDate: "2024-05-27", status: "completed", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по финансовому моделированию.", cooperationLine: "cntr", addedAt: "2024-05-10", addedBy: "Козлов Д.П." },
+      { id: "event-spbgu-1", type: "careerDays", date: "2024-03-20", endDate: "2024-03-22", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов экономического факультета СПбГУ.", cooperationLine: "bko", branch: "Санкт-Петербургский филиал", addedAt: "2024-03-05", addedBy: "Смирнова О.И." },
+      { id: "event-spbgu-2", type: "caseChampionships", date: "2024-05-25", endDate: "2024-05-27", status: "completed", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по финансовому моделированию.", cooperationLine: "cntr", branch: "Головной офис", addedAt: "2024-05-10", addedBy: "Козлов Д.П." },
     ],
     careerDays: true,
     expertParticipation: false,
@@ -460,7 +464,8 @@ const mockUniversities: University[] = [
         date: "2021-04-12",
         period: { start: "2021-04-12", end: "2026-04-11" },
         asddLink: "https://asdd.example.com/contract/2021-033",
-        contractBranch: "Московский филиал"
+        contractBranch: "Московский филиал",
+        cooperationLine: "drp"
       },
       { 
         id: "cont-6", 
@@ -470,13 +475,14 @@ const mockUniversities: University[] = [
         number: "Д-2023-089",
         date: "2023-08-05",
         period: { start: "2023-08-05", end: "2028-08-04" },
-        contractBranch: "Головной офис"
+        contractBranch: "Головной офис",
+        cooperationLine: "cntr"
       },
     ],
     events: [
-      { id: "event-mfti-1", type: "expertParticipation", date: "2024-04-05", endDate: "2024-04-05", status: "completed", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на конференции по машинному обучению.", cooperationLine: "drp", addedAt: "2024-03-20", addedBy: "Соколов А.Н." },
-      { id: "event-mfti-2", type: "caseChampionships", date: "2024-06-01", endDate: "2024-06-03", status: "completed", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по разработке финансовых алгоритмов.", cooperationLine: "bko", addedAt: "2024-05-15", addedBy: "Волкова М.К." },
-      { id: "event-mfti-3", type: "expertParticipation", date: "2024-11-10", endDate: "2024-11-10", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на защите дипломных проектов.", cooperationLine: "cntr", addedAt: "2024-10-28", addedBy: "Новиков Р.С." },
+      { id: "event-mfti-1", type: "expertParticipation", date: "2024-04-05", endDate: "2024-04-05", status: "completed", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на конференции по машинному обучению.", cooperationLine: "drp", branch: "Московский филиал", addedAt: "2024-03-20", addedBy: "Соколов А.Н." },
+      { id: "event-mfti-2", type: "caseChampionships", date: "2024-06-01", endDate: "2024-06-03", status: "completed", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по разработке финансовых алгоритмов.", cooperationLine: "bko", branch: "Головной офис", addedAt: "2024-05-15", addedBy: "Волкова М.К." },
+      { id: "event-mfti-3", type: "expertParticipation", date: "2024-11-10", endDate: "2024-11-10", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на защите дипломных проектов.", cooperationLine: "cntr", branch: "Центральный офис", addedAt: "2024-10-28", addedBy: "Новиков Р.С." },
     ],
     careerDays: false,
     expertParticipation: true,
@@ -582,7 +588,8 @@ const mockUniversities: University[] = [
         date: "2018-11-20",
         period: { start: "2018-11-20", end: "2023-11-19" },
         asddLink: "https://asdd.example.com/contract/2018-056",
-        contractBranch: "Головной офис"
+        contractBranch: "Головной офис",
+        cooperationLine: "drp"
       },
       { 
         id: "cont-8", 
@@ -591,7 +598,8 @@ const mockUniversities: University[] = [
         number: "Д-2020-102",
         date: "2020-05-18",
         period: { start: "2020-05-18", end: "2025-05-17" },
-        contractBranch: "Московский филиал"
+        contractBranch: "Московский филиал",
+        cooperationLine: "bko"
       },
       { 
         id: "cont-9", 
@@ -601,7 +609,8 @@ const mockUniversities: University[] = [
         date: "2022-07-22",
         period: { start: "2022-07-22", end: "2027-07-21" },
         asddLink: "https://asdd.example.com/contract/2022-067",
-        contractBranch: "Головной офис"
+        contractBranch: "Головной офис",
+        cooperationLine: "drp"
       },
       { 
         id: "cont-hse-1", 
@@ -612,7 +621,8 @@ const mockUniversities: University[] = [
         period: { start: "2023-03-10", end: "2028-03-09" },
         asddLink: "https://asdd.example.com/contract/2023-145",
         contractBranch: "Московский филиал",
-        contractFile: "contract-hse-bank-department-2023.pdf"
+        contractFile: "contract-hse-bank-department-2023.pdf",
+        cooperationLine: "cntr"
       },
       { 
         id: "cont-hse-2", 
@@ -623,7 +633,8 @@ const mockUniversities: University[] = [
         period: { start: "2024-01-15", end: "2029-01-14" },
         asddLink: "https://asdd.example.com/contract/2024-089",
         contractBranch: "Центральный офис",
-        contractFile: "contract-hse-cooperation-2024.pdf"
+        contractFile: "contract-hse-cooperation-2024.pdf",
+        cooperationLine: "bko"
       },
       { 
         id: "cont-hse-3", 
@@ -632,7 +643,8 @@ const mockUniversities: University[] = [
         number: "Д-2023-278",
         date: "2023-09-05",
         period: { start: "2023-09-05", end: "2028-09-04" },
-        contractBranch: "Головной офис"
+        contractBranch: "Головной офис",
+        cooperationLine: "drp"
       },
       { 
         id: "cont-hse-4", 
@@ -643,7 +655,8 @@ const mockUniversities: University[] = [
         period: { start: "2024-06-01", end: "2029-05-31" },
         asddLink: "https://asdd.example.com/contract/2024-156",
         contractBranch: "Московский филиал",
-        contractFile: "contract-hse-internship-2024.pdf"
+        contractFile: "contract-hse-internship-2024.pdf",
+        cooperationLine: "cntr"
       },
       { 
         id: "cont-hse-5", 
@@ -652,40 +665,41 @@ const mockUniversities: University[] = [
         number: "Д-2022-334",
         date: "2022-12-20",
         period: { start: "2022-12-20", end: "2027-12-19" },
-        contractBranch: "Головной офис"
+        contractBranch: "Головной офис",
+        cooperationLine: "bko"
       },
     ],
     events: [
-      { id: "event-hse-1", type: "careerDays", date: "2024-03-15", endDate: "2024-03-17", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Проведены дни карьеры для студентов экономического факультета. В мероприятии приняли участие более 150 студентов 3-4 курсов. Были организованы мастер-классы по подготовке резюме, тренинги по прохождению собеседований и презентации карьерных треков в банке. Особый интерес вызвала секция по работе с корпоративными клиентами.", cooperationLine: "drp", addedAt: "2024-03-01", addedBy: "Иванова Е.С." },
-      { id: "event-hse-2", type: "expertParticipation", date: "2024-04-20", endDate: "2024-04-20", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите дипломных работ по направлению 'Финансы и кредит'. Оценено 12 выпускных работ, из которых 4 рекомендованы к публикации. Дана обратная связь по практической применимости исследований в банковской сфере. Три студента получили приглашение на стажировку.", cooperationLine: "bko", addedAt: "2024-04-05", addedBy: "Петров А.В." },
-      { id: "event-hse-3", type: "caseChampionships", date: "2024-05-10", endDate: "2024-05-12", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по банковскому делу. В финал вышли 8 команд из 24 участвовавших. Победила команда студентов 3 курса с проектом по оптимизации процессов кредитования МСБ. Призовой фонд составил 300 000 рублей. Все финалисты получили приоритетное право на стажировку.", cooperationLine: "cntr", addedAt: "2024-04-25", addedBy: "Смирнова О.И." },
-      { id: "event-hse-4", type: "careerDays", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Запланированы дни карьеры для студентов IT-направления. Ожидается участие более 200 студентов. В программе: хакатон по разработке финтех-решений, воркшопы по машинному обучению в банкинге, нетворкинг-сессии с техническими лидерами банка. Подготовлены специальные треки для backend и frontend разработчиков.", cooperationLine: "drp", addedAt: "2024-09-10", addedBy: "Козлов Д.П." },
-      { id: "event-hse-5", type: "expertParticipation", date: "2024-10-15", endDate: "2024-10-15", status: "planned", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на международной конференции по финансовым технологиям. Запланирован доклад на тему «Трансформация банковских продуктов в эпоху AI». Ожидается участие представителей 15 университетов и 20 финансовых организаций. Будет организована панельная дискуссия с Q&A сессией.", cooperationLine: "bko", addedAt: "2024-09-30", addedBy: "Соколов А.Н." },
-      { id: "event-hse-6", type: "caseChampionships", date: "2024-11-20", endDate: "2024-11-22", status: "planned", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Организация кейс-чемпионата по управлению рисками в банковской сфере. Тематика включает кредитные, операционные и рыночные риски. Приглашены команды из 10 ведущих вузов страны. Общий призовой фонд — 500 000 рублей. Победители получат возможность пройти стажировку в департаменте риск-менеджмента.", cooperationLine: "cntr", addedAt: "2024-11-05", addedBy: "Волкова М.К." },
-      { id: "event-hse-7", type: "careerDays", date: "2024-12-05", endDate: "2024-12-07", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для выпускников магистратуры. Фокус на карьерные возможности в банковском секторе для специалистов с углублённой подготовкой. Запланированы индивидуальные консультации с HR-партнёрами, экскурсии в офисы банка, презентации лидерских программ развития. Ожидается участие 80+ магистрантов.", cooperationLine: "drp", addedAt: "2024-11-20", addedBy: "Новиков Р.С." },
-      { id: "event-hse-8", type: "meeting", date: "2024-01-15", endDate: "2024-01-15", status: "completed", responsiblePerson: ["person-1"], comments: "Встреча с руководством факультета по вопросам расширения сотрудничества. Обсуждены новые форматы взаимодействия: создание совместной магистерской программы, организация практикумов на базе банка, привлечение преподавателей в качестве консультантов. Подписан протокол о намерениях на 2024 год.", cooperationLine: "bko", addedAt: "2024-01-08", addedBy: "Морозова Т.И." },
-      { id: "event-hse-9", type: "communication", date: "2024-02-01", endDate: "2024-02-01", status: "completed", responsiblePerson: ["person-2"], comments: "Презентация программ стажировок для студентов 2 курса. Проведена в формате онлайн-вебинара с интерактивными элементами. Подключились 180 студентов. Представлены 8 направлений стажировок, условия участия, карьерные перспективы. Получено 45 заявок на участие в отборе непосредственно после мероприятия.", cooperationLine: "cntr", addedAt: "2024-01-22", addedBy: "Лебедева А.С." },
-      { id: "event-hse-10", type: "expertParticipation", date: "2024-02-20", endDate: "2024-02-20", status: "completed", responsiblePerson: ["person-3"], comments: "Экспертиза студенческих проектов по направлению «Финансовые технологии». Рассмотрено 15 проектов на различных стадиях готовности. Даны рекомендации по доработке для 8 команд. Три проекта отобраны для пилотирования в рамках акселератора банка. Выделено менторское сопровождение для перспективных команд.", cooperationLine: "drp", addedAt: "2024-02-12", addedBy: "Федорова М.Д." },
-      { id: "event-hse-11", type: "caseChampionships", date: "2024-03-01", endDate: "2024-03-03", status: "completed", responsiblePerson: ["person-4"], comments: "Кейс-чемпионат по корпоративным финансам. Участвовало 20 команд, в финал вышли 6 лучших. Кейс был посвящён оптимизации структуры капитала крупного промышленного холдинга. Победители получили денежные призы и приглашение на летнюю стажировку в инвестиционном блоке банка.", cooperationLine: "bko", addedAt: "2024-02-18", addedBy: "Иванова Е.С." },
-      { id: "event-hse-12", type: "careerDays", date: "2024-04-05", endDate: "2024-04-07", status: "completed", responsiblePerson: ["person-5"], comments: "Дни карьеры для магистрантов программы «Финансы». Трёхдневное мероприятие включало: день знакомства с корпоративной культурой, день погружения в бизнес-процессы, день карьерного планирования. Участвовало 65 магистрантов. 28 из них подали заявки на позиции junior-аналитиков.", cooperationLine: "cntr", addedAt: "2024-03-22", addedBy: "Петров А.В." },
-      { id: "event-hse-13", type: "meeting", date: "2024-04-18", endDate: "2024-04-18", status: "completed", responsiblePerson: ["person-6"], comments: "Совещание по плану совместных мероприятий на 2024 год. Утверждён календарь из 24 мероприятий. Согласованы бюджеты на кейс-чемпионаты, дни карьеры и научные конференции. Определены ответственные лица с обеих сторон. Запланированы ежеквартальные статус-встречи для контроля выполнения.", cooperationLine: "drp", addedAt: "2024-04-08", addedBy: "Смирнова О.И." },
-      { id: "event-hse-14", type: "communication", date: "2024-05-05", endDate: "2024-05-05", status: "completed", responsiblePerson: ["person-7"], comments: "Вебинар о карьерных возможностях в банке для студентов всех направлений. Спикеры — руководители ключевых подразделений банка. Охвачены темы: розничный бизнес, корпоративный блок, IT, риски, операционная деятельность. Зарегистрировалось 250 участников, средняя продолжительность просмотра — 75 минут.", cooperationLine: "bko", addedAt: "2024-04-28", addedBy: "Козлов Д.П." },
-      { id: "event-hse-15", type: "expertParticipation", date: "2024-05-22", endDate: "2024-05-22", status: "completed", responsiblePerson: ["person-1"], comments: "Участие в жюри олимпиады по экономике среди студентов. Оценивались решения кейсов по макроэкономике и финансовым рынкам. В олимпиаде приняли участие 120 студентов из 8 вузов. Вручены специальные призы от банка трём лучшим участникам с приглашением на экскурсию в головной офис.", cooperationLine: "cntr", addedAt: "2024-05-12", addedBy: "Соколов А.Н." },
-      { id: "event-hse-16", type: "caseChampionships", date: "2024-06-10", endDate: "2024-06-12", status: "in_progress", responsiblePerson: ["person-2"], comments: "Кейс-чемпионат по риск-менеджменту в активной фазе. Регистрация завершена — подано 32 заявки от команд. Кейс посвящён разработке модели оценки кредитного риска для сегмента МСБ. Полуфиналы пройдут онлайн, финал — очно в офисе банка. Призовой фонд — 400 000 рублей.", cooperationLine: "drp", addedAt: "2024-05-28", addedBy: "Волкова М.К." },
-      { id: "event-hse-17", type: "careerDays", date: "2024-07-01", endDate: "2024-07-03", status: "planned", responsiblePerson: ["person-3"], comments: "Летняя школа «Карьера в банке» для студентов 1-3 курсов. Интенсивная трёхдневная программа: лекции от топ-менеджеров, бизнес-симуляции, работа в командах над мини-проектами. Планируется участие 100 студентов. Лучшие участники получат возможность досрочного зачисления в кадровый резерв.", cooperationLine: "bko", addedAt: "2024-06-18", addedBy: "Новиков Р.С." },
-      { id: "event-hse-18", type: "meeting", date: "2024-07-15", endDate: "2024-07-15", status: "planned", responsiblePerson: ["person-4"], comments: "Планирование осенних мероприятий с кафедрой банковского дела. На повестке: согласование тем для гостевых лекций, обсуждение формата осеннего кейс-чемпионата, планирование совместной научной конференции. Участвуют заведующий кафедрой, ведущие преподаватели и представители HR-блока банка.", cooperationLine: "cntr", addedAt: "2024-07-05", addedBy: "Морозова Т.И." },
-      { id: "event-hse-19", type: "communication", date: "2024-08-20", endDate: "2024-08-20", status: "planned", responsiblePerson: ["person-5"], comments: "Онлайн-встреча с кураторами студенческих групп перед началом учебного года. Цель — информирование о программах сотрудничества банка с университетом, планах на семестр, возможностях для студентов. Кураторы получат информационные материалы для распространения среди студентов.", cooperationLine: "drp", addedAt: "2024-08-08", addedBy: "Лебедева А.С." },
-      { id: "event-hse-20", type: "expertParticipation", date: "2024-09-10", endDate: "2024-09-10", status: "planned", responsiblePerson: ["person-6"], comments: "Экспертиза магистерских работ по направлению БКО. Планируется оценка 18 работ на тему управления банковскими операциями и клиентским опытом. Эксперты дадут развёрнутую обратную связь и рекомендации по развитию исследований. Лучшие работы будут рекомендованы к публикации в отраслевых журналах.", cooperationLine: "bko", addedAt: "2024-08-28", addedBy: "Федорова М.Д." },
-      { id: "event-hse-21", type: "caseChampionships", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-7"], comments: "Кейс-чемпионат по устойчивому развитию и ESG в банковской сфере. Актуальная тематика привлекает повышенный интерес студентов. Планируется участие команд из 12 вузов. Кейс разработан совместно с ESG-подразделением банка. Призёры получат возможность стажировки в проектах устойчивого развития.", cooperationLine: "cntr", addedAt: "2024-09-12", addedBy: "Иванова Е.С." },
-      { id: "event-hse-22", type: "careerDays", date: "2024-10-10", endDate: "2024-10-12", status: "planned", responsiblePerson: ["person-1"], comments: "Осенние дни карьеры для бакалавров 4 курса — целевой аудитории для программы Graduate Recruitment. Программа включает: ярмарку вакансий, speed-dating с руководителями подразделений, воркшопы по soft skills. Ожидается участие 180+ студентов. Цель — закрыть 40 позиций молодых специалистов.", cooperationLine: "drp", addedAt: "2024-09-26", addedBy: "Петров А.В." },
-      { id: "event-hse-23", type: "meeting", date: "2024-10-25", endDate: "2024-10-25", status: "planned", responsiblePerson: ["person-2"], comments: "Подведение итогов года сотрудничества с руководством факультета. Будут представлены метрики эффективности: количество проведённых мероприятий, охват студентов, конверсия в стажёры и сотрудники. Обсуждение планов на 2025 год и новых форматов сотрудничества.", cooperationLine: "bko", addedAt: "2024-10-14", addedBy: "Смирнова О.И." },
-      { id: "event-hse-24", type: "communication", date: "2024-11-05", endDate: "2024-11-05", status: "planned", responsiblePerson: ["person-3"], comments: "Информационная рассылка о программах стажировок 2025 года. Охват — все студенты 2-4 курсов профильных направлений (около 1500 человек). В рассылке: описание программ, сроки подачи заявок, истории успеха прошлых стажёров. Запланирована серия reminder-писем.", cooperationLine: "cntr", addedAt: "2024-10-25", addedBy: "Козлов Д.П." },
-      { id: "event-hse-25", type: "expertParticipation", date: "2024-11-18", endDate: "2024-11-18", status: "planned", responsiblePerson: ["person-4"], comments: "Участие в межвузовской конференции «Банк и университет: модели эффективного партнёрства». Запланирован доклад о лучших практиках сотрудничества и совместной подготовки кадров. Ожидается участие представителей 25 вузов и 15 банков. Хорошая площадка для обмена опытом.", cooperationLine: "drp", addedAt: "2024-11-05", addedBy: "Соколов А.Н." },
-      { id: "event-hse-26", type: "caseChampionships", date: "2024-12-02", endDate: "2024-12-04", status: "planned", responsiblePerson: ["person-5"], comments: "Зимний кейс-чемпионат по цифровым продуктам и инновациям в банкинге. Кейс разработан продуктовыми командами банка на основе реальных бизнес-задач. Участники предложат решения по улучшению мобильного приложения и внедрению новых цифровых сервисов. Призовой фонд — 350 000 рублей.", cooperationLine: "bko", addedAt: "2024-11-20", addedBy: "Волкова М.К." },
-      { id: "event-hse-27", type: "careerDays", date: "2024-12-15", endDate: "2024-12-17", status: "planned", responsiblePerson: ["person-6"], comments: "Дни карьеры для выпускников бакалавриата — завершающее крупное мероприятие года. Программа адаптирована под студентов, заканчивающих обучение зимой. Особый фокус на программы management trainee и позиции с быстрым карьерным ростом. Планируется участие 120 студентов.", cooperationLine: "cntr", addedAt: "2024-12-02", addedBy: "Новиков Р.С." },
-      { id: "event-hse-28", type: "meeting", date: "2025-01-20", endDate: "2025-01-20", status: "planned", responsiblePerson: ["person-7"], comments: "Стартовая встреча по плану мероприятий 2025 года. Презентация стратегии работы с вузами, утверждение календаря мероприятий, распределение бюджетов и ответственных. Планируется расширить сотрудничество — добавить 3 новых формата мероприятий и увеличить охват студентов на 30%.", cooperationLine: "drp", addedAt: "2025-01-10", addedBy: "Морозова Т.И." },
-      { id: "event-hse-29", type: "communication", date: "2025-02-10", endDate: "2025-02-10", status: "planned", responsiblePerson: ["person-1"], comments: "Презентация летних стажировок для магистрантов первого года обучения. Онлайн-формат с возможностью задать вопросы напрямую HR-специалистам и бывшим стажёрам. Представлены 12 направлений стажировок с описанием задач, команд и карьерных перспектив. Ожидается 150+ участников.", cooperationLine: "bko", addedAt: "2025-01-28", addedBy: "Лебедева А.С." },
-      { id: "event-hse-30", type: "expertParticipation", date: "2025-03-05", endDate: "2025-03-05", status: "planned", responsiblePerson: ["person-2"], comments: "Экспертная сессия по тематике ЦНТР — центров научно-технологического развития. Обсуждение перспективных направлений сотрудничества: совместные R&D проекты, создание лабораторий, привлечение студентов к исследовательской работе. Участвуют представители научного блока университета и инновационного подразделения банка.", cooperationLine: "cntr", addedAt: "2025-02-22", addedBy: "Федорова М.Д." },
+      { id: "event-hse-1", type: "careerDays", date: "2024-03-15", endDate: "2024-03-17", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Проведены дни карьеры для студентов экономического факультета. В мероприятии приняли участие более 150 студентов 3-4 курсов. Были организованы мастер-классы по подготовке резюме, тренинги по прохождению собеседований и презентации карьерных треков в банке. Особый интерес вызвала секция по работе с корпоративными клиентами.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-03-01", addedBy: "Иванова Е.С." },
+      { id: "event-hse-2", type: "expertParticipation", date: "2024-04-20", endDate: "2024-04-20", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите дипломных работ по направлению 'Финансы и кредит'. Оценено 12 выпускных работ, из которых 4 рекомендованы к публикации. Дана обратная связь по практической применимости исследований в банковской сфере. Три студента получили приглашение на стажировку.", cooperationLine: "bko", branch: "Московский филиал", addedAt: "2024-04-05", addedBy: "Петров А.В." },
+      { id: "event-hse-3", type: "caseChampionships", date: "2024-05-10", endDate: "2024-05-12", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по банковскому делу. В финал вышли 8 команд из 24 участвовавших. Победила команда студентов 3 курса с проектом по оптимизации процессов кредитования МСБ. Призовой фонд составил 300 000 рублей. Все финалисты получили приоритетное право на стажировку.", cooperationLine: "cntr", branch: "Центральный офис", addedAt: "2024-04-25", addedBy: "Смирнова О.И." },
+      { id: "event-hse-4", type: "careerDays", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Запланированы дни карьеры для студентов IT-направления. Ожидается участие более 200 студентов. В программе: хакатон по разработке финтех-решений, воркшопы по машинному обучению в банкинге, нетворкинг-сессии с техническими лидерами банка. Подготовлены специальные треки для backend и frontend разработчиков.", cooperationLine: "drp", branch: "Санкт-Петербургский филиал", addedAt: "2024-09-10", addedBy: "Козлов Д.П." },
+      { id: "event-hse-5", type: "expertParticipation", date: "2024-10-15", endDate: "2024-10-15", status: "planned", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на международной конференции по финансовым технологиям. Запланирован доклад на тему «Трансформация банковских продуктов в эпоху AI». Ожидается участие представителей 15 университетов и 20 финансовых организаций. Будет организована панельная дискуссия с Q&A сессией.", cooperationLine: "bko", branch: "Головной офис", addedAt: "2024-09-30", addedBy: "Соколов А.Н." },
+      { id: "event-hse-6", type: "caseChampionships", date: "2024-11-20", endDate: "2024-11-22", status: "planned", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Организация кейс-чемпионата по управлению рисками в банковской сфере. Тематика включает кредитные, операционные и рыночные риски. Приглашены команды из 10 ведущих вузов страны. Общий призовой фонд — 500 000 рублей. Победители получат возможность пройти стажировку в департаменте риск-менеджмента.", cooperationLine: "cntr", branch: "Московский филиал", addedAt: "2024-11-05", addedBy: "Волкова М.К." },
+      { id: "event-hse-7", type: "careerDays", date: "2024-12-05", endDate: "2024-12-07", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для выпускников магистратуры. Фокус на карьерные возможности в банковском секторе для специалистов с углублённой подготовкой. Запланированы индивидуальные консультации с HR-партнёрами, экскурсии в офисы банка, презентации лидерских программ развития. Ожидается участие 80+ магистрантов.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-11-20", addedBy: "Новиков Р.С." },
+      { id: "event-hse-8", type: "meeting", date: "2024-01-15", endDate: "2024-01-15", status: "completed", responsiblePerson: ["person-1"], comments: "Встреча с руководством факультета по вопросам расширения сотрудничества. Обсуждены новые форматы взаимодействия: создание совместной магистерской программы, организация практикумов на базе банка, привлечение преподавателей в качестве консультантов. Подписан протокол о намерениях на 2024 год.", cooperationLine: "bko", branch: "Центральный офис", addedAt: "2024-01-08", addedBy: "Морозова Т.И." },
+      { id: "event-hse-9", type: "communication", date: "2024-02-01", endDate: "2024-02-01", status: "completed", responsiblePerson: ["person-2"], comments: "Презентация программ стажировок для студентов 2 курса. Проведена в формате онлайн-вебинара с интерактивными элементами. Подключились 180 студентов. Представлены 8 направлений стажировок, условия участия, карьерные перспективы. Получено 45 заявок на участие в отборе непосредственно после мероприятия.", cooperationLine: "cntr", branch: "Московский филиал", addedAt: "2024-01-22", addedBy: "Лебедева А.С." },
+      { id: "event-hse-10", type: "expertParticipation", date: "2024-02-20", endDate: "2024-02-20", status: "completed", responsiblePerson: ["person-3"], comments: "Экспертиза студенческих проектов по направлению «Финансовые технологии». Рассмотрено 15 проектов на различных стадиях готовности. Даны рекомендации по доработке для 8 команд. Три проекта отобраны для пилотирования в рамках акселератора банка. Выделено менторское сопровождение для перспективных команд.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-02-12", addedBy: "Федорова М.Д." },
+      { id: "event-hse-11", type: "caseChampionships", date: "2024-03-01", endDate: "2024-03-03", status: "completed", responsiblePerson: ["person-4"], comments: "Кейс-чемпионат по корпоративным финансам. Участвовало 20 команд, в финал вышли 6 лучших. Кейс был посвящён оптимизации структуры капитала крупного промышленного холдинга. Победители получили денежные призы и приглашение на летнюю стажировку в инвестиционном блоке банка.", cooperationLine: "bko", branch: "Санкт-Петербургский филиал", addedAt: "2024-02-18", addedBy: "Иванова Е.С." },
+      { id: "event-hse-12", type: "careerDays", date: "2024-04-05", endDate: "2024-04-07", status: "completed", responsiblePerson: ["person-5"], comments: "Дни карьеры для магистрантов программы «Финансы». Трёхдневное мероприятие включало: день знакомства с корпоративной культурой, день погружения в бизнес-процессы, день карьерного планирования. Участвовало 65 магистрантов. 28 из них подали заявки на позиции junior-аналитиков.", cooperationLine: "cntr", branch: "Головной офис", addedAt: "2024-03-22", addedBy: "Петров А.В." },
+      { id: "event-hse-13", type: "meeting", date: "2024-04-18", endDate: "2024-04-18", status: "completed", responsiblePerson: ["person-6"], comments: "Совещание по плану совместных мероприятий на 2024 год. Утверждён календарь из 24 мероприятий. Согласованы бюджеты на кейс-чемпионаты, дни карьеры и научные конференции. Определены ответственные лица с обеих сторон. Запланированы ежеквартальные статус-встречи для контроля выполнения.", cooperationLine: "drp", branch: "Московский филиал", addedAt: "2024-04-08", addedBy: "Смирнова О.И." },
+      { id: "event-hse-14", type: "communication", date: "2024-05-05", endDate: "2024-05-05", status: "completed", responsiblePerson: ["person-7"], comments: "Вебинар о карьерных возможностях в банке для студентов всех направлений. Спикеры — руководители ключевых подразделений банка. Охвачены темы: розничный бизнес, корпоративный блок, IT, риски, операционная деятельность. Зарегистрировалось 250 участников, средняя продолжительность просмотра — 75 минут.", cooperationLine: "bko", branch: "Центральный офис", addedAt: "2024-04-28", addedBy: "Козлов Д.П." },
+      { id: "event-hse-15", type: "expertParticipation", date: "2024-05-22", endDate: "2024-05-22", status: "completed", responsiblePerson: ["person-1"], comments: "Участие в жюри олимпиады по экономике среди студентов. Оценивались решения кейсов по макроэкономике и финансовым рынкам. В олимпиаде приняли участие 120 студентов из 8 вузов. Вручены специальные призы от банка трём лучшим участникам с приглашением на экскурсию в головной офис.", cooperationLine: "cntr", branch: "Головной офис", addedAt: "2024-05-12", addedBy: "Соколов А.Н." },
+      { id: "event-hse-16", type: "caseChampionships", date: "2024-06-10", endDate: "2024-06-12", status: "in_progress", responsiblePerson: ["person-2"], comments: "Кейс-чемпионат по риск-менеджменту в активной фазе. Регистрация завершена — подано 32 заявки от команд. Кейс посвящён разработке модели оценки кредитного риска для сегмента МСБ. Полуфиналы пройдут онлайн, финал — очно в офисе банка. Призовой фонд — 400 000 рублей.", cooperationLine: "drp", branch: "Санкт-Петербургский филиал", addedAt: "2024-05-28", addedBy: "Волкова М.К." },
+      { id: "event-hse-17", type: "careerDays", date: "2024-07-01", endDate: "2024-07-03", status: "planned", responsiblePerson: ["person-3"], comments: "Летняя школа «Карьера в банке» для студентов 1-3 курсов. Интенсивная трёхдневная программа: лекции от топ-менеджеров, бизнес-симуляции, работа в командах над мини-проектами. Планируется участие 100 студентов. Лучшие участники получат возможность досрочного зачисления в кадровый резерв.", cooperationLine: "bko", branch: "Головной офис", addedAt: "2024-06-18", addedBy: "Новиков Р.С." },
+      { id: "event-hse-18", type: "meeting", date: "2024-07-15", endDate: "2024-07-15", status: "planned", responsiblePerson: ["person-4"], comments: "Планирование осенних мероприятий с кафедрой банковского дела. На повестке: согласование тем для гостевых лекций, обсуждение формата осеннего кейс-чемпионата, планирование совместной научной конференции. Участвуют заведующий кафедрой, ведущие преподаватели и представители HR-блока банка.", cooperationLine: "cntr", branch: "Московский филиал", addedAt: "2024-07-05", addedBy: "Морозова Т.И." },
+      { id: "event-hse-19", type: "communication", date: "2024-08-20", endDate: "2024-08-20", status: "planned", responsiblePerson: ["person-5"], comments: "Онлайн-встреча с кураторами студенческих групп перед началом учебного года. Цель — информирование о программах сотрудничества банка с университетом, планах на семестр, возможностях для студентов. Кураторы получат информационные материалы для распространения среди студентов.", cooperationLine: "drp", branch: "Центральный офис", addedAt: "2024-08-08", addedBy: "Лебедева А.С." },
+      { id: "event-hse-20", type: "expertParticipation", date: "2024-09-10", endDate: "2024-09-10", status: "planned", responsiblePerson: ["person-6"], comments: "Экспертиза магистерских работ по направлению БКО. Планируется оценка 18 работ на тему управления банковскими операциями и клиентским опытом. Эксперты дадут развёрнутую обратную связь и рекомендации по развитию исследований. Лучшие работы будут рекомендованы к публикации в отраслевых журналах.", cooperationLine: "bko", branch: "Головной офис", addedAt: "2024-08-28", addedBy: "Федорова М.Д." },
+      { id: "event-hse-21", type: "caseChampionships", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-7"], comments: "Кейс-чемпионат по устойчивому развитию и ESG в банковской сфере. Актуальная тематика привлекает повышенный интерес студентов. Планируется участие команд из 12 вузов. Кейс разработан совместно с ESG-подразделением банка. Призёры получат возможность стажировки в проектах устойчивого развития.", cooperationLine: "cntr", branch: "Санкт-Петербургский филиал", addedAt: "2024-09-12", addedBy: "Иванова Е.С." },
+      { id: "event-hse-22", type: "careerDays", date: "2024-10-10", endDate: "2024-10-12", status: "planned", responsiblePerson: ["person-1"], comments: "Осенние дни карьеры для бакалавров 4 курса — целевой аудитории для программы Graduate Recruitment. Программа включает: ярмарку вакансий, speed-dating с руководителями подразделений, воркшопы по soft skills. Ожидается участие 180+ студентов. Цель — закрыть 40 позиций молодых специалистов.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-09-26", addedBy: "Петров А.В." },
+      { id: "event-hse-23", type: "meeting", date: "2024-10-25", endDate: "2024-10-25", status: "planned", responsiblePerson: ["person-2"], comments: "Подведение итогов года сотрудничества с руководством факультета. Будут представлены метрики эффективности: количество проведённых мероприятий, охват студентов, конверсия в стажёры и сотрудники. Обсуждение планов на 2025 год и новых форматов сотрудничества.", cooperationLine: "bko", branch: "Московский филиал", addedAt: "2024-10-14", addedBy: "Смирнова О.И." },
+      { id: "event-hse-24", type: "communication", date: "2024-11-05", endDate: "2024-11-05", status: "planned", responsiblePerson: ["person-3"], comments: "Информационная рассылка о программах стажировок 2025 года. Охват — все студенты 2-4 курсов профильных направлений (около 1500 человек). В рассылке: описание программ, сроки подачи заявок, истории успеха прошлых стажёров. Запланирована серия reminder-писем.", cooperationLine: "cntr", branch: "Центральный офис", addedAt: "2024-10-25", addedBy: "Козлов Д.П." },
+      { id: "event-hse-25", type: "expertParticipation", date: "2024-11-18", endDate: "2024-11-18", status: "planned", responsiblePerson: ["person-4"], comments: "Участие в межвузовской конференции «Банк и университет: модели эффективного партнёрства». Запланирован доклад о лучших практиках сотрудничества и совместной подготовки кадров. Ожидается участие представителей 25 вузов и 15 банков. Хорошая площадка для обмена опытом.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-11-05", addedBy: "Соколов А.Н." },
+      { id: "event-hse-26", type: "caseChampionships", date: "2024-12-02", endDate: "2024-12-04", status: "planned", responsiblePerson: ["person-5"], comments: "Зимний кейс-чемпионат по цифровым продуктам и инновациям в банкинге. Кейс разработан продуктовыми командами банка на основе реальных бизнес-задач. Участники предложат решения по улучшению мобильного приложения и внедрению новых цифровых сервисов. Призовой фонд — 350 000 рублей.", cooperationLine: "bko", branch: "Санкт-Петербургский филиал", addedAt: "2024-11-20", addedBy: "Волкова М.К." },
+      { id: "event-hse-27", type: "careerDays", date: "2024-12-15", endDate: "2024-12-17", status: "planned", responsiblePerson: ["person-6"], comments: "Дни карьеры для выпускников бакалавриата — завершающее крупное мероприятие года. Программа адаптирована под студентов, заканчивающих обучение зимой. Особый фокус на программы management trainee и позиции с быстрым карьерным ростом. Планируется участие 120 студентов.", cooperationLine: "cntr", branch: "Головной офис", addedAt: "2024-12-02", addedBy: "Новиков Р.С." },
+      { id: "event-hse-28", type: "meeting", date: "2025-01-20", endDate: "2025-01-20", status: "planned", responsiblePerson: ["person-7"], comments: "Стартовая встреча по плану мероприятий 2025 года. Презентация стратегии работы с вузами, утверждение календаря мероприятий, распределение бюджетов и ответственных. Планируется расширить сотрудничество — добавить 3 новых формата мероприятий и увеличить охват студентов на 30%.", cooperationLine: "drp", branch: "Московский филиал", addedAt: "2025-01-10", addedBy: "Морозова Т.И." },
+      { id: "event-hse-29", type: "communication", date: "2025-02-10", endDate: "2025-02-10", status: "planned", responsiblePerson: ["person-1"], comments: "Презентация летних стажировок для магистрантов первого года обучения. Онлайн-формат с возможностью задать вопросы напрямую HR-специалистам и бывшим стажёрам. Представлены 12 направлений стажировок с описанием задач, команд и карьерных перспектив. Ожидается 150+ участников.", cooperationLine: "bko", branch: "Центральный офис", addedAt: "2025-01-28", addedBy: "Лебедева А.С." },
+      { id: "event-hse-30", type: "expertParticipation", date: "2025-03-05", endDate: "2025-03-05", status: "planned", responsiblePerson: ["person-2"], comments: "Экспертная сессия по тематике ЦНТР — центров научно-технологического развития. Обсуждение перспективных направлений сотрудничества: совместные R&D проекты, создание лабораторий, привлечение студентов к исследовательской работе. Участвуют представители научного блока университета и инновационного подразделения банка.", cooperationLine: "cntr", branch: "Головной офис", addedAt: "2025-02-22", addedBy: "Федорова М.Д." },
     ],
     careerDays: true,
     expertParticipation: true,
@@ -1942,9 +1956,10 @@ export default function UniversitiesPage() {
   // Состояние для администрирования
   const [universities, setUniversities] = useState<University[]>(mockUniversities);
   const [selectedUniversity, setSelectedUniversity] = useState<string | null>(null);
-  const [universityDetailTab, setUniversityDetailTab] = useState<"general" | "contracts" | "eventsFeed" | "events" | "staff" | "bko" | "cntr">("general");
+  const [universityDetailTab, setUniversityDetailTab] = useState<"general" | "contracts" | "kaleidoscope" | "eventsFeed" | "events" | "staff" | "bko" | "cntr">("general");
   const [generalSubTab, setGeneralSubTab] = useState<"main" | "branches">("main");
   const [staffSubTab, setStaffSubTab] = useState<"interns" | "practitioners">("interns");
+  const [kaleidoscopeSubTab, setKaleidoscopeSubTab] = useState<"drp" | "bko" | "cntr">("drp");
   const [cntrSubTab, setCntrSubTab] = useState<"infrastructure" | "projects" | "accelerator" | "events" | "agreements" | "educational">("infrastructure");
   
   // Состояние для добавления элемента инфраструктуры ЦНТР
@@ -4991,9 +5006,10 @@ export default function UniversitiesPage() {
                     <Separator />
                     <CardContent className="overflow-x-hidden">
                       <Tabs value={universityDetailTab} onValueChange={(v) => setUniversityDetailTab(v as typeof universityDetailTab)} className="w-full">
-                        <TabsList className="grid w-full grid-cols-7">
+                        <TabsList className="grid w-full grid-cols-8">
                           <TabsTrigger value="general">Общая информация</TabsTrigger>
                           <TabsTrigger value="contracts">Договорная база</TabsTrigger>
+                          <TabsTrigger value="kaleidoscope">Калейдоскоп</TabsTrigger>
                           <TabsTrigger value="eventsFeed">Лента мероприятий</TabsTrigger>
                           <TabsTrigger value="events">Мероприятия</TabsTrigger>
                           <TabsTrigger value="staff">Кадровые показатели</TabsTrigger>
@@ -6089,6 +6105,143 @@ export default function UniversitiesPage() {
                           </div>
                         </TabsContent>
 
+                        {/* Таб: Калейдоскоп */}
+                        <TabsContent value="kaleidoscope" className="space-y-4 mt-4">
+                          {(() => {
+                            const university = universities.find((u) => u.id === selectedUniversity);
+                            if (!university) return null;
+
+                            const contracts = university.contracts || [];
+                            
+                            // Группируем договоры по линиям сотрудничества
+                            const drpContracts = contracts.filter(c => c.cooperationLine === "drp");
+                            const bkoContracts = contracts.filter(c => c.cooperationLine === "bko");
+                            const cntrContracts = contracts.filter(c => c.cooperationLine === "cntr");
+                            const unassignedContracts = contracts.filter(c => !c.cooperationLine);
+
+                            const contractTypeLabels: Record<string, string> = {
+                              cooperation: "О сотрудничестве",
+                              scholarship: "Об именных стипендиях",
+                              internship: "О практике",
+                              bankDepartment: "Кафедра банка",
+                            };
+
+                            const contractTypeBadgeColors: Record<string, string> = {
+                              cooperation: "bg-blue-500 text-white",
+                              scholarship: "bg-purple-500 text-white",
+                              internship: "bg-green-500 text-white",
+                              bankDepartment: "bg-orange-500 text-white",
+                            };
+
+                            const cooperationLineLabels: Record<string, string> = {
+                              drp: "ДРП",
+                              bko: "БКО",
+                              cntr: "ЦНТР",
+                            };
+
+                            const cooperationLineBadgeColors: Record<string, string> = {
+                              drp: "bg-blue-100 text-blue-700 border-blue-300",
+                              bko: "bg-purple-100 text-purple-700 border-purple-300",
+                              cntr: "bg-cyan-100 text-cyan-700 border-cyan-300",
+                            };
+
+                            const formatDate = (dateStr: string) => {
+                              const d = new Date(dateStr);
+                              return d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit", year: "numeric" });
+                            };
+
+                            const renderContractCard = (contract: Contract) => (
+                              <Card key={contract.id} className="p-3 hover:shadow-md transition-shadow cursor-pointer">
+                                <div className="space-y-2">
+                                  <div className="flex items-start justify-between gap-2">
+                                    <div className="flex items-center gap-1.5 flex-wrap">
+                                      {contract.cooperationLine && (
+                                        <Badge variant="outline" className={cn("text-xs", cooperationLineBadgeColors[contract.cooperationLine])}>
+                                          {cooperationLineLabels[contract.cooperationLine]}
+                                        </Badge>
+                                      )}
+                                      <Badge className={cn("text-xs", contractTypeBadgeColors[contract.type])}>
+                                        {contractTypeLabels[contract.type]}
+                                      </Badge>
+                                    </div>
+                                    {contract.contractBranch && (
+                                      <Badge variant="secondary" className="text-xs shrink-0">
+                                        {contract.contractBranch}
+                                      </Badge>
+                                    )}
+                                  </div>
+                                  {contract.number && (
+                                    <p className="text-sm font-medium">{contract.number}</p>
+                                  )}
+                                  {contract.date && (
+                                    <p className="text-xs text-muted-foreground">
+                                      от {formatDate(contract.date)}
+                                    </p>
+                                  )}
+                                  {contract.period && (
+                                    <p className="text-xs text-muted-foreground">
+                                      {formatDate(contract.period.start)} — {formatDate(contract.period.end)}
+                                    </p>
+                                  )}
+                                </div>
+                              </Card>
+                            );
+
+                            const renderColumn = (title: string, columnContracts: Contract[], bgClass: string, textClass: string, badgeBgClass: string) => (
+                              <div className="flex-1 min-w-[280px]">
+                                <div className={cn("rounded-t-lg px-4 py-2 border", bgClass)}>
+                                  <div className="flex items-center justify-between">
+                                    <h3 className={cn("font-semibold", textClass)}>{title}</h3>
+                                    <Badge variant="secondary" className={cn("border-0", badgeBgClass, textClass)}>
+                                      {columnContracts.length}
+                                    </Badge>
+                                  </div>
+                                </div>
+                                <div className="bg-muted/30 rounded-b-lg p-3 min-h-[400px] space-y-3">
+                                  {columnContracts.length > 0 ? (
+                                    columnContracts.map(renderContractCard)
+                                  ) : (
+                                    <div className="text-center py-8 text-muted-foreground">
+                                      <p className="text-sm">Нет договоров</p>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            );
+
+                            return (
+                              <div className="space-y-4">
+                                <div className="flex items-center gap-4">
+                                  <div className="flex-1">
+                                    <h3 className="text-lg font-semibold">Калейдоскоп договоров</h3>
+                                    <p className="text-sm text-muted-foreground">Договоры по линиям сотрудничества</p>
+                                  </div>
+                                  <Badge variant="outline" className="text-base px-3 py-1">
+                                    Всего: {contracts.length}
+                                  </Badge>
+                                </div>
+
+                                <div className="flex gap-4 overflow-x-auto pb-4">
+                                  {renderColumn("ДРП", drpContracts, "bg-blue-100 border-blue-300", "text-blue-700", "bg-blue-200")}
+                                  {renderColumn("БКО", bkoContracts, "bg-purple-100 border-purple-300", "text-purple-700", "bg-purple-200")}
+                                  {renderColumn("ЦНТР", cntrContracts, "bg-cyan-100 border-cyan-300", "text-cyan-700", "bg-cyan-200")}
+                                </div>
+
+                                {unassignedContracts.length > 0 && (
+                                  <div className="mt-4">
+                                    <h4 className="text-sm font-medium text-muted-foreground mb-2">
+                                      Без линии сотрудничества ({unassignedContracts.length})
+                                    </h4>
+                                    <div className="grid grid-cols-3 gap-3">
+                                      {unassignedContracts.map(renderContractCard)}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })()}
+                        </TabsContent>
+
                         {/* Таб: Лента мероприятий */}
                         <TabsContent value="eventsFeed" className="space-y-4 mt-4 outline-none focus:outline-none focus-visible:outline-none ring-0 focus-visible:ring-0 [&:focus]:outline-none [&:focus]:ring-0">
                           <div className="space-y-4 outline-none">
@@ -6290,6 +6443,70 @@ export default function UniversitiesPage() {
                                       )}
                                     </div>
                                   </div>
+                                  {/* Активные фильтры */}
+                                  {(() => {
+                                    const activeFilters: Array<{ label: string; onRemove: () => void }> = [];
+                                    
+                                    // Фильтр по линии сотрудничества
+                                    if (eventsFeedFilters.cooperationLine) {
+                                      activeFilters.push({
+                                        label: `Линия: ${getCooperationLineLabel(eventsFeedFilters.cooperationLine)}`,
+                                        onRemove: () => {
+                                          setEventsFeedFilters((p) => ({ ...p, cooperationLine: null }));
+                                          setEventsFeedCurrentPage(1);
+                                        },
+                                      });
+                                    }
+                                    
+                                    // Фильтр по типу мероприятия
+                                    if (eventsFeedFilters.type) {
+                                      activeFilters.push({
+                                        label: `Тип: ${eventTypeLabels[eventsFeedFilters.type]}`,
+                                        onRemove: () => {
+                                          setEventsFeedFilters((p) => ({ ...p, type: null }));
+                                          setEventsFeedCurrentPage(1);
+                                        },
+                                      });
+                                    }
+                                    
+                                    // Фильтр по году
+                                    if (eventsFeedFilters.year != null) {
+                                      activeFilters.push({
+                                        label: `Год: ${eventsFeedFilters.year}`,
+                                        onRemove: () => {
+                                          setEventsFeedFilters((p) => ({ ...p, year: null }));
+                                          setEventsFeedCurrentPage(1);
+                                        },
+                                      });
+                                    }
+                                    
+                                    if (activeFilters.length === 0) return null;
+                                    
+                                    return (
+                                      <div className="flex flex-wrap items-center gap-2 mb-3">
+                                        {activeFilters.map((filter, index) => (
+                                          <Badge
+                                            key={index}
+                                            variant="secondary"
+                                            className="flex items-center gap-1 px-2 py-1"
+                                          >
+                                            <span className="text-sm">{filter.label}</span>
+                                            <button
+                                              type="button"
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                filter.onRemove();
+                                              }}
+                                              className="ml-1 rounded-full hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                              aria-label="Удалить фильтр"
+                                            >
+                                              <X className="h-3 w-3" />
+                                            </button>
+                                          </Badge>
+                                        ))}
+                                      </div>
+                                    );
+                                  })()}
                                   {(() => {
                                     if (eventsList.length === 0) {
                                       return (
@@ -6406,6 +6623,13 @@ export default function UniversitiesPage() {
                                                       {/* Развёрнутая информация */}
                                                       {isExpanded && (
                                                         <div className="pt-2.5 mt-2 border-t space-y-2.5">
+                                                          {/* Тег Головной офис / Филиал */}
+                                                          {event.branch && (
+                                                            <Badge variant="secondary" className="text-xs">
+                                                              {event.branch}
+                                                            </Badge>
+                                                          )}
+
                                                           {/* Контактное лицо ВУЗ */}
                                                           <div className="flex gap-2 text-sm">
                                                             <Building2 className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />

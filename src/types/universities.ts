@@ -23,6 +23,7 @@ export interface Contract {
   period?: { start: string; end: string }; // Период действия (начало - конец)
   asddLink?: string; // Ссылка на АСДД
   contractBranch?: string; // Головной офис или филиал (только одно значение)
+  cooperationLine?: CooperationLine; // Линия сотрудничества (drp, bko, cntr)
 }
 
 // Тип для кафедры банка
