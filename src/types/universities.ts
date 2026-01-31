@@ -24,6 +24,7 @@ export interface Contract {
   asddLink?: string; // Ссылка на АСДД
   contractBranch?: string; // Головной офис или филиал (только одно значение)
   cooperationLine?: CooperationLine; // Линия сотрудничества (drp, bko, cntr)
+  archived?: boolean; // В архиве (иначе — активные, в т.ч. с истёкшим сроком)
 }
 
 // Тип для кафедры банка

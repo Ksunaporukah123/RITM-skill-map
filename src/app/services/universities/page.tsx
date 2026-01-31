@@ -668,6 +668,87 @@ const mockUniversities: University[] = [
         contractBranch: "Головной офис",
         cooperationLine: "bko"
       },
+      { 
+        id: "cont-hse-6", 
+        type: "cooperation", 
+        hasContract: true,
+        number: "Д-2023-201",
+        date: "2023-04-12",
+        period: { start: "2023-04-12", end: "2028-04-11" },
+        asddLink: "https://asdd.example.com/contract/2023-201",
+        contractBranch: "Санкт-Петербургский филиал",
+        contractFile: "contract-hse-cooperation-2023.pdf",
+        cooperationLine: "drp"
+      },
+      { 
+        id: "cont-hse-7", 
+        type: "scholarship", 
+        hasContract: true,
+        number: "Д-2024-067",
+        date: "2024-02-01",
+        period: { start: "2024-02-01", end: "2029-01-31" },
+        contractBranch: "Московский филиал",
+        cooperationLine: "cntr"
+      },
+      { 
+        id: "cont-hse-8", 
+        type: "internship", 
+        hasContract: true,
+        number: "Д-2022-189",
+        date: "2022-09-15",
+        period: { start: "2022-09-15", end: "2023-09-14" },
+        asddLink: "https://asdd.example.com/contract/2022-189",
+        contractBranch: "Головной офис",
+        contractFile: "contract-hse-internship-2022.pdf",
+        cooperationLine: "bko",
+        archived: true
+      },
+      { 
+        id: "cont-hse-9", 
+        type: "bankDepartment", 
+        hasContract: true,
+        number: "Д-2024-212",
+        date: "2024-05-20",
+        period: { start: "2024-05-20", end: "2029-05-19" },
+        asddLink: "https://asdd.example.com/contract/2024-212",
+        contractBranch: "Центральный офис",
+        contractFile: "contract-hse-bank-department-2024.pdf",
+        cooperationLine: "drp"
+      },
+      { 
+        id: "cont-hse-10", 
+        type: "cooperation", 
+        hasContract: true,
+        number: "Д-2019-034",
+        date: "2019-06-10",
+        period: { start: "2019-06-10", end: "2024-06-09" },
+        asddLink: "https://asdd.example.com/contract/2019-034",
+        contractBranch: "Московский филиал",
+        cooperationLine: "bko",
+        archived: true
+      },
+      { 
+        id: "cont-hse-11", 
+        type: "scholarship", 
+        hasContract: true,
+        number: "Д-2024-118",
+        date: "2024-03-05",
+        period: { start: "2024-03-05", end: "2029-03-04" },
+        contractBranch: "Головной офис",
+        cooperationLine: "drp"
+      },
+      { 
+        id: "cont-hse-12", 
+        type: "internship", 
+        hasContract: true,
+        number: "Д-2023-267",
+        date: "2023-11-01",
+        period: { start: "2023-11-01", end: "2028-10-31" },
+        asddLink: "https://asdd.example.com/contract/2023-267",
+        contractBranch: "Санкт-Петербургский филиал",
+        contractFile: "contract-hse-internship-2023.pdf",
+        cooperationLine: "cntr"
+      },
     ],
     events: [
       { id: "event-hse-1", type: "careerDays", date: "2024-03-15", endDate: "2024-03-17", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Проведены дни карьеры для студентов экономического факультета. В мероприятии приняли участие более 150 студентов 3-4 курсов. Были организованы мастер-классы по подготовке резюме, тренинги по прохождению собеседований и презентации карьерных треков в банке. Особый интерес вызвала секция по работе с корпоративными клиентами.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-03-01", addedBy: "Иванова Е.С." },
@@ -2105,6 +2186,12 @@ export default function UniversitiesPage() {
     type: Event["type"] | null;
     year: number | null;
   }>({ cooperationLine: null, type: null, year: null });
+  // Фильтры калейдоскопа (линия, тип договора)
+  const [kaleidoscopeFilters, setKaleidoscopeFilters] = useState<{
+    cooperationLine: "drp" | "bko" | "cntr" | null;
+    type: Contract["type"] | null;
+  }>({ cooperationLine: null, type: null });
+
   // Коллапс строк в ленте мероприятий: Set id = свёрнута
   const [collapsedEventsFeed, setCollapsedEventsFeed] = useState<Set<string>>(new Set());
   const handleEventsFeedToggle = useCallback((eventId: string) => {
@@ -2125,6 +2212,12 @@ export default function UniversitiesPage() {
     setEventsFeedFilters({ cooperationLine: null, type: null, year: null });
     setEventsFeedCurrentPage(1);
   }, [selectedUniversity, universityDetailTab, universities]);
+
+  // Сброс фильтров калейдоскопа при смене ВУЗа или вкладки
+  useEffect(() => {
+    if (!selectedUniversity || universityDetailTab !== "kaleidoscope") return;
+    setKaleidoscopeFilters({ cooperationLine: null, type: null });
+  }, [selectedUniversity, universityDetailTab]);
 
   // Сброс страницы при смене фильтров ленты мероприятий
   useEffect(() => {
@@ -6112,25 +6205,48 @@ export default function UniversitiesPage() {
                             if (!university) return null;
 
                             const contracts = university.contracts || [];
-                            
-                            // Группируем договоры по линиям сотрудничества
-                            const drpContracts = contracts.filter(c => c.cooperationLine === "drp");
-                            const bkoContracts = contracts.filter(c => c.cooperationLine === "bko");
-                            const cntrContracts = contracts.filter(c => c.cooperationLine === "cntr");
-                            const unassignedContracts = contracts.filter(c => !c.cooperationLine);
+
+                            // Для блоков — договоры, отфильтрованные по другому критерию (как в ленте мероприятий)
+                            const contractsForLineBlock = contracts.filter((c) => {
+                              if (kaleidoscopeFilters.type && c.type !== kaleidoscopeFilters.type) return false;
+                              return true;
+                            });
+                            const contractsForTypeBlock = contracts.filter((c) => {
+                              if (kaleidoscopeFilters.cooperationLine && c.cooperationLine !== kaleidoscopeFilters.cooperationLine) return false;
+                              return true;
+                            });
+                            const byCooperationLine = {
+                              drp: contractsForLineBlock.filter((c) => c.cooperationLine === "drp").length,
+                              bko: contractsForLineBlock.filter((c) => c.cooperationLine === "bko").length,
+                              cntr: contractsForLineBlock.filter((c) => c.cooperationLine === "cntr").length,
+                            };
+                            const byType = {
+                              cooperation: contractsForTypeBlock.filter((c) => c.type === "cooperation").length,
+                              scholarship: contractsForTypeBlock.filter((c) => c.type === "scholarship").length,
+                              internship: contractsForTypeBlock.filter((c) => c.type === "internship").length,
+                              bankDepartment: contractsForTypeBlock.filter((c) => c.type === "bankDepartment").length,
+                            };
+
+                            // Применяем фильтры к списку договоров
+                            const filteredContracts = contracts.filter((c) => {
+                              if (kaleidoscopeFilters.cooperationLine && c.cooperationLine !== kaleidoscopeFilters.cooperationLine) return false;
+                              if (kaleidoscopeFilters.type && c.type !== kaleidoscopeFilters.type) return false;
+                              return true;
+                            });
+
+                            // Группируем отфильтрованные договоры по линиям сотрудничества (только активные в колонках)
+                            const activeFiltered = filteredContracts.filter((c) => !c.archived);
+                            const allArchivedContracts = filteredContracts.filter((c) => c.archived === true);
+                            const drpContracts = activeFiltered.filter(c => c.cooperationLine === "drp");
+                            const bkoContracts = activeFiltered.filter(c => c.cooperationLine === "bko");
+                            const cntrContracts = activeFiltered.filter(c => c.cooperationLine === "cntr");
+                            const unassignedContracts = activeFiltered.filter(c => !c.cooperationLine);
 
                             const contractTypeLabels: Record<string, string> = {
                               cooperation: "О сотрудничестве",
                               scholarship: "Об именных стипендиях",
                               internship: "О практике",
                               bankDepartment: "Кафедра банка",
-                            };
-
-                            const contractTypeBadgeColors: Record<string, string> = {
-                              cooperation: "bg-blue-500 text-white",
-                              scholarship: "bg-purple-500 text-white",
-                              internship: "bg-green-500 text-white",
-                              bankDepartment: "bg-orange-500 text-white",
                             };
 
                             const cooperationLineLabels: Record<string, string> = {
@@ -6150,8 +6266,21 @@ export default function UniversitiesPage() {
                               return d.toLocaleDateString("ru-RU", { day: "2-digit", month: "2-digit", year: "numeric" });
                             };
 
-                            const renderContractCard = (contract: Contract) => (
-                              <Card key={contract.id} className="p-3 hover:shadow-md transition-shadow cursor-pointer">
+                            const renderContractCard = (contract: Contract) => {
+                              const isExpired = contract.period?.end
+                                ? new Date(contract.period.end) < new Date()
+                                : false;
+                              const showExpiredState = isExpired && !contract.archived;
+                              return (
+                              <Card
+                                key={contract.id}
+                                className={`p-3 relative hover:shadow-md transition-shadow cursor-pointer ${showExpiredState ? "border-2 border-red-300" : ""}`}
+                              >
+                                {showExpiredState && (
+                                  <div className="absolute -top-3 left-4 px-2 bg-red-100 text-red-700 text-xs font-medium rounded border border-red-300">
+                                    Истек срок действия договора
+                                  </div>
+                                )}
                                 <div className="space-y-2">
                                   <div className="flex items-start justify-between gap-2">
                                     <div className="flex items-center gap-1.5 flex-wrap">
@@ -6160,7 +6289,7 @@ export default function UniversitiesPage() {
                                           {cooperationLineLabels[contract.cooperationLine]}
                                         </Badge>
                                       )}
-                                      <Badge className={cn("text-xs", contractTypeBadgeColors[contract.type])}>
+                                      <Badge variant="outline" className={cn("text-xs", getContractTypeBadgeColor(contract.type))}>
                                         {contractTypeLabels[contract.type]}
                                       </Badge>
                                     </div>
@@ -6170,22 +6299,76 @@ export default function UniversitiesPage() {
                                       </Badge>
                                     )}
                                   </div>
-                                  {contract.number && (
-                                    <p className="text-sm font-medium">{contract.number}</p>
-                                  )}
-                                  {contract.date && (
-                                    <p className="text-xs text-muted-foreground">
-                                      от {formatDate(contract.date)}
-                                    </p>
+                                  {(contract.number || contract.date) && (
+                                    <div className="flex items-start gap-2 text-sm">
+                                      <Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                                      <div className="min-w-0 flex flex-wrap items-baseline gap-x-2 gap-y-0">
+                                        {contract.number && (
+                                          <span>
+                                            <span className="text-muted-foreground">Номер: </span>
+                                            <span className="font-medium">{contract.number}</span>
+                                          </span>
+                                        )}
+                                        {contract.number && contract.date && <span className="text-muted-foreground">·</span>}
+                                        {contract.date && (
+                                          <span>
+                                            <span className="text-muted-foreground">Дата: </span>
+                                            <span className="font-medium">{formatDate(contract.date)}</span>
+                                          </span>
+                                        )}
+                                      </div>
+                                    </div>
                                   )}
                                   {contract.period && (
-                                    <p className="text-xs text-muted-foreground">
-                                      {formatDate(contract.period.start)} — {formatDate(contract.period.end)}
-                                    </p>
+                                    <div className="flex items-start gap-2 text-sm">
+                                      <Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                                      <div className="min-w-0">
+                                        <span className="text-muted-foreground whitespace-nowrap">Период действия: </span>
+                                        <span className="font-medium">
+                                          {formatDate(contract.period.start)} — {formatDate(contract.period.end)}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  )}
+                                  {contract.asddLink && (
+                                    <div className="flex items-start gap-2 text-sm">
+                                      <Link2 className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                                      <div className="min-w-0">
+                                        <span className="text-muted-foreground whitespace-nowrap">Ссылка на АСДД: </span>
+                                        <a
+                                          href={contract.asddLink}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-primary hover:underline break-all"
+                                        >
+                                          {contract.asddLink}
+                                        </a>
+                                      </div>
+                                    </div>
+                                  )}
+                                  {contract.contractFile && (
+                                    <div className="flex items-start gap-2 text-sm">
+                                      <FileText className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                                      <div className="min-w-0">
+                                        <span className="text-muted-foreground whitespace-nowrap">Документ: </span>
+                                        <a
+                                          href={contract.contractFile}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-primary hover:underline break-all"
+                                        >
+                                          {contract.contractFile}
+                                        </a>
+                                      </div>
+                                    </div>
                                   )}
                                 </div>
                               </Card>
                             );
+                            };
+
+                            const isContractExpired = (c: Contract) =>
+                              c.period?.end ? new Date(c.period.end) < new Date() : false;
 
                             const renderColumn = (title: string, columnContracts: Contract[], bgClass: string, textClass: string, badgeBgClass: string) => (
                               <div className="flex-1 min-w-[280px]">
@@ -6199,7 +6382,10 @@ export default function UniversitiesPage() {
                                 </div>
                                 <div className="bg-muted/30 rounded-b-lg p-3 min-h-[400px] space-y-3">
                                   {columnContracts.length > 0 ? (
-                                    columnContracts.map(renderContractCard)
+                                    <>
+                                      <p className="text-base font-medium text-muted-foreground">Активные</p>
+                                      {columnContracts.map(renderContractCard)}
+                                    </>
                                   ) : (
                                     <div className="text-center py-8 text-muted-foreground">
                                       <p className="text-sm">Нет договоров</p>
@@ -6211,14 +6397,81 @@ export default function UniversitiesPage() {
 
                             return (
                               <div className="space-y-4">
-                                <div className="flex items-center gap-4">
-                                  <div className="flex-1">
-                                    <h3 className="text-lg font-semibold">Калейдоскоп договоров</h3>
-                                    <p className="text-sm text-muted-foreground">Договоры по линиям сотрудничества</p>
-                                  </div>
-                                  <Badge variant="outline" className="text-base px-3 py-1">
-                                    Всего: {contracts.length}
-                                  </Badge>
+                                {/* Блоки фильтров как в ленте мероприятий */}
+                                <div className="flex flex-wrap items-center gap-4 mb-4">
+                                  <Card className="p-3 flex-[0.75] min-w-[140px]">
+                                    <div className="space-y-2">
+                                      <Label className="text-base font-semibold">Линия сотрудничества</Label>
+                                      <div className="flex flex-wrap gap-3">
+                                        {(["drp", "bko", "cntr"] as const)
+                                          .filter((line) => (byCooperationLine[line] ?? 0) > 0 || kaleidoscopeFilters.cooperationLine === line)
+                                          .map((line) => {
+                                            const count = byCooperationLine[line] ?? 0;
+                                            const isActive = kaleidoscopeFilters.cooperationLine === line;
+                                            return (
+                                              <div key={line} className="text-base">
+                                                <span className="text-muted-foreground">{cooperationLineLabels[line]}: </span>
+                                                <Badge
+                                                  variant="outline"
+                                                  className={cn(
+                                                    "cursor-pointer",
+                                                    cooperationLineBadgeColors[line],
+                                                    isActive && "ring-4 ring-primary"
+                                                  )}
+                                                  onClick={() => {
+                                                    setKaleidoscopeFilters((p) => ({
+                                                      ...p,
+                                                      cooperationLine: p.cooperationLine === line ? null : line,
+                                                    }));
+                                                  }}
+                                                >
+                                                  {count}
+                                                </Badge>
+                                              </div>
+                                            );
+                                          })}
+                                      </div>
+                                    </div>
+                                  </Card>
+                                  <Card className="p-3 flex-[2.5] min-w-[340px]">
+                                    <div className="space-y-2">
+                                      <Label className="text-base font-semibold">Тип договора</Label>
+                                      <div className="flex flex-wrap gap-3">
+                                        {([
+                                          { key: "cooperation" as const, label: contractTypeLabels.cooperation },
+                                          { key: "scholarship" as const, label: contractTypeLabels.scholarship },
+                                          { key: "internship" as const, label: contractTypeLabels.internship },
+                                          { key: "bankDepartment" as const, label: contractTypeLabels.bankDepartment },
+                                        ])
+                                          .filter((item) => (byType[item.key] ?? 0) > 0 || kaleidoscopeFilters.type === item.key)
+                                          .map(({ key, label }) => {
+                                            const count = byType[key] ?? 0;
+                                            const isActive = kaleidoscopeFilters.type === key;
+                                            return (
+                                              <div key={key} className="text-base">
+                                                <span className="text-muted-foreground">{label}: </span>
+                                                <Badge
+                                                  variant="outline"
+                                                  className={cn(
+                                                    "cursor-pointer",
+                                                    getContractTypeBadgeColor(key),
+                                                    isActive && "ring-4 ring-primary"
+                                                  )}
+                                                  onClick={() => {
+                                                    setKaleidoscopeFilters((p) => ({
+                                                      ...p,
+                                                      type: p.type === key ? null : key,
+                                                    }));
+                                                  }}
+                                                >
+                                                  {count}
+                                                </Badge>
+                                              </div>
+                                            );
+                                          })}
+                                      </div>
+                                    </div>
+                                  </Card>
                                 </div>
 
                                 <div className="flex gap-4 overflow-x-auto pb-4">
@@ -6226,6 +6479,17 @@ export default function UniversitiesPage() {
                                   {renderColumn("БКО", bkoContracts, "bg-purple-100 border-purple-300", "text-purple-700", "bg-purple-200")}
                                   {renderColumn("ЦНТР", cntrContracts, "bg-cyan-100 border-cyan-300", "text-cyan-700", "bg-cyan-200")}
                                 </div>
+
+                                {/* Все архивные договоры под общей горизонтальной чертой */}
+                                {allArchivedContracts.length > 0 && (
+                                  <>
+                                    <Separator className="my-4" />
+                                    <p className="text-base font-medium text-muted-foreground mb-3">Архивные</p>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                      {allArchivedContracts.map(renderContractCard)}
+                                    </div>
+                                  </>
+                                )}
 
                                 {unassignedContracts.length > 0 && (
                                   <div className="mt-4">
@@ -6676,7 +6940,7 @@ export default function UniversitiesPage() {
                                                           </div>
 
                                                           {/* Метаданные */}
-                                                          <div className="flex items-center justify-end gap-2 pt-2 border-t text-xs text-muted-foreground">
+                                                          <div className="flex items-center justify-end gap-2 pt-2 border-t text-sm text-muted-foreground">
                                                             <Clock className="h-3.5 w-3.5" />
                                                             <span>{event.addedAt ? formatDate(event.addedAt) : "—"}</span>
                                                             {event.addedBy && <span>• {event.addedBy}</span>}
