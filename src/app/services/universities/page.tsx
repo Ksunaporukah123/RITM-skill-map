@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Progress } from "@/components/ui/progress";
-import { GraduationCap, ClipboardCheck, Users, Settings, ExternalLink, FileText, Calendar, Link2, Plus, ChevronDown, ChevronRight, Pencil, Trash2, Search, X, ChevronLeft, ChevronsLeft, ChevronsRight, AlertCircle, Mail, Send, CheckCircle2, Clock, MapPin, Building2, Archive, ArchiveRestore, Filter, SortAsc, SortDesc, BarChart3, MessageSquare, History, FileText as FileTextIcon, Edit3, Copy, Tag, Eye, EyeOff, Star, UserCheck, User, ArrowRight, HelpCircle, Handshake, MessageCircle, Phone } from "lucide-react";
+import { GraduationCap, ClipboardCheck, Users, Settings, ExternalLink, FileText, Calendar, Link2, Plus, ChevronDown, ChevronRight, Pencil, Trash2, Search, X, ChevronLeft, ChevronsLeft, ChevronsRight, AlertCircle, Mail, Send, CheckCircle2, Clock, MapPin, Building2, Archive, ArchiveRestore, Filter, SortAsc, SortDesc, BarChart3, MessageSquare, History, FileText as FileTextIcon, Edit3, Copy, Tag, Eye, EyeOff, Star, UserCheck, User, ArrowRight, HelpCircle, Handshake, MessageCircle, Phone, LayoutGrid, List } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { MultiSelect } from "@/components/ui/multi-select";
@@ -2191,6 +2191,10 @@ export default function UniversitiesPage() {
     cooperationLine: "drp" | "bko" | "cntr" | null;
     type: Contract["type"] | null;
   }>({ cooperationLine: null, type: null });
+  // Режим отображения калейдоскопа: канбан (колонки) или список
+  const [kaleidoscopeViewMode, setKaleidoscopeViewMode] = useState<"kanban" | "list">("kanban");
+  const [kaleidoscopeListCurrentPage, setKaleidoscopeListCurrentPage] = useState(1);
+  const [kaleidoscopeListItemsPerPage, setKaleidoscopeListItemsPerPage] = useState(10);
 
   // Коллапс строк в ленте мероприятий: Set id = свёрнута
   const [collapsedEventsFeed, setCollapsedEventsFeed] = useState<Set<string>>(new Set());
@@ -2217,7 +2221,13 @@ export default function UniversitiesPage() {
   useEffect(() => {
     if (!selectedUniversity || universityDetailTab !== "kaleidoscope") return;
     setKaleidoscopeFilters({ cooperationLine: null, type: null });
+    setKaleidoscopeListCurrentPage(1);
   }, [selectedUniversity, universityDetailTab]);
+
+  // Сброс страницы списка калейдоскопа при смене фильтров
+  useEffect(() => {
+    setKaleidoscopeListCurrentPage(1);
+  }, [kaleidoscopeFilters]);
 
   // Сброс страницы при смене фильтров ленты мероприятий
   useEffect(() => {
@@ -6472,8 +6482,231 @@ export default function UniversitiesPage() {
                                       </div>
                                     </div>
                                   </Card>
+                                  <Card className="p-3 shrink-0">
+                                    <div className="space-y-2">
+                                      <Label className="text-base font-semibold">Вид</Label>
+                                      <div className="flex gap-2">
+                                        <Tooltip>
+                                          <TooltipTrigger asChild>
+                                            <Button
+                                              variant={kaleidoscopeViewMode === "kanban" ? "secondary" : "outline"}
+                                              size="sm"
+                                              onClick={() => setKaleidoscopeViewMode("kanban")}
+                                              aria-pressed={kaleidoscopeViewMode === "kanban"}
+                                              className="gap-1.5"
+                                            >
+                                              <LayoutGrid className="h-4 w-4" />
+                                              Канбан
+                                            </Button>
+                                          </TooltipTrigger>
+                                          <TooltipContent>Колонки по линиям</TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                          <TooltipTrigger asChild>
+                                            <Button
+                                              variant={kaleidoscopeViewMode === "list" ? "secondary" : "outline"}
+                                              size="sm"
+                                              onClick={() => setKaleidoscopeViewMode("list")}
+                                              aria-pressed={kaleidoscopeViewMode === "list"}
+                                              className="gap-1.5"
+                                            >
+                                              <List className="h-4 w-4" />
+                                              Список
+                                            </Button>
+                                          </TooltipTrigger>
+                                          <TooltipContent>Таблица</TooltipContent>
+                                        </Tooltip>
+                                      </div>
+                                    </div>
+                                  </Card>
                                 </div>
 
+                                {kaleidoscopeViewMode === "list" ? (
+                                  <div className="space-y-4">
+                                    {filteredContracts.length === 0 ? (
+                                      <div className="border rounded-lg overflow-hidden p-8 text-center text-muted-foreground bg-muted/20">
+                                        Нет договоров по выбранным фильтрам
+                                      </div>
+                                    ) : (
+                                    <>
+                                    <div className="border rounded-lg overflow-hidden">
+                                      <Table>
+                                        <TableHeader>
+                                          <TableRow className="bg-muted/50">
+                                            <TableHead className="w-[80px] px-4">Линия</TableHead>
+                                            <TableHead className="w-[160px] px-4">Тип договора</TableHead>
+                                            <TableHead className="w-[180px] px-4">Номер / Дата</TableHead>
+                                            <TableHead className="w-[200px] px-4">Период действия</TableHead>
+                                            <TableHead className="w-[120px] px-4">Статус</TableHead>
+                                            <TableHead className="min-w-[140px] px-4">Ссылка на АСДД</TableHead>
+                                            <TableHead className="min-w-[220px] px-4">Документ</TableHead>
+                                          </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                          {(() => {
+                                            const listContracts = [
+                                              ...drpContracts.map((c) => ({ ...c, _line: "ДРП" })),
+                                              ...bkoContracts.map((c) => ({ ...c, _line: "БКО" })),
+                                              ...cntrContracts.map((c) => ({ ...c, _line: "ЦНТР" })),
+                                              ...unassignedContracts.map((c) => ({ ...c, _line: "—" })),
+                                              ...allArchivedContracts.map((c) => ({
+                                                ...c,
+                                                _line: c.cooperationLine ? cooperationLineLabels[c.cooperationLine] : "—",
+                                              })),
+                                            ];
+                                            const totalPages = Math.ceil(listContracts.length / kaleidoscopeListItemsPerPage) || 1;
+                                            const startIndex = (kaleidoscopeListCurrentPage - 1) * kaleidoscopeListItemsPerPage;
+                                            const paginatedContracts = listContracts.slice(startIndex, startIndex + kaleidoscopeListItemsPerPage);
+                                            return paginatedContracts.map((contract) => {
+                                            const isExpired = contract.period?.end ? new Date(contract.period.end) < new Date() : false;
+                                            const showExpired = isExpired && !contract.archived;
+                                            return (
+                                              <TableRow key={contract.id}>
+                                                <TableCell className="px-4 whitespace-normal">
+                                                  {contract.cooperationLine ? (
+                                                    <Badge variant="outline" className={cn("text-xs px-2 py-0.5", cooperationLineBadgeColors[contract.cooperationLine])}>
+                                                      {cooperationLineLabels[contract.cooperationLine]}
+                                                    </Badge>
+                                                  ) : (
+                                                    <span className="text-muted-foreground">—</span>
+                                                  )}
+                                                </TableCell>
+                                                <TableCell className="px-4 whitespace-normal">
+                                                  <Badge variant="outline" className={cn("text-xs px-2 py-0.5", getContractTypeBadgeColor(contract.type))}>
+                                                    {contractTypeLabels[contract.type]}
+                                                  </Badge>
+                                                </TableCell>
+                                                <TableCell className="px-4 whitespace-normal">
+                                                  <div className="flex flex-col gap-0.5">
+                                                    {contract.number && <span className="font-medium">{contract.number}</span>}
+                                                    {contract.date && (
+                                                      <span className="text-muted-foreground text-sm">{formatDate(contract.date)}</span>
+                                                    )}
+                                                    {!contract.number && !contract.date && "—"}
+                                                  </div>
+                                                </TableCell>
+                                                <TableCell className="px-4 whitespace-normal">
+                                                  {contract.period
+                                                    ? `${formatDate(contract.period.start)} — ${formatDate(contract.period.end)}`
+                                                    : "—"}
+                                                </TableCell>
+                                                <TableCell className="px-4 whitespace-normal">
+                                                  {contract.archived ? (
+                                                    <Badge variant="outline" className="text-xs px-2 py-0.5">Архивный</Badge>
+                                                  ) : showExpired ? (
+                                                    <Badge variant="destructive" className="text-xs px-2 py-0.5">Истёк срок</Badge>
+                                                  ) : (
+                                                    <Badge variant="outline" className="text-xs px-2 py-0.5 bg-green-50 text-green-700 border-green-200 dark:bg-green-950 dark:text-green-300 dark:border-green-800">Активный</Badge>
+                                                  )}
+                                                </TableCell>
+                                                <TableCell className="px-4 whitespace-normal max-w-[200px]">
+                                                  {contract.asddLink ? (
+                                                    <a href={contract.asddLink} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline break-all">
+                                                      {contract.asddLink}
+                                                    </a>
+                                                  ) : (
+                                                    "—"
+                                                  )}
+                                                </TableCell>
+                                                <TableCell className="px-4 whitespace-normal max-w-[280px]">
+                                                  {contract.contractFile ? (
+                                                    <a href={contract.contractFile} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline truncate block" title={contract.contractFile}>
+                                                      {contract.contractFile.split("/").pop()?.trim() || contract.contractFile}
+                                                    </a>
+                                                  ) : (
+                                                    "—"
+                                                  )}
+                                                </TableCell>
+                                              </TableRow>
+                                            );
+                                            });
+                                          })()}
+                                        </TableBody>
+                                      </Table>
+                                    </div>
+
+                                    {/* Пагинация списка договоров калейдоскопа */}
+                                    {(() => {
+                                      const listContractsLength = drpContracts.length + bkoContracts.length + cntrContracts.length + unassignedContracts.length + allArchivedContracts.length;
+                                      const totalPages = Math.ceil(listContractsLength / kaleidoscopeListItemsPerPage) || 1;
+                                      return (
+                                        <div className="flex items-center justify-between px-2">
+                                          <div className="flex items-center gap-2">
+                                            <Label htmlFor="kaleidoscope-list-items-per-page" className="text-sm text-muted-foreground">
+                                              Показать:
+                                            </Label>
+                                            <Select
+                                              value={kaleidoscopeListItemsPerPage.toString()}
+                                              onValueChange={(value) => {
+                                                setKaleidoscopeListItemsPerPage(Number(value));
+                                                setKaleidoscopeListCurrentPage(1);
+                                              }}
+                                            >
+                                              <SelectTrigger id="kaleidoscope-list-items-per-page" className="w-[80px]">
+                                                <SelectValue />
+                                              </SelectTrigger>
+                                              <SelectContent>
+                                                <SelectItem value="10">10</SelectItem>
+                                                <SelectItem value="25">25</SelectItem>
+                                                <SelectItem value="50">50</SelectItem>
+                                                <SelectItem value="100">100</SelectItem>
+                                              </SelectContent>
+                                            </Select>
+                                            <span className="text-sm text-muted-foreground">
+                                              из {listContractsLength}
+                                            </span>
+                                          </div>
+                                          <div className="flex items-center gap-2">
+                                            <span className="text-sm text-muted-foreground">
+                                              Страница {kaleidoscopeListCurrentPage} из {totalPages}
+                                            </span>
+                                            <div className="flex items-center gap-1">
+                                              <Button
+                                                variant="outline"
+                                                size="icon"
+                                                className="h-8 w-8"
+                                                onClick={() => setKaleidoscopeListCurrentPage(1)}
+                                                disabled={kaleidoscopeListCurrentPage === 1}
+                                              >
+                                                <ChevronsLeft className="h-4 w-4" />
+                                              </Button>
+                                              <Button
+                                                variant="outline"
+                                                size="icon"
+                                                className="h-8 w-8"
+                                                onClick={() => setKaleidoscopeListCurrentPage(kaleidoscopeListCurrentPage - 1)}
+                                                disabled={kaleidoscopeListCurrentPage === 1}
+                                              >
+                                                <ChevronLeft className="h-4 w-4" />
+                                              </Button>
+                                              <Button
+                                                variant="outline"
+                                                size="icon"
+                                                className="h-8 w-8"
+                                                onClick={() => setKaleidoscopeListCurrentPage(kaleidoscopeListCurrentPage + 1)}
+                                                disabled={kaleidoscopeListCurrentPage >= totalPages}
+                                              >
+                                                <ChevronRight className="h-4 w-4" />
+                                              </Button>
+                                              <Button
+                                                variant="outline"
+                                                size="icon"
+                                                className="h-8 w-8"
+                                                onClick={() => setKaleidoscopeListCurrentPage(totalPages)}
+                                                disabled={kaleidoscopeListCurrentPage >= totalPages}
+                                              >
+                                                <ChevronsRight className="h-4 w-4" />
+                                              </Button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      );
+                                    })()}
+                                    </>
+                                    )}
+                                  </div>
+                                ) : (
+                                <>
                                 <div className="flex gap-4 overflow-x-auto pb-4">
                                   {renderColumn("ДРП", drpContracts, "bg-blue-100 border-blue-300", "text-blue-700", "bg-blue-200")}
                                   {renderColumn("БКО", bkoContracts, "bg-purple-100 border-purple-300", "text-purple-700", "bg-purple-200")}
@@ -6500,6 +6733,8 @@ export default function UniversitiesPage() {
                                       {unassignedContracts.map(renderContractCard)}
                                     </div>
                                   </div>
+                                )}
+                                </>
                                 )}
                               </div>
                             );
