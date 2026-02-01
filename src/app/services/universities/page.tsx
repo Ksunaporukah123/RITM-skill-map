@@ -255,7 +255,7 @@ const mockUniversities: University[] = [
         date: "2020-03-15",
         period: { start: "2020-03-15", end: "2025-03-14" },
         asddLink: "https://asdd.example.com/contract/2020-001",
-        contractBranch: "Головной офис",
+        contractBranch: "Головной ВУЗ",
         cooperationLine: "drp"
       },
       { 
@@ -272,7 +272,7 @@ const mockUniversities: University[] = [
       },
     ],
     events: [
-      { id: "event-mgu-1", type: "careerDays", date: "2024-02-10", endDate: "2024-02-12", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов факультета вычислительной математики и кибернетики.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-01-25", addedBy: "Иванова Е.С." },
+      { id: "event-mgu-1", type: "careerDays", date: "2024-02-10", endDate: "2024-02-12", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов факультета вычислительной математики и кибернетики.", cooperationLine: "drp", branch: "Головной ВУЗ", addedAt: "2024-01-25", addedBy: "Иванова Е.С." },
       { id: "event-mgu-2", type: "expertParticipation", date: "2024-06-15", endDate: "2024-06-15", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите магистерских диссертаций.", cooperationLine: "bko", branch: "Московский филиал", addedAt: "2024-06-01", addedBy: "Петров А.В." },
     ],
     careerDays: true,
@@ -394,13 +394,13 @@ const mockUniversities: University[] = [
         number: "Д-2022-012",
         date: "2022-02-20",
         period: { start: "2022-02-20", end: "2027-02-19" },
-        contractBranch: "Головной офис",
+        contractBranch: "Головной ВУЗ",
         cooperationLine: "cntr"
       },
     ],
     events: [
       { id: "event-spbgu-1", type: "careerDays", date: "2024-03-20", endDate: "2024-03-22", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов экономического факультета СПбГУ.", cooperationLine: "bko", branch: "Санкт-Петербургский филиал", addedAt: "2024-03-05", addedBy: "Смирнова О.И." },
-      { id: "event-spbgu-2", type: "caseChampionships", date: "2024-05-25", endDate: "2024-05-27", status: "completed", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по финансовому моделированию.", cooperationLine: "cntr", branch: "Головной офис", addedAt: "2024-05-10", addedBy: "Козлов Д.П." },
+      { id: "event-spbgu-2", type: "caseChampionships", date: "2024-05-25", endDate: "2024-05-27", status: "completed", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по финансовому моделированию.", cooperationLine: "cntr", branch: "Головной ВУЗ", addedAt: "2024-05-10", addedBy: "Козлов Д.П." },
     ],
     careerDays: true,
     expertParticipation: false,
@@ -475,13 +475,13 @@ const mockUniversities: University[] = [
         number: "Д-2023-089",
         date: "2023-08-05",
         period: { start: "2023-08-05", end: "2028-08-04" },
-        contractBranch: "Головной офис",
+        contractBranch: "Головной ВУЗ",
         cooperationLine: "cntr"
       },
     ],
     events: [
       { id: "event-mfti-1", type: "expertParticipation", date: "2024-04-05", endDate: "2024-04-05", status: "completed", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на конференции по машинному обучению.", cooperationLine: "drp", branch: "Московский филиал", addedAt: "2024-03-20", addedBy: "Соколов А.Н." },
-      { id: "event-mfti-2", type: "caseChampionships", date: "2024-06-01", endDate: "2024-06-03", status: "completed", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по разработке финансовых алгоритмов.", cooperationLine: "bko", branch: "Головной офис", addedAt: "2024-05-15", addedBy: "Волкова М.К." },
+      { id: "event-mfti-2", type: "caseChampionships", date: "2024-06-01", endDate: "2024-06-03", status: "completed", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по разработке финансовых алгоритмов.", cooperationLine: "bko", branch: "Головной ВУЗ", addedAt: "2024-05-15", addedBy: "Волкова М.К." },
       { id: "event-mfti-3", type: "expertParticipation", date: "2024-11-10", endDate: "2024-11-10", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на защите дипломных проектов.", cooperationLine: "cntr", branch: "Центральный офис", addedAt: "2024-10-28", addedBy: "Новиков Р.С." },
     ],
     careerDays: false,
@@ -588,7 +588,7 @@ const mockUniversities: University[] = [
         date: "2018-11-20",
         period: { start: "2018-11-20", end: "2023-11-19" },
         asddLink: "https://asdd.example.com/contract/2018-056",
-        contractBranch: "Головной офис",
+        contractBranch: "Головной ВУЗ",
         cooperationLine: "drp"
       },
       { 
@@ -609,7 +609,7 @@ const mockUniversities: University[] = [
         date: "2022-07-22",
         period: { start: "2022-07-22", end: "2027-07-21" },
         asddLink: "https://asdd.example.com/contract/2022-067",
-        contractBranch: "Головной офис",
+        contractBranch: "Головной ВУЗ",
         cooperationLine: "drp"
       },
       { 
@@ -643,7 +643,7 @@ const mockUniversities: University[] = [
         number: "Д-2023-278",
         date: "2023-09-05",
         period: { start: "2023-09-05", end: "2028-09-04" },
-        contractBranch: "Головной офис",
+        contractBranch: "Головной ВУЗ",
         cooperationLine: "drp"
       },
       { 
@@ -665,7 +665,7 @@ const mockUniversities: University[] = [
         number: "Д-2022-334",
         date: "2022-12-20",
         period: { start: "2022-12-20", end: "2027-12-19" },
-        contractBranch: "Головной офис",
+        contractBranch: "Головной ВУЗ",
         cooperationLine: "bko"
       },
       { 
@@ -698,7 +698,7 @@ const mockUniversities: University[] = [
         date: "2022-09-15",
         period: { start: "2022-09-15", end: "2023-09-14" },
         asddLink: "https://asdd.example.com/contract/2022-189",
-        contractBranch: "Головной офис",
+        contractBranch: "Головной ВУЗ",
         contractFile: "contract-hse-internship-2022.pdf",
         cooperationLine: "bko",
         archived: true
@@ -734,7 +734,7 @@ const mockUniversities: University[] = [
         number: "Д-2024-118",
         date: "2024-03-05",
         period: { start: "2024-03-05", end: "2029-03-04" },
-        contractBranch: "Головной офис",
+        contractBranch: "Головной ВУЗ",
         cooperationLine: "drp"
       },
       { 
@@ -751,36 +751,36 @@ const mockUniversities: University[] = [
       },
     ],
     events: [
-      { id: "event-hse-1", type: "careerDays", date: "2024-03-15", endDate: "2024-03-17", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Проведены дни карьеры для студентов экономического факультета. В мероприятии приняли участие более 150 студентов 3-4 курсов. Были организованы мастер-классы по подготовке резюме, тренинги по прохождению собеседований и презентации карьерных треков в банке. Особый интерес вызвала секция по работе с корпоративными клиентами.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-03-01", addedBy: "Иванова Е.С." },
+      { id: "event-hse-1", type: "careerDays", date: "2024-03-15", endDate: "2024-03-17", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Проведены дни карьеры для студентов экономического факультета. В мероприятии приняли участие более 150 студентов 3-4 курсов. Были организованы мастер-классы по подготовке резюме, тренинги по прохождению собеседований и презентации карьерных треков в банке. Особый интерес вызвала секция по работе с корпоративными клиентами.", cooperationLine: "drp", branch: "Головной ВУЗ", addedAt: "2024-03-01", addedBy: "Иванова Е.С." },
       { id: "event-hse-2", type: "expertParticipation", date: "2024-04-20", endDate: "2024-04-20", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите дипломных работ по направлению 'Финансы и кредит'. Оценено 12 выпускных работ, из которых 4 рекомендованы к публикации. Дана обратная связь по практической применимости исследований в банковской сфере. Три студента получили приглашение на стажировку.", cooperationLine: "bko", branch: "Московский филиал", addedAt: "2024-04-05", addedBy: "Петров А.В." },
       { id: "event-hse-3", type: "caseChampionships", date: "2024-05-10", endDate: "2024-05-12", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по банковскому делу. В финал вышли 8 команд из 24 участвовавших. Победила команда студентов 3 курса с проектом по оптимизации процессов кредитования МСБ. Призовой фонд составил 300 000 рублей. Все финалисты получили приоритетное право на стажировку.", cooperationLine: "cntr", branch: "Центральный офис", addedAt: "2024-04-25", addedBy: "Смирнова О.И." },
       { id: "event-hse-4", type: "careerDays", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Запланированы дни карьеры для студентов IT-направления. Ожидается участие более 200 студентов. В программе: хакатон по разработке финтех-решений, воркшопы по машинному обучению в банкинге, нетворкинг-сессии с техническими лидерами банка. Подготовлены специальные треки для backend и frontend разработчиков.", cooperationLine: "drp", branch: "Санкт-Петербургский филиал", addedAt: "2024-09-10", addedBy: "Козлов Д.П." },
-      { id: "event-hse-5", type: "expertParticipation", date: "2024-10-15", endDate: "2024-10-15", status: "planned", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на международной конференции по финансовым технологиям. Запланирован доклад на тему «Трансформация банковских продуктов в эпоху AI». Ожидается участие представителей 15 университетов и 20 финансовых организаций. Будет организована панельная дискуссия с Q&A сессией.", cooperationLine: "bko", branch: "Головной офис", addedAt: "2024-09-30", addedBy: "Соколов А.Н." },
+      { id: "event-hse-5", type: "expertParticipation", date: "2024-10-15", endDate: "2024-10-15", status: "planned", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на международной конференции по финансовым технологиям. Запланирован доклад на тему «Трансформация банковских продуктов в эпоху AI». Ожидается участие представителей 15 университетов и 20 финансовых организаций. Будет организована панельная дискуссия с Q&A сессией.", cooperationLine: "bko", branch: "Головной ВУЗ", addedAt: "2024-09-30", addedBy: "Соколов А.Н." },
       { id: "event-hse-6", type: "caseChampionships", date: "2024-11-20", endDate: "2024-11-22", status: "planned", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Организация кейс-чемпионата по управлению рисками в банковской сфере. Тематика включает кредитные, операционные и рыночные риски. Приглашены команды из 10 ведущих вузов страны. Общий призовой фонд — 500 000 рублей. Победители получат возможность пройти стажировку в департаменте риск-менеджмента.", cooperationLine: "cntr", branch: "Московский филиал", addedAt: "2024-11-05", addedBy: "Волкова М.К." },
-      { id: "event-hse-7", type: "careerDays", date: "2024-12-05", endDate: "2024-12-07", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для выпускников магистратуры. Фокус на карьерные возможности в банковском секторе для специалистов с углублённой подготовкой. Запланированы индивидуальные консультации с HR-партнёрами, экскурсии в офисы банка, презентации лидерских программ развития. Ожидается участие 80+ магистрантов.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-11-20", addedBy: "Новиков Р.С." },
+      { id: "event-hse-7", type: "careerDays", date: "2024-12-05", endDate: "2024-12-07", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для выпускников магистратуры. Фокус на карьерные возможности в банковском секторе для специалистов с углублённой подготовкой. Запланированы индивидуальные консультации с HR-партнёрами, экскурсии в офисы банка, презентации лидерских программ развития. Ожидается участие 80+ магистрантов.", cooperationLine: "drp", branch: "Головной ВУЗ", addedAt: "2024-11-20", addedBy: "Новиков Р.С." },
       { id: "event-hse-8", type: "meeting", date: "2024-01-15", endDate: "2024-01-15", status: "completed", responsiblePerson: ["person-1"], comments: "Встреча с руководством факультета по вопросам расширения сотрудничества. Обсуждены новые форматы взаимодействия: создание совместной магистерской программы, организация практикумов на базе банка, привлечение преподавателей в качестве консультантов. Подписан протокол о намерениях на 2024 год.", cooperationLine: "bko", branch: "Центральный офис", addedAt: "2024-01-08", addedBy: "Морозова Т.И." },
       { id: "event-hse-9", type: "communication", date: "2024-02-01", endDate: "2024-02-01", status: "completed", responsiblePerson: ["person-2"], comments: "Презентация программ стажировок для студентов 2 курса. Проведена в формате онлайн-вебинара с интерактивными элементами. Подключились 180 студентов. Представлены 8 направлений стажировок, условия участия, карьерные перспективы. Получено 45 заявок на участие в отборе непосредственно после мероприятия.", cooperationLine: "cntr", branch: "Московский филиал", addedAt: "2024-01-22", addedBy: "Лебедева А.С." },
-      { id: "event-hse-10", type: "expertParticipation", date: "2024-02-20", endDate: "2024-02-20", status: "completed", responsiblePerson: ["person-3"], comments: "Экспертиза студенческих проектов по направлению «Финансовые технологии». Рассмотрено 15 проектов на различных стадиях готовности. Даны рекомендации по доработке для 8 команд. Три проекта отобраны для пилотирования в рамках акселератора банка. Выделено менторское сопровождение для перспективных команд.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-02-12", addedBy: "Федорова М.Д." },
+      { id: "event-hse-10", type: "expertParticipation", date: "2024-02-20", endDate: "2024-02-20", status: "completed", responsiblePerson: ["person-3"], comments: "Экспертиза студенческих проектов по направлению «Финансовые технологии». Рассмотрено 15 проектов на различных стадиях готовности. Даны рекомендации по доработке для 8 команд. Три проекта отобраны для пилотирования в рамках акселератора банка. Выделено менторское сопровождение для перспективных команд.", cooperationLine: "drp", branch: "Головной ВУЗ", addedAt: "2024-02-12", addedBy: "Федорова М.Д." },
       { id: "event-hse-11", type: "caseChampionships", date: "2024-03-01", endDate: "2024-03-03", status: "completed", responsiblePerson: ["person-4"], comments: "Кейс-чемпионат по корпоративным финансам. Участвовало 20 команд, в финал вышли 6 лучших. Кейс был посвящён оптимизации структуры капитала крупного промышленного холдинга. Победители получили денежные призы и приглашение на летнюю стажировку в инвестиционном блоке банка.", cooperationLine: "bko", branch: "Санкт-Петербургский филиал", addedAt: "2024-02-18", addedBy: "Иванова Е.С." },
-      { id: "event-hse-12", type: "careerDays", date: "2024-04-05", endDate: "2024-04-07", status: "completed", responsiblePerson: ["person-5"], comments: "Дни карьеры для магистрантов программы «Финансы». Трёхдневное мероприятие включало: день знакомства с корпоративной культурой, день погружения в бизнес-процессы, день карьерного планирования. Участвовало 65 магистрантов. 28 из них подали заявки на позиции junior-аналитиков.", cooperationLine: "cntr", branch: "Головной офис", addedAt: "2024-03-22", addedBy: "Петров А.В." },
+      { id: "event-hse-12", type: "careerDays", date: "2024-04-05", endDate: "2024-04-07", status: "completed", responsiblePerson: ["person-5"], comments: "Дни карьеры для магистрантов программы «Финансы». Трёхдневное мероприятие включало: день знакомства с корпоративной культурой, день погружения в бизнес-процессы, день карьерного планирования. Участвовало 65 магистрантов. 28 из них подали заявки на позиции junior-аналитиков.", cooperationLine: "cntr", branch: "Головной ВУЗ", addedAt: "2024-03-22", addedBy: "Петров А.В." },
       { id: "event-hse-13", type: "meeting", date: "2024-04-18", endDate: "2024-04-18", status: "completed", responsiblePerson: ["person-6"], comments: "Совещание по плану совместных мероприятий на 2024 год. Утверждён календарь из 24 мероприятий. Согласованы бюджеты на кейс-чемпионаты, дни карьеры и научные конференции. Определены ответственные лица с обеих сторон. Запланированы ежеквартальные статус-встречи для контроля выполнения.", cooperationLine: "drp", branch: "Московский филиал", addedAt: "2024-04-08", addedBy: "Смирнова О.И." },
       { id: "event-hse-14", type: "communication", date: "2024-05-05", endDate: "2024-05-05", status: "completed", responsiblePerson: ["person-7"], comments: "Вебинар о карьерных возможностях в банке для студентов всех направлений. Спикеры — руководители ключевых подразделений банка. Охвачены темы: розничный бизнес, корпоративный блок, IT, риски, операционная деятельность. Зарегистрировалось 250 участников, средняя продолжительность просмотра — 75 минут.", cooperationLine: "bko", branch: "Центральный офис", addedAt: "2024-04-28", addedBy: "Козлов Д.П." },
-      { id: "event-hse-15", type: "expertParticipation", date: "2024-05-22", endDate: "2024-05-22", status: "completed", responsiblePerson: ["person-1"], comments: "Участие в жюри олимпиады по экономике среди студентов. Оценивались решения кейсов по макроэкономике и финансовым рынкам. В олимпиаде приняли участие 120 студентов из 8 вузов. Вручены специальные призы от банка трём лучшим участникам с приглашением на экскурсию в головной офис.", cooperationLine: "cntr", branch: "Головной офис", addedAt: "2024-05-12", addedBy: "Соколов А.Н." },
+      { id: "event-hse-15", type: "expertParticipation", date: "2024-05-22", endDate: "2024-05-22", status: "completed", responsiblePerson: ["person-1"], comments: "Участие в жюри олимпиады по экономике среди студентов. Оценивались решения кейсов по макроэкономике и финансовым рынкам. В олимпиаде приняли участие 120 студентов из 8 вузов. Вручены специальные призы от банка трём лучшим участникам с приглашением на экскурсию в головной ВУЗ.", cooperationLine: "cntr", branch: "Головной ВУЗ", addedAt: "2024-05-12", addedBy: "Соколов А.Н." },
       { id: "event-hse-16", type: "caseChampionships", date: "2024-06-10", endDate: "2024-06-12", status: "in_progress", responsiblePerson: ["person-2"], comments: "Кейс-чемпионат по риск-менеджменту в активной фазе. Регистрация завершена — подано 32 заявки от команд. Кейс посвящён разработке модели оценки кредитного риска для сегмента МСБ. Полуфиналы пройдут онлайн, финал — очно в офисе банка. Призовой фонд — 400 000 рублей.", cooperationLine: "drp", branch: "Санкт-Петербургский филиал", addedAt: "2024-05-28", addedBy: "Волкова М.К." },
-      { id: "event-hse-17", type: "careerDays", date: "2024-07-01", endDate: "2024-07-03", status: "planned", responsiblePerson: ["person-3"], comments: "Летняя школа «Карьера в банке» для студентов 1-3 курсов. Интенсивная трёхдневная программа: лекции от топ-менеджеров, бизнес-симуляции, работа в командах над мини-проектами. Планируется участие 100 студентов. Лучшие участники получат возможность досрочного зачисления в кадровый резерв.", cooperationLine: "bko", branch: "Головной офис", addedAt: "2024-06-18", addedBy: "Новиков Р.С." },
+      { id: "event-hse-17", type: "careerDays", date: "2024-07-01", endDate: "2024-07-03", status: "planned", responsiblePerson: ["person-3"], comments: "Летняя школа «Карьера в банке» для студентов 1-3 курсов. Интенсивная трёхдневная программа: лекции от топ-менеджеров, бизнес-симуляции, работа в командах над мини-проектами. Планируется участие 100 студентов. Лучшие участники получат возможность досрочного зачисления в кадровый резерв.", cooperationLine: "bko", branch: "Головной ВУЗ", addedAt: "2024-06-18", addedBy: "Новиков Р.С." },
       { id: "event-hse-18", type: "meeting", date: "2024-07-15", endDate: "2024-07-15", status: "planned", responsiblePerson: ["person-4"], comments: "Планирование осенних мероприятий с кафедрой банковского дела. На повестке: согласование тем для гостевых лекций, обсуждение формата осеннего кейс-чемпионата, планирование совместной научной конференции. Участвуют заведующий кафедрой, ведущие преподаватели и представители HR-блока банка.", cooperationLine: "cntr", branch: "Московский филиал", addedAt: "2024-07-05", addedBy: "Морозова Т.И." },
       { id: "event-hse-19", type: "communication", date: "2024-08-20", endDate: "2024-08-20", status: "planned", responsiblePerson: ["person-5"], comments: "Онлайн-встреча с кураторами студенческих групп перед началом учебного года. Цель — информирование о программах сотрудничества банка с университетом, планах на семестр, возможностях для студентов. Кураторы получат информационные материалы для распространения среди студентов.", cooperationLine: "drp", branch: "Центральный офис", addedAt: "2024-08-08", addedBy: "Лебедева А.С." },
-      { id: "event-hse-20", type: "expertParticipation", date: "2024-09-10", endDate: "2024-09-10", status: "planned", responsiblePerson: ["person-6"], comments: "Экспертиза магистерских работ по направлению БКО. Планируется оценка 18 работ на тему управления банковскими операциями и клиентским опытом. Эксперты дадут развёрнутую обратную связь и рекомендации по развитию исследований. Лучшие работы будут рекомендованы к публикации в отраслевых журналах.", cooperationLine: "bko", branch: "Головной офис", addedAt: "2024-08-28", addedBy: "Федорова М.Д." },
+      { id: "event-hse-20", type: "expertParticipation", date: "2024-09-10", endDate: "2024-09-10", status: "planned", responsiblePerson: ["person-6"], comments: "Экспертиза магистерских работ по направлению БКО. Планируется оценка 18 работ на тему управления банковскими операциями и клиентским опытом. Эксперты дадут развёрнутую обратную связь и рекомендации по развитию исследований. Лучшие работы будут рекомендованы к публикации в отраслевых журналах.", cooperationLine: "bko", branch: "Головной ВУЗ", addedAt: "2024-08-28", addedBy: "Федорова М.Д." },
       { id: "event-hse-21", type: "caseChampionships", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-7"], comments: "Кейс-чемпионат по устойчивому развитию и ESG в банковской сфере. Актуальная тематика привлекает повышенный интерес студентов. Планируется участие команд из 12 вузов. Кейс разработан совместно с ESG-подразделением банка. Призёры получат возможность стажировки в проектах устойчивого развития.", cooperationLine: "cntr", branch: "Санкт-Петербургский филиал", addedAt: "2024-09-12", addedBy: "Иванова Е.С." },
-      { id: "event-hse-22", type: "careerDays", date: "2024-10-10", endDate: "2024-10-12", status: "planned", responsiblePerson: ["person-1"], comments: "Осенние дни карьеры для бакалавров 4 курса — целевой аудитории для программы Graduate Recruitment. Программа включает: ярмарку вакансий, speed-dating с руководителями подразделений, воркшопы по soft skills. Ожидается участие 180+ студентов. Цель — закрыть 40 позиций молодых специалистов.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-09-26", addedBy: "Петров А.В." },
+      { id: "event-hse-22", type: "careerDays", date: "2024-10-10", endDate: "2024-10-12", status: "planned", responsiblePerson: ["person-1"], comments: "Осенние дни карьеры для бакалавров 4 курса — целевой аудитории для программы Graduate Recruitment. Программа включает: ярмарку вакансий, speed-dating с руководителями подразделений, воркшопы по soft skills. Ожидается участие 180+ студентов. Цель — закрыть 40 позиций молодых специалистов.", cooperationLine: "drp", branch: "Головной ВУЗ", addedAt: "2024-09-26", addedBy: "Петров А.В." },
       { id: "event-hse-23", type: "meeting", date: "2024-10-25", endDate: "2024-10-25", status: "planned", responsiblePerson: ["person-2"], comments: "Подведение итогов года сотрудничества с руководством факультета. Будут представлены метрики эффективности: количество проведённых мероприятий, охват студентов, конверсия в стажёры и сотрудники. Обсуждение планов на 2025 год и новых форматов сотрудничества.", cooperationLine: "bko", branch: "Московский филиал", addedAt: "2024-10-14", addedBy: "Смирнова О.И." },
       { id: "event-hse-24", type: "communication", date: "2024-11-05", endDate: "2024-11-05", status: "planned", responsiblePerson: ["person-3"], comments: "Информационная рассылка о программах стажировок 2025 года. Охват — все студенты 2-4 курсов профильных направлений (около 1500 человек). В рассылке: описание программ, сроки подачи заявок, истории успеха прошлых стажёров. Запланирована серия reminder-писем.", cooperationLine: "cntr", branch: "Центральный офис", addedAt: "2024-10-25", addedBy: "Козлов Д.П." },
-      { id: "event-hse-25", type: "expertParticipation", date: "2024-11-18", endDate: "2024-11-18", status: "planned", responsiblePerson: ["person-4"], comments: "Участие в межвузовской конференции «Банк и университет: модели эффективного партнёрства». Запланирован доклад о лучших практиках сотрудничества и совместной подготовки кадров. Ожидается участие представителей 25 вузов и 15 банков. Хорошая площадка для обмена опытом.", cooperationLine: "drp", branch: "Головной офис", addedAt: "2024-11-05", addedBy: "Соколов А.Н." },
+      { id: "event-hse-25", type: "expertParticipation", date: "2024-11-18", endDate: "2024-11-18", status: "planned", responsiblePerson: ["person-4"], comments: "Участие в межвузовской конференции «Банк и университет: модели эффективного партнёрства». Запланирован доклад о лучших практиках сотрудничества и совместной подготовки кадров. Ожидается участие представителей 25 вузов и 15 банков. Хорошая площадка для обмена опытом.", cooperationLine: "drp", branch: "Головной ВУЗ", addedAt: "2024-11-05", addedBy: "Соколов А.Н." },
       { id: "event-hse-26", type: "caseChampionships", date: "2024-12-02", endDate: "2024-12-04", status: "planned", responsiblePerson: ["person-5"], comments: "Зимний кейс-чемпионат по цифровым продуктам и инновациям в банкинге. Кейс разработан продуктовыми командами банка на основе реальных бизнес-задач. Участники предложат решения по улучшению мобильного приложения и внедрению новых цифровых сервисов. Призовой фонд — 350 000 рублей.", cooperationLine: "bko", branch: "Санкт-Петербургский филиал", addedAt: "2024-11-20", addedBy: "Волкова М.К." },
-      { id: "event-hse-27", type: "careerDays", date: "2024-12-15", endDate: "2024-12-17", status: "planned", responsiblePerson: ["person-6"], comments: "Дни карьеры для выпускников бакалавриата — завершающее крупное мероприятие года. Программа адаптирована под студентов, заканчивающих обучение зимой. Особый фокус на программы management trainee и позиции с быстрым карьерным ростом. Планируется участие 120 студентов.", cooperationLine: "cntr", branch: "Головной офис", addedAt: "2024-12-02", addedBy: "Новиков Р.С." },
+      { id: "event-hse-27", type: "careerDays", date: "2024-12-15", endDate: "2024-12-17", status: "planned", responsiblePerson: ["person-6"], comments: "Дни карьеры для выпускников бакалавриата — завершающее крупное мероприятие года. Программа адаптирована под студентов, заканчивающих обучение зимой. Особый фокус на программы management trainee и позиции с быстрым карьерным ростом. Планируется участие 120 студентов.", cooperationLine: "cntr", branch: "Головной ВУЗ", addedAt: "2024-12-02", addedBy: "Новиков Р.С." },
       { id: "event-hse-28", type: "meeting", date: "2025-01-20", endDate: "2025-01-20", status: "planned", responsiblePerson: ["person-7"], comments: "Стартовая встреча по плану мероприятий 2025 года. Презентация стратегии работы с вузами, утверждение календаря мероприятий, распределение бюджетов и ответственных. Планируется расширить сотрудничество — добавить 3 новых формата мероприятий и увеличить охват студентов на 30%.", cooperationLine: "drp", branch: "Московский филиал", addedAt: "2025-01-10", addedBy: "Морозова Т.И." },
       { id: "event-hse-29", type: "communication", date: "2025-02-10", endDate: "2025-02-10", status: "planned", responsiblePerson: ["person-1"], comments: "Презентация летних стажировок для магистрантов первого года обучения. Онлайн-формат с возможностью задать вопросы напрямую HR-специалистам и бывшим стажёрам. Представлены 12 направлений стажировок с описанием задач, команд и карьерных перспектив. Ожидается 150+ участников.", cooperationLine: "bko", branch: "Центральный офис", addedAt: "2025-01-28", addedBy: "Лебедева А.С." },
-      { id: "event-hse-30", type: "expertParticipation", date: "2025-03-05", endDate: "2025-03-05", status: "planned", responsiblePerson: ["person-2"], comments: "Экспертная сессия по тематике ЦНТР — центров научно-технологического развития. Обсуждение перспективных направлений сотрудничества: совместные R&D проекты, создание лабораторий, привлечение студентов к исследовательской работе. Участвуют представители научного блока университета и инновационного подразделения банка.", cooperationLine: "cntr", branch: "Головной офис", addedAt: "2025-02-22", addedBy: "Федорова М.Д." },
+      { id: "event-hse-30", type: "expertParticipation", date: "2025-03-05", endDate: "2025-03-05", status: "planned", responsiblePerson: ["person-2"], comments: "Экспертная сессия по тематике ЦНТР — центров научно-технологического развития. Обсуждение перспективных направлений сотрудничества: совместные R&D проекты, создание лабораторий, привлечение студентов к исследовательской работе. Участвуют представители научного блока университета и инновационного подразделения банка.", cooperationLine: "cntr", branch: "Головной ВУЗ", addedAt: "2025-02-22", addedBy: "Федорова М.Д." },
     ],
     careerDays: true,
     expertParticipation: true,
@@ -1407,7 +1407,7 @@ const mockUniversities: University[] = [
         date: "2023-03-28",
         period: { start: "2023-03-28", end: "2028-03-27" },
         asddLink: "https://asdd.example.com/contract/2023-156",
-        contractBranch: "Головной офис"
+        contractBranch: "Головной ВУЗ"
       },
     ],
     careerDays: false,
@@ -1478,7 +1478,7 @@ const mockUniversities: University[] = [
         number: "Д-2021-198",
         date: "2021-09-11",
         period: { start: "2021-09-11", end: "2026-09-10" },
-        contractBranch: "Головной офис"
+        contractBranch: "Головной ВУЗ"
       },
     ],
     careerDays: true,
@@ -1616,7 +1616,7 @@ const mockUniversities: University[] = [
         number: "Д-2023-234",
         date: "2023-05-14",
         period: { start: "2023-05-14", end: "2028-05-13" },
-        contractBranch: "Головной офис"
+        contractBranch: "Головной ВУЗ"
       },
     ],
     careerDays: true,
@@ -1678,7 +1678,7 @@ const mockUniversities: University[] = [
         date: "2020-06-03",
         period: { start: "2020-06-03", end: "2025-06-02" },
         asddLink: "https://asdd.example.com/contract/2020-178",
-        contractBranch: "Головной офис"
+        contractBranch: "Головной ВУЗ"
       },
       { 
         id: "cont-19", 
@@ -1697,7 +1697,7 @@ const mockUniversities: University[] = [
         date: "2023-01-27",
         period: { start: "2023-01-27", end: "2028-01-26" },
         asddLink: "https://asdd.example.com/contract/2023-112",
-        contractBranch: "Головной офис"
+        contractBranch: "Головной ВУЗ"
       },
     ],
     careerDays: true,
@@ -1865,7 +1865,7 @@ const mockUniversities: University[] = [
         date: "2023-09-07",
         period: { start: "2023-09-07", end: "2028-09-06" },
         asddLink: "https://asdd.example.com/contract/2023-298",
-        contractBranch: "Головной офис"
+        contractBranch: "Головной ВУЗ"
       },
     ],
     careerDays: true,
@@ -2037,11 +2037,13 @@ export default function UniversitiesPage() {
   // Состояние для администрирования
   const [universities, setUniversities] = useState<University[]>(mockUniversities);
   const [selectedUniversity, setSelectedUniversity] = useState<string | null>(null);
-  const [universityDetailTab, setUniversityDetailTab] = useState<"general" | "contracts" | "kaleidoscope" | "eventsFeed" | "events" | "staff" | "bko" | "cntr">("general");
+  const [universityDetailTab, setUniversityDetailTab] = useState<"general" | "contracts" | "kaleidoscope" | "eventsFeed" | "events" | "staff" | "bko" | "cntr" | "drpCabinet">("general");
   const [generalSubTab, setGeneralSubTab] = useState<"main" | "branches">("main");
   const [staffSubTab, setStaffSubTab] = useState<"interns" | "practitioners">("interns");
   const [kaleidoscopeSubTab, setKaleidoscopeSubTab] = useState<"drp" | "bko" | "cntr">("drp");
   const [cntrSubTab, setCntrSubTab] = useState<"infrastructure" | "projects" | "accelerator" | "events" | "agreements" | "educational">("infrastructure");
+  const [drpCabinetSubTab, setDrpCabinetSubTab] = useState<"general" | "events" | "contracts" | "staff">("general");
+  const [drpCabinetGeneralSubTab, setDrpCabinetGeneralSubTab] = useState<"main" | "branches">("main");
   
   // Состояние для добавления элемента инфраструктуры ЦНТР
   const [addInfrastructureDialogOpen, setAddInfrastructureDialogOpen] = useState(false);
@@ -2564,6 +2566,10 @@ export default function UniversitiesPage() {
     responsible: [],
   });
   
+  // Открыто ли модальное окно линии/мероприятия/договора из вкладки «Личный кабинет ДРП» (только ДРП)
+  const [isDrpCabinetCooperationLineDialog, setIsDrpCabinetCooperationLineDialog] = useState(false);
+  const [isDrpCabinetEventDialog, setIsDrpCabinetEventDialog] = useState(false);
+  const [isDrpCabinetContractDialog, setIsDrpCabinetContractDialog] = useState(false);
   // Состояния для модального окна линии сотрудничества головного ВУЗа
   const [isMainCooperationLineDialogOpen, setIsMainCooperationLineDialogOpen] = useState(false);
   const [newCooperationLineForMain, setNewCooperationLineForMain] = useState<CooperationLineRecord>({
@@ -3435,7 +3441,7 @@ export default function UniversitiesPage() {
       status: newEvent.status,
       comments: newEvent.comments.trim() || undefined,
       responsiblePerson: newEvent.responsiblePerson,
-      cooperationLine: newEvent.cooperationLine || undefined,
+      cooperationLine: (isDrpCabinetEventDialog ? "drp" : newEvent.cooperationLine) || undefined,
       addedAt: new Date().toISOString().split("T")[0],
     };
     const university = universities.find(u => u.id === universityId);
@@ -3446,6 +3452,7 @@ export default function UniversitiesPage() {
       ));
       setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
       setIsEventDialogOpen(false);
+      setIsDrpCabinetEventDialog(false);
     }
   };
   
@@ -3477,7 +3484,7 @@ export default function UniversitiesPage() {
       .find(u => u.id === editingEvent.universityId)
       ?.events?.map(e => 
         e.id === editingEvent.event.id 
-          ? { ...e, type: newEvent.type as "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication", date: newEvent.date, endDate: newEvent.endDate, status: newEvent.status, comments: newEvent.comments.trim() || undefined, responsiblePerson: newEvent.responsiblePerson, cooperationLine: newEvent.cooperationLine || undefined }
+          ? { ...e, type: newEvent.type as "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication", date: newEvent.date, endDate: newEvent.endDate, status: newEvent.status, comments: newEvent.comments.trim() || undefined, responsiblePerson: newEvent.responsiblePerson, cooperationLine: (isDrpCabinetEventDialog ? "drp" : newEvent.cooperationLine) || undefined }
           : e
       ) || [];
     setUniversities(universities.map(u => 
@@ -3486,6 +3493,7 @@ export default function UniversitiesPage() {
     setEditingEvent(null);
     setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
     setIsEventDialogOpen(false);
+    setIsDrpCabinetEventDialog(false);
   };
 
   // Добавление договора в табе
@@ -3506,6 +3514,7 @@ export default function UniversitiesPage() {
       } : undefined,
       asddLink: newContractForTab.asddLink.trim() || undefined,
       contractBranch: newContractForTab.contractBranch || undefined,
+      cooperationLine: isDrpCabinetContractDialog ? "drp" : undefined,
     };
     const university = universities.find(u => u.id === universityId);
     if (university) {
@@ -3515,6 +3524,7 @@ export default function UniversitiesPage() {
       ));
       setNewContractForTab({ type: "cooperation", hasContract: true, contractFile: "", number: "", date: "", period: { start: "", end: "" }, asddLink: "", contractBranch: "" });
       setIsContractDialogOpen(false);
+      setIsDrpCabinetContractDialog(false);
     }
   };
 
@@ -3560,6 +3570,7 @@ export default function UniversitiesPage() {
               } : undefined,
               asddLink: newContractForTab.asddLink.trim() || undefined,
               contractBranch: newContractForTab.contractBranch || undefined,
+              cooperationLine: isDrpCabinetContractDialog ? "drp" : c.cooperationLine,
             }
           : c
       ) || [];
@@ -3569,6 +3580,7 @@ export default function UniversitiesPage() {
     setEditingContract(null);
     setNewContractForTab({ type: "cooperation", hasContract: true, contractFile: "", number: "", date: "", period: { start: "", end: "" }, asddLink: "", contractBranch: "" });
     setIsContractDialogOpen(false);
+    setIsDrpCabinetContractDialog(false);
   };
 
   // Удаление договора в табе
@@ -5109,7 +5121,7 @@ export default function UniversitiesPage() {
                     <Separator />
                     <CardContent className="overflow-x-hidden">
                       <Tabs value={universityDetailTab} onValueChange={(v) => setUniversityDetailTab(v as typeof universityDetailTab)} className="w-full">
-                        <TabsList className="grid w-full grid-cols-8">
+                        <TabsList className="grid w-full grid-cols-9">
                           <TabsTrigger value="general">Общая информация</TabsTrigger>
                           <TabsTrigger value="contracts">Договорная база</TabsTrigger>
                           <TabsTrigger value="kaleidoscope">Калейдоскоп</TabsTrigger>
@@ -5118,6 +5130,7 @@ export default function UniversitiesPage() {
                           <TabsTrigger value="staff">Кадровые показатели</TabsTrigger>
                           <TabsTrigger value="bko">Договорная база БКО</TabsTrigger>
                           <TabsTrigger value="cntr">ЦНТР</TabsTrigger>
+                          <TabsTrigger value="drpCabinet">Личный кабинет ДРП</TabsTrigger>
                         </TabsList>
                         
                         {/* Таб 1: Общая информация */}
@@ -6529,12 +6542,17 @@ export default function UniversitiesPage() {
                                       </div>
                                     ) : (
                                     <>
+                                    <div className="text-sm text-muted-foreground mb-2">
+                                      Найдено: <span className="font-semibold text-foreground">{filteredContracts.length}</span>{" "}
+                                      {filteredContracts.length === 1 ? "договор" : filteredContracts.length >= 2 && filteredContracts.length <= 4 ? "договора" : "договоров"}
+                                    </div>
                                     <div className="border rounded-lg overflow-hidden">
                                       <Table>
                                         <TableHeader>
                                           <TableRow className="bg-muted/50">
                                             <TableHead className="w-[80px] px-4">Линия</TableHead>
                                             <TableHead className="w-[160px] px-4">Тип договора</TableHead>
+                                            <TableHead className="w-[160px] px-4">ВУЗ/филиал ВУЗА</TableHead>
                                             <TableHead className="w-[180px] px-4">Номер / Дата</TableHead>
                                             <TableHead className="w-[200px] px-4">Период действия</TableHead>
                                             <TableHead className="w-[120px] px-4">Статус</TableHead>
@@ -6575,6 +6593,15 @@ export default function UniversitiesPage() {
                                                   <Badge variant="outline" className={cn("text-xs px-2 py-0.5", getContractTypeBadgeColor(contract.type))}>
                                                     {contractTypeLabels[contract.type]}
                                                   </Badge>
+                                                </TableCell>
+                                                <TableCell className="px-4 whitespace-normal">
+                                                  {contract.contractBranch ? (
+                                                    <Badge variant="secondary" className="text-xs px-2 py-0.5">
+                                                      {contract.contractBranch}
+                                                    </Badge>
+                                                  ) : (
+                                                    <span className="text-muted-foreground">—</span>
+                                                  )}
                                                 </TableCell>
                                                 <TableCell className="px-4 whitespace-normal">
                                                   <div className="flex flex-col gap-0.5">
@@ -7122,7 +7149,7 @@ export default function UniversitiesPage() {
                                                       {/* Развёрнутая информация */}
                                                       {isExpanded && (
                                                         <div className="pt-2.5 mt-2 border-t space-y-2.5">
-                                                          {/* Тег Головной офис / Филиал */}
+                                                          {/* Тег Головной ВУЗ / Филиал */}
                                                           {event.branch && (
                                                             <Badge variant="secondary" className="text-xs">
                                                               {event.branch}
@@ -13742,6 +13769,850 @@ export default function UniversitiesPage() {
                             </div>
                           </Tabs>
                         </TabsContent>
+                        {/* Таб: Личный кабинет ДРП */}
+                        <TabsContent value="drpCabinet" className="space-y-4 mt-4">
+                          {(() => {
+                            if (!selectedUniversity) {
+                              return (
+                                <Card>
+                                  <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+                                    <GraduationCap className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                                    <h3 className="text-lg font-semibold mb-2">Выберите ВУЗ</h3>
+                                    <p className="text-muted-foreground text-sm">Выберите ВУЗ из списка слева, чтобы просмотреть личный кабинет ДРП</p>
+                                  </CardContent>
+                                </Card>
+                              );
+                            }
+                            const university = universities.find((u) => u.id === selectedUniversity);
+                            if (!university) {
+                              return (
+                                <Card>
+                                  <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+                                    <GraduationCap className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                                    <h3 className="text-lg font-semibold mb-2">Данные ВУЗа не найдены</h3>
+                                    <p className="text-muted-foreground text-sm">Выбранный ВУЗ не найден в списке</p>
+                                  </CardContent>
+                                </Card>
+                              );
+                            }
+                            const drpCooperationLinesFromArray = (university.cooperationLines || []).filter((r) => r.line === "drp");
+                            const hasLegacyDrp = Array.isArray(university.cooperationLine)
+                              ? university.cooperationLine.includes("drp")
+                              : university.cooperationLine === "drp";
+                            const drpCooperationLines = drpCooperationLinesFromArray.length > 0
+                              ? drpCooperationLinesFromArray
+                              : hasLegacyDrp
+                                ? [{ id: "legacy-drp", line: "drp" as const, year: university.cooperationLineYear ?? new Date().getFullYear(), responsible: [] }]
+                                : [];
+                            const drpEvents = (university.events || []).filter((e) => e.cooperationLine === "drp");
+                            const drpContracts = (university.contracts || []).filter((c) => c.cooperationLine === "drp");
+                            return (
+                              <div key={selectedUniversity} className="space-y-4">
+                                <Tabs value={drpCabinetSubTab} onValueChange={(v) => setDrpCabinetSubTab(v as typeof drpCabinetSubTab)} className="w-full">
+                                  <TabsList className="grid w-full grid-cols-4">
+                                    <TabsTrigger value="general">Общая информация</TabsTrigger>
+                                    <TabsTrigger value="events">Мероприятия</TabsTrigger>
+                                    <TabsTrigger value="contracts">Договорная база</TabsTrigger>
+                                    <TabsTrigger value="staff">Кадровые показатели</TabsTrigger>
+                                  </TabsList>
+
+                                  {/* Подтаб: Общая информация (как на вкладке «Общая информация»: Головной ВУЗ / Филиалы ВУза + контакты) */}
+                                  <TabsContent value="general" className="space-y-4 mt-4">
+                                    <Tabs value={drpCabinetGeneralSubTab} onValueChange={(v) => setDrpCabinetGeneralSubTab(v as "main" | "branches")} className="w-full">
+                                      <TabsList className="grid w-full grid-cols-2">
+                                        <TabsTrigger value="main">Головной ВУЗ</TabsTrigger>
+                                        <TabsTrigger value="branches" className="flex items-center gap-2">
+                                          Филиалы ВУЗа
+                                          {university.branchCurators && university.branchCurators.length > 0 && (
+                                            <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
+                                              {university.branchCurators.length}
+                                            </Badge>
+                                          )}
+                                        </TabsTrigger>
+                                      </TabsList>
+
+                                      {/* Головной ВУЗ — только линии ДРП с контактами */}
+                                      <TabsContent value="main" className="space-y-4 mt-4">
+                                        <div className="flex items-center justify-end w-full">
+                                          <Button
+                                            onClick={() => {
+                                              setIsDrpCabinetCooperationLineDialog(true);
+                                              setNewCooperationLineForMain({
+                                                id: `clr-${Date.now()}`,
+                                                line: "drp",
+                                                year: new Date().getFullYear(),
+                                                responsible: [],
+                                              });
+                                              setEditingMainCooperationLine(null);
+                                              setIsMainCooperationLineDialogOpen(true);
+                                            }}
+                                            size="sm"
+                                            disabled={!selectedUniversity}
+                                          >
+                                            <Plus className="mr-2 h-4 w-4" />
+                                            Добавить линию сотрудничества
+                                          </Button>
+                                        </div>
+                                        {drpCooperationLines.length > 0 ? (
+                                          <div className="space-y-3">
+                                            {drpCooperationLines.map((record, index) => (
+                                              <Card key={record.id || index} className="p-3">
+                                                <div className="flex items-start justify-between gap-3">
+                                                  <div className="flex-1 space-y-1.5">
+                                                    <div className="flex items-center gap-2 flex-wrap">
+                                                      <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(record.line))}>
+                                                        {getCooperationLineLabel(record.line)}
+                                                      </Badge>
+                                                      <div className="flex items-center gap-2">
+                                                        <Label className="text-sm text-muted-foreground">Год начала сотрудничества:</Label>
+                                                        <span className="text-base font-medium text-foreground">{record.year}</span>
+                                                      </div>
+                                                    </div>
+                                                    {record.responsible && record.responsible.length > 0 && (
+                                                      <div className="flex items-center gap-2">
+                                                        <Label className="text-sm font-semibold">Ответственное лицо:</Label>
+                                                        <div className="flex flex-wrap gap-3">
+                                                          {record.responsible.map((personId, personIndex) => {
+                                                            const person = responsiblePersons.find(p => p.value === personId);
+                                                            return person ? (
+                                                              <div key={personIndex} className="flex items-center gap-2">
+                                                                <Avatar className="h-10 w-10">
+                                                                  <AvatarImage src={person.image} alt={person.label} />
+                                                                  <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+                                                                    {person.label.split(" ").slice(1, 3).map(n => n[0]).join("").toUpperCase()}
+                                                                  </AvatarFallback>
+                                                                </Avatar>
+                                                                <div className="flex flex-col">
+                                                                  <span className="text-sm font-medium">{person.label}</span>
+                                                                  <span className="text-xs text-muted-foreground">{person.position}</span>
+                                                                </div>
+                                                              </div>
+                                                            ) : null;
+                                                          })}
+                                                        </div>
+                                                      </div>
+                                                    )}
+                                                    {/* Контакты со стороны ВУза */}
+                                                    {(() => {
+                                                      const contacts = record.universityContacts || (record.universityContact?.name ? [record.universityContact] : []);
+                                                      const contactsKey = `drp-main-${record.id}`;
+                                                      const isCollapsed = collapsedContacts.has(contactsKey);
+                                                      return contacts.length > 0 || true ? (
+                                                        <div className="pt-3 border-t mt-3">
+                                                          <div
+                                                            className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md px-2 py-1.5 -mx-2 transition-colors"
+                                                            onClick={() => {
+                                                              const newCollapsed = new Set(collapsedContacts);
+                                                              if (isCollapsed) newCollapsed.delete(contactsKey);
+                                                              else newCollapsed.add(contactsKey);
+                                                              setCollapsedContacts(newCollapsed);
+                                                            }}
+                                                          >
+                                                            <div className="flex items-center gap-2">
+                                                              {isCollapsed ? <ChevronRight className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+                                                              <Users className="h-4 w-4 text-primary" />
+                                                              <span className="text-sm font-semibold">Контакты ВУза</span>
+                                                              {contacts.length > 0 && (
+                                                                <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs font-medium">{contacts.length}</Badge>
+                                                              )}
+                                                            </div>
+                                                            <Button
+                                                              variant="outline"
+                                                              size="sm"
+                                                              className="h-7 px-2 text-xs"
+                                                              onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleAddContactInMain(university.id, record.id);
+                                                                if (isCollapsed) {
+                                                                  const newCollapsed = new Set(collapsedContacts);
+                                                                  newCollapsed.delete(contactsKey);
+                                                                  setCollapsedContacts(newCollapsed);
+                                                                }
+                                                              }}
+                                                            >
+                                                              <Plus className="h-3 w-3 mr-1" />
+                                                              Добавить
+                                                            </Button>
+                                                          </div>
+                                                          {!isCollapsed && (
+                                                            <div className="mt-3">
+                                                              {contacts.length > 0 ? (
+                                                                <div className="rounded-lg border overflow-hidden">
+                                                                  <Table>
+                                                                    <TableHeader>
+                                                                      <TableRow className="bg-muted/50 hover:bg-muted/50">
+                                                                        <TableHead className="h-9 text-xs font-semibold w-[200px]">ФИО</TableHead>
+                                                                        <TableHead className="h-9 text-xs font-semibold w-[180px]">Должность</TableHead>
+                                                                        <TableHead className="h-9 text-xs font-semibold w-[200px]">Телефон</TableHead>
+                                                                        <TableHead className="h-9 text-xs font-semibold w-[180px]">Email</TableHead>
+                                                                        <TableHead className="h-9 text-xs font-semibold w-[100px] text-center">Публичный</TableHead>
+                                                                        <TableHead className="h-9 text-xs font-semibold w-[50px]"></TableHead>
+                                                                      </TableRow>
+                                                                    </TableHeader>
+                                                                    <TableBody>
+                                                                      {contacts.map((contact, contactIdx) => (
+                                                                        <TableRow key={contactIdx} className="group">
+                                                                          <TableCell className="py-1.5 px-3">
+                                                                            <Input
+                                                                              value={contact.name}
+                                                                              onChange={(e) => handleUpdateContactInMain(university.id, record.id, contactIdx, { ...contact, name: e.target.value })}
+                                                                              placeholder="ФИО"
+                                                                              className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1"
+                                                                            />
+                                                                          </TableCell>
+                                                                          <TableCell className="py-1.5 px-3">
+                                                                            <Input
+                                                                              value={contact.position || ""}
+                                                                              onChange={(e) => handleUpdateContactInMain(university.id, record.id, contactIdx, { ...contact, position: e.target.value })}
+                                                                              placeholder="Должность"
+                                                                              className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1"
+                                                                            />
+                                                                          </TableCell>
+                                                                          <TableCell className="py-1.5 px-3">
+                                                                            <div className="flex items-center gap-1">
+                                                                              <Phone className="h-3 w-3 text-muted-foreground shrink-0" />
+                                                                              <Input
+                                                                                value={contact.phone || ""}
+                                                                                onChange={(e) => handleUpdateContactInMain(university.id, record.id, contactIdx, { ...contact, phone: e.target.value })}
+                                                                                placeholder="Телефон"
+                                                                                className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1"
+                                                                              />
+                                                                            </div>
+                                                                          </TableCell>
+                                                                          <TableCell className="py-1.5 px-3">
+                                                                            <div className="flex items-center gap-1">
+                                                                              <Mail className="h-3 w-3 text-muted-foreground shrink-0" />
+                                                                              <Input
+                                                                                type="email"
+                                                                                value={contact.email || ""}
+                                                                                onChange={(e) => handleUpdateContactInMain(university.id, record.id, contactIdx, { ...contact, email: e.target.value })}
+                                                                                placeholder="Email"
+                                                                                className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1"
+                                                                              />
+                                                                            </div>
+                                                                          </TableCell>
+                                                                          <TableCell className="py-1.5 px-3 text-center">
+                                                                            <div className="flex items-center justify-center">
+                                                                              <Tooltip>
+                                                                                <TooltipTrigger asChild>
+                                                                                  <div>
+                                                                                    <Checkbox
+                                                                                      id={`drp-contact-visibility-main-${record.id}-${contactIdx}`}
+                                                                                      checked={contact.isPublic || false}
+                                                                                      onCheckedChange={(checked) => handleToggleContactVisibilityInMain(university.id, record.id, contactIdx, checked === true)}
+                                                                                    />
+                                                                                  </div>
+                                                                                </TooltipTrigger>
+                                                                                <TooltipContent>
+                                                                                  <p>{contact.isPublic ? "Контакт виден всем" : "Контакт скрыт"}</p>
+                                                                                </TooltipContent>
+                                                                              </Tooltip>
+                                                                              {contact.isPublic && <Eye className="h-3 w-3 text-green-500 ml-1" />}
+                                                                              {!contact.isPublic && <EyeOff className="h-3 w-3 text-muted-foreground ml-1" />}
+                                                                            </div>
+                                                                          </TableCell>
+                                                                          <TableCell className="py-1.5 px-3">
+                                                                            <Button
+                                                                              variant="ghost"
+                                                                              size="icon"
+                                                                              className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                                                                              onClick={() => handleDeleteContactInMain(university.id, record.id, contactIdx)}
+                                                                            >
+                                                                              <Trash2 className="h-3 w-3 text-destructive" />
+                                                                            </Button>
+                                                                          </TableCell>
+                                                                        </TableRow>
+                                                                      ))}
+                                                                    </TableBody>
+                                                                  </Table>
+                                                                </div>
+                                                              ) : (
+                                                                <div className="flex flex-col items-center justify-center py-6 text-center border rounded-lg bg-muted/20">
+                                                                  <Users className="h-8 w-8 text-muted-foreground/50 mb-2" />
+                                                                  <p className="text-sm text-muted-foreground">Контакты не добавлены</p>
+                                                                  <p className="text-xs text-muted-foreground/70 mt-1">Нажмите &quot;Добавить&quot; для создания контакта</p>
+                                                                </div>
+                                                              )}
+                                                            </div>
+                                                          )}
+                                                        </div>
+                                                      ) : null;
+                                                    })()}
+                                                  </div>
+                                                  <div className="flex gap-1 shrink-0">
+                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => { setIsDrpCabinetCooperationLineDialog(true); handleEditCooperationLineInMain(university.id, record.id); }}>
+                                                      <Pencil className="h-3.5 w-3.5" />
+                                                    </Button>
+                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteCooperationLineDialog({ open: true, universityId: university.id, lineId: record.id, type: "main" })}>
+                                                      <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                    </Button>
+                                                  </div>
+                                                </div>
+                                              </Card>
+                                            ))}
+                                          </div>
+                                        ) : (
+                                          <Card className="p-3">
+                                            <p className="text-sm text-muted-foreground text-center">Линии сотрудничества ДРП не добавлены</p>
+                                          </Card>
+                                        )}
+                                      </TabsContent>
+
+                                      {/* Филиалы ВУза — только линии ДРП по филиалам с контактами */}
+                                      <TabsContent value="branches" className="space-y-4 mt-4">
+                                        <div className="flex items-center justify-end w-full">
+                                          <Button
+                                            onClick={() => {
+                                              setNewCuratorForUniversity({ city: "", branch: "", cooperationLines: [] });
+                                              setIsBranchDialogOpen(true);
+                                            }}
+                                            size="sm"
+                                          >
+                                            <Plus className="mr-2 h-4 w-4" />
+                                            Добавить филиал
+                                          </Button>
+                                        </div>
+                                        <div className="space-y-3">
+                                          {university.branchCurators && university.branchCurators.length > 0 ? (
+                                            <>
+                                              {university.branchCurators.map((curator) => {
+                                                const drpLinesInBranch = (curator.cooperationLines || []).filter((r) => r.line === "drp");
+                                                return (
+                                                  <Card key={curator.id} className="p-3">
+                                                    {editingCuratorId === curator.id ? (
+                                                      <div className="flex-1 space-y-1.5">
+                                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                                                          <div className="space-y-1">
+                                                            <Label htmlFor={`drp-edit-curator-city-${curator.id}`} className="text-xs text-muted-foreground">Город</Label>
+                                                            <Input
+                                                              id={`drp-edit-curator-city-${curator.id}`}
+                                                              placeholder="Москва"
+                                                              value={editingCurator.city}
+                                                              onChange={(e) => setEditingCurator({ ...editingCurator, city: e.target.value })}
+                                                              className="h-9"
+                                                            />
+                                                          </div>
+                                                          <div className="space-y-1">
+                                                            <Label htmlFor={`drp-edit-curator-branch-${curator.id}`} className="text-xs text-muted-foreground">Филиал</Label>
+                                                            <Input
+                                                              id={`drp-edit-curator-branch-${curator.id}`}
+                                                              placeholder="Московский филиал"
+                                                              value={editingCurator.branch}
+                                                              onChange={(e) => setEditingCurator({ ...editingCurator, branch: e.target.value })}
+                                                              className="h-9"
+                                                            />
+                                                          </div>
+                                                        </div>
+                                                        <div className="space-y-2">
+                                                          <Label className="text-xs text-muted-foreground">Линии сотрудничества (максимум 3)</Label>
+                                                          <div className="space-y-3">
+                                                            {editingCurator.cooperationLines.filter((r) => r.line === "drp").map((record, index) => {
+                                                              const origIndex = editingCurator.cooperationLines.findIndex((r) => r === record);
+                                                              return (
+                                                                <div key={record.id} className="p-3 border rounded-lg space-y-2">
+                                                                  <div className="flex items-center gap-2">
+                                                                    <Select
+                                                                      value={record.line}
+                                                                      onValueChange={(value) => {
+                                                                        const updated = editingCurator.cooperationLines.map((r, i) =>
+                                                                          i === origIndex ? { ...r, line: value as "drp" | "bko" | "cntr" } : r
+                                                                        );
+                                                                        setEditingCurator({ ...editingCurator, cooperationLines: updated });
+                                                                      }}
+                                                                    >
+                                                                      <SelectTrigger className="flex-1 h-9">
+                                                                        <SelectValue />
+                                                                      </SelectTrigger>
+                                                                      <SelectContent>
+                                                                        {cooperationLines.map((line) => (
+                                                                          <SelectItem key={line.value} value={line.value}>
+                                                                            {line.label}
+                                                                          </SelectItem>
+                                                                        ))}
+                                                                      </SelectContent>
+                                                                    </Select>
+                                                                    <Button
+                                                                      variant="ghost"
+                                                                      size="icon"
+                                                                      onClick={() => {
+                                                                        const updated = editingCurator.cooperationLines.filter((_, i) => i !== origIndex);
+                                                                        setEditingCurator({ ...editingCurator, cooperationLines: updated });
+                                                                      }}
+                                                                      className="h-9 w-9"
+                                                                    >
+                                                                      <X className="h-4 w-4" />
+                                                                    </Button>
+                                                                  </div>
+                                                                  <div className="grid grid-cols-2 gap-2">
+                                                                    <div className="space-y-1">
+                                                                      <Label className="text-xs text-muted-foreground">Год начала</Label>
+                                                                      <Input
+                                                                        type="number"
+                                                                        value={record.year}
+                                                                        onChange={(e) => {
+                                                                          const updated = editingCurator.cooperationLines.map((r, i) =>
+                                                                            i === origIndex ? { ...r, year: parseInt(e.target.value) || new Date().getFullYear() } : r
+                                                                          );
+                                                                          setEditingCurator({ ...editingCurator, cooperationLines: updated });
+                                                                        }}
+                                                                        placeholder={String(new Date().getFullYear())}
+                                                                        className="h-9"
+                                                                      />
+                                                                    </div>
+                                                                    <div className="space-y-1">
+                                                                      <Label className="text-xs text-muted-foreground">Ответственное лицо</Label>
+                                                                      <MultiSelect
+                                                                        options={responsiblePersons.map(p => ({ value: p.value, label: p.label }))}
+                                                                        selected={record.responsible}
+                                                                        onChange={(selected) => {
+                                                                          const updated = editingCurator.cooperationLines.map((r, i) =>
+                                                                            i === origIndex ? { ...r, responsible: selected } : r
+                                                                          );
+                                                                          setEditingCurator({ ...editingCurator, cooperationLines: updated });
+                                                                        }}
+                                                                        placeholder="Выберите ответственное лицо"
+                                                                      />
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              );
+                                                            })}
+                                                            {editingCurator.cooperationLines.filter((r) => r.line === "drp").length < 3 && (
+                                                              <Button
+                                                                type="button"
+                                                                variant="outline"
+                                                                size="sm"
+                                                                onClick={() => {
+                                                                  const newRecord: CooperationLineRecord = {
+                                                                    id: `clr-${Date.now()}`,
+                                                                    line: "drp",
+                                                                    year: new Date().getFullYear(),
+                                                                    responsible: [],
+                                                                  };
+                                                                  setEditingCurator({
+                                                                    ...editingCurator,
+                                                                    cooperationLines: [...editingCurator.cooperationLines, newRecord],
+                                                                  });
+                                                                }}
+                                                                className="w-full"
+                                                              >
+                                                                <Plus className="h-4 w-4 mr-2" />
+                                                                Добавить линию
+                                                              </Button>
+                                                            )}
+                                                          </div>
+                                                        </div>
+                                                        <div className="flex items-center gap-2 justify-end">
+                                                          <Button variant="ghost" size="sm" onClick={handleCancelEditingCurator}>Отмена</Button>
+                                                          <Button
+                                                            variant="default"
+                                                            size="sm"
+                                                            onClick={() => handleUpdateCuratorForUniversity(university.id, curator.id)}
+                                                            disabled={!editingCurator.city.trim() || !editingCurator.branch.trim()}
+                                                          >
+                                                            Сохранить
+                                                          </Button>
+                                                        </div>
+                                                      </div>
+                                                    ) : (
+                                                      <>
+                                                        <div className="flex items-start justify-between gap-3">
+                                                          <div className="flex-1">
+                                                            <div className="flex items-center gap-3 flex-wrap">
+                                                              <Button
+                                                                variant="ghost"
+                                                                size="sm"
+                                                                className="h-8 w-8 p-0 shrink-0"
+                                                                onClick={() => {
+                                                                  const newCollapsed = new Set(collapsedBranches);
+                                                                  if (newCollapsed.has(curator.id)) newCollapsed.delete(curator.id);
+                                                                  else newCollapsed.add(curator.id);
+                                                                  setCollapsedBranches(newCollapsed);
+                                                                }}
+                                                                title={collapsedBranches.has(curator.id) ? "Развернуть" : "Свернуть"}
+                                                              >
+                                                                {collapsedBranches.has(curator.id) ? <ChevronRight className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+                                                              </Button>
+                                                              <Badge variant="secondary" className="text-sm font-semibold px-3 py-1.5 flex items-center gap-1.5 bg-primary/10 text-primary border-primary/20">
+                                                                <Building2 className="h-4 w-4" />
+                                                                <span className="text-sm text-muted-foreground font-normal">Филиал:</span>
+                                                                <span className="text-base font-bold">{curator.branch}</span>
+                                                              </Badge>
+                                                              <Separator orientation="vertical" className="h-6" />
+                                                              <Badge variant="secondary" className="text-sm font-semibold px-3 py-1.5 flex items-center gap-1.5 bg-primary/10 text-primary border-primary/20">
+                                                                <MapPin className="h-4 w-4" />
+                                                                <span className="text-sm text-muted-foreground font-normal">Город:</span>
+                                                                <span className="text-base font-bold">{curator.city}</span>
+                                                              </Badge>
+                                                              {drpLinesInBranch.length > 0 && (
+                                                                <>
+                                                                  <Separator orientation="vertical" className="h-6" />
+                                                                  <div className="flex items-center gap-2 flex-wrap">
+                                                                    {drpLinesInBranch.map((record, idx) => (
+                                                                      <Badge key={record.id || idx} variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(record.line))}>
+                                                                        {getCooperationLineLabel(record.line)}
+                                                                      </Badge>
+                                                                    ))}
+                                                                  </div>
+                                                                </>
+                                                              )}
+                                                            </div>
+                                                          </div>
+                                                          <div className="flex gap-1 shrink-0">
+                                                            {drpLinesInBranch.length < 3 && (
+                                                              <Button
+                                                                variant="ghost"
+                                                                size="sm"
+                                                                className="h-8 w-8 p-0 shrink-0"
+                                                                onClick={() => {
+                                                                  setSelectedBranchId(curator.id);
+                                                                  setNewCooperationLineForBranch({
+                                                                    id: `clr-${Date.now()}`,
+                                                                    line: "drp",
+                                                                    year: new Date().getFullYear(),
+                                                                    responsible: [],
+                                                                  });
+                                                                  setIsCooperationLineDialogOpen(true);
+                                                                }}
+                                                                title="Добавить линию сотрудничества"
+                                                              >
+                                                                <Plus className="h-3.5 w-3.5" />
+                                                              </Button>
+                                                            )}
+                                                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => handleStartEditingCurator(curator)} title="Редактировать">
+                                                              <Pencil className="h-3.5 w-3.5" />
+                                                            </Button>
+                                                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteBranchDialog({ open: true, universityId: university.id, branchId: curator.id, branchName: curator.branch })} title="Удалить">
+                                                              <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                            </Button>
+                                                          </div>
+                                                        </div>
+                                                        {!collapsedBranches.has(curator.id) && (
+                                                          <div className="space-y-3 mt-3 pt-3 border-t">
+                                                            {drpLinesInBranch.length > 0 ? (
+                                                              drpLinesInBranch.map((record) => (
+                                                                <Card key={record.id} className="p-3">
+                                                                  <div className="flex items-start justify-between gap-3">
+                                                                    <div className="flex-1 space-y-1.5">
+                                                                      <div className="flex items-center gap-2 flex-wrap">
+                                                                        <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(record.line))}>
+                                                                          {getCooperationLineLabel(record.line)}
+                                                                        </Badge>
+                                                                        <div className="flex items-center gap-2">
+                                                                          <Label className="text-sm text-muted-foreground">Год начала сотрудничества:</Label>
+                                                                          <span className="text-base font-medium text-foreground">{record.year}</span>
+                                                                        </div>
+                                                                      </div>
+                                                                      {record.responsible && record.responsible.length > 0 && (
+                                                                        <div className="flex items-center gap-2">
+                                                                          <Label className="text-sm font-semibold">Ответственное лицо:</Label>
+                                                                          <div className="flex flex-wrap gap-3">
+                                                                            {record.responsible.map((personId, personIndex) => {
+                                                                              const person = responsiblePersons.find(p => p.value === personId);
+                                                                              return person ? (
+                                                                                <div key={personIndex} className="flex items-center gap-2">
+                                                                                  <Avatar className="h-10 w-10">
+                                                                                    <AvatarImage src={person.image} alt={person.label} />
+                                                                                    <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+                                                                                      {person.label.split(" ").slice(1, 3).map(n => n[0]).join("").toUpperCase()}
+                                                                                    </AvatarFallback>
+                                                                                  </Avatar>
+                                                                                  <div className="flex flex-col">
+                                                                                    <span className="text-sm font-medium">{person.label}</span>
+                                                                                    <span className="text-xs text-muted-foreground">{person.position}</span>
+                                                                                  </div>
+                                                                                </div>
+                                                                              ) : null;
+                                                                            })}
+                                                                          </div>
+                                                                        </div>
+                                                                      )}
+                                                                      {(() => {
+                                                                        const contacts = record.universityContacts || (record.universityContact?.name ? [record.universityContact] : []);
+                                                                        const contactsKey = `drp-branch-${curator.id}-${record.id}`;
+                                                                        const isCollapsed = collapsedContacts.has(contactsKey);
+                                                                        return contacts.length > 0 || true ? (
+                                                                          <div className="pt-3 border-t mt-3">
+                                                                            <div
+                                                                              className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md px-2 py-1.5 -mx-2 transition-colors"
+                                                                              onClick={() => {
+                                                                                const newCollapsed = new Set(collapsedContacts);
+                                                                                if (isCollapsed) newCollapsed.delete(contactsKey);
+                                                                                else newCollapsed.add(contactsKey);
+                                                                                setCollapsedContacts(newCollapsed);
+                                                                              }}
+                                                                            >
+                                                                              <div className="flex items-center gap-2">
+                                                                                {isCollapsed ? <ChevronRight className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+                                                                                <Users className="h-4 w-4 text-primary" />
+                                                                                <span className="text-sm font-semibold">Контакты ВУза</span>
+                                                                                {contacts.length > 0 && <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs font-medium">{contacts.length}</Badge>}
+                                                                              </div>
+                                                                              <Button
+                                                                                variant="outline"
+                                                                                size="sm"
+                                                                                className="h-7 px-2 text-xs"
+                                                                                onClick={(e) => {
+                                                                                  e.stopPropagation();
+                                                                                  handleAddContactInBranch(university.id, curator.id, record.id);
+                                                                                  if (isCollapsed) {
+                                                                                    const newCollapsed = new Set(collapsedContacts);
+                                                                                    newCollapsed.delete(contactsKey);
+                                                                                    setCollapsedContacts(newCollapsed);
+                                                                                  }
+                                                                                }}
+                                                                              >
+                                                                                <Plus className="h-3 w-3 mr-1" />
+                                                                                Добавить
+                                                                              </Button>
+                                                                            </div>
+                                                                            {!isCollapsed && (
+                                                                              <div className="mt-3">
+                                                                                {contacts.length > 0 ? (
+                                                                                  <div className="rounded-lg border overflow-hidden">
+                                                                                    <Table>
+                                                                                      <TableHeader>
+                                                                                        <TableRow className="bg-muted/50 hover:bg-muted/50">
+                                                                                          <TableHead className="h-9 text-xs font-semibold w-[200px]">ФИО</TableHead>
+                                                                                          <TableHead className="h-9 text-xs font-semibold w-[180px]">Должность</TableHead>
+                                                                                          <TableHead className="h-9 text-xs font-semibold w-[200px]">Телефон</TableHead>
+                                                                                          <TableHead className="h-9 text-xs font-semibold w-[180px]">Email</TableHead>
+                                                                                          <TableHead className="h-9 text-xs font-semibold w-[100px] text-center">Публичный</TableHead>
+                                                                                          <TableHead className="h-9 text-xs font-semibold w-[50px]"></TableHead>
+                                                                                        </TableRow>
+                                                                                      </TableHeader>
+                                                                                      <TableBody>
+                                                                                        {contacts.map((contact, contactIdx) => (
+                                                                                          <TableRow key={contactIdx} className="group">
+                                                                                            <TableCell className="py-1.5 px-3">
+                                                                                              <Input value={contact.name} onChange={(e) => handleUpdateContactInBranch(university.id, curator.id, record.id, contactIdx, { ...contact, name: e.target.value })} placeholder="ФИО" className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1" />
+                                                                                            </TableCell>
+                                                                                            <TableCell className="py-1.5 px-3">
+                                                                                              <Input value={contact.position || ""} onChange={(e) => handleUpdateContactInBranch(university.id, curator.id, record.id, contactIdx, { ...contact, position: e.target.value })} placeholder="Должность" className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1" />
+                                                                                            </TableCell>
+                                                                                            <TableCell className="py-1.5 px-3">
+                                                                                              <div className="flex items-center gap-1">
+                                                                                                <Phone className="h-3 w-3 text-muted-foreground shrink-0" />
+                                                                                                <Input value={contact.phone || ""} onChange={(e) => handleUpdateContactInBranch(university.id, curator.id, record.id, contactIdx, { ...contact, phone: e.target.value })} placeholder="Телефон" className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1" />
+                                                                                              </div>
+                                                                                            </TableCell>
+                                                                                            <TableCell className="py-1.5 px-3">
+                                                                                              <div className="flex items-center gap-1">
+                                                                                                <Mail className="h-3 w-3 text-muted-foreground shrink-0" />
+                                                                                                <Input type="email" value={contact.email || ""} onChange={(e) => handleUpdateContactInBranch(university.id, curator.id, record.id, contactIdx, { ...contact, email: e.target.value })} placeholder="Email" className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1" />
+                                                                                              </div>
+                                                                                            </TableCell>
+                                                                                            <TableCell className="py-1.5 px-3 text-center">
+                                                                                              <div className="flex items-center justify-center">
+                                                                                                <Tooltip>
+                                                                                                  <TooltipTrigger asChild>
+                                                                                                    <div>
+                                                                                                      <Checkbox id={`drp-contact-branch-${curator.id}-${record.id}-${contactIdx}`} checked={contact.isPublic || false} onCheckedChange={(checked) => handleToggleContactVisibilityInBranch(university.id, curator.id, record.id, contactIdx, checked === true)} />
+                                                                                                    </div>
+                                                                                                  </TooltipTrigger>
+                                                                                                  <TooltipContent><p>{contact.isPublic ? "Контакт виден всем" : "Контакт скрыт"}</p></TooltipContent>
+                                                                                                </Tooltip>
+                                                                                                {contact.isPublic && <Eye className="h-3 w-3 text-green-500 ml-1" />}
+                                                                                                {!contact.isPublic && <EyeOff className="h-3 w-3 text-muted-foreground ml-1" />}
+                                                                                              </div>
+                                                                                            </TableCell>
+                                                                                            <TableCell className="py-1.5 px-3">
+                                                                                              <Button variant="ghost" size="icon" className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => handleDeleteContactInBranch(university.id, curator.id, record.id, contactIdx)}>
+                                                                                                <Trash2 className="h-3 w-3 text-destructive" />
+                                                                                              </Button>
+                                                                                            </TableCell>
+                                                                                          </TableRow>
+                                                                                        ))}
+                                                                                      </TableBody>
+                                                                                    </Table>
+                                                                                  </div>
+                                                                                ) : (
+                                                                                  <div className="flex flex-col items-center justify-center py-6 text-center border rounded-lg bg-muted/20">
+                                                                                    <Users className="h-8 w-8 text-muted-foreground/50 mb-2" />
+                                                                                    <p className="text-sm text-muted-foreground">Контакты не добавлены</p>
+                                                                                    <p className="text-xs text-muted-foreground/70 mt-1">Нажмите &quot;Добавить&quot; для создания контакта</p>
+                                                                                  </div>
+                                                                                )}
+                                                                              </div>
+                                                                            )}
+                                                                          </div>
+                                                                        ) : null;
+                                                                      })()}
+                                                                    </div>
+                                                                    <div className="flex gap-1 shrink-0">
+                                                                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => handleEditCooperationLineInBranch(university.id, curator.id, record.id)}>
+                                                                        <Pencil className="h-3.5 w-3.5" />
+                                                                      </Button>
+                                                                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteCooperationLineDialog({ open: true, universityId: university.id, lineId: record.id, type: "branch", branchId: curator.id })}>
+                                                                        <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                                      </Button>
+                                                                    </div>
+                                                                  </div>
+                                                                </Card>
+                                                              ))
+                                                            ) : (
+                                                              <p className="text-sm text-muted-foreground">Линии сотрудничества ДРП по филиалу не добавлены</p>
+                                                            )}
+                                                          </div>
+                                                        )}
+                                                      </>
+                                                    )}
+                                                  </Card>
+                                                );
+                                              })}
+                                            </>
+                                          ) : (
+                                            <Card className="p-3">
+                                              <p className="text-sm text-muted-foreground text-center">Филиалы ВУза не добавлены</p>
+                                            </Card>
+                                          )}
+                                        </div>
+                                      </TabsContent>
+                                    </Tabs>
+                                  </TabsContent>
+
+                                  {/* Подтаб: Мероприятия */}
+                                  <TabsContent value="events" className="space-y-4 mt-4">
+                                    <Card className="p-4">
+                                      <div className="flex items-center justify-between mb-4">
+                                        <h3 className="text-lg font-semibold">Мероприятия (ДРП)</h3>
+                                        <Button
+                                          size="sm"
+                                          onClick={() => {
+                                            setIsDrpCabinetEventDialog(true);
+                                            setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "drp" });
+                                            setIsEventDialogOpen(true);
+                                          }}
+                                          disabled={!selectedUniversity}
+                                        >
+                                          <Plus className="mr-2 h-4 w-4" />
+                                          Добавить мероприятие
+                                        </Button>
+                                      </div>
+                                      {drpEvents.length > 0 ? (
+                                        <div className="space-y-3">
+                                          {drpEvents.map((event) => {
+                                            const eventTypeLabels: Record<string, string> = {
+                                              careerDays: "Дни карьеры",
+                                              expertParticipation: "Экспертное участие",
+                                              caseChampionships: "Кейс-чемпионат",
+                                              meeting: "Встреча",
+                                              communication: "Коммуникация",
+                                            };
+                                            const formatDate = (d: string) => {
+                                              if (!d) return "—";
+                                              const [y, m, day] = d.split("-").map(Number);
+                                              return `${String(day).padStart(2, "0")}.${String(m).padStart(2, "0")}.${y}`;
+                                            };
+                                            return (
+                                              <Card key={event.id} className="p-3">
+                                                <div className="flex items-start justify-between gap-2">
+                                                  <div className="flex flex-wrap items-center gap-2">
+                                                    <Badge variant="outline" className="text-xs">{eventTypeLabels[event.type] || event.type}</Badge>
+                                                    <span className="text-sm text-muted-foreground">{formatDate(event.date)}{event.endDate ? ` — ${formatDate(event.endDate)}` : ""}</span>
+                                                  </div>
+                                                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => { handleEditEvent(university.id, event.id); setIsDrpCabinetEventDialog(true); }}>
+                                                    <Pencil className="h-3.5 w-3.5" />
+                                                  </Button>
+                                                </div>
+                                                {event.comments && <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{event.comments}</p>}
+                                              </Card>
+                                            );
+                                          })}
+                                        </div>
+                                      ) : (
+                                        <p className="text-sm text-muted-foreground">Мероприятия ДРП не добавлены</p>
+                                      )}
+                                    </Card>
+                                  </TabsContent>
+
+                                  {/* Подтаб: Договорная база */}
+                                  <TabsContent value="contracts" className="space-y-4 mt-4">
+                                    <Card className="p-4">
+                                      <div className="flex items-center justify-between mb-4">
+                                        <h3 className="text-lg font-semibold">Договоры (ДРП)</h3>
+                                        <Button
+                                          size="sm"
+                                          onClick={() => {
+                                            setIsDrpCabinetContractDialog(true);
+                                            setEditingContract(null);
+                                            setNewContractForTab({ type: "cooperation", hasContract: true, contractFile: "", number: "", date: "", period: { start: "", end: "" }, asddLink: "", contractBranch: "" });
+                                            setIsContractDialogOpen(true);
+                                          }}
+                                          disabled={!selectedUniversity}
+                                        >
+                                          <Plus className="mr-2 h-4 w-4" />
+                                          Добавить договор
+                                        </Button>
+                                      </div>
+                                      {drpContracts.length > 0 ? (
+                                        <div className="space-y-3">
+                                          {drpContracts.map((contract) => {
+                                            const contractTypeLabels: Record<string, string> = {
+                                              cooperation: "О сотрудничестве",
+                                              scholarship: "Об именных стипендиях",
+                                              internship: "О практике",
+                                              bankDepartment: "Кафедра банка",
+                                            };
+                                            const formatDate = (d: string) => {
+                                              if (!d) return "—";
+                                              const [y, m, day] = d.split("-").map(Number);
+                                              return `${String(day).padStart(2, "0")}.${String(m).padStart(2, "0")}.${y}`;
+                                            };
+                                            return (
+                                              <Card key={contract.id} className="p-3">
+                                                <div className="flex items-start justify-between gap-2">
+                                                  <div className="flex flex-wrap items-center gap-2">
+                                                    <Badge variant="outline" className={cn("text-xs", getContractTypeBadgeColor(contract.type))}>{contractTypeLabels[contract.type] || contract.type}</Badge>
+                                                    {contract.number && <span className="text-sm font-medium">{contract.number}</span>}
+                                                    {contract.date && <span className="text-sm text-muted-foreground">{formatDate(contract.date)}</span>}
+                                                  </div>
+                                                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => { handleEditContractForTab(university.id, contract.id); setIsDrpCabinetContractDialog(true); }}>
+                                                    <Pencil className="h-3.5 w-3.5" />
+                                                  </Button>
+                                                </div>
+                                              </Card>
+                                            );
+                                          })}
+                                        </div>
+                                      ) : (
+                                        <p className="text-sm text-muted-foreground">Договоры ДРП не добавлены</p>
+                                      )}
+                                    </Card>
+                                  </TabsContent>
+
+                                  {/* Подтаб: Кадровые показатели */}
+                                  <TabsContent value="staff" className="space-y-4 mt-4">
+                                    <Card className="p-4">
+                                      <h3 className="text-lg font-semibold mb-4">Кадровые показатели (ДРП)</h3>
+                                      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                                        <Card className="p-4">
+                                          <p className="text-sm text-muted-foreground">Численность сотрудников</p>
+                                          <p className="text-2xl font-semibold mt-1">{university.allEmployees ?? "—"}</p>
+                                        </Card>
+                                        <Card className="p-4">
+                                          <p className="text-sm text-muted-foreground">Трудоустройство стажёров</p>
+                                          <p className="text-2xl font-semibold mt-1">{university.internHiring ? "Да" : "Нет"}</p>
+                                        </Card>
+                                        <Card className="p-4">
+                                          <p className="text-sm text-muted-foreground">Среднее число стажёров в год</p>
+                                          <p className="text-2xl font-semibold mt-1">{university.averageInternsPerYear ?? "—"}</p>
+                                        </Card>
+                                        <Card className="p-4">
+                                          <p className="text-sm text-muted-foreground">Стажёры</p>
+                                          <p className="text-2xl font-semibold mt-1">{university.interns ?? "—"}</p>
+                                        </Card>
+                                      </div>
+                                      {(!university.allEmployees && !university.interns && university.interns !== 0 && !university.averageInternsPerYear) ? (
+                                        <p className="text-sm text-muted-foreground mt-4">По выбранному ВУЗу кадровые показатели не заполнены. Заполните данные в разделе «Общая информация» или «Кадровые показатели».</p>
+                                      ) : null}
+                                    </Card>
+                                  </TabsContent>
+                                </Tabs>
+                              </div>
+                            );
+                          })()}
+                        </TabsContent>
                       </Tabs>
                     </CardContent>
                   </Card>
@@ -14171,6 +15042,7 @@ export default function UniversitiesPage() {
           <Dialog open={isEventDialogOpen} onOpenChange={(open) => {
             setIsEventDialogOpen(open);
             if (!open) {
+              setIsDrpCabinetEventDialog(false);
               setEditingEvent(null);
               setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
             }
@@ -14282,6 +15154,7 @@ export default function UniversitiesPage() {
                         </SelectContent>
                       </Select>
                   </div>
+                  {!isDrpCabinetEventDialog && (
                   <div className="flex-1 space-y-2">
                     <Label htmlFor="event-cooperation-line-dialog">Линия сотрудничества</Label>
                     <Select
@@ -14298,6 +15171,7 @@ export default function UniversitiesPage() {
                       </SelectContent>
                     </Select>
                   </div>
+                  )}
                 </div>
                   <div className="space-y-2">
                   <div className="flex items-center gap-1">
@@ -14380,6 +15254,7 @@ export default function UniversitiesPage() {
           <Dialog open={isContractDialogOpen} onOpenChange={(open) => {
             setIsContractDialogOpen(open);
             if (!open) {
+              setIsDrpCabinetContractDialog(false);
               setEditingContract(null);
               setNewContractForTab({ type: "cooperation", hasContract: false, contractFile: "", number: "", date: "", period: { start: "", end: "" }, asddLink: "", contractBranch: "" });
             }
@@ -14425,16 +15300,16 @@ export default function UniversitiesPage() {
                   </Select>
                 </div>
                   <div className="space-y-2">
-                    <Label htmlFor="contract-branch">Головной офис / Филиал</Label>
+                    <Label htmlFor="contract-branch">Головной ВУЗ / Филиал</Label>
                     <Select
                       value={newContractForTab.contractBranch}
                       onValueChange={(value) => setNewContractForTab({ ...newContractForTab, contractBranch: value })}
                     >
                       <SelectTrigger id="contract-branch">
-                        <SelectValue placeholder="Выберите головной офис или филиал" />
+                        <SelectValue placeholder="Выберите головной ВУЗ или филиал" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Головной офис">Головной офис</SelectItem>
+                        <SelectItem value="Головной ВУЗ">Головной ВУЗ</SelectItem>
                         {selectedUniversity && (() => {
                           const university = universities.find(u => u.id === selectedUniversity);
                           const branches = university?.branchCurators || [];
@@ -14797,6 +15672,7 @@ export default function UniversitiesPage() {
           <Dialog open={isMainCooperationLineDialogOpen} onOpenChange={(open) => {
             setIsMainCooperationLineDialogOpen(open);
             if (!open) {
+              setIsDrpCabinetCooperationLineDialog(false);
               setEditingMainCooperationLine(null);
               setNewCooperationLineForMain({
                 id: `clr-${Date.now()}`,
@@ -14812,10 +15688,11 @@ export default function UniversitiesPage() {
                   {editingMainCooperationLine ? "Редактировать линию сотрудничества" : "Добавить линию сотрудничества"}
                 </DialogTitle>
                 <DialogDescription>
-                  {editingMainCooperationLine ? "Внесите изменения в линию сотрудничества для головного ВУЗа" : "Заполните информацию о линии сотрудничества для головного ВУЗа"}
+                  {isDrpCabinetCooperationLineDialog ? "Заполните информацию о линии сотрудничества ДРП" : editingMainCooperationLine ? "Внесите изменения в линию сотрудничества для головного ВУЗа" : "Заполните информацию о линии сотрудничества для головного ВУЗа"}
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
+                {!isDrpCabinetCooperationLineDialog && (
                 <div className="space-y-2">
                   <Label>Линия сотрудничества</Label>
                   <Select
@@ -14834,6 +15711,7 @@ export default function UniversitiesPage() {
                     </SelectContent>
                   </Select>
                 </div>
+                )}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Год начала</Label>

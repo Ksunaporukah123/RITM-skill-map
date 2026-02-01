@@ -22,7 +22,7 @@ export interface Contract {
   date?: string; // Дата договора
   period?: { start: string; end: string }; // Период действия (начало - конец)
   asddLink?: string; // Ссылка на АСДД
-  contractBranch?: string; // Головной офис или филиал (только одно значение)
+  contractBranch?: string; // Головной ВУЗ или филиал (только одно значение)
   cooperationLine?: CooperationLine; // Линия сотрудничества (drp, bko, cntr)
   archived?: boolean; // В архиве (иначе — активные, в т.ч. с истёкшим сроком)
 }
