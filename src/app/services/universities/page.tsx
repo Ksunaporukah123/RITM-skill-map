@@ -2523,7 +2523,7 @@ export default function UniversitiesPage() {
   const [collapsedBranches, setCollapsedBranches] = useState<Set<string>>(new Set());
   
   // Состояние для отслеживания свернутых контактов в линиях сотрудничества
-  const [collapsedContacts, setCollapsedContacts] = useState<Set<string>>(new Set());
+  const [expandedContacts, setExpandedContacts] = useState<Set<string>>(new Set());
   
   // Состояние для добавления договора
   const [newContract, setNewContract] = useState({
@@ -2568,6 +2568,7 @@ export default function UniversitiesPage() {
   
   // Открыто ли модальное окно линии/мероприятия/договора из вкладки «Личный кабинет ДРП» (только ДРП)
   const [isDrpCabinetCooperationLineDialog, setIsDrpCabinetCooperationLineDialog] = useState(false);
+  const [isDrpCabinetBranchLineDialog, setIsDrpCabinetBranchLineDialog] = useState(false);
   const [isDrpCabinetEventDialog, setIsDrpCabinetEventDialog] = useState(false);
   const [isDrpCabinetContractDialog, setIsDrpCabinetContractDialog] = useState(false);
   // Состояния для модального окна линии сотрудничества головного ВУЗа
@@ -3047,6 +3048,7 @@ export default function UniversitiesPage() {
         : u
     );
     setUniversities(updatedUniversities);
+    setIsDrpCabinetBranchLineDialog(false);
     setIsCooperationLineDialogOpen(false);
     setSelectedBranchId(null);
     setNewCooperationLineForBranch({
@@ -3114,6 +3116,7 @@ export default function UniversitiesPage() {
         : u
     );
     setUniversities(updatedUniversities);
+    setIsDrpCabinetBranchLineDialog(false);
     setIsCooperationLineDialogOpen(false);
     setEditingCooperationLine(null);
     setSelectedBranchId(null);
@@ -5148,28 +5151,8 @@ export default function UniversitiesPage() {
                               </TabsTrigger>
                             </TabsList>
                             
-                            {/* Подтаб: Головной ВУЗ */}
+                            {/* Подтаб: Головной ВУЗ — добавление линий только в личных кабинетах (ДРП, БКО, ЦНТР) */}
                             <TabsContent value="main" className="space-y-4 mt-4">
-                              {/* Кнопка добавления линии сотрудничества */}
-                              <div className="flex items-center justify-end w-full">
-                                <Button
-                                  onClick={() => {
-                                    setNewCooperationLineForMain({
-                                      id: `clr-${Date.now()}`,
-                                      line: "drp",
-                                      year: new Date().getFullYear(),
-                                      responsible: [],
-                                    });
-                                    setEditingMainCooperationLine(null);
-                                    setIsMainCooperationLineDialogOpen(true);
-                                  }}
-                                  size="sm"
-                                  disabled={!selectedUniversity}
-                                >
-                                  <Plus className="mr-2 h-4 w-4" />
-                                  Добавить линию сотрудничества
-                                </Button>
-                              </div>
                               {/* Линии сотрудничества */}
                               {((university.cooperationLines && university.cooperationLines.length > 0) || university.cooperationLine) ? (
                                 <div className="space-y-4">
@@ -5217,20 +5200,17 @@ export default function UniversitiesPage() {
                                             {(() => {
                                               const contacts = record.universityContacts || (record.universityContact?.name ? [record.universityContact] : []);
                                               const contactsKey = `main-${record.id}`;
-                                              const isCollapsed = collapsedContacts.has(contactsKey);
+                                              const isCollapsed = !expandedContacts.has(contactsKey);
                                               
                                               return contacts.length > 0 || true ? (
                                                 <div className="pt-3 border-t mt-3">
                                                   <div 
                                                     className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md px-2 py-1.5 -mx-2 transition-colors"
                                                     onClick={() => {
-                                                      const newCollapsed = new Set(collapsedContacts);
-                                                      if (isCollapsed) {
-                                                        newCollapsed.delete(contactsKey);
-                                                      } else {
-                                                        newCollapsed.add(contactsKey);
-                                                      }
-                                                      setCollapsedContacts(newCollapsed);
+                                                      const next = new Set(expandedContacts);
+                                                      if (isCollapsed) next.add(contactsKey);
+                                                      else next.delete(contactsKey);
+                                                      setExpandedContacts(next);
                                                     }}
                                                   >
                                                     <div className="flex items-center gap-2">
@@ -5243,37 +5223,19 @@ export default function UniversitiesPage() {
                                                         </Badge>
                                                       )}
                                                     </div>
-                                                    <Button
-                                                      variant="outline"
-                                                      size="sm"
-                                                      className="h-7 px-2 text-xs"
-                                                      onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleAddContactInMain(university.id, record.id);
-                                                        if (isCollapsed) {
-                                                          const newCollapsed = new Set(collapsedContacts);
-                                                          newCollapsed.delete(contactsKey);
-                                                          setCollapsedContacts(newCollapsed);
-                                                        }
-                                                      }}
-                                                    >
-                                                      <Plus className="h-3 w-3 mr-1" />
-                                                      Добавить
-                                                    </Button>
-                                                  </div>
-                                                  
-                                                  {!isCollapsed && (
-                                                    <div className="mt-3">
-                                                      {contacts.length > 0 ? (
-                                                        <div className="rounded-lg border overflow-hidden">
-                                                          <Table>
-                                                            <TableHeader>
-                                                              <TableRow className="bg-muted/50 hover:bg-muted/50">
-                                                                <TableHead className="h-9 text-xs font-semibold w-[200px]">ФИО</TableHead>
+                                                          </div>
+                                                          
+                                                          {!isCollapsed && (
+                                                            <div className="mt-3">
+                                                              {contacts.length > 0 ? (
+                                                                <div className="rounded-lg border overflow-hidden">
+                                                                  <Table>
+                                                                    <TableHeader>
+                                                                      <TableRow className="bg-muted/50 hover:bg-muted/50">
+                                                                        <TableHead className="h-9 text-xs font-semibold w-[200px]">ФИО</TableHead>
                                                                 <TableHead className="h-9 text-xs font-semibold w-[180px]">Должность</TableHead>
                                                                 <TableHead className="h-9 text-xs font-semibold w-[200px]">Телефон</TableHead>
                                                                 <TableHead className="h-9 text-xs font-semibold w-[180px]">Email</TableHead>
-                                                                <TableHead className="h-9 text-xs font-semibold w-[100px] text-center">Публичный</TableHead>
                                                                 <TableHead className="h-9 text-xs font-semibold w-[50px]"></TableHead>
                                                               </TableRow>
                                                             </TableHeader>
@@ -5319,26 +5281,6 @@ export default function UniversitiesPage() {
                                                                       />
                                                                     </div>
                                                                   </TableCell>
-                                                                  <TableCell className="py-1.5 px-3 text-center">
-                                                                    <div className="flex items-center justify-center">
-                                                                      <Tooltip>
-                                                                        <TooltipTrigger asChild>
-                                                                          <div>
-                                                                            <Checkbox
-                                                                              id={`contact-visibility-main-${record.id}-${contactIdx}`}
-                                                                              checked={contact.isPublic || false}
-                                                                              onCheckedChange={(checked) => handleToggleContactVisibilityInMain(university.id, record.id, contactIdx, checked === true)}
-                                                                            />
-                                                                          </div>
-                                                                        </TooltipTrigger>
-                                                                        <TooltipContent>
-                                                                          <p>{contact.isPublic ? "Контакт виден всем" : "Контакт скрыт"}</p>
-                                                                        </TooltipContent>
-                                                                      </Tooltip>
-                                                                      {contact.isPublic && <Eye className="h-3 w-3 text-green-500 ml-1" />}
-                                                                      {!contact.isPublic && <EyeOff className="h-3 w-3 text-muted-foreground ml-1" />}
-                                                                    </div>
-                                                                  </TableCell>
                                                                   <TableCell className="py-1.5 px-3">
                                                                     <Button
                                                                       variant="ghost"
@@ -5358,7 +5300,6 @@ export default function UniversitiesPage() {
                                                         <div className="flex flex-col items-center justify-center py-6 text-center border rounded-lg bg-muted/20">
                                                           <Users className="h-8 w-8 text-muted-foreground/50 mb-2" />
                                                           <p className="text-sm text-muted-foreground">Контакты не добавлены</p>
-                                                          <p className="text-xs text-muted-foreground/70 mt-1">Нажмите "Добавить" для создания контакта</p>
                                                         </div>
                                                       )}
                                                     </div>
@@ -5366,24 +5307,6 @@ export default function UniversitiesPage() {
                                                 </div>
                                               ) : null;
                                             })()}
-                                          </div>
-                                          <div className="flex gap-1 shrink-0">
-                                            <Button
-                                              variant="ghost"
-                                              size="sm"
-                                              className="h-8 w-8 p-0 shrink-0"
-                                              onClick={() => handleEditCooperationLineInMain(university.id, record.id)}
-                                            >
-                                              <Pencil className="h-3.5 w-3.5" />
-                                            </Button>
-                                            <Button
-                                              variant="ghost"
-                                              size="sm"
-                                              className="h-8 w-8 p-0 shrink-0"
-                                              onClick={() => setDeleteCooperationLineDialog({ open: true, universityId: university.id, lineId: record.id, type: "main" })}
-                                            >
-                                              <Trash2 className="h-3.5 w-3.5 text-destructive" />
-                                            </Button>
                                           </div>
                                         </div>
                                       </Card>
@@ -5468,19 +5391,6 @@ export default function UniversitiesPage() {
                             
                             {/* Подтаб: Филиалы ВУЗа */}
                             <TabsContent value="branches" className="space-y-4 mt-4">
-                              {/* Кнопка добавления филиала */}
-                              <div className="flex items-center justify-end w-full">
-                                <Button
-                                  onClick={() => {
-                                    setNewCuratorForUniversity({ city: "", branch: "", cooperationLines: [] });
-                                    setIsBranchDialogOpen(true);
-                                  }}
-                                  size="sm"
-                                >
-                                  <Plus className="mr-2 h-4 w-4" />
-                                  Добавить филиал
-                                </Button>
-                              </div>
                               <div className="space-y-3">
                                 {university.branchCurators && university.branchCurators.length > 0 ? (
                                   <>
@@ -5581,29 +5491,6 @@ export default function UniversitiesPage() {
                                                     </div>
                                                   </div>
                                                 ))}
-                                                {editingCurator.cooperationLines.length < 3 && (
-                                                  <Button
-                                                    type="button"
-                                                    variant="outline"
-                                                    size="sm"
-                                                    onClick={() => {
-                                                      const newRecord: CooperationLineRecord = {
-                                                        id: `clr-${Date.now()}`,
-                                                        line: "drp",
-                                                        year: new Date().getFullYear(),
-                                                        responsible: [],
-                                                      };
-                                                      setEditingCurator({
-                                                        ...editingCurator,
-                                                        cooperationLines: [...editingCurator.cooperationLines, newRecord],
-                                                      });
-                                                    }}
-                                                    className="w-full"
-                                                  >
-                                                    <Plus className="h-4 w-4 mr-2" />
-                                                    Добавить линию
-                                                  </Button>
-                                                )}
                                               </div>
                                             </div>
                                             <div className="flex items-center gap-2 justify-end">
@@ -5675,46 +5562,6 @@ export default function UniversitiesPage() {
                                                   )}
                                                 </div>
                                               </div>
-                                              <div className="flex gap-1 shrink-0">
-                                                {(!curator.cooperationLines || curator.cooperationLines.length < 3) && (
-                                                  <Button
-                                                    variant="ghost"
-                                                    size="sm"
-                                                    className="h-8 w-8 p-0 shrink-0"
-                                                    onClick={() => {
-                                                      setSelectedBranchId(curator.id);
-                                                      setNewCooperationLineForBranch({
-                                                        id: `clr-${Date.now()}`,
-                                                        line: "drp",
-                                                        year: new Date().getFullYear(),
-                                                        responsible: [],
-                                                      });
-                                                      setIsCooperationLineDialogOpen(true);
-                                                    }}
-                                                    title="Добавить линию сотрудничества"
-                                                  >
-                                                    <Plus className="h-3.5 w-3.5" />
-                                                  </Button>
-                                                )}
-                                                <Button
-                                                  variant="ghost"
-                                                  size="sm"
-                                                  className="h-8 w-8 p-0 shrink-0"
-                                                  onClick={() => handleStartEditingCurator(curator)}
-                                                  title="Редактировать"
-                                                >
-                                                  <Pencil className="h-3.5 w-3.5" />
-                                                </Button>
-                                                <Button
-                                                  variant="ghost"
-                                                  size="sm"
-                                                  className="h-8 w-8 p-0 shrink-0"
-                                                  onClick={() => setDeleteBranchDialog({ open: true, universityId: university.id, branchId: curator.id, branchName: curator.branch })}
-                                                  title="Удалить"
-                                                >
-                                                  <Trash2 className="h-3.5 w-3.5 text-destructive" />
-                                                </Button>
-                                              </div>
                                             </div>
                                             {!collapsedBranches.has(curator.id) && curator.cooperationLines && curator.cooperationLines.length > 0 && (
                                               <div className="space-y-3 mt-3 pt-3 border-t">
@@ -5759,20 +5606,17 @@ export default function UniversitiesPage() {
                                                         {(() => {
                                                           const contacts = record.universityContacts || (record.universityContact?.name ? [record.universityContact] : []);
                                                           const contactsKey = `branch-${curator.id}-${record.id}`;
-                                                          const isCollapsed = collapsedContacts.has(contactsKey);
+                                                          const isCollapsed = !expandedContacts.has(contactsKey);
                                                           
                                                           return contacts.length > 0 || true ? (
                                                             <div className="pt-3 border-t mt-3">
                                                               <div 
                                                                 className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md px-2 py-1.5 -mx-2 transition-colors"
                                                                 onClick={() => {
-                                                                  const newCollapsed = new Set(collapsedContacts);
-                                                                  if (isCollapsed) {
-                                                                    newCollapsed.delete(contactsKey);
-                                                                  } else {
-                                                                    newCollapsed.add(contactsKey);
-                                                                  }
-                                                                  setCollapsedContacts(newCollapsed);
+                                                                  const next = new Set(expandedContacts);
+                                                                  if (isCollapsed) next.add(contactsKey);
+                                                                  else next.delete(contactsKey);
+                                                                  setExpandedContacts(next);
                                                                 }}
                                                               >
                                                                 <div className="flex items-center gap-2">
@@ -5785,23 +5629,6 @@ export default function UniversitiesPage() {
                                                                     </Badge>
                                                                   )}
                                                                 </div>
-                                                                <Button
-                                                                  variant="outline"
-                                                                  size="sm"
-                                                                  className="h-7 px-2 text-xs"
-                                                                  onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    handleAddContactInBranch(university.id, curator.id, record.id);
-                                                                    if (isCollapsed) {
-                                                                      const newCollapsed = new Set(collapsedContacts);
-                                                                      newCollapsed.delete(contactsKey);
-                                                                      setCollapsedContacts(newCollapsed);
-                                                                    }
-                                                                  }}
-                                                                >
-                                                                  <Plus className="h-3 w-3 mr-1" />
-                                                                  Добавить
-                                                                </Button>
                                                               </div>
                                                               
                                                               {!isCollapsed && (
@@ -5815,7 +5642,6 @@ export default function UniversitiesPage() {
                                                                             <TableHead className="h-9 text-xs font-semibold w-[180px]">Должность</TableHead>
                                                                             <TableHead className="h-9 text-xs font-semibold w-[200px]">Телефон</TableHead>
                                                                             <TableHead className="h-9 text-xs font-semibold w-[180px]">Email</TableHead>
-                                                                            <TableHead className="h-9 text-xs font-semibold w-[100px] text-center">Публичный</TableHead>
                                                                             <TableHead className="h-9 text-xs font-semibold w-[50px]"></TableHead>
                                                                           </TableRow>
                                                                         </TableHeader>
@@ -5861,26 +5687,6 @@ export default function UniversitiesPage() {
                                                                                   />
                                                                                 </div>
                                                                               </TableCell>
-                                                                              <TableCell className="py-1.5 px-3 text-center">
-                                                                                <div className="flex items-center justify-center">
-                                                                                  <Tooltip>
-                                                                                    <TooltipTrigger asChild>
-                                                                                      <div>
-                                                                                        <Checkbox
-                                                                                          id={`contact-visibility-branch-${curator.id}-${record.id}-${contactIdx}`}
-                                                                                          checked={contact.isPublic || false}
-                                                                                          onCheckedChange={(checked) => handleToggleContactVisibilityInBranch(university.id, curator.id, record.id, contactIdx, checked === true)}
-                                                                                        />
-                                                                                      </div>
-                                                                                    </TooltipTrigger>
-                                                                                    <TooltipContent>
-                                                                                      <p>{contact.isPublic ? "Контакт виден всем" : "Контакт скрыт"}</p>
-                                                                                    </TooltipContent>
-                                                                                  </Tooltip>
-                                                                                  {contact.isPublic && <Eye className="h-3 w-3 text-green-500 ml-1" />}
-                                                                                  {!contact.isPublic && <EyeOff className="h-3 w-3 text-muted-foreground ml-1" />}
-                                                                                </div>
-                                                                              </TableCell>
                                                                               <TableCell className="py-1.5 px-3">
                                                                                 <Button
                                                                                   variant="ghost"
@@ -5900,7 +5706,6 @@ export default function UniversitiesPage() {
                                                                     <div className="flex flex-col items-center justify-center py-6 text-center border rounded-lg bg-muted/20">
                                                                       <Users className="h-8 w-8 text-muted-foreground/50 mb-2" />
                                                                       <p className="text-sm text-muted-foreground">Контакты не добавлены</p>
-                                                                      <p className="text-xs text-muted-foreground/70 mt-1">Нажмите "Добавить" для создания контакта</p>
                                                                     </div>
                                                                   )}
                                                                 </div>
@@ -5908,24 +5713,6 @@ export default function UniversitiesPage() {
                                                             </div>
                                                           ) : null;
                                                         })()}
-                                                      </div>
-                                                      <div className="flex gap-1 shrink-0">
-                                                        <Button
-                                                          variant="ghost"
-                                                          size="sm"
-                                                          className="h-8 w-8 p-0 shrink-0"
-                                                          onClick={() => handleEditCooperationLineInBranch(university.id, curator.id, record.id)}
-                                                        >
-                                                          <Pencil className="h-3.5 w-3.5" />
-                                                        </Button>
-                                                        <Button
-                                                          variant="ghost"
-                                                          size="sm"
-                                                          className="h-8 w-8 p-0 shrink-0"
-                                                          onClick={() => setDeleteCooperationLineDialog({ open: true, universityId: university.id, lineId: record.id, type: "branch", branchId: curator.id })}
-                                                        >
-                                                          <Trash2 className="h-3.5 w-3.5 text-destructive" />
-                                                        </Button>
                                                       </div>
                                                     </div>
                                                   </Card>
@@ -5939,7 +5726,7 @@ export default function UniversitiesPage() {
                                   </>
                                 ) : (
                                   <Card className="p-3">
-                                    <p className="text-sm text-muted-foreground text-center">Филиалы ВУЗа не добавлены</p>
+                                    <p className="text-sm text-muted-foreground text-center">Филиалы ВУза не добавлены</p>
                                   </Card>
                                 )}
                               </div>
@@ -13896,16 +13683,16 @@ export default function UniversitiesPage() {
                                                     {(() => {
                                                       const contacts = record.universityContacts || (record.universityContact?.name ? [record.universityContact] : []);
                                                       const contactsKey = `drp-main-${record.id}`;
-                                                      const isCollapsed = collapsedContacts.has(contactsKey);
+                                                      const isCollapsed = !expandedContacts.has(contactsKey);
                                                       return contacts.length > 0 || true ? (
                                                         <div className="pt-3 border-t mt-3">
                                                           <div
                                                             className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md px-2 py-1.5 -mx-2 transition-colors"
                                                             onClick={() => {
-                                                              const newCollapsed = new Set(collapsedContacts);
-                                                              if (isCollapsed) newCollapsed.delete(contactsKey);
-                                                              else newCollapsed.add(contactsKey);
-                                                              setCollapsedContacts(newCollapsed);
+                                                              const next = new Set(expandedContacts);
+                                                              if (isCollapsed) next.add(contactsKey);
+                                                              else next.delete(contactsKey);
+                                                              setExpandedContacts(next);
                                                             }}
                                                           >
                                                             <div className="flex items-center gap-2">
@@ -13916,23 +13703,6 @@ export default function UniversitiesPage() {
                                                                 <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs font-medium">{contacts.length}</Badge>
                                                               )}
                                                             </div>
-                                                            <Button
-                                                              variant="outline"
-                                                              size="sm"
-                                                              className="h-7 px-2 text-xs"
-                                                              onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                handleAddContactInMain(university.id, record.id);
-                                                                if (isCollapsed) {
-                                                                  const newCollapsed = new Set(collapsedContacts);
-                                                                  newCollapsed.delete(contactsKey);
-                                                                  setCollapsedContacts(newCollapsed);
-                                                                }
-                                                              }}
-                                                            >
-                                                              <Plus className="h-3 w-3 mr-1" />
-                                                              Добавить
-                                                            </Button>
                                                           </div>
                                                           {!isCollapsed && (
                                                             <div className="mt-3">
@@ -13941,11 +13711,10 @@ export default function UniversitiesPage() {
                                                                   <Table>
                                                                     <TableHeader>
                                                                       <TableRow className="bg-muted/50 hover:bg-muted/50">
-                                                                        <TableHead className="h-9 text-xs font-semibold w-[200px]">ФИО</TableHead>
+                                                                      <TableHead className="h-9 text-xs font-semibold w-[200px]">ФИО</TableHead>
                                                                         <TableHead className="h-9 text-xs font-semibold w-[180px]">Должность</TableHead>
                                                                         <TableHead className="h-9 text-xs font-semibold w-[200px]">Телефон</TableHead>
                                                                         <TableHead className="h-9 text-xs font-semibold w-[180px]">Email</TableHead>
-                                                                        <TableHead className="h-9 text-xs font-semibold w-[100px] text-center">Публичный</TableHead>
                                                                         <TableHead className="h-9 text-xs font-semibold w-[50px]"></TableHead>
                                                                       </TableRow>
                                                                     </TableHeader>
@@ -13991,26 +13760,6 @@ export default function UniversitiesPage() {
                                                                               />
                                                                             </div>
                                                                           </TableCell>
-                                                                          <TableCell className="py-1.5 px-3 text-center">
-                                                                            <div className="flex items-center justify-center">
-                                                                              <Tooltip>
-                                                                                <TooltipTrigger asChild>
-                                                                                  <div>
-                                                                                    <Checkbox
-                                                                                      id={`drp-contact-visibility-main-${record.id}-${contactIdx}`}
-                                                                                      checked={contact.isPublic || false}
-                                                                                      onCheckedChange={(checked) => handleToggleContactVisibilityInMain(university.id, record.id, contactIdx, checked === true)}
-                                                                                    />
-                                                                                  </div>
-                                                                                </TooltipTrigger>
-                                                                                <TooltipContent>
-                                                                                  <p>{contact.isPublic ? "Контакт виден всем" : "Контакт скрыт"}</p>
-                                                                                </TooltipContent>
-                                                                              </Tooltip>
-                                                                              {contact.isPublic && <Eye className="h-3 w-3 text-green-500 ml-1" />}
-                                                                              {!contact.isPublic && <EyeOff className="h-3 w-3 text-muted-foreground ml-1" />}
-                                                                            </div>
-                                                                          </TableCell>
                                                                           <TableCell className="py-1.5 px-3">
                                                                             <Button
                                                                               variant="ghost"
@@ -14030,7 +13779,6 @@ export default function UniversitiesPage() {
                                                                 <div className="flex flex-col items-center justify-center py-6 text-center border rounded-lg bg-muted/20">
                                                                   <Users className="h-8 w-8 text-muted-foreground/50 mb-2" />
                                                                   <p className="text-sm text-muted-foreground">Контакты не добавлены</p>
-                                                                  <p className="text-xs text-muted-foreground/70 mt-1">Нажмите &quot;Добавить&quot; для создания контакта</p>
                                                                 </div>
                                                               )}
                                                             </div>
@@ -14060,18 +13808,6 @@ export default function UniversitiesPage() {
 
                                       {/* Филиалы ВУза — только линии ДРП по филиалам с контактами */}
                                       <TabsContent value="branches" className="space-y-4 mt-4">
-                                        <div className="flex items-center justify-end w-full">
-                                          <Button
-                                            onClick={() => {
-                                              setNewCuratorForUniversity({ city: "", branch: "", cooperationLines: [] });
-                                              setIsBranchDialogOpen(true);
-                                            }}
-                                            size="sm"
-                                          >
-                                            <Plus className="mr-2 h-4 w-4" />
-                                            Добавить филиал
-                                          </Button>
-                                        </div>
                                         <div className="space-y-3">
                                           {university.branchCurators && university.branchCurators.length > 0 ? (
                                             <>
@@ -14124,7 +13860,7 @@ export default function UniversitiesPage() {
                                                                         <SelectValue />
                                                                       </SelectTrigger>
                                                                       <SelectContent>
-                                                                        {cooperationLines.map((line) => (
+                                                                        {cooperationLines.filter((line) => line.value === "drp").map((line) => (
                                                                           <SelectItem key={line.value} value={line.value}>
                                                                             {line.label}
                                                                           </SelectItem>
@@ -14265,6 +14001,7 @@ export default function UniversitiesPage() {
                                                                 size="sm"
                                                                 className="h-8 w-8 p-0 shrink-0"
                                                                 onClick={() => {
+                                                                  setIsDrpCabinetBranchLineDialog(true);
                                                                   setSelectedBranchId(curator.id);
                                                                   setNewCooperationLineForBranch({
                                                                     id: `clr-${Date.now()}`,
@@ -14330,16 +14067,16 @@ export default function UniversitiesPage() {
                                                                       {(() => {
                                                                         const contacts = record.universityContacts || (record.universityContact?.name ? [record.universityContact] : []);
                                                                         const contactsKey = `drp-branch-${curator.id}-${record.id}`;
-                                                                        const isCollapsed = collapsedContacts.has(contactsKey);
+                                                                        const isCollapsed = !expandedContacts.has(contactsKey);
                                                                         return contacts.length > 0 || true ? (
                                                                           <div className="pt-3 border-t mt-3">
                                                                             <div
                                                                               className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md px-2 py-1.5 -mx-2 transition-colors"
                                                                               onClick={() => {
-                                                                                const newCollapsed = new Set(collapsedContacts);
-                                                                                if (isCollapsed) newCollapsed.delete(contactsKey);
-                                                                                else newCollapsed.add(contactsKey);
-                                                                                setCollapsedContacts(newCollapsed);
+                                                                                const next = new Set(expandedContacts);
+                                                                                if (isCollapsed) next.add(contactsKey);
+                                                                                else next.delete(contactsKey);
+                                                                                setExpandedContacts(next);
                                                                               }}
                                                                             >
                                                                               <div className="flex items-center gap-2">
@@ -14348,23 +14085,6 @@ export default function UniversitiesPage() {
                                                                                 <span className="text-sm font-semibold">Контакты ВУза</span>
                                                                                 {contacts.length > 0 && <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs font-medium">{contacts.length}</Badge>}
                                                                               </div>
-                                                                              <Button
-                                                                                variant="outline"
-                                                                                size="sm"
-                                                                                className="h-7 px-2 text-xs"
-                                                                                onClick={(e) => {
-                                                                                  e.stopPropagation();
-                                                                                  handleAddContactInBranch(university.id, curator.id, record.id);
-                                                                                  if (isCollapsed) {
-                                                                                    const newCollapsed = new Set(collapsedContacts);
-                                                                                    newCollapsed.delete(contactsKey);
-                                                                                    setCollapsedContacts(newCollapsed);
-                                                                                  }
-                                                                                }}
-                                                                              >
-                                                                                <Plus className="h-3 w-3 mr-1" />
-                                                                                Добавить
-                                                                              </Button>
                                                                             </div>
                                                                             {!isCollapsed && (
                                                                               <div className="mt-3">
@@ -14377,7 +14097,6 @@ export default function UniversitiesPage() {
                                                                                           <TableHead className="h-9 text-xs font-semibold w-[180px]">Должность</TableHead>
                                                                                           <TableHead className="h-9 text-xs font-semibold w-[200px]">Телефон</TableHead>
                                                                                           <TableHead className="h-9 text-xs font-semibold w-[180px]">Email</TableHead>
-                                                                                          <TableHead className="h-9 text-xs font-semibold w-[100px] text-center">Публичный</TableHead>
                                                                                           <TableHead className="h-9 text-xs font-semibold w-[50px]"></TableHead>
                                                                                         </TableRow>
                                                                                       </TableHeader>
@@ -14402,20 +14121,6 @@ export default function UniversitiesPage() {
                                                                                                 <Input type="email" value={contact.email || ""} onChange={(e) => handleUpdateContactInBranch(university.id, curator.id, record.id, contactIdx, { ...contact, email: e.target.value })} placeholder="Email" className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1" />
                                                                                               </div>
                                                                                             </TableCell>
-                                                                                            <TableCell className="py-1.5 px-3 text-center">
-                                                                                              <div className="flex items-center justify-center">
-                                                                                                <Tooltip>
-                                                                                                  <TooltipTrigger asChild>
-                                                                                                    <div>
-                                                                                                      <Checkbox id={`drp-contact-branch-${curator.id}-${record.id}-${contactIdx}`} checked={contact.isPublic || false} onCheckedChange={(checked) => handleToggleContactVisibilityInBranch(university.id, curator.id, record.id, contactIdx, checked === true)} />
-                                                                                                    </div>
-                                                                                                  </TooltipTrigger>
-                                                                                                  <TooltipContent><p>{contact.isPublic ? "Контакт виден всем" : "Контакт скрыт"}</p></TooltipContent>
-                                                                                                </Tooltip>
-                                                                                                {contact.isPublic && <Eye className="h-3 w-3 text-green-500 ml-1" />}
-                                                                                                {!contact.isPublic && <EyeOff className="h-3 w-3 text-muted-foreground ml-1" />}
-                                                                                              </div>
-                                                                                            </TableCell>
                                                                                             <TableCell className="py-1.5 px-3">
                                                                                               <Button variant="ghost" size="icon" className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => handleDeleteContactInBranch(university.id, curator.id, record.id, contactIdx)}>
                                                                                                 <Trash2 className="h-3 w-3 text-destructive" />
@@ -14430,7 +14135,6 @@ export default function UniversitiesPage() {
                                                                                   <div className="flex flex-col items-center justify-center py-6 text-center border rounded-lg bg-muted/20">
                                                                                     <Users className="h-8 w-8 text-muted-foreground/50 mb-2" />
                                                                                     <p className="text-sm text-muted-foreground">Контакты не добавлены</p>
-                                                                                    <p className="text-xs text-muted-foreground/70 mt-1">Нажмите &quot;Добавить&quot; для создания контакта</p>
                                                                                   </div>
                                                                                 )}
                                                                               </div>
@@ -15575,6 +15279,7 @@ export default function UniversitiesPage() {
           <Dialog open={isCooperationLineDialogOpen} onOpenChange={(open) => {
             setIsCooperationLineDialogOpen(open);
             if (!open) {
+              setIsDrpCabinetBranchLineDialog(false);
               setSelectedBranchId(null);
               setEditingCooperationLine(null);
               setNewCooperationLineForBranch({
@@ -15605,7 +15310,7 @@ export default function UniversitiesPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {cooperationLines.map((line) => (
+                      {(isDrpCabinetBranchLineDialog ? cooperationLines.filter((l) => l.value === "drp") : cooperationLines).map((line) => (
                         <SelectItem key={line.value} value={line.value}>
                           {line.label}
                         </SelectItem>
@@ -15638,6 +15343,7 @@ export default function UniversitiesPage() {
                 <Button
                   variant="outline"
                   onClick={() => {
+                    setIsDrpCabinetBranchLineDialog(false);
                     setIsCooperationLineDialogOpen(false);
                     setSelectedBranchId(null);
                     setEditingCooperationLine(null);
