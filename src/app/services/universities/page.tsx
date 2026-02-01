@@ -751,19 +751,19 @@ const mockUniversities: University[] = [
       },
     ],
     events: [
-      { id: "event-hse-1", type: "careerDays", date: "2024-03-15", endDate: "2024-03-17", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Проведены дни карьеры для студентов экономического факультета. В мероприятии приняли участие более 150 студентов 3-4 курсов. Были организованы мастер-классы по подготовке резюме, тренинги по прохождению собеседований и презентации карьерных треков в банке. Особый интерес вызвала секция по работе с корпоративными клиентами.", cooperationLine: "drp", branch: "Головной ВУЗ", addedAt: "2024-03-01", addedBy: "Иванова Е.С." },
-      { id: "event-hse-2", type: "expertParticipation", date: "2024-04-20", endDate: "2024-04-20", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите дипломных работ по направлению 'Финансы и кредит'. Оценено 12 выпускных работ, из которых 4 рекомендованы к публикации. Дана обратная связь по практической применимости исследований в банковской сфере. Три студента получили приглашение на стажировку.", cooperationLine: "bko", branch: "Московский филиал", addedAt: "2024-04-05", addedBy: "Петров А.В." },
-      { id: "event-hse-3", type: "caseChampionships", date: "2024-05-10", endDate: "2024-05-12", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по банковскому делу. В финал вышли 8 команд из 24 участвовавших. Победила команда студентов 3 курса с проектом по оптимизации процессов кредитования МСБ. Призовой фонд составил 300 000 рублей. Все финалисты получили приоритетное право на стажировку.", cooperationLine: "cntr", branch: "Центральный офис", addedAt: "2024-04-25", addedBy: "Смирнова О.И." },
+      { id: "event-hse-1", type: "careerDays", date: "2024-03-15", endDate: "2024-03-17", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Проведены дни карьеры для студентов экономического факультета. В мероприятии приняли участие более 150 студентов 3-4 курсов. Были организованы мастер-классы по подготовке резюме, тренинги по прохождению собеседований и презентации карьерных треков в банке. Особый интерес вызвала секция по работе с корпоративными клиентами.", cooperationLine: "drp", branch: "Головной ВУЗ", addedAt: "2024-03-01", addedBy: "Иванова Е.С.", universityContact: { name: "Кузнецова Анна Владимировна", position: "Доцент кафедры финансов, куратор карьерного центра", phone: "+7 (495) 772-95-90", email: "a.kuznetsova@hse.ru" } },
+      { id: "event-hse-2", type: "expertParticipation", date: "2024-04-20", endDate: "2024-04-20", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите дипломных работ по направлению 'Финансы и кредит'. Оценено 12 выпускных работ, из которых 4 рекомендованы к публикации. Дана обратная связь по практической применимости исследований в банковской сфере. Три студента получили приглашение на стажировку.", cooperationLine: "bko", branch: "Московский филиал", addedAt: "2024-04-05", addedBy: "Петров А.В.", universityContact: { name: "Сидоров Дмитрий Петрович", position: "Заведующий кафедрой банковского дела", phone: "+7 (495) 772-95-91", email: "d.sidorov@hse.ru" } },
+      { id: "event-hse-3", type: "caseChampionships", date: "2024-05-10", endDate: "2024-05-12", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по банковскому делу. В финал вышли 8 команд из 24 участвовавших. Победила команда студентов 3 курса с проектом по оптимизации процессов кредитования МСБ. Призовой фонд составил 300 000 рублей. Все финалисты получили приоритетное право на стажировку.", cooperationLine: "cntr", branch: "Центральный офис", addedAt: "2024-04-25", addedBy: "Смирнова О.И.", universityContact: { name: "Орлова Мария Сергеевна", position: "Руководитель департамента развития карьеры студентов", phone: "+7 (495) 772-95-92", email: "m.orlova@hse.ru" } },
       { id: "event-hse-4", type: "careerDays", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Запланированы дни карьеры для студентов IT-направления. Ожидается участие более 200 студентов. В программе: хакатон по разработке финтех-решений, воркшопы по машинному обучению в банкинге, нетворкинг-сессии с техническими лидерами банка. Подготовлены специальные треки для backend и frontend разработчиков.", cooperationLine: "drp", branch: "Санкт-Петербургский филиал", addedAt: "2024-09-10", addedBy: "Козлов Д.П." },
       { id: "event-hse-5", type: "expertParticipation", date: "2024-10-15", endDate: "2024-10-15", status: "planned", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на международной конференции по финансовым технологиям. Запланирован доклад на тему «Трансформация банковских продуктов в эпоху AI». Ожидается участие представителей 15 университетов и 20 финансовых организаций. Будет организована панельная дискуссия с Q&A сессией.", cooperationLine: "bko", branch: "Головной ВУЗ", addedAt: "2024-09-30", addedBy: "Соколов А.Н." },
       { id: "event-hse-6", type: "caseChampionships", date: "2024-11-20", endDate: "2024-11-22", status: "planned", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Организация кейс-чемпионата по управлению рисками в банковской сфере. Тематика включает кредитные, операционные и рыночные риски. Приглашены команды из 10 ведущих вузов страны. Общий призовой фонд — 500 000 рублей. Победители получат возможность пройти стажировку в департаменте риск-менеджмента.", cooperationLine: "cntr", branch: "Московский филиал", addedAt: "2024-11-05", addedBy: "Волкова М.К." },
       { id: "event-hse-7", type: "careerDays", date: "2024-12-05", endDate: "2024-12-07", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для выпускников магистратуры. Фокус на карьерные возможности в банковском секторе для специалистов с углублённой подготовкой. Запланированы индивидуальные консультации с HR-партнёрами, экскурсии в офисы банка, презентации лидерских программ развития. Ожидается участие 80+ магистрантов.", cooperationLine: "drp", branch: "Головной ВУЗ", addedAt: "2024-11-20", addedBy: "Новиков Р.С." },
-      { id: "event-hse-8", type: "meeting", date: "2024-01-15", endDate: "2024-01-15", status: "completed", responsiblePerson: ["person-1"], comments: "Встреча с руководством факультета по вопросам расширения сотрудничества. Обсуждены новые форматы взаимодействия: создание совместной магистерской программы, организация практикумов на базе банка, привлечение преподавателей в качестве консультантов. Подписан протокол о намерениях на 2024 год.", cooperationLine: "bko", branch: "Центральный офис", addedAt: "2024-01-08", addedBy: "Морозова Т.И." },
-      { id: "event-hse-9", type: "communication", date: "2024-02-01", endDate: "2024-02-01", status: "completed", responsiblePerson: ["person-2"], comments: "Презентация программ стажировок для студентов 2 курса. Проведена в формате онлайн-вебинара с интерактивными элементами. Подключились 180 студентов. Представлены 8 направлений стажировок, условия участия, карьерные перспективы. Получено 45 заявок на участие в отборе непосредственно после мероприятия.", cooperationLine: "cntr", branch: "Московский филиал", addedAt: "2024-01-22", addedBy: "Лебедева А.С." },
+      { id: "event-hse-8", type: "meeting", date: "2024-01-15", endDate: "2024-01-15", status: "completed", responsiblePerson: ["person-1"], comments: "Встреча с руководством факультета по вопросам расширения сотрудничества. Обсуждены новые форматы взаимодействия: создание совместной магистерской программы, организация практикумов на базе банка, привлечение преподавателей в качестве консультантов. Подписан протокол о намерениях на 2024 год.", cooperationLine: "bko", branch: "Центральный офис", addedAt: "2024-01-08", addedBy: "Морозова Т.И.", universityContact: { name: "Волков Андрей Николаевич", position: "Декан факультета экономических наук", phone: "+7 (495) 772-95-93", email: "a.volkov@hse.ru" } },
+      { id: "event-hse-9", type: "communication", date: "2024-02-01", endDate: "2024-02-01", status: "completed", responsiblePerson: ["person-2"], comments: "Презентация программ стажировок для студентов 2 курса. Проведена в формате онлайн-вебинара с интерактивными элементами. Подключились 180 студентов. Представлены 8 направлений стажировок, условия участия, карьерные перспективы. Получено 45 заявок на участие в отборе непосредственно после мероприятия.", cooperationLine: "cntr", branch: "Московский филиал", addedAt: "2024-01-22", addedBy: "Лебедева А.С.", universityContact: { name: "Федорова Елена Игоревна", position: "Координатор программ стажировок", phone: "+7 (495) 772-95-94", email: "e.fedorova@hse.ru" } },
       { id: "event-hse-10", type: "expertParticipation", date: "2024-02-20", endDate: "2024-02-20", status: "completed", responsiblePerson: ["person-3"], comments: "Экспертиза студенческих проектов по направлению «Финансовые технологии». Рассмотрено 15 проектов на различных стадиях готовности. Даны рекомендации по доработке для 8 команд. Три проекта отобраны для пилотирования в рамках акселератора банка. Выделено менторское сопровождение для перспективных команд.", cooperationLine: "drp", branch: "Головной ВУЗ", addedAt: "2024-02-12", addedBy: "Федорова М.Д." },
       { id: "event-hse-11", type: "caseChampionships", date: "2024-03-01", endDate: "2024-03-03", status: "completed", responsiblePerson: ["person-4"], comments: "Кейс-чемпионат по корпоративным финансам. Участвовало 20 команд, в финал вышли 6 лучших. Кейс был посвящён оптимизации структуры капитала крупного промышленного холдинга. Победители получили денежные призы и приглашение на летнюю стажировку в инвестиционном блоке банка.", cooperationLine: "bko", branch: "Санкт-Петербургский филиал", addedAt: "2024-02-18", addedBy: "Иванова Е.С." },
       { id: "event-hse-12", type: "careerDays", date: "2024-04-05", endDate: "2024-04-07", status: "completed", responsiblePerson: ["person-5"], comments: "Дни карьеры для магистрантов программы «Финансы». Трёхдневное мероприятие включало: день знакомства с корпоративной культурой, день погружения в бизнес-процессы, день карьерного планирования. Участвовало 65 магистрантов. 28 из них подали заявки на позиции junior-аналитиков.", cooperationLine: "cntr", branch: "Головной ВУЗ", addedAt: "2024-03-22", addedBy: "Петров А.В." },
-      { id: "event-hse-13", type: "meeting", date: "2024-04-18", endDate: "2024-04-18", status: "completed", responsiblePerson: ["person-6"], comments: "Совещание по плану совместных мероприятий на 2024 год. Утверждён календарь из 24 мероприятий. Согласованы бюджеты на кейс-чемпионаты, дни карьеры и научные конференции. Определены ответственные лица с обеих сторон. Запланированы ежеквартальные статус-встречи для контроля выполнения.", cooperationLine: "drp", branch: "Московский филиал", addedAt: "2024-04-08", addedBy: "Смирнова О.И." },
+      { id: "event-hse-13", type: "meeting", date: "2024-04-18", endDate: "2024-04-18", status: "completed", responsiblePerson: ["person-6"], comments: "Совещание по плану совместных мероприятий на 2024 год. Утверждён календарь из 24 мероприятий. Согласованы бюджеты на кейс-чемпионаты, дни карьеры и научные конференции. Определены ответственные лица с обеих сторон. Запланированы ежеквартальные статус-встречи для контроля выполнения.", cooperationLine: "drp", branch: "Московский филиал", addedAt: "2024-04-08", addedBy: "Смирнова О.И.", universityContact: { name: "Павлова Ольга Александровна", position: "Начальник управления по работе с партнёрами", phone: "+7 (495) 772-95-95", email: "o.pavlova@hse.ru" } },
       { id: "event-hse-14", type: "communication", date: "2024-05-05", endDate: "2024-05-05", status: "completed", responsiblePerson: ["person-7"], comments: "Вебинар о карьерных возможностях в банке для студентов всех направлений. Спикеры — руководители ключевых подразделений банка. Охвачены темы: розничный бизнес, корпоративный блок, IT, риски, операционная деятельность. Зарегистрировалось 250 участников, средняя продолжительность просмотра — 75 минут.", cooperationLine: "bko", branch: "Центральный офис", addedAt: "2024-04-28", addedBy: "Козлов Д.П." },
       { id: "event-hse-15", type: "expertParticipation", date: "2024-05-22", endDate: "2024-05-22", status: "completed", responsiblePerson: ["person-1"], comments: "Участие в жюри олимпиады по экономике среди студентов. Оценивались решения кейсов по макроэкономике и финансовым рынкам. В олимпиаде приняли участие 120 студентов из 8 вузов. Вручены специальные призы от банка трём лучшим участникам с приглашением на экскурсию в головной ВУЗ.", cooperationLine: "cntr", branch: "Головной ВУЗ", addedAt: "2024-05-12", addedBy: "Соколов А.Н." },
       { id: "event-hse-16", type: "caseChampionships", date: "2024-06-10", endDate: "2024-06-12", status: "in_progress", responsiblePerson: ["person-2"], comments: "Кейс-чемпионат по риск-менеджменту в активной фазе. Регистрация завершена — подано 32 заявки от команд. Кейс посвящён разработке модели оценки кредитного риска для сегмента МСБ. Полуфиналы пройдут онлайн, финал — очно в офисе банка. Призовой фонд — 400 000 рублей.", cooperationLine: "drp", branch: "Санкт-Петербургский филиал", addedAt: "2024-05-28", addedBy: "Волкова М.К." },
@@ -2188,6 +2188,10 @@ export default function UniversitiesPage() {
     type: Event["type"] | null;
     year: number | null;
   }>({ cooperationLine: null, type: null, year: null });
+  // Фильтры мероприятий в Личном кабинете ДРП (стилистика вкладки «Мероприятия» + период как на ленте)
+  const [drpEventsFeedFilters, setDrpEventsFeedFilters] = useState<{ type: Event["type"] | null; year: number | null }>({ type: null, year: null });
+  const [drpEventsFeedCurrentPage, setDrpEventsFeedCurrentPage] = useState(1);
+  const [drpEventsFeedItemsPerPage, setDrpEventsFeedItemsPerPage] = useState(10);
   // Фильтры калейдоскопа (линия, тип договора)
   const [kaleidoscopeFilters, setKaleidoscopeFilters] = useState<{
     cooperationLine: "drp" | "bko" | "cntr" | null;
@@ -2218,6 +2222,13 @@ export default function UniversitiesPage() {
     setEventsFeedFilters({ cooperationLine: null, type: null, year: null });
     setEventsFeedCurrentPage(1);
   }, [selectedUniversity, universityDetailTab, universities]);
+
+  // При открытии вкладки «Мероприятия» в Личном кабинете ДРП — сброс фильтров и страницы
+  useEffect(() => {
+    if (!selectedUniversity || universityDetailTab !== "drpCabinet" || drpCabinetSubTab !== "events") return;
+    setDrpEventsFeedFilters({ type: null, year: null });
+    setDrpEventsFeedCurrentPage(1);
+  }, [selectedUniversity, universityDetailTab, drpCabinetSubTab]);
 
   // Сброс фильтров калейдоскопа при смене ВУЗа или вкладки
   useEffect(() => {
@@ -2607,6 +2618,9 @@ export default function UniversitiesPage() {
     comments: string;
     responsiblePerson: string[];
     cooperationLine: "drp" | "bko" | "cntr" | "";
+    branch: string;
+    showInEventsFeed: boolean;
+    universityContact: { name: string; position: string; phone: string; email: string };
   }>({
     type: "",
     date: "",
@@ -2615,7 +2629,12 @@ export default function UniversitiesPage() {
     comments: "",
     responsiblePerson: [],
     cooperationLine: "",
+    branch: "",
+    showInEventsFeed: true,
+    universityContact: { name: "", position: "", phone: "", email: "" },
   });
+
+  const [eventToDelete, setEventToDelete] = useState<{ universityId: string; eventId: string } | null>(null);
   
   // Состояние для модального окна добавления студентов
   const [isAddStudentsDialogOpen, setIsAddStudentsDialogOpen] = useState(false);
@@ -3436,6 +3455,12 @@ export default function UniversitiesPage() {
     if (!newEvent.type || !newEvent.date.trim() || !newEvent.endDate.trim() || newEvent.responsiblePerson.length === 0) {
       return;
     }
+    const hasUniversityContact = Boolean(
+      newEvent.universityContact.name.trim() ||
+      newEvent.universityContact.position?.trim() ||
+      newEvent.universityContact.phone?.trim() ||
+      newEvent.universityContact.email?.trim()
+    );
     const event: Event = {
       id: `event-${Date.now()}`,
       type: newEvent.type as "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication",
@@ -3445,7 +3470,17 @@ export default function UniversitiesPage() {
       comments: newEvent.comments.trim() || undefined,
       responsiblePerson: newEvent.responsiblePerson,
       cooperationLine: (isDrpCabinetEventDialog ? "drp" : newEvent.cooperationLine) || undefined,
+      branch: newEvent.branch.trim() || undefined,
+      showInEventsFeed: newEvent.showInEventsFeed,
       addedAt: new Date().toISOString().split("T")[0],
+      universityContact: hasUniversityContact
+        ? {
+            name: newEvent.universityContact.name.trim(),
+            position: newEvent.universityContact.position?.trim() || undefined,
+            phone: newEvent.universityContact.phone?.trim() || undefined,
+            email: newEvent.universityContact.email?.trim() || undefined,
+          }
+        : undefined,
     };
     const university = universities.find(u => u.id === universityId);
     if (university) {
@@ -3453,7 +3488,7 @@ export default function UniversitiesPage() {
       setUniversities(universities.map(u => 
         u.id === universityId ? { ...u, events: updatedEvents } : u
       ));
-      setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
+      setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "", branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" } });
       setIsEventDialogOpen(false);
       setIsDrpCabinetEventDialog(false);
     }
@@ -3473,6 +3508,11 @@ export default function UniversitiesPage() {
         comments: event.comments || "",
         responsiblePerson: event.responsiblePerson,
         cooperationLine: event.cooperationLine || "",
+        branch: event.branch || "",
+        showInEventsFeed: event.showInEventsFeed !== false,
+        universityContact: event.universityContact
+          ? { name: event.universityContact.name || "", position: event.universityContact.position || "", phone: event.universityContact.phone || "", email: event.universityContact.email || "" }
+          : { name: "", position: "", phone: "", email: "" },
       });
       setIsEventDialogOpen(true);
     }
@@ -3483,20 +3523,54 @@ export default function UniversitiesPage() {
     if (!editingEvent || !newEvent.type || !newEvent.date.trim() || !newEvent.endDate.trim() || newEvent.responsiblePerson.length === 0) {
       return;
     }
+    const hasUniversityContact = Boolean(
+      newEvent.universityContact.name.trim() ||
+      newEvent.universityContact.position?.trim() ||
+      newEvent.universityContact.phone?.trim() ||
+      newEvent.universityContact.email?.trim()
+    );
     const updatedEvents = universities
       .find(u => u.id === editingEvent.universityId)
-      ?.events?.map(e => 
-        e.id === editingEvent.event.id 
-          ? { ...e, type: newEvent.type as "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication", date: newEvent.date, endDate: newEvent.endDate, status: newEvent.status, comments: newEvent.comments.trim() || undefined, responsiblePerson: newEvent.responsiblePerson, cooperationLine: (isDrpCabinetEventDialog ? "drp" : newEvent.cooperationLine) || undefined }
+      ?.events?.map(e =>
+        e.id === editingEvent.event.id
+          ? {
+              ...e,
+              type: newEvent.type as "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication",
+              date: newEvent.date,
+              endDate: newEvent.endDate,
+              status: newEvent.status,
+              comments: newEvent.comments.trim() || undefined,
+              responsiblePerson: newEvent.responsiblePerson,
+              cooperationLine: (isDrpCabinetEventDialog ? "drp" : newEvent.cooperationLine) || undefined,
+              branch: newEvent.branch.trim() || undefined,
+              showInEventsFeed: newEvent.showInEventsFeed,
+              universityContact: hasUniversityContact
+                ? { name: newEvent.universityContact.name.trim(), position: newEvent.universityContact.position?.trim() || undefined, phone: newEvent.universityContact.phone?.trim() || undefined, email: newEvent.universityContact.email?.trim() || undefined }
+                : undefined,
+            }
           : e
       ) || [];
     setUniversities(universities.map(u => 
       u.id === editingEvent.universityId ? { ...u, events: updatedEvents } : u
     ));
     setEditingEvent(null);
-    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
+    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "", branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" } });
     setIsEventDialogOpen(false);
     setIsDrpCabinetEventDialog(false);
+  };
+
+  // Переключение видимости мероприятия в ленте мероприятий (из Личного кабинета ДРП)
+  const handleToggleEventShowInFeed = (universityId: string, eventId: string, showInEventsFeed: boolean) => {
+    setUniversities(universities.map(u =>
+      u.id === universityId
+        ? {
+            ...u,
+            events: (u.events || []).map(e =>
+              e.id === eventId ? { ...e, showInEventsFeed } : e
+            ),
+          }
+        : u
+    ));
   };
 
   // Добавление договора в табе
@@ -5196,9 +5270,10 @@ export default function UniversitiesPage() {
                                                 </div>
                                               </div>
                                             )}
-                                            {/* Контакты со стороны ВУЗа */}
+                                            {/* Контакты со стороны ВУЗа — только публичные (isPublic !== false), скрытые в ДРП не показываем */}
                                             {(() => {
                                               const contacts = record.universityContacts || (record.universityContact?.name ? [record.universityContact] : []);
+                                              const publicContacts = contacts.filter((c: { isPublic?: boolean }) => c.isPublic !== false);
                                               const contactsKey = `main-${record.id}`;
                                               const isCollapsed = !expandedContacts.has(contactsKey);
                                               
@@ -5217,9 +5292,9 @@ export default function UniversitiesPage() {
                                                       {isCollapsed ? <ChevronRight className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
                                                       <Users className="h-4 w-4 text-primary" />
                                                       <span className="text-sm font-semibold">Контакты ВУЗа</span>
-                                                      {contacts.length > 0 && (
+                                                      {publicContacts.length > 0 && (
                                                         <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs font-medium">
-                                                          {contacts.length}
+                                                          {publicContacts.length}
                                                         </Badge>
                                                       )}
                                                     </div>
@@ -5227,7 +5302,7 @@ export default function UniversitiesPage() {
                                                           
                                                           {!isCollapsed && (
                                                             <div className="mt-3">
-                                                              {contacts.length > 0 ? (
+                                                              {publicContacts.length > 0 ? (
                                                                 <div className="rounded-lg border overflow-hidden">
                                                                   <Table>
                                                                     <TableHeader>
@@ -5240,7 +5315,9 @@ export default function UniversitiesPage() {
                                                               </TableRow>
                                                             </TableHeader>
                                                             <TableBody>
-                                                              {contacts.map((contact, contactIdx) => (
+                                                              {publicContacts.map((contact) => {
+                                                                const contactIdx = contacts.findIndex((c: { name?: string; email?: string }) => c === contact);
+                                                                return (
                                                                 <TableRow key={contactIdx} className="group">
                                                               <TableCell className="py-1.5 px-3">
                                                                 <Input
@@ -5292,7 +5369,8 @@ export default function UniversitiesPage() {
                                                                     </Button>
                                                                   </TableCell>
                                                                 </TableRow>
-                                                              ))}
+                                                              );
+                                                              })}
                                                             </TableBody>
                                                           </Table>
                                                         </div>
@@ -5602,9 +5680,10 @@ export default function UniversitiesPage() {
                                                             </div>
                                                           </div>
                                                         )}
-                                                        {/* Контакты со стороны ВУЗа */}
+                                                        {/* Контакты со стороны ВУЗа — только публичные (isPublic !== false) */}
                                                         {(() => {
                                                           const contacts = record.universityContacts || (record.universityContact?.name ? [record.universityContact] : []);
+                                                          const publicContacts = contacts.filter((c: { isPublic?: boolean }) => c.isPublic !== false);
                                                           const contactsKey = `branch-${curator.id}-${record.id}`;
                                                           const isCollapsed = !expandedContacts.has(contactsKey);
                                                           
@@ -5623,9 +5702,9 @@ export default function UniversitiesPage() {
                                                                   {isCollapsed ? <ChevronRight className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
                                                                   <Users className="h-4 w-4 text-primary" />
                                                                   <span className="text-sm font-semibold">Контакты ВУЗа</span>
-                                                                  {contacts.length > 0 && (
+                                                                  {publicContacts.length > 0 && (
                                                                     <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs font-medium">
-                                                                      {contacts.length}
+                                                                      {publicContacts.length}
                                                                     </Badge>
                                                                   )}
                                                                 </div>
@@ -5633,7 +5712,7 @@ export default function UniversitiesPage() {
                                                               
                                                               {!isCollapsed && (
                                                                 <div className="mt-3">
-                                                                  {contacts.length > 0 ? (
+                                                                  {publicContacts.length > 0 ? (
                                                                     <div className="rounded-lg border overflow-hidden">
                                                                       <Table>
                                                                         <TableHeader>
@@ -5646,7 +5725,9 @@ export default function UniversitiesPage() {
                                                                           </TableRow>
                                                                         </TableHeader>
                                                                         <TableBody>
-                                                                          {contacts.map((contact, contactIdx) => (
+                                                                          {publicContacts.map((contact) => {
+                                                                            const contactIdx = contacts.findIndex((c: { name?: string; email?: string }) => c === contact);
+                                                                            return (
                                                                             <TableRow key={contactIdx} className="group">
                                                                               <TableCell className="py-1.5 px-3">
                                                                                 <Input
@@ -5698,7 +5779,8 @@ export default function UniversitiesPage() {
                                                                                 </Button>
                                                                               </TableCell>
                                                                             </TableRow>
-                                                                          ))}
+                                                                          );
+                                                                          })}
                                                                         </TableBody>
                                                                       </Table>
                                                                     </div>
@@ -6583,7 +6665,7 @@ export default function UniversitiesPage() {
                                 in_progress: "В процессе",
                                 completed: "Проведено",
                               };
-                              const allEvents = university.events || [];
+                              const allEvents = (university.events || []).filter((e) => e.showInEventsFeed !== false);
                               // Для каждого блока — мероприятия, отфильтрованные по двум другим критериям (чтобы блоки сужали варианты)
                               const eventsForLineBlock = allEvents.filter((e) => {
                                 if (eventsFeedFilters.type && e.type !== eventsFeedFilters.type) return false;
@@ -6943,12 +7025,23 @@ export default function UniversitiesPage() {
                                                             </Badge>
                                                           )}
 
-                                                          {/* Контактное лицо ВУЗ */}
+                                                          {/* ВУЗ: контакт мероприятия (event.universityContact) или контакты университета */}
                                                           <div className="flex gap-2 text-sm">
                                                             <Building2 className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
                                                             <div>
                                                               <span className="text-muted-foreground">ВУЗ: </span>
-                                                              {university.universityContacts?.length > 0 ? (
+                                                              {event.universityContact && (event.universityContact.name || event.universityContact.position || event.universityContact.phone || event.universityContact.email) ? (
+                                                                <>
+                                                                  <span className="font-medium">{event.universityContact.name || "—"}</span>
+                                                                  {event.universityContact.position && <span className="text-muted-foreground"> ({event.universityContact.position})</span>}
+                                                                  {(event.universityContact.phone || event.universityContact.email) && (
+                                                                    <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-0.5 text-muted-foreground text-xs">
+                                                                      {event.universityContact.phone && <span className="flex items-center gap-1"><Phone className="h-3 w-3" />{event.universityContact.phone}</span>}
+                                                                      {event.universityContact.email && <span className="flex items-center gap-1"><Mail className="h-3 w-3" />{event.universityContact.email}</span>}
+                                                                    </div>
+                                                                  )}
+                                                                </>
+                                                              ) : university.universityContacts?.length > 0 ? (
                                                                 university.universityContacts.map((contact, idx) => (
                                                                   <span key={idx}>
                                                                     {idx > 0 && ", "}
@@ -7247,7 +7340,7 @@ export default function UniversitiesPage() {
                               <Button
                                 onClick={() => {
                                   setEditingEvent(null);
-                                  setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
+                                  setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "", branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" } });
                                   setIsEventDialogOpen(true);
                                 }}
                                 disabled={!selectedUniversity}
@@ -7331,7 +7424,10 @@ export default function UniversitiesPage() {
                                                 return `${formatDate(event.date)} - ${formatDate(event.endDate)}`;
                                               })()}
                             </span>
-                          </div>
+                                            {event.branch && (
+                                              <Badge variant="secondary" className="text-xs">{event.branch}</Badge>
+                                            )}
+                                          </div>
                                       {event.comments && (
                                             <div className="flex items-center gap-2">
                                               <Label className="text-sm font-semibold">Комментарий:</Label>
@@ -7361,6 +7457,24 @@ export default function UniversitiesPage() {
                                               )}
                                             </div>
                                                 </div>
+                                      {(event.universityContact && (event.universityContact.name || event.universityContact.position || event.universityContact.phone || event.universityContact.email)) ? (
+                                            <div className="flex items-start gap-2 pt-2 border-t">
+                                              <Building2 className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                                              <div className="space-y-1">
+                                                <Label className="text-sm font-semibold">ВУЗ:</Label>
+                                                <div className="text-sm">
+                                                  {event.universityContact.name && <span className="font-medium">{event.universityContact.name}</span>}
+                                                  {event.universityContact.position && <span className="text-muted-foreground"> — {event.universityContact.position}</span>}
+                                                  {(event.universityContact.phone || event.universityContact.email) && (
+                                                    <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-0.5 text-muted-foreground">
+                                                      {event.universityContact.phone && <span className="flex items-center gap-1"><Phone className="h-3 w-3" />{event.universityContact.phone}</span>}
+                                                      {event.universityContact.email && <span className="flex items-center gap-1"><Mail className="h-3 w-3" />{event.universityContact.email}</span>}
+                                                    </div>
+                                                  )}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          ) : null}
                                                     </div>
                                                 <div className="flex gap-1">
                               <Button
@@ -7377,7 +7491,7 @@ export default function UniversitiesPage() {
                                             variant="ghost"
                                             size="sm"
                                             className="h-8 w-8 p-0"
-                                            onClick={() => handleRemoveEvent(selectedUniversity!, event.id)}
+                                            onClick={() => setEventToDelete({ universityId: selectedUniversity!, eventId: event.id })}
                                           >
                                             <Trash2 className="h-3.5 w-3.5 text-destructive" />
                               </Button>
@@ -13703,6 +13817,19 @@ export default function UniversitiesPage() {
                                                                 <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs font-medium">{contacts.length}</Badge>
                                                               )}
                                                             </div>
+                                                            <Button
+                                                              variant="outline"
+                                                              size="sm"
+                                                              className="h-7 px-2 text-xs"
+                                                              onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleAddContactInMain(university.id, record.id);
+                                                                if (isCollapsed) setExpandedContacts(prev => new Set([...prev, contactsKey]));
+                                                              }}
+                                                            >
+                                                              <Plus className="h-3 w-3 mr-1" />
+                                                              Добавить
+                                                            </Button>
                                                           </div>
                                                           {!isCollapsed && (
                                                             <div className="mt-3">
@@ -13715,6 +13842,7 @@ export default function UniversitiesPage() {
                                                                         <TableHead className="h-9 text-xs font-semibold w-[180px]">Должность</TableHead>
                                                                         <TableHead className="h-9 text-xs font-semibold w-[200px]">Телефон</TableHead>
                                                                         <TableHead className="h-9 text-xs font-semibold w-[180px]">Email</TableHead>
+                                                                        <TableHead className="h-9 text-xs font-semibold w-[100px] text-center">Публичный</TableHead>
                                                                         <TableHead className="h-9 text-xs font-semibold w-[50px]"></TableHead>
                                                                       </TableRow>
                                                                     </TableHeader>
@@ -13758,6 +13886,26 @@ export default function UniversitiesPage() {
                                                                                 placeholder="Email"
                                                                                 className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1"
                                                                               />
+                                                                            </div>
+                                                                          </TableCell>
+                                                                          <TableCell className="py-1.5 px-3 text-center">
+                                                                            <div className="flex items-center justify-center">
+                                                                              <Tooltip>
+                                                                                <TooltipTrigger asChild>
+                                                                                  <div>
+                                                                                    <Checkbox
+                                                                                      id={`drp-contact-visibility-main-${record.id}-${contactIdx}`}
+                                                                                      checked={contact.isPublic || false}
+                                                                                      onCheckedChange={(checked) => handleToggleContactVisibilityInMain(university.id, record.id, contactIdx, checked === true)}
+                                                                                    />
+                                                                                  </div>
+                                                                                </TooltipTrigger>
+                                                                                <TooltipContent>
+                                                                                  <p>{contact.isPublic ? "Контакт виден всем" : "Контакт скрыт"}</p>
+                                                                                </TooltipContent>
+                                                                              </Tooltip>
+                                                                              {contact.isPublic && <Eye className="h-3 w-3 text-green-500 ml-1" />}
+                                                                              {!contact.isPublic && <EyeOff className="h-3 w-3 text-muted-foreground ml-1" />}
                                                                             </div>
                                                                           </TableCell>
                                                                           <TableCell className="py-1.5 px-3">
@@ -13808,6 +13956,16 @@ export default function UniversitiesPage() {
 
                                       {/* Филиалы ВУза — только линии ДРП по филиалам с контактами */}
                                       <TabsContent value="branches" className="space-y-4 mt-4">
+                                        <div className="flex items-center justify-end w-full">
+                                          <Button
+                                            onClick={() => setIsBranchDialogOpen(true)}
+                                            size="sm"
+                                            disabled={!selectedUniversity}
+                                          >
+                                            <Plus className="h-4 w-4 mr-2" />
+                                            Добавить филиал
+                                          </Button>
+                                        </div>
                                         <div className="space-y-3">
                                           {university.branchCurators && university.branchCurators.length > 0 ? (
                                             <>
@@ -14085,6 +14243,19 @@ export default function UniversitiesPage() {
                                                                                 <span className="text-sm font-semibold">Контакты ВУза</span>
                                                                                 {contacts.length > 0 && <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs font-medium">{contacts.length}</Badge>}
                                                                               </div>
+                                                                              <Button
+                                                                                variant="outline"
+                                                                                size="sm"
+                                                                                className="h-7 px-2 text-xs"
+                                                                                onClick={(e) => {
+                                                                                  e.stopPropagation();
+                                                                                  handleAddContactInBranch(university.id, curator.id, record.id);
+                                                                                  if (isCollapsed) setExpandedContacts(prev => new Set([...prev, contactsKey]));
+                                                                                }}
+                                                                              >
+                                                                                <Plus className="h-3 w-3 mr-1" />
+                                                                                Добавить
+                                                                              </Button>
                                                                             </div>
                                                                             {!isCollapsed && (
                                                                               <div className="mt-3">
@@ -14097,6 +14268,7 @@ export default function UniversitiesPage() {
                                                                                           <TableHead className="h-9 text-xs font-semibold w-[180px]">Должность</TableHead>
                                                                                           <TableHead className="h-9 text-xs font-semibold w-[200px]">Телефон</TableHead>
                                                                                           <TableHead className="h-9 text-xs font-semibold w-[180px]">Email</TableHead>
+                                                                                          <TableHead className="h-9 text-xs font-semibold w-[100px] text-center">Публичный</TableHead>
                                                                                           <TableHead className="h-9 text-xs font-semibold w-[50px]"></TableHead>
                                                                                         </TableRow>
                                                                                       </TableHeader>
@@ -14119,6 +14291,20 @@ export default function UniversitiesPage() {
                                                                                               <div className="flex items-center gap-1">
                                                                                                 <Mail className="h-3 w-3 text-muted-foreground shrink-0" />
                                                                                                 <Input type="email" value={contact.email || ""} onChange={(e) => handleUpdateContactInBranch(university.id, curator.id, record.id, contactIdx, { ...contact, email: e.target.value })} placeholder="Email" className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1" />
+                                                                                              </div>
+                                                                                            </TableCell>
+                                                                                            <TableCell className="py-1.5 px-3 text-center">
+                                                                                              <div className="flex items-center justify-center">
+                                                                                                <Tooltip>
+                                                                                                  <TooltipTrigger asChild>
+                                                                                                    <div>
+                                                                                                      <Checkbox id={`drp-contact-branch-${curator.id}-${record.id}-${contactIdx}`} checked={contact.isPublic || false} onCheckedChange={(checked) => handleToggleContactVisibilityInBranch(university.id, curator.id, record.id, contactIdx, checked === true)} />
+                                                                                                    </div>
+                                                                                                  </TooltipTrigger>
+                                                                                                  <TooltipContent><p>{contact.isPublic ? "Контакт виден всем" : "Контакт скрыт"}</p></TooltipContent>
+                                                                                                </Tooltip>
+                                                                                                {contact.isPublic && <Eye className="h-3 w-3 text-green-500 ml-1" />}
+                                                                                                {!contact.isPublic && <EyeOff className="h-3 w-3 text-muted-foreground ml-1" />}
                                                                                               </div>
                                                                                             </TableCell>
                                                                                             <TableCell className="py-1.5 px-3">
@@ -14166,8 +14352,19 @@ export default function UniversitiesPage() {
                                               })}
                                             </>
                                           ) : (
-                                            <Card className="p-3">
-                                              <p className="text-sm text-muted-foreground text-center">Филиалы ВУза не добавлены</p>
+                                            <Card className="p-6">
+                                              <div className="flex flex-col items-center justify-center gap-3 text-center">
+                                                <p className="text-sm text-muted-foreground">Филиалы ВУза не добавлены</p>
+                                                <Button
+                                                  onClick={() => setIsBranchDialogOpen(true)}
+                                                  size="sm"
+                                                  variant="outline"
+                                                  disabled={!selectedUniversity}
+                                                >
+                                                  <Plus className="h-4 w-4 mr-2" />
+                                                  Добавить филиал
+                                                </Button>
+                                              </div>
                                             </Card>
                                           )}
                                         </div>
@@ -14175,59 +14372,263 @@ export default function UniversitiesPage() {
                                     </Tabs>
                                   </TabsContent>
 
-                                  {/* Подтаб: Мероприятия */}
+                                  {/* Подтаб: Мероприятия — в стилистике вкладки «Мероприятия», с возможностью добавления через ДРП */}
                                   <TabsContent value="events" className="space-y-4 mt-4">
-                                    <Card className="p-4">
-                                      <div className="flex items-center justify-between mb-4">
-                                        <h3 className="text-lg font-semibold">Мероприятия (ДРП)</h3>
-                                        <Button
-                                          size="sm"
-                                          onClick={() => {
-                                            setIsDrpCabinetEventDialog(true);
-                                            setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "drp" });
-                                            setIsEventDialogOpen(true);
-                                          }}
-                                          disabled={!selectedUniversity}
-                                        >
-                                          <Plus className="mr-2 h-4 w-4" />
-                                          Добавить мероприятие
-                                        </Button>
-                                      </div>
-                                      {drpEvents.length > 0 ? (
-                                        <div className="space-y-3">
-                                          {drpEvents.map((event) => {
-                                            const eventTypeLabels: Record<string, string> = {
-                                              careerDays: "Дни карьеры",
-                                              expertParticipation: "Экспертное участие",
-                                              caseChampionships: "Кейс-чемпионат",
-                                              meeting: "Встреча",
-                                              communication: "Коммуникация",
-                                            };
-                                            const formatDate = (d: string) => {
-                                              if (!d) return "—";
-                                              const [y, m, day] = d.split("-").map(Number);
-                                              return `${String(day).padStart(2, "0")}.${String(m).padStart(2, "0")}.${y}`;
-                                            };
-                                            return (
-                                              <Card key={event.id} className="p-3">
-                                                <div className="flex items-start justify-between gap-2">
-                                                  <div className="flex flex-wrap items-center gap-2">
-                                                    <Badge variant="outline" className="text-xs">{eventTypeLabels[event.type] || event.type}</Badge>
-                                                    <span className="text-sm text-muted-foreground">{formatDate(event.date)}{event.endDate ? ` — ${formatDate(event.endDate)}` : ""}</span>
+                                    <div className="space-y-4">
+                                      {(() => {
+                                        const stats = {
+                                          byType: {
+                                            careerDays: drpEvents.filter((e) => e.type === "careerDays").length,
+                                            expertParticipation: drpEvents.filter((e) => e.type === "expertParticipation").length,
+                                            caseChampionships: drpEvents.filter((e) => e.type === "caseChampionships").length,
+                                            meeting: drpEvents.filter((e) => e.type === "meeting").length,
+                                            communication: drpEvents.filter((e) => e.type === "communication").length,
+                                          },
+                                        };
+                                        const yearsMap = drpEvents.reduce<Record<number, number>>((acc, e) => {
+                                          const y = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
+                                          if (y) acc[y] = (acc[y] || 0) + 1;
+                                          return acc;
+                                        }, {});
+                                        const yearsSorted = Object.keys(yearsMap).map(Number).sort((a, b) => a - b);
+                                        const filteredDrpEvents = drpEvents.filter((e) => {
+                                          if (drpEventsFeedFilters.type && e.type !== drpEventsFeedFilters.type) return false;
+                                          if (drpEventsFeedFilters.year != null) {
+                                            const eventYear = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
+                                            if (eventYear !== drpEventsFeedFilters.year) return false;
+                                          }
+                                          return true;
+                                        });
+                                        return (
+                                          <>
+                                            <div className="flex items-center gap-4 w-full">
+                                              <Card className="p-3 flex-[2]">
+                                                <div className="space-y-2">
+                                                  <Label className="text-base font-semibold">Тип мероприятия</Label>
+                                                  <div className="flex flex-wrap gap-3">
+                                                    <div className="text-base">
+                                                      <span className="text-muted-foreground">Дни карьеры: </span>
+                                                      <Badge variant="outline" className={cn("!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600 cursor-pointer", drpEventsFeedFilters.type === "careerDays" && "ring-2 ring-blue-600")} onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, type: p.type === "careerDays" ? null : "careerDays" }))}>{stats.byType.careerDays}</Badge>
+                                                    </div>
+                                                    <div className="text-base">
+                                                      <span className="text-muted-foreground">Экспертное участие: </span>
+                                                      <Badge variant="outline" className={cn("!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600 cursor-pointer", drpEventsFeedFilters.type === "expertParticipation" && "ring-2 ring-purple-600")} onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, type: p.type === "expertParticipation" ? null : "expertParticipation" }))}>{stats.byType.expertParticipation}</Badge>
+                                                    </div>
+                                                    <div className="text-base">
+                                                      <span className="text-muted-foreground">Кейс-чемпионат: </span>
+                                                      <Badge variant="outline" className={cn("!bg-green-500 !text-white !border-green-500 hover:!bg-green-600 cursor-pointer", drpEventsFeedFilters.type === "caseChampionships" && "ring-2 ring-green-600")} onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, type: p.type === "caseChampionships" ? null : "caseChampionships" }))}>{stats.byType.caseChampionships}</Badge>
+                                                    </div>
+                                                    <div className="text-base">
+                                                      <span className="text-muted-foreground">Встреча: </span>
+                                                      <Badge variant="outline" className={cn("!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600 cursor-pointer", drpEventsFeedFilters.type === "meeting" && "ring-2 ring-gray-600")} onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, type: p.type === "meeting" ? null : "meeting" }))}>{stats.byType.meeting}</Badge>
+                                                    </div>
+                                                    <div className="text-base">
+                                                      <span className="text-muted-foreground">Коммуникация: </span>
+                                                      <Badge variant="outline" className={cn("!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600 cursor-pointer", drpEventsFeedFilters.type === "communication" && "ring-2 ring-cyan-600")} onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, type: p.type === "communication" ? null : "communication" }))}>{stats.byType.communication}</Badge>
+                                                    </div>
                                                   </div>
-                                                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => { handleEditEvent(university.id, event.id); setIsDrpCabinetEventDialog(true); }}>
-                                                    <Pencil className="h-3.5 w-3.5" />
-                                                  </Button>
                                                 </div>
-                                                {event.comments && <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{event.comments}</p>}
                                               </Card>
-                                            );
-                                          })}
-                                        </div>
-                                      ) : (
-                                        <p className="text-sm text-muted-foreground">Мероприятия ДРП не добавлены</p>
-                                      )}
-                                    </Card>
+                                              <Card className="p-3 flex-[0.75] min-w-[140px]">
+                                                <div className="space-y-2">
+                                                  <Label className="text-base font-semibold">Период проведения</Label>
+                                                  <div className="flex flex-wrap gap-3">
+                                                    {yearsSorted.length > 0 ? (
+                                                      yearsSorted.map((year) => {
+                                                        const count = yearsMap[year] ?? 0;
+                                                        const isActive = drpEventsFeedFilters.year === year;
+                                                        return (
+                                                          <div key={year} className="text-base">
+                                                            <span className="text-muted-foreground">{year}: </span>
+                                                            <Badge
+                                                              variant="outline"
+                                                              className={cn(
+                                                                "cursor-pointer bg-muted hover:bg-muted/80",
+                                                                isActive && "ring-4 ring-primary"
+                                                              )}
+                                                              onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, year: p.year === year ? null : year }))}
+                                                            >
+                                                              {count}
+                                                            </Badge>
+                                                          </div>
+                                                        );
+                                                      })
+                                                    ) : (
+                                                      <span className="text-sm text-muted-foreground">Нет данных</span>
+                                                    )}
+                                                  </div>
+                                                </div>
+                                              </Card>
+                                              <Button size="sm" onClick={() => { setIsDrpCabinetEventDialog(true); setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "drp", branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" } }); setIsEventDialogOpen(true); }} disabled={!selectedUniversity}>
+                                                <Plus className="h-4 w-4 mr-1" />
+                                                Добавить мероприятие
+                                              </Button>
+                                            </div>
+                                            {drpEvents.length > 0 ? (
+                                              filteredDrpEvents.length > 0 ? (
+                                              <div className="space-y-3">
+                                                {filteredDrpEvents.map((event) => {
+                                                  const eventTypeLabels: Record<Event["type"], string> = {
+                                                    careerDays: "Дни карьеры",
+                                                    expertParticipation: "Экспертное участие",
+                                                    caseChampionships: "Кейс-чемпионат",
+                                                    meeting: "Встреча",
+                                                    communication: "Коммуникация",
+                                                  };
+                                                  const eventStatusLabels: Record<Event["status"], string> = {
+                                                    planned: "Запланировано",
+                                                    in_progress: "В процессе",
+                                                    completed: "Проведено",
+                                                  };
+                                                  const getEventTypeBadgeClassName = (type: Event["type"]) => {
+                                                    switch (type) {
+                                                      case "careerDays": return "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600";
+                                                      case "expertParticipation": return "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600";
+                                                      case "caseChampionships": return "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600";
+                                                      case "meeting": return "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600";
+                                                      case "communication": return "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600";
+                                                      default: return "";
+                                                    }
+                                                  };
+                                                  const formatDate = (dateString: string) => {
+                                                    if (!dateString) return "Не указано";
+                                                    const [year, month, day] = dateString.split("-").map(Number);
+                                                    if (isNaN(year) || isNaN(month) || isNaN(day)) return "Неверный формат";
+                                                    return `${String(day).padStart(2, "0")}.${String(month).padStart(2, "0")}.${year}`;
+                                                  };
+                                                  return (
+                                                    <Card key={event.id} className="p-3">
+                                                      <div className="flex items-start justify-between gap-3">
+                                                        <div className="flex-1 space-y-1.5">
+                                                          <div className="flex items-center justify-between gap-2 flex-wrap">
+                                                            <div className="flex items-center gap-2 flex-wrap">
+                                                              <Badge variant="outline" className={getEventTypeBadgeClassName(event.type)}>{eventTypeLabels[event.type]}</Badge>
+                                                              <Calendar className="h-4 w-4 text-muted-foreground" />
+                                                              <span className="text-sm font-semibold">{formatDate(event.date)} - {formatDate(event.endDate)}</span>
+                                                            </div>
+                                                            <Badge variant="outline" className={cn(getStatusBadgeColor(event.status))}>{eventStatusLabels[event.status]}</Badge>
+                                                          </div>
+                                                          {event.comments && (
+                                                            <div className="flex items-center gap-2">
+                                                              <Label className="text-sm font-semibold">Комментарий:</Label>
+                                                              <span className="text-sm text-muted-foreground">{event.comments}</span>
+                                                            </div>
+                                                          )}
+                                                          {/* Горизонтальная черта и блок: тег филиала, ВУЗ (контакт мероприятия или университета), Банк */}
+                                                          <div className="pt-2.5 mt-2 border-t space-y-2.5">
+                                                            {event.branch && (
+                                                              <Badge variant="secondary" className="text-xs">
+                                                                {event.branch}
+                                                              </Badge>
+                                                            )}
+                                                            <div className="flex gap-2 text-sm">
+                                                              <Building2 className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                                                              <div>
+                                                                <span className="text-muted-foreground">ВУЗ: </span>
+                                                                {event.universityContact && (event.universityContact.name || event.universityContact.position || event.universityContact.phone || event.universityContact.email) ? (
+                                                                  <>
+                                                                    <span className="font-medium">{event.universityContact.name || "—"}</span>
+                                                                    {event.universityContact.position && <span className="text-muted-foreground"> ({event.universityContact.position})</span>}
+                                                                    {(event.universityContact.phone || event.universityContact.email) && (
+                                                                      <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-0.5 text-muted-foreground text-xs">
+                                                                        {event.universityContact.phone && <span className="flex items-center gap-1"><Phone className="h-3 w-3" />{event.universityContact.phone}</span>}
+                                                                        {event.universityContact.email && <span className="flex items-center gap-1"><Mail className="h-3 w-3" />{event.universityContact.email}</span>}
+                                                                      </div>
+                                                                    )}
+                                                                  </>
+                                                                ) : university.universityContacts?.length > 0 ? (
+                                                                  university.universityContacts.map((contact, idx) => (
+                                                                    <span key={idx}>
+                                                                      {idx > 0 && ", "}
+                                                                      <span className="font-medium">{contact.name}</span>
+                                                                      {contact.position && <span className="text-muted-foreground"> ({contact.position})</span>}
+                                                                    </span>
+                                                                  ))
+                                                                ) : university.universityContact?.name ? (
+                                                                  <span>
+                                                                    <span className="font-medium">{university.universityContact.name}</span>
+                                                                    {university.universityContact.position && <span className="text-muted-foreground"> ({university.universityContact.position})</span>}
+                                                                  </span>
+                                                                ) : (
+                                                                  <span className="text-muted-foreground">—</span>
+                                                                )}
+                                                              </div>
+                                                            </div>
+                                                            <div className="flex gap-2 text-sm">
+                                                              <UserCheck className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                                                              <div>
+                                                                <span className="text-muted-foreground">Банк: </span>
+                                                                {event.responsiblePerson?.length > 0 ? (
+                                                                  event.responsiblePerson.map((personId, idx) => {
+                                                                    const person = responsiblePersons.find((p) => p.value === personId);
+                                                                    return person ? (
+                                                                      <span key={idx}>
+                                                                        {idx > 0 && ", "}
+                                                                        <span className="font-medium">{person.label}</span>
+                                                                      </span>
+                                                                    ) : null;
+                                                                  })
+                                                                ) : (
+                                                                  <span className="text-muted-foreground">—</span>
+                                                                )}
+                                                              </div>
+                                                            </div>
+                                                            {(event.addedAt || event.addedBy) && (
+                                                              <div className="flex items-center justify-end gap-2 pt-2 border-t text-sm text-muted-foreground">
+                                                                <Clock className="h-3.5 w-3.5" />
+                                                                <span>{event.addedAt ? formatDate(event.addedAt) : "—"}</span>
+                                                                {event.addedBy && <span>• {event.addedBy}</span>}
+                                                              </div>
+                                                            )}
+                                                          </div>
+                                                        </div>
+                                                        <div className="flex flex-col items-end gap-2 shrink-0">
+                                                          <div className="flex items-center gap-2">
+                                                            <Label htmlFor={`event-feed-switch-${event.id}`} className="text-xs text-muted-foreground cursor-pointer leading-tight block text-right">
+                                                              В ленте
+                                                              <br />
+                                                              мероприятий
+                                                            </Label>
+                                                            <Switch
+                                                              id={`event-feed-switch-${event.id}`}
+                                                              checked={event.showInEventsFeed !== false}
+                                                              onCheckedChange={(checked) => handleToggleEventShowInFeed(university.id, event.id, checked)}
+                                                            />
+                                                          </div>
+                                                          <div className="flex gap-1">
+                                                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => { handleEditEvent(university.id, event.id); setIsDrpCabinetEventDialog(true); }}>
+                                                              <Pencil className="h-3.5 w-3.5" />
+                                                            </Button>
+                                                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => setEventToDelete({ universityId: university.id, eventId: event.id })}>
+                                                              <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                            </Button>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </Card>
+                                                  );
+                                                })}
+                                              </div>
+                                              ) : (
+                                                <div className="text-center py-8 text-muted-foreground">
+                                                  <Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                                                  <p className="text-base">Мероприятия не найдены по выбранным фильтрам</p>
+                                                </div>
+                                              )
+                                            ) : (
+                                              <div className="text-center py-8 text-muted-foreground">
+                                                <Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                                                <p className="text-base">Мероприятия ДРП не добавлены</p>
+                                                <Button size="sm" className="mt-3" onClick={() => { setIsDrpCabinetEventDialog(true); setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "drp", branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" } }); setIsEventDialogOpen(true); }} disabled={!selectedUniversity}>
+                                                  <Plus className="mr-2 h-4 w-4" />
+                                                  Добавить мероприятие
+                                                </Button>
+                                              </div>
+                                            )}
+                                          </>
+                                        );
+                                      })()}
+                                    </div>
                                   </TabsContent>
 
                                   {/* Подтаб: Договорная база */}
@@ -14748,7 +15149,7 @@ export default function UniversitiesPage() {
             if (!open) {
               setIsDrpCabinetEventDialog(false);
               setEditingEvent(null);
-              setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
+              setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "", branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" } });
             }
           }}>
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -14877,6 +15278,37 @@ export default function UniversitiesPage() {
                   </div>
                   )}
                 </div>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1">
+                    <Label htmlFor="event-branch-dialog">Место проведения</Label>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Головной ВУЗ или филиал, к которому относится мероприятие</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
+                  <Select
+                    value={newEvent.branch || ""}
+                    onValueChange={(value) => setNewEvent({ ...newEvent, branch: value })}
+                  >
+                    <SelectTrigger id="event-branch-dialog" className="w-full">
+                      <SelectValue placeholder="Головной ВУЗ или филиал" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Головной ВУЗ">Головной ВУЗ</SelectItem>
+                      {selectedUniversity && (() => {
+                        const university = universities.find((u) => u.id === selectedUniversity);
+                        const branches = university?.branchCurators?.map((b) => b.branch) ?? [];
+                        return branches.filter((b, i, arr) => arr.indexOf(b) === i).map((branch) => (
+                          <SelectItem key={branch} value={branch}>{branch}</SelectItem>
+                        ));
+                      })()}
+                    </SelectContent>
+                  </Select>
+                </div>
                   <div className="space-y-2">
                   <div className="flex items-center gap-1">
                     <Label htmlFor="event-comments-dialog">Комментарий</Label>
@@ -14898,13 +15330,13 @@ export default function UniversitiesPage() {
                     </div>
                     <div className="space-y-2">
                     <div className="flex items-center gap-1">
-                      <Label htmlFor="event-responsible-dialog">Ответственное лицо</Label>
+                      <Label htmlFor="event-responsible-dialog">Контактное лицо от банка (ответственное лицо)</Label>
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Выберите сотрудников, ответственных за проведение мероприятия</p>
+                          <p>Выберите сотрудников банка, ответственных за проведение мероприятия</p>
                         </TooltipContent>
                       </Tooltip>
                   </div>
@@ -14916,6 +15348,73 @@ export default function UniversitiesPage() {
                         className="w-full"
                       />
                     </div>
+                    <div className="space-y-2 rounded-lg border p-4">
+                      <div className="flex items-center gap-1">
+                        <Label>Контактное лицо от ВУЗа</Label>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Укажите контактное лицо со стороны университета (необязательно)</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div className="space-y-1.5">
+                          <Label htmlFor="event-uc-name" className="text-xs">ФИО</Label>
+                          <Input
+                            id="event-uc-name"
+                            value={newEvent.universityContact.name}
+                            onChange={(e) => setNewEvent({ ...newEvent, universityContact: { ...newEvent.universityContact, name: e.target.value } })}
+                            placeholder="ФИО контактного лица"
+                            className="h-8 text-sm"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <Label htmlFor="event-uc-position" className="text-xs">Должность</Label>
+                          <Input
+                            id="event-uc-position"
+                            value={newEvent.universityContact.position}
+                            onChange={(e) => setNewEvent({ ...newEvent, universityContact: { ...newEvent.universityContact, position: e.target.value } })}
+                            placeholder="Должность"
+                            className="h-8 text-sm"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <Label htmlFor="event-uc-phone" className="text-xs">Телефон</Label>
+                          <Input
+                            id="event-uc-phone"
+                            value={newEvent.universityContact.phone}
+                            onChange={(e) => setNewEvent({ ...newEvent, universityContact: { ...newEvent.universityContact, phone: e.target.value } })}
+                            placeholder="Телефон"
+                            className="h-8 text-sm"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <Label htmlFor="event-uc-email" className="text-xs">Email</Label>
+                          <Input
+                            id="event-uc-email"
+                            type="email"
+                            value={newEvent.universityContact.email}
+                            onChange={(e) => setNewEvent({ ...newEvent, universityContact: { ...newEvent.universityContact, email: e.target.value } })}
+                            placeholder="Email"
+                            className="h-8 text-sm"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between rounded-lg border p-4">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="event-show-in-feed-dialog">Показывать в ленте мероприятий</Label>
+                        <p className="text-sm text-muted-foreground">Если выключено, мероприятие не отображается на вкладке «Лента мероприятий»</p>
+                      </div>
+                      <Switch
+                        id="event-show-in-feed-dialog"
+                        checked={newEvent.showInEventsFeed}
+                        onCheckedChange={(checked) => setNewEvent({ ...newEvent, showInEventsFeed: checked })}
+                      />
+                    </div>
                   </div>
                   <DialogFooter>
                 <Button
@@ -14923,7 +15422,7 @@ export default function UniversitiesPage() {
                   onClick={() => {
                     setIsEventDialogOpen(false);
                     setEditingEvent(null);
-                    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "" });
+                    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], cooperationLine: "", branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" } });
                   }}
                 >
                   Отмена
@@ -15136,6 +15635,32 @@ export default function UniversitiesPage() {
               </DialogFooter>
             </DialogContent>
           </Dialog>
+
+          {/* Диалог подтверждения удаления мероприятия */}
+          <AlertDialog open={eventToDelete !== null} onOpenChange={(open) => !open && setEventToDelete(null)}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Удаление мероприятия</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Вы уверены, что хотите удалить это мероприятие? Это действие нельзя отменить.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Отмена</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() => {
+                    if (eventToDelete) {
+                      handleRemoveEvent(eventToDelete.universityId, eventToDelete.eventId);
+                      setEventToDelete(null);
+                    }
+                  }}
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                >
+                  Удалить
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
 
           {/* Диалог удаления ВУЗа */}
           <AlertDialog open={deleteUniversityId !== null} onOpenChange={(open) => !open && setDeleteUniversityId(null)}>
