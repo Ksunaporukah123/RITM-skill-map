@@ -2646,6 +2646,12 @@ export default function UniversitiesPage() {
     status: null,
   });
 
+  // Фильтры договоров в Личном кабинете ДРП (отдельно от основной вкладки)
+  const [drpContractFilters, setDrpContractFilters] = useState<{
+    type: Contract["type"] | null;
+    status: "active" | "expired" | null;
+  }>({ type: null, status: null });
+
   // Состояния для работы с договорами в табе
   const [editingContract, setEditingContract] = useState<{ universityId: string; contract: Contract } | null>(null);
   const [isContractDialogOpen, setIsContractDialogOpen] = useState(false);
@@ -4448,6 +4454,35 @@ export default function UniversitiesPage() {
       total: university.contracts.length,
     };
   };
+
+  // Статистика по списку договоров (для Личного кабинета ДРП)
+  const getContractStatisticsFromList = (contracts: Contract[]) => {
+    if (!contracts || contracts.length === 0) {
+      return {
+        byType: { cooperation: 0, scholarship: 0, internship: 0, bankDepartment: 0 },
+        byStatus: { active: 0, expired: 0 },
+        total: 0,
+      };
+    }
+    const now = new Date();
+    const byType = {
+      cooperation: contracts.filter(c => c.type === "cooperation").length,
+      scholarship: contracts.filter(c => c.type === "scholarship").length,
+      internship: contracts.filter(c => c.type === "internship").length,
+      bankDepartment: contracts.filter(c => c.type === "bankDepartment").length,
+    };
+    const byStatus = {
+      active: contracts.filter(c => {
+        if (!c.period?.end) return true;
+        return new Date(c.period.end) >= now;
+      }).length,
+      expired: contracts.filter(c => {
+        if (!c.period?.end) return false;
+        return new Date(c.period.end) < now;
+      }).length,
+    };
+    return { byType, byStatus, total: contracts.length };
+  };
   
   // Удаление мероприятия
   const handleRemoveEvent = (universityId: string, eventId: string) => {
@@ -5098,12 +5133,12 @@ export default function UniversitiesPage() {
                           )}
                           onClick={() => setSelectedUniversity(university.id)}
                         >
-                            {/* Индикатор: зелёная точка только если хотя бы одна линия явно имеет статус «работа ведётся» (isActive === true) */}
+                            {/* Индикатор: зелёная точка, если хотя бы одна линия имеет статус «работа ведётся» (isActive не false) */}
                             {(() => {
                               const hasActiveLine =
-                                (university.cooperationLines?.some((cl) => cl.isActive === true)) ||
+                                (university.cooperationLines?.some((cl) => cl.isActive !== false)) ||
                                 (university.branchCurators?.some((curator) =>
-                                  curator.cooperationLines?.some((cl) => cl.isActive === true)
+                                  curator.cooperationLines?.some((cl) => cl.isActive !== false)
                                 ));
                               return (
                                 <Tooltip>
@@ -11278,11 +11313,92 @@ export default function UniversitiesPage() {
                                     </div>
                                   </TabsContent>
 
-                                  {/* Подтаб: Договорная база */}
+                                  {/* Подтаб: Договорная база — полный функционал как на вкладке «Договорная база» */}
                                   <TabsContent value="contracts" className="space-y-4 mt-4">
-                                    <Card className="p-4">
-                                      <div className="flex items-center justify-between mb-4">
-                                        <h3 className="text-lg font-semibold">Договоры (ДРП)</h3>
+                                    <div className="space-y-4">
+                                      {/* Виджет статистики и кнопка добавления */}
+                                      <div className="flex items-center gap-4 w-full">
+                                        {(() => {
+                                          const stats = getContractStatisticsFromList(drpContracts);
+                                          return (
+                                            <>
+                                              <Card className="p-3 flex-[3]">
+                                                <div className="space-y-2">
+                                                  <Label className="text-base font-semibold">Тип договора</Label>
+                                                  <div className="flex items-center gap-3">
+                                                    <div className="text-base">
+                                                      <span className="text-muted-foreground">О сотрудничестве: </span>
+                                                      <Badge
+                                                        variant="outline"
+                                                        className={`!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600 cursor-pointer ${drpContractFilters.type === "cooperation" ? "ring-2 ring-blue-600" : ""}`}
+                                                        onClick={() => setDrpContractFilters(prev => ({ ...prev, type: prev.type === "cooperation" ? null : "cooperation" }))}
+                                                      >
+                                                        {stats.byType.cooperation}
+                                                      </Badge>
+                                                    </div>
+                                                    <div className="text-base">
+                                                      <span className="text-muted-foreground">Об именных стипендиях: </span>
+                                                      <Badge
+                                                        variant="outline"
+                                                        className={`!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600 cursor-pointer ${drpContractFilters.type === "scholarship" ? "ring-2 ring-purple-600" : ""}`}
+                                                        onClick={() => setDrpContractFilters(prev => ({ ...prev, type: prev.type === "scholarship" ? null : "scholarship" }))}
+                                                      >
+                                                        {stats.byType.scholarship}
+                                                      </Badge>
+                                                    </div>
+                                                    <div className="text-base">
+                                                      <span className="text-muted-foreground">О практике: </span>
+                                                      <Badge
+                                                        variant="outline"
+                                                        className={`!bg-green-500 !text-white !border-green-500 hover:!bg-green-600 cursor-pointer ${drpContractFilters.type === "internship" ? "ring-2 ring-green-600" : ""}`}
+                                                        onClick={() => setDrpContractFilters(prev => ({ ...prev, type: prev.type === "internship" ? null : "internship" }))}
+                                                      >
+                                                        {stats.byType.internship}
+                                                      </Badge>
+                                                    </div>
+                                                    <div className="text-base">
+                                                      <span className="text-muted-foreground">Кафедра банка: </span>
+                                                      <Badge
+                                                        variant="outline"
+                                                        className={`!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600 cursor-pointer ${drpContractFilters.type === "bankDepartment" ? "ring-2 ring-orange-600" : ""}`}
+                                                        onClick={() => setDrpContractFilters(prev => ({ ...prev, type: prev.type === "bankDepartment" ? null : "bankDepartment" }))}
+                                                      >
+                                                        {stats.byType.bankDepartment}
+                                                      </Badge>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </Card>
+                                              <Card className="p-3 flex-[1]">
+                                                <div className="space-y-2">
+                                                  <Label className="text-base font-semibold">Статус</Label>
+                                                  <div className="flex items-center gap-3">
+                                                    <div className="text-base">
+                                                      <span className="text-muted-foreground">Активный: </span>
+                                                      <Badge
+                                                        variant="outline"
+                                                        className={`cursor-pointer ${drpContractFilters.status === "active" ? "ring-2 ring-primary" : ""}`}
+                                                        onClick={() => setDrpContractFilters(prev => ({ ...prev, status: prev.status === "active" ? null : "active" }))}
+                                                      >
+                                                        {stats.byStatus.active}
+                                                      </Badge>
+                                                    </div>
+                                                    <div className="text-base">
+                                                      <span className="text-muted-foreground">Истекший: </span>
+                                                      <Badge
+                                                        variant="default"
+                                                        className={`cursor-pointer ${drpContractFilters.status === "expired" ? "ring-2 ring-primary" : ""}`}
+                                                        onClick={() => setDrpContractFilters(prev => ({ ...prev, status: prev.status === "expired" ? null : "expired" }))}
+                                                      >
+                                                        {stats.byStatus.expired}
+                                                      </Badge>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </Card>
+                                            </>
+                                          );
+                                        })()}
                                         <Button
                                           size="sm"
                                           onClick={() => {
@@ -11297,40 +11413,112 @@ export default function UniversitiesPage() {
                                           Добавить договор
                                         </Button>
                                       </div>
-                                      {drpContracts.length > 0 ? (
-                                        <div className="space-y-3">
-                                          {drpContracts.map((contract) => {
-                                            const contractTypeLabels: Record<string, string> = {
-                                              cooperation: "О сотрудничестве",
-                                              scholarship: "Об именных стипендиях",
-                                              internship: "О практике",
-                                              bankDepartment: "Кафедра банка",
-                                            };
-                                            const formatDate = (d: string) => {
-                                              if (!d) return "—";
-                                              const [y, m, day] = d.split("-").map(Number);
-                                              return `${String(day).padStart(2, "0")}.${String(m).padStart(2, "0")}.${y}`;
-                                            };
-                                            return (
-                                              <Card key={contract.id} className="p-3">
-                                                <div className="flex items-start justify-between gap-2">
-                                                  <div className="flex flex-wrap items-center gap-2">
-                                                    <Badge variant="outline" className={cn("text-xs", getContractTypeBadgeColor(contract.type))}>{contractTypeLabels[contract.type] || contract.type}</Badge>
-                                                    {contract.number && <span className="text-sm font-medium">{contract.number}</span>}
-                                                    {contract.date && <span className="text-sm text-muted-foreground">{formatDate(contract.date)}</span>}
+
+                                      {/* Список договоров ДРП */}
+                                      {drpContracts.length > 0 ? (() => {
+                                        const filteredContracts = drpContracts.filter((contract) => {
+                                          if (drpContractFilters.type && contract.type !== drpContractFilters.type) return false;
+                                          if (drpContractFilters.status) {
+                                            const isExpired = contract.period?.end ? new Date(contract.period.end) < new Date() : false;
+                                            if (drpContractFilters.status === "expired" && !isExpired) return false;
+                                            if (drpContractFilters.status === "active" && isExpired) return false;
+                                          }
+                                          return true;
+                                        });
+                                        return filteredContracts.length > 0 ? (
+                                          <div className="space-y-3">
+                                            {filteredContracts.map((contract) => {
+                                              const contractTypeLabels: Record<Contract["type"], string> = {
+                                                cooperation: "О сотрудничестве",
+                                                scholarship: "Об именных стипендиях",
+                                                internship: "О практике",
+                                                bankDepartment: "Кафедра банка",
+                                              };
+                                              const isExpired = contract.period?.end ? new Date(contract.period.end) < new Date() : false;
+                                              return (
+                                                <Card key={contract.id} className={`p-4 relative ${isExpired ? "border-2 border-red-300" : ""}`}>
+                                                  {isExpired && (
+                                                    <div className="absolute -top-3 left-4 px-2 bg-red-100 text-red-700 text-xs font-medium rounded border border-red-300">
+                                                      Истек срок действия договора
+                                                    </div>
+                                                  )}
+                                                  <div className="flex items-start justify-between gap-4">
+                                                    <div className="flex-1 space-y-3">
+                                                      <div className="flex items-center gap-2 flex-wrap">
+                                                        <Badge variant="outline" className={cn("text-xs", getContractTypeBadgeColor(contract.type))}>
+                                                          {contractTypeLabels[contract.type]}
+                                                        </Badge>
+                                                        {contract.contractBranch && (
+                                                          <Badge variant="secondary" className="text-xs">{contract.contractBranch}</Badge>
+                                                        )}
+                                                      </div>
+                                                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+                                                        {contract.number && (
+                                                          <div className="flex items-start gap-2">
+                                                            <span className="text-muted-foreground whitespace-nowrap">Номер:</span>
+                                                            <span className="font-medium">{contract.number}</span>
+                                                          </div>
+                                                        )}
+                                                        {contract.date && (
+                                                          <div className="flex items-start gap-2">
+                                                            <Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                                                            <span className="text-muted-foreground whitespace-nowrap">Дата:</span>
+                                                            <span className="font-medium">{formatDateToDDMMYYYY(contract.date)}</span>
+                                                          </div>
+                                                        )}
+                                                        {contract.period && (contract.period.start || contract.period.end) && (
+                                                          <div className="flex items-start gap-2">
+                                                            <Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                                                            <span className="text-muted-foreground whitespace-nowrap">Период действия:</span>
+                                                            <span className="font-medium">
+                                                              {contract.period.start && contract.period.end
+                                                                ? `${formatDateToDDMMYYYY(contract.period.start)} — ${formatDateToDDMMYYYY(contract.period.end)}`
+                                                                : formatDateToDDMMYYYY(contract.period.start || contract.period.end || "")}
+                                                            </span>
+                                                          </div>
+                                                        )}
+                                                        {contract.asddLink && (
+                                                          <div className="flex items-start gap-2 md:col-span-2">
+                                                            <Link2 className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                                                            <span className="text-muted-foreground whitespace-nowrap">Ссылка на АСДД:</span>
+                                                            <a href={contract.asddLink} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline break-all">{contract.asddLink}</a>
+                                                          </div>
+                                                        )}
+                                                        {contract.contractFile && (
+                                                          <div className="flex items-start gap-2 md:col-span-2">
+                                                            <FileText className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                                                            <span className="text-muted-foreground whitespace-nowrap">Документ:</span>
+                                                            <a href={contract.contractFile} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline break-all">{contract.contractFile}</a>
+                                                          </div>
+                                                        )}
+                                                      </div>
+                                                    </div>
+                                                    <div className="flex items-center gap-1 flex-shrink-0">
+                                                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => { handleEditContractForTab(university.id, contract.id); setIsDrpCabinetContractDialog(true); }}>
+                                                        <Pencil className="h-3.5 w-3.5" />
+                                                      </Button>
+                                                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => handleRemoveContractForTab(university.id, contract.id)}>
+                                                        <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                      </Button>
+                                                    </div>
                                                   </div>
-                                                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => { handleEditContractForTab(university.id, contract.id); setIsDrpCabinetContractDialog(true); }}>
-                                                    <Pencil className="h-3.5 w-3.5" />
-                                                  </Button>
-                                                </div>
-                                              </Card>
-                                            );
-                                          })}
+                                                </Card>
+                                              );
+                                            })}
+                                          </div>
+                                        ) : (
+                                          <div className="text-center py-8 text-muted-foreground">
+                                            <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                                            <p className="text-base">Договоры не найдены по выбранным фильтрам</p>
+                                          </div>
+                                        );
+                                      })() : (
+                                        <div className="text-center py-8 text-muted-foreground">
+                                          <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                                          <p className="text-base">Договоры ДРП не добавлены</p>
                                         </div>
-                                      ) : (
-                                        <p className="text-sm text-muted-foreground">Договоры ДРП не добавлены</p>
                                       )}
-                                    </Card>
+                                    </div>
                                   </TabsContent>
 
                                   {/* Подтаб: Кадровые показатели */}
