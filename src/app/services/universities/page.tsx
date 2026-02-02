@@ -5246,12 +5246,11 @@ export default function UniversitiesPage() {
                     <Separator />
                     <CardContent className="overflow-x-hidden">
                       <Tabs value={universityDetailTab} onValueChange={(v) => setUniversityDetailTab(v as typeof universityDetailTab)} className="w-full">
-                        <TabsList className="grid w-full grid-cols-8">
+                        <TabsList className="grid w-full grid-cols-7">
                           <TabsTrigger value="general">Общая информация</TabsTrigger>
                           <TabsTrigger value="contracts">Договорная база</TabsTrigger>
                           <TabsTrigger value="kaleidoscope">Калейдоскоп</TabsTrigger>
                           <TabsTrigger value="eventsFeed">Лента мероприятий</TabsTrigger>
-                          <TabsTrigger value="events">Мероприятия</TabsTrigger>
                           <TabsTrigger value="bko">Договорная база БКО</TabsTrigger>
                           <TabsTrigger value="cntr">ЦНТР</TabsTrigger>
                           <TabsTrigger value="drpCabinet">Личный кабинет ДРП</TabsTrigger>
