@@ -216,6 +216,7 @@ const mockUniversities: University[] = [
       },
     ],
     targetAudience: "Студенты IT-направлений",
+    isActive: true,
     initiatorBlock: "Блок развития",
     initiatorName: "Иванов Иван Иванович",
     initiatorImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
@@ -349,6 +350,7 @@ const mockUniversities: University[] = [
       },
     ],
     targetAudience: "Студенты экономических направлений",
+    isActive: false,
     initiatorBlock: "Блок управления",
     initiatorName: "Смирнова Анна Владимировна",
     initiatorImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
@@ -442,6 +444,7 @@ const mockUniversities: University[] = [
       },
     ],
     targetAudience: "Студенты технических направлений",
+    isActive: true,
     initiatorBlock: "Блок технологий",
     initiatorName: "Соколов Алексей Николаевич",
     branchCurators: [
@@ -1879,6 +1882,86 @@ const mockUniversities: University[] = [
     description: "Крупный региональный университет",
     image: "https://via.placeholder.com/100?text=БелГУ",
   },
+  {
+    id: "univ-14",
+    name: "London School of Economics and Political Science",
+    shortName: "LSE",
+    city: "Лондон",
+    countryType: "foreign",
+    cooperationStartYear: 2019,
+    cooperationLines: [
+      {
+        id: "clr-lse-1",
+        line: "drp",
+        year: 2019,
+        responsible: ["person-1", "person-3"],
+      },
+    ],
+    targetAudience: "Студенты экономических и политологических направлений",
+    initiatorBlock: "Блок развития",
+    initiatorName: "Иванов Иван Иванович",
+    branchCurators: [],
+    contracts: [
+      {
+        id: "cont-25",
+        type: "cooperation",
+        hasContract: true,
+        number: "Д-2019-089",
+        date: "2019-06-01",
+        period: { start: "2019-06-01", end: "2024-05-31" },
+        contractBranch: "Головной ВУЗ",
+        cooperationLine: "drp",
+      },
+    ],
+    careerDays: true,
+    expertParticipation: true,
+    caseChampionships: false,
+    allEmployees: 12,
+    internHiring: true,
+    region: "Великобритания",
+    description: "Ведущая школа экономики и политических наук",
+    image: "https://via.placeholder.com/100?text=LSE",
+  },
+  {
+    id: "univ-15",
+    name: "National University of Singapore",
+    shortName: "NUS",
+    city: "Сингапур",
+    countryType: "foreign",
+    cooperationStartYear: 2022,
+    cooperationLines: [
+      {
+        id: "clr-nus-1",
+        line: "cntr",
+        year: 2022,
+        responsible: ["person-5", "person-6"],
+      },
+    ],
+    targetAudience: "Студенты IT и бизнес-направлений",
+    initiatorBlock: "Блок технологий",
+    initiatorName: "Соколов Алексей Николаевич",
+    branchCurators: [],
+    contracts: [
+      {
+        id: "cont-26",
+        type: "cooperation",
+        hasContract: true,
+        number: "Д-2022-156",
+        date: "2022-03-15",
+        period: { start: "2022-03-15", end: "2027-03-14" },
+        contractBranch: "Головной ВУЗ",
+        cooperationLine: "cntr",
+      },
+    ],
+    careerDays: false,
+    expertParticipation: true,
+    caseChampionships: true,
+    allEmployees: 5,
+    internHiring: false,
+    region: "Сингапур",
+    description: "Крупнейший университет Сингапура",
+    image: "https://via.placeholder.com/100?text=NUS",
+  },
 ];
 
 // Функции для партнерств - удалены
@@ -2487,6 +2570,7 @@ export default function UniversitiesPage() {
     shortName: "",
     inn: "",
     city: "",
+    countryType: "russian" as "russian" | "foreign",
     branch: [] as string[],
     cooperationStartYear: new Date().getFullYear(),
     cooperationLine: [] as CooperationLine[], // Старое поле для обратной совместимости
@@ -2807,6 +2891,7 @@ export default function UniversitiesPage() {
       shortName: "",
       inn: "",
       city: "",
+      countryType: "russian" as "russian" | "foreign",
       branch: [] as string[],
       cooperationStartYear: new Date().getFullYear(),
       cooperationLine: [] as CooperationLine[],
@@ -2868,6 +2953,7 @@ export default function UniversitiesPage() {
         interns: universityFormData.interns || undefined,
         region: universityFormData.region.trim() || undefined,
         description: universityFormData.description.trim() || undefined,
+        countryType: universityFormData.countryType,
       };
       
       setUniversities(universities.map(u => u.id === editingUniversity.id ? updatedUniversity : u));
@@ -2898,6 +2984,7 @@ export default function UniversitiesPage() {
       interns: universityFormData.interns || undefined,
       region: universityFormData.region.trim() || undefined,
       description: universityFormData.description.trim() || undefined,
+      countryType: universityFormData.countryType,
     };
     
     setUniversities([...universities, newUniversity]);
@@ -2912,6 +2999,7 @@ export default function UniversitiesPage() {
       shortName: "",
       inn: "",
       city: "",
+      countryType: "russian" as "russian" | "foreign",
       branch: [] as string[],
       cooperationStartYear: new Date().getFullYear(),
       cooperationLine: [] as CooperationLine[],
@@ -3172,6 +3260,41 @@ export default function UniversitiesPage() {
     });
   };
   
+  // Переключение «работа ведётся» для линии сотрудничества головного ВУЗа
+  const handleToggleCooperationLineActiveMain = (universityId: string, lineId: string, isActive: boolean) => {
+    setUniversities(universities.map((u) =>
+      u.id === universityId && u.cooperationLines
+        ? {
+            ...u,
+            cooperationLines: u.cooperationLines.map((cl) =>
+              cl.id === lineId ? { ...cl, isActive } : cl
+            ),
+          }
+        : u
+    ));
+  };
+
+  // Переключение «работа ведётся» для линии сотрудничества филиала
+  const handleToggleCooperationLineActiveBranch = (universityId: string, branchId: string, lineId: string, isActive: boolean) => {
+    setUniversities(universities.map((u) =>
+      u.id === universityId && u.branchCurators
+        ? {
+            ...u,
+            branchCurators: u.branchCurators.map((c) =>
+              c.id === branchId && c.cooperationLines
+                ? {
+                    ...c,
+                    cooperationLines: c.cooperationLines.map((cl) =>
+                      cl.id === lineId ? { ...cl, isActive } : cl
+                    ),
+                  }
+                : c
+            ),
+          }
+        : u
+    ));
+  };
+
   // Удаление линии сотрудничества из головного ВУЗа
   const handleRemoveCooperationLineFromMain = (universityId: string, lineId: string) => {
     const updatedUniversities = universities.map((u) =>
@@ -4968,13 +5091,37 @@ export default function UniversitiesPage() {
                         {/* ВУЗ */}
                         <div
                                   className={cn(
-                            "p-2 rounded-md cursor-pointer transition-colors",
+                            "p-2 rounded-md cursor-pointer transition-colors flex items-start gap-2",
                             selectedUniversity === university.id
                                       ? "bg-accent text-accent-foreground"
                               : "hover:bg-muted"
                           )}
                           onClick={() => setSelectedUniversity(university.id)}
                         >
+                            {/* Индикатор: зелёная точка только если хотя бы одна линия явно имеет статус «работа ведётся» (isActive === true) */}
+                            {(() => {
+                              const hasActiveLine =
+                                (university.cooperationLines?.some((cl) => cl.isActive === true)) ||
+                                (university.branchCurators?.some((curator) =>
+                                  curator.cooperationLines?.some((cl) => cl.isActive === true)
+                                ));
+                              return (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <span
+                                      className={cn(
+                                        "mt-1.5 shrink-0 h-2 w-2 rounded-full",
+                                        hasActiveLine ? "bg-green-500 dark:bg-green-400" : "bg-muted-foreground/40"
+                                      )}
+                                      aria-hidden
+                                    />
+                                  </TooltipTrigger>
+                                  <TooltipContent side="right">
+                                    <p>{hasActiveLine ? "Активная работа с ВУЗом" : "Неактивная работа с ВУЗом"}</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              );
+                            })()}
                             <div className="flex-1 min-w-0">
                               <div className="font-medium text-sm break-words">{university.name}</div>
                               {university.shortName && (
@@ -5211,6 +5358,7 @@ export default function UniversitiesPage() {
                                 interns: university.interns || 0,
                                 region: university.region || "",
                                 description: university.description || "",
+                                countryType: university.countryType || "russian",
                               });
                               setCreateType("university");
                               setIsCreateDialogOpen(true);
@@ -5284,6 +5432,13 @@ export default function UniversitiesPage() {
                                         <div className="flex items-start justify-between gap-3">
                                           <div className="flex-1 space-y-1.5">
                                             <div className="flex items-center gap-2 flex-wrap">
+                                              <span
+                                                className={cn(
+                                                  "shrink-0 h-2.5 w-2.5 rounded-full",
+                                                  record.isActive !== false ? "bg-green-500 dark:bg-green-400" : "bg-muted-foreground/40"
+                                                )}
+                                                title={record.isActive !== false ? "Работа с ВУЗом ведётся" : "Работа не ведётся"}
+                                              />
                                               <Badge variant="outline" className={`text-xs ${getCooperationLineBadgeColor(record.line)}`}>
                                                 {getCooperationLineLabel(record.line)}
                                               </Badge>
@@ -5694,6 +5849,13 @@ export default function UniversitiesPage() {
                                                     <div className="flex items-start justify-between gap-3">
                                                       <div className="flex-1 space-y-1.5">
                                                         <div className="flex items-center gap-2 flex-wrap">
+                                                          <span
+                                                            className={cn(
+                                                              "shrink-0 h-2.5 w-2.5 rounded-full",
+                                                              record.isActive !== false ? "bg-green-500 dark:bg-green-400" : "bg-muted-foreground/40"
+                                                            )}
+                                                            title={record.isActive !== false ? "Работа с ВУЗом ведётся" : "Работа не ведётся"}
+                                                          />
                                                           <Badge variant="outline" className={`text-xs ${getCooperationLineBadgeColor(record.line)}`}>
                                                             {getCooperationLineLabel(record.line)}
                                                           </Badge>
@@ -10212,6 +10374,13 @@ export default function UniversitiesPage() {
                                                 <div className="flex items-start justify-between gap-3">
                                                   <div className="flex-1 space-y-1.5">
                                                     <div className="flex items-center gap-2 flex-wrap">
+                                                      <span
+                                                        className={cn(
+                                                          "shrink-0 h-2.5 w-2.5 rounded-full",
+                                                          record.isActive !== false ? "bg-green-500 dark:bg-green-400" : "bg-muted-foreground/40"
+                                                        )}
+                                                        title={record.isActive !== false ? "Работа с ВУЗом ведётся" : "Работа не ведётся"}
+                                                      />
                                                       <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(record.line))}>
                                                         {getCooperationLineLabel(record.line)}
                                                       </Badge>
@@ -10386,13 +10555,23 @@ export default function UniversitiesPage() {
                                                       ) : null;
                                                     })()}
                                                   </div>
-                                                  <div className="flex gap-1 shrink-0">
-                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => { setIsDrpCabinetCooperationLineDialog(true); handleEditCooperationLineInMain(university.id, record.id); }}>
-                                                      <Pencil className="h-3.5 w-3.5" />
-                                                    </Button>
-                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteCooperationLineDialog({ open: true, universityId: university.id, lineId: record.id, type: "main" })}>
-                                                      <Trash2 className="h-3.5 w-3.5 text-destructive" />
-                                                    </Button>
+                                                  <div className="flex flex-col items-end gap-2 shrink-0">
+                                                    <div className="flex items-center gap-2">
+                                                      <Label htmlFor={`drp-line-active-${record.id}`} className="text-xs text-muted-foreground whitespace-nowrap">Работа ведётся</Label>
+                                                      <Switch
+                                                        id={`drp-line-active-${record.id}`}
+                                                        checked={record.isActive !== false}
+                                                        onCheckedChange={(checked) => handleToggleCooperationLineActiveMain(university.id, record.id, checked)}
+                                                      />
+                                                    </div>
+                                                    <div className="flex gap-1">
+                                                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => { setIsDrpCabinetCooperationLineDialog(true); handleEditCooperationLineInMain(university.id, record.id); }}>
+                                                        <Pencil className="h-3.5 w-3.5" />
+                                                      </Button>
+                                                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteCooperationLineDialog({ open: true, universityId: university.id, lineId: record.id, type: "main" })}>
+                                                        <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                      </Button>
+                                                    </div>
                                                   </div>
                                                 </div>
                                               </Card>
@@ -10641,6 +10820,13 @@ export default function UniversitiesPage() {
                                                                   <div className="flex items-start justify-between gap-3">
                                                                     <div className="flex-1 space-y-1.5">
                                                                       <div className="flex items-center gap-2 flex-wrap">
+                                                                        <span
+                                                                          className={cn(
+                                                                            "shrink-0 h-2.5 w-2.5 rounded-full",
+                                                                            record.isActive !== false ? "bg-green-500 dark:bg-green-400" : "bg-muted-foreground/40"
+                                                                          )}
+                                                                          title={record.isActive !== false ? "Работа с ВУЗом ведётся" : "Работа не ведётся"}
+                                                                        />
                                                                         <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(record.line))}>
                                                                           {getCooperationLineLabel(record.line)}
                                                                         </Badge>
@@ -10780,13 +10966,23 @@ export default function UniversitiesPage() {
                                                                         ) : null;
                                                                       })()}
                                                                     </div>
-                                                                    <div className="flex gap-1 shrink-0">
-                                                                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => handleEditCooperationLineInBranch(university.id, curator.id, record.id)}>
-                                                                        <Pencil className="h-3.5 w-3.5" />
-                                                                      </Button>
-                                                                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteCooperationLineDialog({ open: true, universityId: university.id, lineId: record.id, type: "branch", branchId: curator.id })}>
-                                                                        <Trash2 className="h-3.5 w-3.5 text-destructive" />
-                                                                      </Button>
+                                                                    <div className="flex flex-col items-end gap-2 shrink-0">
+                                                                      <div className="flex items-center gap-2">
+                                                                        <Label htmlFor={`drp-branch-line-active-${curator.id}-${record.id}`} className="text-xs text-muted-foreground whitespace-nowrap">Работа ведётся</Label>
+                                                                        <Switch
+                                                                          id={`drp-branch-line-active-${curator.id}-${record.id}`}
+                                                                          checked={record.isActive !== false}
+                                                                          onCheckedChange={(checked) => handleToggleCooperationLineActiveBranch(university.id, curator.id, record.id, checked)}
+                                                                        />
+                                                                      </div>
+                                                                      <div className="flex gap-1">
+                                                                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => handleEditCooperationLineInBranch(university.id, curator.id, record.id)}>
+                                                                          <Pencil className="h-3.5 w-3.5" />
+                                                                        </Button>
+                                                                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteCooperationLineDialog({ open: true, universityId: university.id, lineId: record.id, type: "branch", branchId: curator.id })}>
+                                                                          <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                                        </Button>
+                                                                      </div>
                                                                     </div>
                                                                   </div>
                                                                 </Card>
@@ -15096,6 +15292,21 @@ export default function UniversitiesPage() {
                       onChange={(e) => setUniversityFormData({ ...universityFormData, name: e.target.value })}
                       placeholder="Московский государственный университет"
                     />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="university-country-type">Тип ВУЗа</Label>
+                    <Select
+                      value={universityFormData.countryType}
+                      onValueChange={(value) => setUniversityFormData({ ...universityFormData, countryType: value as "russian" | "foreign" })}
+                    >
+                      <SelectTrigger id="university-country-type">
+                        <SelectValue placeholder="Выберите тип" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="russian">Российский</SelectItem>
+                        <SelectItem value="foreign">Зарубежный</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-2">

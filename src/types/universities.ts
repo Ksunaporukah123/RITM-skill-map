@@ -235,6 +235,8 @@ export interface CooperationLineRecord {
   responsible: string[]; // Массив ID ответственных лиц
   universityContact?: UniversityContact; // Контактное лицо со стороны ВУЗа (для обратной совместимости)
   universityContacts?: UniversityContact[]; // Массив контактных лиц со стороны ВУЗа
+  /** Работа с ВУЗом по данной линии ведётся (зелёная точка — да, серая — нет) */
+  isActive?: boolean;
 }
 
 // Основной интерфейс университета
@@ -283,6 +285,10 @@ export interface University {
   description?: string;
   image?: string; // Фото/логотип ВУЗа
   bkoData?: UniversityBKOData;
+  /** Активное состояние работы с ВУЗом (зелёная точка — активно, серая — неактивно) */
+  isActive?: boolean;
+  /** Тип ВУЗа: российский или зарубежный */
+  countryType?: "russian" | "foreign";
 }
 
 // Данные БКО для университета
