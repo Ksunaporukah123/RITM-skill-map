@@ -1727,6 +1727,7 @@ const mockUniversities: University[] = [
         id: "clr-yufu-1",
         line: "drp",
         year: 2022,
+        isActive: false,
         responsible: ["person-5"],
       },
     ],
@@ -1739,7 +1740,7 @@ const mockUniversities: University[] = [
         city: "Ростов-на-Дону", 
         branch: "Южный филиал", 
         cooperationLines: [
-          { id: "clr-cur-14-1", line: "drp", year: 2022, responsible: ["person-5"] },
+          { id: "clr-cur-14-1", line: "drp", year: 2022, isActive: false, responsible: ["person-5"] },
         ],
         cooperationStartYear: 2022,
       },
@@ -1765,6 +1766,61 @@ const mockUniversities: University[] = [
     region: "Ростовская область",
     description: "Крупнейший университет Юга России",
     image: "https://via.placeholder.com/100?text=КубГУ",
+  },
+  {
+    id: "univ-99",
+    name: "Российский государственный университет нефти и газа имени И. М. Губкина",
+    shortName: "РГУНГ",
+    inn: "7736093127",
+    city: "Москва",
+    branch: ["Московский филиал"],
+    cooperationStartYear: 2024,
+    cooperationLines: [
+      {
+        id: "clr-rgungg-1",
+        line: "drp",
+        year: 2024,
+        isActive: true,
+        responsible: ["person-1"],
+      },
+    ],
+    targetAudience: "Студенты нефтегазового и IT-направлений",
+    isActive: true,
+    initiatorBlock: "Блок технологий",
+    initiatorName: "Губкин Алексей Петрович",
+    branchCurators: [
+      {
+        id: "cur-17",
+        city: "Москва",
+        branch: "Московский филиал",
+        cooperationLines: [
+          { id: "clr-cur-17-1", line: "drp", year: 2024, isActive: true, responsible: ["person-1"] },
+        ],
+        cooperationStartYear: 2024,
+      },
+    ],
+    contracts: [
+      {
+        id: "cont-25",
+        type: "cooperation",
+        hasContract: true,
+        number: "Д-2024-105",
+        date: "2024-05-20",
+        period: { start: "2024-05-20", end: "2029-05-19" },
+        asddLink: "https://asdd.example.com/contract/2024-105",
+        contractBranch: "Головной ВУЗ",
+      },
+    ],
+    careerDays: true,
+    expertParticipation: true,
+    caseChampionships: false,
+    allEmployees: 90,
+    internHiring: true,
+    averageInternsPerYear: 18,
+    interns: 7,
+    region: "Москва",
+    description: "Профильный вуз по нефтегазовой отрасли",
+    image: "/rgung-logo.png",
   },
   {
     id: "univ-12",
@@ -2745,14 +2801,13 @@ export default function UniversitiesPage() {
   const [deleteUniversityId, setDeleteUniversityId] = useState<string | null>(null);
   const [universityHistoryDialogOpen, setUniversityHistoryDialogOpen] = useState(false);
   const [selectedUniversityForHistory, setSelectedUniversityForHistory] = useState<string | null>(null);
-  const [statusFilter, setStatusFilter] = useState<string>("all");
-  const [typeFilter, setTypeFilter] = useState<string>("all");
   const [cityFilter, setCityFilter] = useState<string>("all");
   const [regionFilter, setRegionFilter] = useState<string>("all");
+  const [countryTypeFilter, setCountryTypeFilter] = useState<"all" | "russian" | "foreign">("all");
   const [cooperationLineFilter, setCooperationLineFilter] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<"name" | "city" | "region">("name");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [showArchived, setShowArchived] = useState(false);
+  const [activityFilter, setActivityFilter] = useState<"all" | "active" | "inactive">("all");
   const [editingStudent, setEditingStudent] = useState<{ partnershipId: string; student: Student } | null>(null);
   const [studentStatusFilter, setStudentStatusFilter] = useState<string>("all");
   const [comments, setComments] = useState<Comment[]>([]);
@@ -4513,6 +4568,9 @@ export default function UniversitiesPage() {
       // Фильтр по региону
       if (regionFilter !== "all" && u.region !== regionFilter) return false;
       
+      // Фильтр по типу ВУЗа (Российский / Зарубежный)
+      if (countryTypeFilter !== "all" && u.countryType !== countryTypeFilter) return false;
+      
       // Фильтр по линиям сотрудничества
       if (cooperationLineFilter.length > 0) {
         const hasMatchingLine = cooperationLineFilter.some(filterLine => {
@@ -4530,6 +4588,15 @@ export default function UniversitiesPage() {
           return false;
         });
         if (!hasMatchingLine) return false;
+      }
+      
+      // Фильтр по активности (хотя бы одна линия с isActive !== false)
+      if (activityFilter !== "all") {
+        const hasActiveLine =
+          (u.cooperationLines?.some((cl) => cl.isActive !== false)) ||
+          (u.branchCurators?.some((curator) => curator.cooperationLines?.some((cl) => cl.isActive !== false)));
+        if (activityFilter === "active" && !hasActiveLine) return false;
+        if (activityFilter === "inactive" && hasActiveLine) return false;
       }
       
       return !searchQuery.trim();
@@ -4555,7 +4622,7 @@ export default function UniversitiesPage() {
     });
 
     return result;
-  }, [universities, searchQuery, statusFilter, typeFilter, cityFilter, regionFilter, cooperationLineFilter, sortBy, sortOrder, showArchived]);
+  }, [universities, searchQuery, cityFilter, regionFilter, countryTypeFilter, cooperationLineFilter, sortBy, sortOrder, activityFilter]);
   
   // Сортированный список ВУЗов для левой колонки
   const sortedUniversitiesList = useMemo(() => {
@@ -4995,15 +5062,14 @@ export default function UniversitiesPage() {
             >
               <Filter className="h-4 w-4 mr-2" />
               Фильтры
-              {(statusFilter !== "all" || typeFilter !== "all" || cityFilter !== "all" || regionFilter !== "all" || cooperationLineFilter.length > 0 || showArchived) && (
+              {(cityFilter !== "all" || regionFilter !== "all" || countryTypeFilter !== "all" || cooperationLineFilter.length > 0 || activityFilter !== "all") && (
                 <Badge variant="secondary" className="ml-2 h-5 w-5 p-0 flex items-center justify-center">
                   {[
-                    statusFilter !== "all" ? 1 : 0,
-                    typeFilter !== "all" ? 1 : 0,
                     cityFilter !== "all" ? 1 : 0,
                     regionFilter !== "all" ? 1 : 0,
+                    countryTypeFilter !== "all" ? 1 : 0,
                     cooperationLineFilter.length > 0 ? 1 : 0,
-                    showArchived ? 1 : 0,
+                    activityFilter !== "all" ? 1 : 0,
                   ].reduce((a, b) => a + b, 0)}
                 </Badge>
               )}
@@ -5034,6 +5100,14 @@ export default function UniversitiesPage() {
                       });
                     }
                     
+                    // Фильтр по типу ВУЗа
+                    if (countryTypeFilter !== "all") {
+                      activeFilters.push({
+                        label: `Тип ВУЗа: ${countryTypeFilter === "russian" ? "Российский" : "Зарубежный"}`,
+                        onRemove: () => setCountryTypeFilter("all"),
+                      });
+                    }
+                    
                     // Фильтр по линиям сотрудничества
                     cooperationLineFilter.forEach((lineValue) => {
                       const line = cooperationLines.find(l => l.value === lineValue);
@@ -5044,6 +5118,13 @@ export default function UniversitiesPage() {
                         });
                       }
                     });
+                    
+                    if (activityFilter !== "all") {
+                      activeFilters.push({
+                        label: activityFilter === "active" ? "Только активные" : "Только неактивные",
+                        onRemove: () => setActivityFilter("all"),
+                      });
+                    }
                     
                     if (activeFilters.length === 0) return null;
                     
@@ -5256,8 +5337,8 @@ export default function UniversitiesPage() {
                   const university = universities.find(u => u.id === selectedUniversity);
                   if (!university) return null;
                               return (
-                  <Card className="w-full max-w-full overflow-hidden">
-                    <CardHeader className="pb-2">
+                  <Card className="w-full max-w-full overflow-hidden gap-4">
+                    <CardHeader className="pb-0">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-start gap-3 flex-1 min-w-0">
                           {university.image && (
@@ -5429,13 +5510,12 @@ export default function UniversitiesPage() {
                     <Separator />
                     <CardContent className="overflow-x-hidden">
                       <Tabs value={universityDetailTab} onValueChange={(v) => setUniversityDetailTab(v as typeof universityDetailTab)} className="w-full">
-                        <TabsList className="grid w-full grid-cols-7">
+                        <TabsList className="grid w-full grid-cols-6">
                           <TabsTrigger value="general">Общая информация</TabsTrigger>
-                          <TabsTrigger value="contracts">Договорная база</TabsTrigger>
-                          <TabsTrigger value="kaleidoscope">Калейдоскоп</TabsTrigger>
                           <TabsTrigger value="eventsFeed">Лента мероприятий</TabsTrigger>
-                          <TabsTrigger value="bko">Договорная база БКО</TabsTrigger>
-                          <TabsTrigger value="cntr">ЦНТР</TabsTrigger>
+                          <TabsTrigger value="kaleidoscope">Договорная база</TabsTrigger>
+                          <TabsTrigger value="bko">Личный кабинет БКО</TabsTrigger>
+                          <TabsTrigger value="cntr">Личный кабинет ЦНТР</TabsTrigger>
                           <TabsTrigger value="drpCabinet">Личный кабинет ДРП</TabsTrigger>
                         </TabsList>
                         
@@ -6333,7 +6413,7 @@ export default function UniversitiesPage() {
                           </div>
                         </TabsContent>
 
-                        {/* Таб: Калейдоскоп */}
+                        {/* Таб: Договорная база */}
                         <TabsContent value="kaleidoscope" className="space-y-4 mt-4">
                           {(() => {
                             const university = universities.find((u) => u.id === selectedUniversity);
@@ -7760,7 +7840,7 @@ export default function UniversitiesPage() {
                         </TabsContent>
                         
 
-                        {/* Таб 5: Договорная база БКО */}
+                        {/* Таб 5: Личный кабинет БКО */}
                         <TabsContent value="bko" className="space-y-4 mt-4">
                           {/* Блок Зарплатный проект */}
                           <Card>
@@ -8066,7 +8146,7 @@ export default function UniversitiesPage() {
                           </Card>
                         </TabsContent>
 
-                        {/* Таб 6: ЦНТР */}
+                        {/* Таб 6: Личный кабинет ЦНТР */}
                         <TabsContent value="cntr" className="space-y-4 mt-4">
                           <Tabs value={cntrSubTab} onValueChange={(value) => setCntrSubTab(value as typeof cntrSubTab)} className="w-full">
                             <div className="flex gap-4">
@@ -10361,7 +10441,7 @@ export default function UniversitiesPage() {
                                   <TabsList className="grid w-full grid-cols-4">
                                     <TabsTrigger value="general">Общая информация</TabsTrigger>
                                     <TabsTrigger value="events">Мероприятия</TabsTrigger>
-                                    <TabsTrigger value="contracts">Договорная база</TabsTrigger>
+                                    <TabsTrigger value="contracts">Договоры</TabsTrigger>
                                     <TabsTrigger value="staff">Кадровые показатели</TabsTrigger>
                                   </TabsList>
 
@@ -11146,6 +11226,15 @@ export default function UniversitiesPage() {
                                                 Добавить мероприятие
                                               </Button>
                                             </div>
+                                            <div className="mb-2">
+                                              <div className="text-sm text-muted-foreground">
+                                                Найдено: <span className="font-semibold text-foreground">{filteredDrpEvents.length}</span>{" "}
+                                                {filteredDrpEvents.length === 1 ? "мероприятие" : filteredDrpEvents.length > 1 && filteredDrpEvents.length < 5 ? "мероприятия" : "мероприятий"}
+                                                {filteredDrpEvents.length !== drpEvents.length && (
+                                                  <span className="ml-1">из {drpEvents.length}</span>
+                                                )}
+                                              </div>
+                                            </div>
                                             {drpEvents.length > 0 ? (
                                               filteredDrpEvents.length > 0 ? (
                                               <div className="space-y-3">
@@ -11313,7 +11402,7 @@ export default function UniversitiesPage() {
                                     </div>
                                   </TabsContent>
 
-                                  {/* Подтаб: Договорная база — полный функционал как на вкладке «Договорная база» */}
+                                  {/* Подтаб: Договоры — полный функционал как на вкладке «Договорная база» */}
                                   <TabsContent value="contracts" className="space-y-4 mt-4">
                                     <div className="space-y-4">
                                       {/* Виджет статистики и кнопка добавления */}
@@ -11413,6 +11502,30 @@ export default function UniversitiesPage() {
                                           Добавить договор
                                         </Button>
                                       </div>
+
+                                      {(() => {
+                                        const filteredContractsList = drpContracts.filter((contract) => {
+                                          if (drpContractFilters.type && contract.type !== drpContractFilters.type) return false;
+                                          if (drpContractFilters.status) {
+                                            const isExpired = contract.period?.end ? new Date(contract.period.end) < new Date() : false;
+                                            if (drpContractFilters.status === "expired" && !isExpired) return false;
+                                            if (drpContractFilters.status === "active" && isExpired) return false;
+                                          }
+                                          return true;
+                                        });
+                                        const filteredContractsCount = filteredContractsList.length;
+                                        return (
+                                          <div className="mb-2">
+                                            <div className="text-sm text-muted-foreground">
+                                              Найдено: <span className="font-semibold text-foreground">{filteredContractsCount}</span>{" "}
+                                              {filteredContractsCount === 1 ? "договор" : filteredContractsCount >= 2 && filteredContractsCount <= 4 ? "договора" : "договоров"}
+                                              {filteredContractsCount !== drpContracts.length && (
+                                                <span className="ml-1">из {drpContracts.length}</span>
+                                              )}
+                                            </div>
+                                          </div>
+                                        );
+                                      })()}
 
                                       {/* Список договоров ДРП */}
                                       {drpContracts.length > 0 ? (() => {
@@ -11525,10 +11638,26 @@ export default function UniversitiesPage() {
                                   {/* РџРѕРґС‚Р°Р±: РљР°РґСЂРѕРІС‹Рµ РїРѕРєР°Р·Р°С‚РµР»Рё */}
                                   <TabsContent value="staff" className="space-y-4 mt-4">
                                               <Tabs value={staffSubTab} onValueChange={(v) => setStaffSubTab(v as typeof staffSubTab)} className="w-full">
-                                                <TabsList className="grid w-full grid-cols-2">
-                                                  <TabsTrigger value="interns">Сотрудники</TabsTrigger>
-                                                  <TabsTrigger value="practitioners">Практиканты</TabsTrigger>
-                                                </TabsList>
+                                                <div className="inline-flex items-center gap-1 rounded-md border bg-muted/40 p-1">
+                                                  <Button
+                                                    type="button"
+                                                    size="sm"
+                                                    variant={staffSubTab === "interns" ? "secondary" : "ghost"}
+                                                    className="h-8 px-3"
+                                                    onClick={() => setStaffSubTab("interns")}
+                                                  >
+                                                    Сотрудники
+                                                  </Button>
+                                                  <Button
+                                                    type="button"
+                                                    size="sm"
+                                                    variant={staffSubTab === "practitioners" ? "secondary" : "ghost"}
+                                                    className="h-8 px-3"
+                                                    onClick={() => setStaffSubTab("practitioners")}
+                                                  >
+                                                    Практиканты
+                                                  </Button>
+                                                </div>
                                                 
                                                 {/* Подтаб: Сотрудники */}
                                                 <TabsContent value="interns" className="space-y-4 mt-4">
@@ -16593,6 +16722,37 @@ export default function UniversitiesPage() {
                   </Select>
                 </div>
 
+                <div className="space-y-2">
+                  <Label>Регион</Label>
+                  <Select value={regionFilter} onValueChange={setRegionFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Выберите регион" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Все регионы</SelectItem>
+                      {uniqueRegions.map(region => (
+                        <SelectItem key={region} value={region}>{region}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-2">
+                  <Label>Тип ВУЗа</Label>
+                  <Select value={countryTypeFilter} onValueChange={(v) => setCountryTypeFilter(v as typeof countryTypeFilter)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Выберите тип" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Все</SelectItem>
+                      <SelectItem value="russian">Российский</SelectItem>
+                      <SelectItem value="foreign">Зарубежный</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 <Separator />
 
                 <div className="space-y-2">
@@ -16632,6 +16792,22 @@ export default function UniversitiesPage() {
                     </Button>
                   </div>
                 </div>
+
+                <Separator />
+
+                <div className="space-y-2">
+                  <Label>Активность</Label>
+                  <Select value={activityFilter} onValueChange={(v) => setActivityFilter(v as typeof activityFilter)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Выберите статус" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Все</SelectItem>
+                      <SelectItem value="active">Только активные</SelectItem>
+                      <SelectItem value="inactive">Только неактивные</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
               <DialogFooter>
                 <Button
@@ -16639,9 +16815,11 @@ export default function UniversitiesPage() {
                   onClick={() => {
                     setCityFilter("all");
                     setRegionFilter("all");
+                    setCountryTypeFilter("all");
                     setCooperationLineFilter([]);
                     setSortBy("name");
                     setSortOrder("asc");
+                    setActivityFilter("all");
                   }}
                 >
                   Сбросить фильтры
