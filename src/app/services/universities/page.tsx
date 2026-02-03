@@ -5564,7 +5564,7 @@ export default function UniversitiesPage() {
                                             </div>
                                             {record.responsible && record.responsible.length > 0 && (
                                               <div className="flex items-center gap-2">
-                                                <Label className="text-sm font-semibold">Ответственное лицо:</Label>
+                                                <Label className="text-sm font-semibold">Ответственное лицо Банк:</Label>
                                                 <div className="flex flex-wrap gap-3">
                                                   {record.responsible.map((personId, personIndex) => {
                                                     const person = responsiblePersons.find(p => p.value === personId);
@@ -5745,7 +5745,7 @@ export default function UniversitiesPage() {
                                           )}
                                           {university.cooperationLineResponsible && (
                                             <div className="flex items-center gap-2">
-                                              <Label className="text-sm font-semibold">Ответственное лицо по линии:</Label>
+                                              <Label className="text-sm font-semibold">Ответственное лицо Банк по линии:</Label>
                                               <div className="flex flex-wrap gap-3">
                                                 {Array.isArray(university.cooperationLineResponsible) ? (
                                                   university.cooperationLineResponsible.map((personId, index) => {
@@ -5869,7 +5869,7 @@ export default function UniversitiesPage() {
                                                         />
                                                       </div>
                                                       <div className="space-y-1">
-                                                        <Label className="text-xs text-muted-foreground">Ответственное лицо</Label>
+                                                        <Label className="text-xs text-muted-foreground">Ответственное лицо Банк</Label>
                                                         <MultiSelect
                                                           options={responsiblePersons.map(p => ({ value: p.value, label: p.label }))}
                                                           selected={record.responsible}
@@ -5879,7 +5879,7 @@ export default function UniversitiesPage() {
                                                             );
                                                             setEditingCurator({ ...editingCurator, cooperationLines: updated });
                                                           }}
-                                                          placeholder="Выберите ответственное лицо"
+                                                          placeholder="Выберите ответственное лицо Банк"
                                                         />
                                                       </div>
                                                     </div>
@@ -5981,7 +5981,7 @@ export default function UniversitiesPage() {
                                                         </div>
                                                         {record.responsible && record.responsible.length > 0 && (
                                                           <div className="flex items-center gap-2">
-                                                            <Label className="text-sm font-semibold">Ответственное лицо:</Label>
+                                                            <Label className="text-sm font-semibold">Ответственное лицо Банк:</Label>
                                                             <div className="flex flex-wrap gap-3">
                                                               {record.responsible.map((personId, personIndex) => {
                                                                 const person = responsiblePersons.find(p => p.value === personId);
@@ -10506,7 +10506,7 @@ export default function UniversitiesPage() {
                                                     </div>
                                                     {record.responsible && record.responsible.length > 0 && (
                                                       <div className="flex items-center gap-2">
-                                                        <Label className="text-sm font-semibold">Ответственное лицо:</Label>
+                                                        <Label className="text-sm font-semibold">Ответственное лицо Банк:</Label>
                                                         <div className="flex flex-wrap gap-3">
                                                           {record.responsible.map((personId, personIndex) => {
                                                             const person = responsiblePersons.find(p => p.value === personId);
@@ -10799,7 +10799,7 @@ export default function UniversitiesPage() {
                                                                       />
                                                                     </div>
                                                                     <div className="space-y-1">
-                                                                      <Label className="text-xs text-muted-foreground">Ответственное лицо</Label>
+                                                                      <Label className="text-xs text-muted-foreground">Ответственное лицо Банк</Label>
                                                                       <MultiSelect
                                                                         options={responsiblePersons.map(p => ({ value: p.value, label: p.label }))}
                                                                         selected={record.responsible}
@@ -10809,7 +10809,7 @@ export default function UniversitiesPage() {
                                                                           );
                                                                           setEditingCurator({ ...editingCurator, cooperationLines: updated });
                                                                         }}
-                                                                        placeholder="Выберите ответственное лицо"
+                                                                        placeholder="Выберите ответственное лицо Банк"
                                                                       />
                                                                     </div>
                                                                   </div>
@@ -10952,7 +10952,7 @@ export default function UniversitiesPage() {
                                                                       </div>
                                                                       {record.responsible && record.responsible.length > 0 && (
                                                                         <div className="flex items-center gap-2">
-                                                                          <Label className="text-sm font-semibold">Ответственное лицо:</Label>
+                                                                          <Label className="text-sm font-semibold">Ответственное лицо Банк:</Label>
                                                                           <div className="flex flex-wrap gap-3">
                                                                             {record.responsible.map((personId, personIndex) => {
                                                                               const person = responsiblePersons.find(p => p.value === personId);
