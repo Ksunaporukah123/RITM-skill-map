@@ -122,6 +122,12 @@ export const BADGE_COLORS = {
   
   /** ЦНТР - корпоративный циан */
   cntr: "bg-cyan-100 text-cyan-700 border-cyan-300 dark:bg-cyan-900 dark:text-cyan-200 dark:border-cyan-700",
+  
+  /** Экосистема - зелёный */
+  ecosystem: "bg-emerald-100 text-emerald-700 border-emerald-300 dark:bg-emerald-900 dark:text-emerald-200 dark:border-emerald-700",
+  
+  /** ДКМ - оранжевый */
+  dkm: "bg-orange-100 text-orange-700 border-orange-300 dark:bg-orange-900 dark:text-orange-200 dark:border-orange-700",
 } as const;
 
 /**
@@ -257,7 +263,7 @@ export function getAgreementBadgeColor(status: string): string {
 /**
  * Получает цвет тега для линии сотрудничества
  */
-export function getCooperationLineBadgeColor(line: "drp" | "bko" | "cntr"): string {
+export function getCooperationLineBadgeColor(line: "drp" | "bko" | "cntr" | "ecosystem" | "dkm"): string {
   return BADGE_COLORS[line];
 }
 

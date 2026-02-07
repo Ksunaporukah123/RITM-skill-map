@@ -43,8 +43,8 @@ export interface Event {
   comments?: string; // Комментарии
   responsiblePerson: string[]; // Ответственные лица Банк (массив ID)
   responsiblePersonImage?: string; // Фото ответтельного лица (устаревшее, для обратной совместимости)
-  /** Линия сотрудничества: у мероприятия в один момент времени может быть только одна — ДРП, БКО или ЦНТР */
-  cooperationLine?: "drp" | "bko" | "cntr";
+  /** Линии сотрудничества мероприятия (множественный выбор: ДРП, БКО, ЦНТР, Экосистема, ДКМ) */
+  cooperationLine?: ("drp" | "bko" | "cntr" | "ecosystem" | "dkm")[];
   /** Головной ВУЗ или филиал: место проведения (например «Головной ВУЗ», «Московский филиал») */
   branch?: string;
   /** Показывать в ленте мероприятий (по умолчанию true при отсутствии поля) */
@@ -216,7 +216,7 @@ export interface CNTRAgreementItem {
 }
 
 // Тип линии сотрудничества
-export type CooperationLine = "drp" | "bko" | "cntr";
+export type CooperationLine = "drp" | "bko" | "cntr" | "ecosystem" | "dkm";
 
 // Интерфейс для контакта со стороны ВУЗа
 export interface UniversityContact {
