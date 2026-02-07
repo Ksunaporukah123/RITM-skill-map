@@ -2332,11 +2332,13 @@ export default function UniversitiesPage() {
   const [drpEventsFeedFilters, setDrpEventsFeedFilters] = useState<{ type: Event["type"] | null; year: number | null }>({ type: null, year: null });
   const [drpEventsFeedCurrentPage, setDrpEventsFeedCurrentPage] = useState(1);
   const [drpEventsFeedItemsPerPage, setDrpEventsFeedItemsPerPage] = useState(10);
-  // Фильтры калейдоскопа (линия, тип договора)
+  // Фильтры калейдоскопа (линия, тип, период, статус — множественный выбор)
   const [kaleidoscopeFilters, setKaleidoscopeFilters] = useState<{
-    cooperationLine: "drp" | "bko" | "cntr" | null;
-    type: Contract["type"] | null;
-  }>({ cooperationLine: null, type: null });
+    cooperationLine: string[];
+    type: Contract["type"][];
+    year: number[];
+    status: ("active" | "archived")[];
+  }>({ cooperationLine: [], type: [], year: [], status: [] });
   // Режим отображения калейдоскопа: канбан (колонки) или список
   const [kaleidoscopeViewMode, setKaleidoscopeViewMode] = useState<"kanban" | "list">("kanban");
   const [kaleidoscopeListCurrentPage, setKaleidoscopeListCurrentPage] = useState(1);
@@ -2373,7 +2375,7 @@ export default function UniversitiesPage() {
   // Сброс фильтров калейдоскопа при смене ВУЗа или вкладки
   useEffect(() => {
     if (!selectedUniversity || universityDetailTab !== "kaleidoscope") return;
-    setKaleidoscopeFilters({ cooperationLine: null, type: null });
+    setKaleidoscopeFilters({ cooperationLine: [], type: [], year: [], status: [] });
     setKaleidoscopeListCurrentPage(1);
   }, [selectedUniversity, universityDetailTab]);
 
@@ -6448,13 +6450,52 @@ export default function UniversitiesPage() {
 
                             const contracts = university.contracts || [];
 
-                            // Для блоков — договоры, отфильтрованные по другому критерию (как в ленте мероприятий)
+                            // Для блоков — договоры, отфильтрованные по другим критериям (как в ленте мероприятий)
+                            const getContractYear = (c: Contract) => {
+                              if (c.period?.end) return parseInt(c.period.end.slice(0, 4), 10);
+                              if (c.date) return parseInt(c.date.slice(0, 4), 10);
+                              return 0;
+                            };
                             const contractsForLineBlock = contracts.filter((c) => {
-                              if (kaleidoscopeFilters.type && c.type !== kaleidoscopeFilters.type) return false;
+                              if (kaleidoscopeFilters.type.length > 0 && !kaleidoscopeFilters.type.includes(c.type)) return false;
+                              if (kaleidoscopeFilters.year.length > 0) {
+                                const y = getContractYear(c);
+                                if (!y || !kaleidoscopeFilters.year.includes(y)) return false;
+                              }
+                              if (kaleidoscopeFilters.status.length > 0) {
+                                const isArchived = c.archived === true;
+                                if (!kaleidoscopeFilters.status.includes(isArchived ? "archived" : "active")) return false;
+                              }
                               return true;
                             });
                             const contractsForTypeBlock = contracts.filter((c) => {
-                              if (kaleidoscopeFilters.cooperationLine && c.cooperationLine !== kaleidoscopeFilters.cooperationLine) return false;
+                              if (kaleidoscopeFilters.cooperationLine.length > 0 && (!c.cooperationLine || !kaleidoscopeFilters.cooperationLine.includes(c.cooperationLine))) return false;
+                              if (kaleidoscopeFilters.year.length > 0) {
+                                const y = getContractYear(c);
+                                if (!y || !kaleidoscopeFilters.year.includes(y)) return false;
+                              }
+                              if (kaleidoscopeFilters.status.length > 0) {
+                                const isArchived = c.archived === true;
+                                if (!kaleidoscopeFilters.status.includes(isArchived ? "archived" : "active")) return false;
+                              }
+                              return true;
+                            });
+                            const contractsForYearBlock = contracts.filter((c) => {
+                              if (kaleidoscopeFilters.cooperationLine.length > 0 && (!c.cooperationLine || !kaleidoscopeFilters.cooperationLine.includes(c.cooperationLine))) return false;
+                              if (kaleidoscopeFilters.type.length > 0 && !kaleidoscopeFilters.type.includes(c.type)) return false;
+                              if (kaleidoscopeFilters.status.length > 0) {
+                                const isArchived = c.archived === true;
+                                if (!kaleidoscopeFilters.status.includes(isArchived ? "archived" : "active")) return false;
+                              }
+                              return true;
+                            });
+                            const contractsForStatusBlock = contracts.filter((c) => {
+                              if (kaleidoscopeFilters.cooperationLine.length > 0 && (!c.cooperationLine || !kaleidoscopeFilters.cooperationLine.includes(c.cooperationLine))) return false;
+                              if (kaleidoscopeFilters.type.length > 0 && !kaleidoscopeFilters.type.includes(c.type)) return false;
+                              if (kaleidoscopeFilters.year.length > 0) {
+                                const y = getContractYear(c);
+                                if (!y || !kaleidoscopeFilters.year.includes(y)) return false;
+                              }
                               return true;
                             });
                             const byCooperationLine = {
@@ -6468,11 +6509,29 @@ export default function UniversitiesPage() {
                               internship: contractsForTypeBlock.filter((c) => c.type === "internship").length,
                               bankDepartment: contractsForTypeBlock.filter((c) => c.type === "bankDepartment").length,
                             };
+                            const yearsMap = contractsForYearBlock.reduce<Record<number, number>>((acc, c) => {
+                              const y = getContractYear(c);
+                              if (y) acc[y] = (acc[y] || 0) + 1;
+                              return acc;
+                            }, {});
+                            const yearsSorted = Object.keys(yearsMap).map(Number).sort((a, b) => a - b);
+                            const byStatus = {
+                              active: contractsForStatusBlock.filter((c) => !c.archived).length,
+                              archived: contractsForStatusBlock.filter((c) => c.archived === true).length,
+                            };
 
                             // Применяем фильтры к списку договоров
                             const filteredContracts = contracts.filter((c) => {
-                              if (kaleidoscopeFilters.cooperationLine && c.cooperationLine !== kaleidoscopeFilters.cooperationLine) return false;
-                              if (kaleidoscopeFilters.type && c.type !== kaleidoscopeFilters.type) return false;
+                              if (kaleidoscopeFilters.cooperationLine.length > 0 && (!c.cooperationLine || !kaleidoscopeFilters.cooperationLine.includes(c.cooperationLine))) return false;
+                              if (kaleidoscopeFilters.type.length > 0 && !kaleidoscopeFilters.type.includes(c.type)) return false;
+                              if (kaleidoscopeFilters.year.length > 0) {
+                                const y = getContractYear(c);
+                                if (!y || !kaleidoscopeFilters.year.includes(y)) return false;
+                              }
+                              if (kaleidoscopeFilters.status.length > 0) {
+                                const isArchived = c.archived === true;
+                                if (!kaleidoscopeFilters.status.includes(isArchived ? "archived" : "active")) return false;
+                              }
                               return true;
                             });
 
@@ -6639,82 +6698,59 @@ export default function UniversitiesPage() {
 
                             return (
                               <div className="space-y-4">
-                                {/* Блоки фильтров как в ленте мероприятий */}
+                                {/* Фильтры — выпадающие списки с множественным выбором */}
                                 <div className="flex flex-wrap items-center gap-4 mb-4">
-                                  <Card className="p-3 flex-[0.75] min-w-[140px]">
-                                    <div className="space-y-2">
-                                      <Label className="text-base font-semibold">Линия сотрудничества</Label>
-                                      <div className="flex flex-wrap gap-3">
-                                        {(["drp", "bko", "cntr"] as const)
-                                          .filter((line) => (byCooperationLine[line] ?? 0) > 0 || kaleidoscopeFilters.cooperationLine === line)
-                                          .map((line) => {
-                                            const count = byCooperationLine[line] ?? 0;
-                                            const isActive = kaleidoscopeFilters.cooperationLine === line;
-                                            return (
-                                              <div key={line} className="text-base">
-                                                <span className="text-muted-foreground">{cooperationLineLabels[line]}: </span>
-                                                <Badge
-                                                  variant="outline"
-                                                  className={cn(
-                                                    "cursor-pointer",
-                                                    cooperationLineBadgeColors[line],
-                                                    isActive && "ring-4 ring-primary"
-                                                  )}
-                                                  onClick={() => {
-                                                    setKaleidoscopeFilters((p) => ({
-                                                      ...p,
-                                                      cooperationLine: p.cooperationLine === line ? null : line,
-                                                    }));
-                                                  }}
-                                                >
-                                                  {count}
-                                                </Badge>
-                                              </div>
-                                            );
-                                          })}
-                                      </div>
-                                    </div>
-                                  </Card>
-                                  <Card className="p-3 flex-[2.5] min-w-[340px]">
-                                    <div className="space-y-2">
-                                      <Label className="text-base font-semibold">Тип договора</Label>
-                                      <div className="flex flex-wrap gap-3">
-                                        {([
-                                          { key: "cooperation" as const, label: contractTypeLabels.cooperation },
-                                          { key: "scholarship" as const, label: contractTypeLabels.scholarship },
-                                          { key: "internship" as const, label: contractTypeLabels.internship },
-                                          { key: "bankDepartment" as const, label: contractTypeLabels.bankDepartment },
-                                        ])
-                                          .filter((item) => (byType[item.key] ?? 0) > 0 || kaleidoscopeFilters.type === item.key)
-                                          .map(({ key, label }) => {
-                                            const count = byType[key] ?? 0;
-                                            const isActive = kaleidoscopeFilters.type === key;
-                                            return (
-                                              <div key={key} className="text-base">
-                                                <span className="text-muted-foreground">{label}: </span>
-                                                <Badge
-                                                  variant="outline"
-                                                  className={cn(
-                                                    "cursor-pointer",
-                                                    getContractTypeBadgeColor(key),
-                                                    isActive && "ring-4 ring-primary"
-                                                  )}
-                                                  onClick={() => {
-                                                    setKaleidoscopeFilters((p) => ({
-                                                      ...p,
-                                                      type: p.type === key ? null : key,
-                                                    }));
-                                                  }}
-                                                >
-                                                  {count}
-                                                </Badge>
-                                              </div>
-                                            );
-                                          })}
-                                      </div>
-                                    </div>
-                                  </Card>
-                                  <Card className="p-3 shrink-0">
+                                  <div className="flex-1 min-w-[180px] space-y-2">
+                                    <Label className="text-base font-semibold">Линия сотрудничества</Label>
+                                    <MultiSelect
+                                      options={(["drp", "bko", "cntr"] as const)
+                                        .filter((line) => (byCooperationLine[line] ?? 0) > 0 || kaleidoscopeFilters.cooperationLine.includes(line))
+                                        .map((line) => ({ value: line, label: `${cooperationLineLabels[line]} (${byCooperationLine[line] ?? 0})` }))}
+                                      selected={kaleidoscopeFilters.cooperationLine}
+                                      onChange={(selected) => setKaleidoscopeFilters((p) => ({ ...p, cooperationLine: selected }))}
+                                      placeholder="Выберите линии"
+                                    />
+                                  </div>
+                                  <div className="flex-1 min-w-[180px] space-y-2">
+                                    <Label className="text-base font-semibold">Тип договора</Label>
+                                    <MultiSelect
+                                      options={([
+                                        { value: "cooperation", label: contractTypeLabels.cooperation, count: byType.cooperation },
+                                        { value: "scholarship", label: contractTypeLabels.scholarship, count: byType.scholarship },
+                                        { value: "internship", label: contractTypeLabels.internship, count: byType.internship },
+                                        { value: "bankDepartment", label: contractTypeLabels.bankDepartment, count: byType.bankDepartment },
+                                      ] as const).filter((item) => item.count > 0 || kaleidoscopeFilters.type.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
+                                      selected={kaleidoscopeFilters.type}
+                                      onChange={(selected) => setKaleidoscopeFilters((p) => ({ ...p, type: selected as Contract["type"][] }))}
+                                      placeholder="Выберите типы"
+                                    />
+                                  </div>
+                                  <div className="flex-1 min-w-[180px] space-y-2">
+                                    <Label className="text-base font-semibold">Период действия</Label>
+                                    <MultiSelect
+                                      options={yearsSorted.map((year) => ({
+                                        value: String(year),
+                                        label: `${year} (${yearsMap[year] ?? 0})`,
+                                      }))}
+                                      selected={kaleidoscopeFilters.year.map(String)}
+                                      onChange={(selected) => setKaleidoscopeFilters((p) => ({ ...p, year: selected.map(Number) }))}
+                                      placeholder="Выберите годы"
+                                    />
+                                    {yearsSorted.length === 0 && <span className="text-sm text-muted-foreground">Нет данных</span>}
+                                  </div>
+                                  <div className="flex-1 min-w-[180px] space-y-2">
+                                    <Label className="text-base font-semibold">Статус</Label>
+                                    <MultiSelect
+                                      options={([
+                                        { value: "active", label: "Активные", count: byStatus.active },
+                                        { value: "archived", label: "В архиве", count: byStatus.archived },
+                                      ] as const).filter((item) => item.count > 0 || kaleidoscopeFilters.status.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
+                                      selected={kaleidoscopeFilters.status}
+                                      onChange={(selected) => setKaleidoscopeFilters((p) => ({ ...p, status: selected as ("active" | "archived")[] }))}
+                                      placeholder="Выберите статусы"
+                                    />
+                                  </div>
+                                  <div className="shrink-0 space-y-2">
                                     <div className="space-y-2">
                                       <Label className="text-base font-semibold">Вид</Label>
                                       <div className="flex gap-2">
@@ -6750,8 +6786,51 @@ export default function UniversitiesPage() {
                                         </Tooltip>
                                       </div>
                                     </div>
-                                  </Card>
+                                  </div>
                                 </div>
+
+                                {/* Активные фильтры */}
+                                {(() => {
+                                  const kaleidoscopeActiveFilters: Array<{ label: string; onRemove: () => void }> = [];
+                                  if (kaleidoscopeFilters.cooperationLine.length > 0) {
+                                    kaleidoscopeActiveFilters.push({
+                                      label: `Линия: ${kaleidoscopeFilters.cooperationLine.map((l) => cooperationLineLabels[l]).join(", ")}`,
+                                      onRemove: () => setKaleidoscopeFilters((p) => ({ ...p, cooperationLine: [] })),
+                                    });
+                                  }
+                                  if (kaleidoscopeFilters.type.length > 0) {
+                                    kaleidoscopeActiveFilters.push({
+                                      label: `Тип: ${kaleidoscopeFilters.type.map((t) => contractTypeLabels[t]).join(", ")}`,
+                                      onRemove: () => setKaleidoscopeFilters((p) => ({ ...p, type: [] })),
+                                    });
+                                  }
+                                  if (kaleidoscopeFilters.year.length > 0) {
+                                    kaleidoscopeActiveFilters.push({
+                                      label: `Год: ${kaleidoscopeFilters.year.join(", ")}`,
+                                      onRemove: () => setKaleidoscopeFilters((p) => ({ ...p, year: [] })),
+                                    });
+                                  }
+                                  if (kaleidoscopeFilters.status.length > 0) {
+                                    const statusLabels: Record<string, string> = { active: "Активные", archived: "В архиве" };
+                                    kaleidoscopeActiveFilters.push({
+                                      label: `Статус: ${kaleidoscopeFilters.status.map((s) => statusLabels[s]).join(", ")}`,
+                                      onRemove: () => setKaleidoscopeFilters((p) => ({ ...p, status: [] })),
+                                    });
+                                  }
+                                  if (kaleidoscopeActiveFilters.length === 0) return null;
+                                  return (
+                                    <div className="flex flex-wrap items-center gap-2 mb-3">
+                                      {kaleidoscopeActiveFilters.map((filter, index) => (
+                                        <Badge key={index} variant="secondary" className="gap-1 pr-1">
+                                          {filter.label}
+                                          <Button variant="ghost" size="sm" className="h-5 w-5 p-0 hover:bg-transparent" onClick={filter.onRemove}>
+                                            <X className="h-3 w-3" />
+                                          </Button>
+                                        </Badge>
+                                      ))}
+                                    </div>
+                                  );
+                                })()}
 
                                 {kaleidoscopeViewMode === "list" ? (
                                   <div className="space-y-4">
@@ -7129,7 +7208,7 @@ export default function UniversitiesPage() {
                                       />
                                     </div>
                                     <div className="flex-1 min-w-[180px] space-y-2">
-                                      <Label className="text-base font-semibold">Период проведения</Label>
+                                      <Label className="text-base font-semibold">Период действия</Label>
                                       <MultiSelect
                                         options={yearsSorted.map((year) => ({
                                           value: String(year),
@@ -11223,7 +11302,7 @@ export default function UniversitiesPage() {
                                               </Card>
                                               <Card className="p-3 flex-[0.75] min-w-[140px]">
                                                 <div className="space-y-2">
-                                                  <Label className="text-base font-semibold">Период проведения</Label>
+                                                  <Label className="text-base font-semibold">Период действия</Label>
                                                   <div className="flex flex-wrap gap-3">
                                                     {yearsSorted.length > 0 ? (
                                                       yearsSorted.map((year) => {
