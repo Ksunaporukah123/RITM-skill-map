@@ -2321,12 +2321,13 @@ export default function UniversitiesPage() {
   // Состояние для пагинации ленты мероприятий
   const [eventsFeedCurrentPage, setEventsFeedCurrentPage] = useState(1);
   const [eventsFeedItemsPerPage, setEventsFeedItemsPerPage] = useState(10);
-  // Фильтры ленты мероприятий (линия, тип, календарный год)
+  // Фильтры ленты мероприятий (линия, тип, период, статус — множественный выбор)
   const [eventsFeedFilters, setEventsFeedFilters] = useState<{
-    cooperationLine: "drp" | "bko" | "cntr" | null;
-    type: Event["type"] | null;
-    year: number | null;
-  }>({ cooperationLine: null, type: null, year: null });
+    cooperationLine: string[];
+    type: Event["type"][];
+    year: number[];
+    status: Event["status"][];
+  }>({ cooperationLine: [], type: [], year: [], status: [] });
   // Фильтры мероприятий в Личном кабинете ДРП (стилистика вкладки «Мероприятия» + период как на ленте)
   const [drpEventsFeedFilters, setDrpEventsFeedFilters] = useState<{ type: Event["type"] | null; year: number | null }>({ type: null, year: null });
   const [drpEventsFeedCurrentPage, setDrpEventsFeedCurrentPage] = useState(1);
@@ -2358,7 +2359,7 @@ export default function UniversitiesPage() {
     const university = universities.find((u) => u.id === selectedUniversity);
     const eventIds = university?.events?.map((e) => e.id) ?? [];
     setCollapsedEventsFeed(new Set(eventIds));
-    setEventsFeedFilters({ cooperationLine: null, type: null, year: null });
+    setEventsFeedFilters({ cooperationLine: [], type: [], year: [], status: [] });
     setEventsFeedCurrentPage(1);
   }, [selectedUniversity, universityDetailTab, universities]);
 
@@ -7017,30 +7018,44 @@ export default function UniversitiesPage() {
                               const allEvents = (university.events || []).filter((e) => e.showInEventsFeed !== false);
                               // Для каждого блока — мероприятия, отфильтрованные по двум другим критериям (чтобы блоки сужали варианты)
                               const eventsForLineBlock = allEvents.filter((e) => {
-                                if (eventsFeedFilters.type && e.type !== eventsFeedFilters.type) return false;
-                                if (eventsFeedFilters.year != null) {
+                                if (eventsFeedFilters.type.length > 0 && !eventsFeedFilters.type.includes(e.type)) return false;
+                                if (eventsFeedFilters.year.length > 0) {
                                   const eventYear = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
-                                  if (eventYear !== eventsFeedFilters.year) return false;
+                                  if (!eventYear || !eventsFeedFilters.year.includes(eventYear)) return false;
                                 }
+                                if (eventsFeedFilters.status.length > 0 && !eventsFeedFilters.status.includes(e.status)) return false;
                                 return true;
                               });
                               const eventsForTypeBlock = allEvents.filter((e) => {
-                                if (eventsFeedFilters.cooperationLine && !e.cooperationLine?.includes(eventsFeedFilters.cooperationLine)) return false;
-                                if (eventsFeedFilters.year != null) {
+                                if (eventsFeedFilters.cooperationLine.length > 0 && !e.cooperationLine?.some((l) => eventsFeedFilters.cooperationLine.includes(l))) return false;
+                                if (eventsFeedFilters.year.length > 0) {
                                   const eventYear = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
-                                  if (eventYear !== eventsFeedFilters.year) return false;
+                                  if (!eventYear || !eventsFeedFilters.year.includes(eventYear)) return false;
                                 }
+                                if (eventsFeedFilters.status.length > 0 && !eventsFeedFilters.status.includes(e.status)) return false;
                                 return true;
                               });
                               const eventsForYearBlock = allEvents.filter((e) => {
-                                if (eventsFeedFilters.cooperationLine && !e.cooperationLine?.includes(eventsFeedFilters.cooperationLine)) return false;
-                                if (eventsFeedFilters.type && e.type !== eventsFeedFilters.type) return false;
+                                if (eventsFeedFilters.cooperationLine.length > 0 && !e.cooperationLine?.some((l) => eventsFeedFilters.cooperationLine.includes(l))) return false;
+                                if (eventsFeedFilters.type.length > 0 && !eventsFeedFilters.type.includes(e.type)) return false;
+                                if (eventsFeedFilters.status.length > 0 && !eventsFeedFilters.status.includes(e.status)) return false;
+                                return true;
+                              });
+                              const eventsForStatusBlock = allEvents.filter((e) => {
+                                if (eventsFeedFilters.cooperationLine.length > 0 && !e.cooperationLine?.some((l) => eventsFeedFilters.cooperationLine.includes(l))) return false;
+                                if (eventsFeedFilters.type.length > 0 && !eventsFeedFilters.type.includes(e.type)) return false;
+                                if (eventsFeedFilters.year.length > 0) {
+                                  const eventYear = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
+                                  if (!eventYear || !eventsFeedFilters.year.includes(eventYear)) return false;
+                                }
                                 return true;
                               });
                               const byCooperationLine = {
                                 drp: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("drp")).length,
                                 bko: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("bko")).length,
                                 cntr: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("cntr")).length,
+                                ecosystem: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("ecosystem")).length,
+                                dkm: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("dkm")).length,
                               };
                               const byType = {
                                 careerDays: eventsForTypeBlock.filter((e) => e.type === "careerDays").length,
@@ -7055,13 +7070,19 @@ export default function UniversitiesPage() {
                                 return acc;
                               }, {});
                               const yearsSorted = Object.keys(yearsMap).map(Number).sort((a, b) => a - b);
+                              const byStatus = {
+                                planned: eventsForStatusBlock.filter((e) => e.status === "planned").length,
+                                in_progress: eventsForStatusBlock.filter((e) => e.status === "in_progress").length,
+                                completed: eventsForStatusBlock.filter((e) => e.status === "completed").length,
+                              };
                               const eventsList = allEvents.filter((e) => {
-                                if (eventsFeedFilters.cooperationLine && !e.cooperationLine?.includes(eventsFeedFilters.cooperationLine)) return false;
-                                if (eventsFeedFilters.type && e.type !== eventsFeedFilters.type) return false;
-                                if (eventsFeedFilters.year != null) {
+                                if (eventsFeedFilters.cooperationLine.length > 0 && !e.cooperationLine?.some((l) => eventsFeedFilters.cooperationLine.includes(l))) return false;
+                                if (eventsFeedFilters.type.length > 0 && !eventsFeedFilters.type.includes(e.type)) return false;
+                                if (eventsFeedFilters.year.length > 0) {
                                   const eventYear = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
-                                  if (eventYear !== eventsFeedFilters.year) return false;
+                                  if (!eventYear || !eventsFeedFilters.year.includes(eventYear)) return false;
                                 }
+                                if (eventsFeedFilters.status.length > 0 && !eventsFeedFilters.status.includes(e.status)) return false;
                                 return true;
                               }).sort((a, b) => {
                                 // Сортировка по дате: новые сверху
@@ -7072,111 +7093,75 @@ export default function UniversitiesPage() {
                               return allEvents.length > 0 ? (
                                 <>
                                   <div className="flex flex-wrap items-center gap-4 mb-4">
-                                    <Card className="p-3 flex-[0.75] min-w-[140px]">
-                                      <div className="space-y-2">
-                                        <Label className="text-base font-semibold">Линия сотрудничества</Label>
-                                        <div className="flex flex-wrap gap-3">
-                                          {(["drp", "bko", "cntr"] as const)
-                                            .filter((line) => (byCooperationLine[line] ?? 0) > 0 || eventsFeedFilters.cooperationLine === line)
-                                            .map((line) => {
-                                            const count = byCooperationLine[line] ?? 0;
-                                            const isActive = eventsFeedFilters.cooperationLine === line;
-                                            return (
-                                              <div key={line} className="text-base">
-                                                <span className="text-muted-foreground">{getCooperationLineLabel(line)}: </span>
-                                                <Badge
-                                                  variant="outline"
-                                                  className={cn(
-                                                    "cursor-pointer",
-                                                    getCooperationLineBadgeColor(line),
-                                                    isActive && "ring-4 ring-primary"
-                                                  )}
-                                                  onClick={() => {
-                                                    setEventsFeedFilters((p) => ({
-                                                      ...p,
-                                                      cooperationLine: p.cooperationLine === line ? null : line,
-                                                    }));
-                                                    setEventsFeedCurrentPage(1);
-                                                  }}
-                                                >
-                                                  {count}
-                                                </Badge>
-                                              </div>
-                                            );
-                                          })}
-                                        </div>
-                                      </div>
-                                    </Card>
-                                    <Card className="p-3 flex-[2.5] min-w-[340px]">
-                                      <div className="space-y-2">
-                                        <Label className="text-base font-semibold">Тип мероприятия</Label>
-                                        <div className="flex flex-wrap gap-3">
-                                          {[
-                                            { key: "careerDays" as const, label: "Дни карьеры", count: byType.careerDays, ring: "ring-blue-600" },
-                                            { key: "expertParticipation" as const, label: "Экспертное участие", count: byType.expertParticipation, ring: "ring-purple-600" },
-                                            { key: "caseChampionships" as const, label: "Кейс-чемпионат", count: byType.caseChampionships, ring: "ring-green-600" },
-                                            { key: "meeting" as const, label: "Встреча", count: byType.meeting, ring: "ring-gray-600" },
-                                            { key: "communication" as const, label: "Коммуникация", count: byType.communication, ring: "ring-cyan-600" },
-                                          ]
-                                            .filter((item) => item.count > 0 || eventsFeedFilters.type === item.key)
-                                            .map(({ key, label, count, ring }) => (
-                                          <div key={key} className="text-base">
-                                            <span className="text-muted-foreground">{label}: </span>
-                                            <Badge
-                                              variant="outline"
-                                              className={cn(
-                                                key === "careerDays" && "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600 cursor-pointer",
-                                                key === "expertParticipation" && "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600 cursor-pointer",
-                                                key === "caseChampionships" && "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600 cursor-pointer",
-                                                key === "meeting" && "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600 cursor-pointer",
-                                                key === "communication" && "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600 cursor-pointer",
-                                                eventsFeedFilters.type === key && ring
-                                              )}
-                                              onClick={() => {
-                                                setEventsFeedFilters((p) => ({ ...p, type: p.type === key ? null : key }));
-                                                setEventsFeedCurrentPage(1);
-                                              }}
-                                            >
-                                              {count}
-                                            </Badge>
-                                          </div>
-                                            ))}
-                                        </div>
-                                      </div>
-                                    </Card>
-                                    <Card className="p-3 flex-[0.75] min-w-[140px]">
-                                      <div className="space-y-2">
-                                        <Label className="text-base font-semibold">Период проведения</Label>
-                                        <div className="flex flex-wrap gap-3">
-                                          {yearsSorted.length > 0 ? (
-                                            yearsSorted.map((year) => {
-                                              const count = yearsMap[year] ?? 0;
-                                              const isActive = eventsFeedFilters.year === year;
-                                              return (
-                                                <div key={year} className="text-base">
-                                                  <span className="text-muted-foreground">{year}: </span>
-                                                  <Badge
-                                                    variant="outline"
-                                                    className={cn(
-                                                      "cursor-pointer bg-muted hover:bg-muted/80",
-                                                      isActive && "ring-4 ring-primary"
-                                                    )}
-                                                    onClick={() => {
-                                                      setEventsFeedFilters((p) => ({ ...p, year: p.year === year ? null : year }));
-                                                      setEventsFeedCurrentPage(1);
-                                                    }}
-                                                  >
-                                                    {count}
-                                                  </Badge>
-                                                </div>
-                                              );
-                                            })
-                                          ) : (
-                                            <span className="text-sm text-muted-foreground">Нет данных</span>
-                                          )}
-                                        </div>
-                                      </div>
-                                    </Card>
+                                    <div className="flex-1 min-w-[180px] space-y-2">
+                                      <Label className="text-base font-semibold">Линия сотрудничества</Label>
+                                      <MultiSelect
+                                        options={(["drp", "bko", "cntr", "ecosystem", "dkm"] as const)
+                                          .filter((line) => (byCooperationLine[line] ?? 0) > 0 || eventsFeedFilters.cooperationLine.includes(line))
+                                          .map((line) => ({ value: line, label: `${getCooperationLineLabel(line)} (${byCooperationLine[line] ?? 0})` }))}
+                                        selected={eventsFeedFilters.cooperationLine}
+                                        onChange={(selected) => {
+                                          setEventsFeedFilters((p) => ({ ...p, cooperationLine: selected }));
+                                          setEventsFeedCurrentPage(1);
+                                        }}
+                                        placeholder="Выберите линии"
+                                      />
+                                      {(["drp", "bko", "cntr", "ecosystem", "dkm"] as const).every((l) => (byCooperationLine[l] ?? 0) === 0) && (
+                                        <span className="text-sm text-muted-foreground">Нет данных</span>
+                                      )}
+                                    </div>
+                                    <div className="flex-1 min-w-[180px] space-y-2">
+                                      <Label className="text-base font-semibold">Тип мероприятия</Label>
+                                      <MultiSelect
+                                        options={([
+                                          { value: "careerDays", label: "Дни карьеры", count: byType.careerDays },
+                                          { value: "expertParticipation", label: "Экспертное участие", count: byType.expertParticipation },
+                                          { value: "caseChampionships", label: "Кейс-чемпионат", count: byType.caseChampionships },
+                                          { value: "meeting", label: "Встреча", count: byType.meeting },
+                                          { value: "communication", label: "Коммуникация", count: byType.communication },
+                                        ] as const).filter((item) => item.count > 0 || eventsFeedFilters.type.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
+                                        selected={eventsFeedFilters.type}
+                                        onChange={(selected) => {
+                                          setEventsFeedFilters((p) => ({ ...p, type: selected as Event["type"][] }));
+                                          setEventsFeedCurrentPage(1);
+                                        }}
+                                        placeholder="Выберите типы"
+                                      />
+                                    </div>
+                                    <div className="flex-1 min-w-[180px] space-y-2">
+                                      <Label className="text-base font-semibold">Период проведения</Label>
+                                      <MultiSelect
+                                        options={yearsSorted.map((year) => ({
+                                          value: String(year),
+                                          label: `${year} (${yearsMap[year] ?? 0})`,
+                                        }))}
+                                        selected={eventsFeedFilters.year.map(String)}
+                                        onChange={(selected) => {
+                                          setEventsFeedFilters((p) => ({ ...p, year: selected.map(Number) }));
+                                          setEventsFeedCurrentPage(1);
+                                        }}
+                                        placeholder="Выберите годы"
+                                      />
+                                      {yearsSorted.length === 0 && (
+                                        <span className="text-sm text-muted-foreground">Нет данных</span>
+                                      )}
+                                    </div>
+                                    <div className="flex-1 min-w-[180px] space-y-2">
+                                      <Label className="text-base font-semibold">Статус</Label>
+                                      <MultiSelect
+                                        options={([
+                                          { value: "planned", label: "Запланировано", count: byStatus.planned },
+                                          { value: "in_progress", label: "В процессе", count: byStatus.in_progress },
+                                          { value: "completed", label: "Проведено", count: byStatus.completed },
+                                        ] as const).filter((item) => item.count > 0 || eventsFeedFilters.status.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
+                                        selected={eventsFeedFilters.status}
+                                        onChange={(selected) => {
+                                          setEventsFeedFilters((p) => ({ ...p, status: selected as Event["status"][] }));
+                                          setEventsFeedCurrentPage(1);
+                                        }}
+                                        placeholder="Выберите статусы"
+                                      />
+                                    </div>
                                   </div>
                                   <div className="mb-2">
                                     <div className="text-sm text-muted-foreground">
@@ -7192,33 +7177,44 @@ export default function UniversitiesPage() {
                                     const activeFilters: Array<{ label: string; onRemove: () => void }> = [];
                                     
                                     // Фильтр по линии сотрудничества
-                                    if (eventsFeedFilters.cooperationLine) {
+                                    if (eventsFeedFilters.cooperationLine.length > 0) {
                                       activeFilters.push({
-                                        label: `Линия: ${getCooperationLineLabel(eventsFeedFilters.cooperationLine)}`,
+                                        label: `Линия: ${eventsFeedFilters.cooperationLine.map(getCooperationLineLabel).join(", ")}`,
                                         onRemove: () => {
-                                          setEventsFeedFilters((p) => ({ ...p, cooperationLine: null }));
+                                          setEventsFeedFilters((p) => ({ ...p, cooperationLine: [] }));
                                           setEventsFeedCurrentPage(1);
                                         },
                                       });
                                     }
                                     
                                     // Фильтр по типу мероприятия
-                                    if (eventsFeedFilters.type) {
+                                    if (eventsFeedFilters.type.length > 0) {
                                       activeFilters.push({
-                                        label: `Тип: ${eventTypeLabels[eventsFeedFilters.type]}`,
+                                        label: `Тип: ${eventsFeedFilters.type.map((t) => eventTypeLabels[t]).join(", ")}`,
                                         onRemove: () => {
-                                          setEventsFeedFilters((p) => ({ ...p, type: null }));
+                                          setEventsFeedFilters((p) => ({ ...p, type: [] }));
                                           setEventsFeedCurrentPage(1);
                                         },
                                       });
                                     }
                                     
                                     // Фильтр по году
-                                    if (eventsFeedFilters.year != null) {
+                                    if (eventsFeedFilters.year.length > 0) {
                                       activeFilters.push({
-                                        label: `Год: ${eventsFeedFilters.year}`,
+                                        label: `Год: ${eventsFeedFilters.year.join(", ")}`,
                                         onRemove: () => {
-                                          setEventsFeedFilters((p) => ({ ...p, year: null }));
+                                          setEventsFeedFilters((p) => ({ ...p, year: [] }));
+                                          setEventsFeedCurrentPage(1);
+                                        },
+                                      });
+                                    }
+                                    
+                                    // Фильтр по статусу
+                                    if (eventsFeedFilters.status.length > 0) {
+                                      activeFilters.push({
+                                        label: `Статус: ${eventsFeedFilters.status.map((s) => eventStatusLabels[s]).join(", ")}`,
+                                        onRemove: () => {
+                                          setEventsFeedFilters((p) => ({ ...p, status: [] }));
                                           setEventsFeedCurrentPage(1);
                                         },
                                       });
