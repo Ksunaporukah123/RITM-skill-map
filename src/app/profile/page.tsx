@@ -250,7 +250,7 @@ export default function ProfilePage() {
   const mainProfile = profiles.find((p) => p.id === mainProfileId);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 flex-1 min-h-0 overflow-y-auto">
       {/* Заголовок */}
       <div className="space-y-4">
         <div className="flex items-start justify-end">
@@ -539,7 +539,6 @@ export default function ProfilePage() {
             </div>
           </TabsContent>
         </Tabs>
-      </div>
 
       {/* Диалог для загрузки фотографии */}
       <Dialog open={isAvatarDialogOpen} onOpenChange={setIsAvatarDialogOpen}>
@@ -873,6 +872,8 @@ export default function ProfilePage() {
         </DialogContent>
       </Dialog>
     </div>
+    </div>
   );
 }
+
 

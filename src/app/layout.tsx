@@ -50,7 +50,7 @@ export default function RootLayout({
             <SidebarInset className="h-screen z-0 flex flex-col overflow-hidden">
               <AuroraBackground className="flex-1 w-full min-h-0 overflow-hidden flex flex-col">
                 <AppHeader />
-                <div className="flex flex-1 flex-col min-h-0 gap-4 p-4 pt-6 overflow-hidden">
+                <div className="flex flex-1 flex-col min-h-0 gap-4 p-4 pt-6 overflow-y-auto">
                   {children}
                 </div>
               </AuroraBackground>
