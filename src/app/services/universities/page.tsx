@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Progress } from "@/components/ui/progress";
-import { GraduationCap, ClipboardCheck, Users, Settings, ExternalLink, FileText, Calendar, Link2, Plus, ChevronDown, ChevronRight, Pencil, Trash2, Search, X, ChevronLeft, ChevronsLeft, ChevronsRight, AlertCircle, Mail, Send, CheckCircle2, Clock, MapPin, Building2, Archive, ArchiveRestore, Filter, SortAsc, SortDesc, BarChart3, MessageSquare, History, FileText as FileTextIcon, Edit3, Copy, Tag, Eye, EyeOff, Star, UserCheck, User, ArrowRight, HelpCircle, Handshake, MessageCircle, Phone, LayoutGrid, List } from "lucide-react";
+import { GraduationCap, ClipboardCheck, Users, Settings, ExternalLink, FileText, Calendar, Link2, Plus, ChevronDown, ChevronRight, Pencil, Trash2, Search, X, ChevronLeft, ChevronsLeft, ChevronsRight, AlertCircle, Mail, Send, CheckCircle2, Clock, MapPin, Building, Building2, Archive, ArchiveRestore, Filter, SortAsc, SortDesc, BarChart3, MessageSquare, History, FileText as FileTextIcon, Edit3, Copy, Tag, Eye, EyeOff, Star, UserCheck, User, ArrowRight, HelpCircle, Handshake, MessageCircle, Phone, LayoutGrid, List } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { MultiSelect } from "@/components/ui/multi-select";
@@ -2180,7 +2180,8 @@ export default function UniversitiesPage() {
   const [generalSubTab, setGeneralSubTab] = useState<"main" | "branches">("main");
   const [staffSubTab, setStaffSubTab] = useState<"interns" | "practitioners">("interns");
   const [kaleidoscopeSubTab, setKaleidoscopeSubTab] = useState<"drp" | "bko" | "cntr">("drp");
-  const [cntrSubTab, setCntrSubTab] = useState<"infrastructure" | "projects" | "accelerator" | "events" | "agreements" | "educational">("infrastructure");
+  const [cntrSubTab, setCntrSubTab] = useState<"general" | "infrastructure" | "projects" | "accelerator" | "events" | "agreements" | "educational">("general");
+  const [cntrGeneralSubTab, setCntrGeneralSubTab] = useState<"main" | "branches">("main");
   const [drpCabinetSubTab, setDrpCabinetSubTab] = useState<"general" | "events" | "contracts" | "staff">("general");
   const [drpCabinetGeneralSubTab, setDrpCabinetGeneralSubTab] = useState<"main" | "branches">("main");
   
@@ -2728,6 +2729,8 @@ export default function UniversitiesPage() {
   
   // Открыто ли модальное окно линии/мероприятия/договора из вкладки «Личный кабинет ДРП» (только ДРП)
   const [isDrpCabinetCooperationLineDialog, setIsDrpCabinetCooperationLineDialog] = useState(false);
+  // Открыто ли модальное окно линии из вкладки «Личный кабинет ЦНТР» (только ЦНТР)
+  const [isCntrCabinetCooperationLineDialog, setIsCntrCabinetCooperationLineDialog] = useState(false);
   const [isDrpCabinetBranchLineDialog, setIsDrpCabinetBranchLineDialog] = useState(false);
   const [isDrpCabinetEventDialog, setIsDrpCabinetEventDialog] = useState(false);
   const [isDrpCabinetContractDialog, setIsDrpCabinetContractDialog] = useState(false);
@@ -8258,13 +8261,530 @@ export default function UniversitiesPage() {
                         {/* Таб 6: Личный кабинет ЦНТР */}
                         <TabsContent value="cntr" className="space-y-4 mt-4">
                           <Tabs value={cntrSubTab} onValueChange={(value) => setCntrSubTab(value as typeof cntrSubTab)} className="w-full">
-                            <div className="flex gap-4">
-                              {/* Контент слева */}
-                              <div className="flex-1">
-                            
+                            <TabsList className="grid w-full grid-cols-7">
+                              <TabsTrigger value="general" className="flex items-center justify-center gap-2">
+                                Общая информация
+                              </TabsTrigger>
+                              <TabsTrigger value="infrastructure" className="flex items-center justify-center gap-2">
+                                Инфраструктура
+                                {university.cntrInfrastructure && university.cntrInfrastructure.length > 0 && (
+                                  <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
+                                    {university.cntrInfrastructure.length}
+                                  </Badge>
+                                )}
+                              </TabsTrigger>
+                              <TabsTrigger value="projects" className="flex items-center justify-center gap-2">
+                                Проекты
+                                {university.cntrProjects && university.cntrProjects.length > 0 && (
+                                  <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
+                                    {university.cntrProjects.length}
+                                  </Badge>
+                                )}
+                              </TabsTrigger>
+                              <TabsTrigger value="accelerator" className="flex items-center justify-center gap-2">
+                                Акселератор
+                                {university.cntrAcceleratorItems && university.cntrAcceleratorItems.length > 0 && (
+                                  <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
+                                    {university.cntrAcceleratorItems.length}
+                                  </Badge>
+                                )}
+                              </TabsTrigger>
+                              <TabsTrigger value="events" className="flex items-center justify-center gap-2">
+                                Мероприятия
+                                {university.cntrEventsItems && university.cntrEventsItems.length > 0 && (
+                                  <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
+                                    {university.cntrEventsItems.length}
+                                  </Badge>
+                                )}
+                              </TabsTrigger>
+                              <TabsTrigger value="agreements" className="flex items-center justify-center gap-2">
+                                Соглашения
+                                {university.cntrAgreementItems && university.cntrAgreementItems.length > 0 && (
+                                  <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
+                                    {university.cntrAgreementItems.length}
+                                  </Badge>
+                                )}
+                              </TabsTrigger>
+                              <TabsTrigger value="educational" className="flex items-center justify-center gap-2">
+                                Образование
+                                {university.cntrEducationalProjectsItems && university.cntrEducationalProjectsItems.length > 0 && (
+                                  <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
+                                    {university.cntrEducationalProjectsItems.length}
+                                  </Badge>
+                                )}
+                              </TabsTrigger>
+                            </TabsList>
+                            {/* Подтаб ЦНТР: Общая информация (как в Личном кабинете ДРП, только линии ЦНТР) */}
+                            <TabsContent value="general" className="space-y-4 mt-4">
+                              <Tabs value={cntrGeneralSubTab} onValueChange={(v) => setCntrGeneralSubTab(v as "main" | "branches")} className="w-full">
+                                <TabsList className="grid w-full grid-cols-2">
+                                  <TabsTrigger value="main">Головной ВУЗ</TabsTrigger>
+                                  <TabsTrigger value="branches" className="flex items-center gap-2">
+                                    Филиалы ВУЗа
+                                    {university.branchCurators && university.branchCurators.length > 0 && (
+                                      <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
+                                        {university.branchCurators.length}
+                                      </Badge>
+                                    )}
+                                  </TabsTrigger>
+                                </TabsList>
+                                {/* Головной ВУЗ — только линии ЦНТР */}
+                                <TabsContent value="main" className="space-y-4 mt-4">
+                                  <div className="flex items-center justify-end w-full">
+                                    <Button
+                                      onClick={() => {
+                                        setIsCntrCabinetCooperationLineDialog(true);
+                                        setNewCooperationLineForMain({
+                                          id: `clr-${Date.now()}`,
+                                          line: "cntr",
+                                          year: new Date().getFullYear(),
+                                          responsible: [],
+                                        });
+                                        setEditingMainCooperationLine(null);
+                                        setIsMainCooperationLineDialogOpen(true);
+                                      }}
+                                      size="sm"
+                                      disabled={!selectedUniversity}
+                                    >
+                                      <Plus className="mr-2 h-4 w-4" />
+                                      Добавить линию сотрудничества
+                                    </Button>
+                                  </div>
+                                  {(() => {
+                                    const cntrCooperationLinesFromArray = (university.cooperationLines || []).filter((r) => r.line === "cntr");
+                                    const hasLegacyCntr = Array.isArray(university.cooperationLine)
+                                      ? university.cooperationLine.includes("cntr")
+                                      : university.cooperationLine === "cntr";
+                                    const cntrCooperationLines = cntrCooperationLinesFromArray.length > 0
+                                      ? cntrCooperationLinesFromArray
+                                      : hasLegacyCntr
+                                        ? [{ id: "legacy-cntr", line: "cntr" as const, year: university.cooperationLineYear ?? new Date().getFullYear(), responsible: [] }]
+                                        : [];
+                                    return cntrCooperationLines.length > 0 ? (
+                                      <div className="space-y-3">
+                                        {cntrCooperationLines.map((record, index) => (
+                                          <Card key={record.id || index} className="p-3">
+                                            <div className="flex items-start justify-between gap-3">
+                                              <div className="flex-1 space-y-1.5">
+                                                <div className="flex items-center gap-2 flex-wrap">
+                                                  <span
+                                                    className={cn(
+                                                      "shrink-0 h-2.5 w-2.5 rounded-full",
+                                                      record.isActive !== false ? "bg-green-500 dark:bg-green-400" : "bg-muted-foreground/40"
+                                                    )}
+                                                    title={record.isActive !== false ? "Работа с ВУЗом ведётся" : "Работа не ведётся"}
+                                                  />
+                                                  <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(record.line))}>
+                                                    {getCooperationLineLabel(record.line)}
+                                                  </Badge>
+                                                  <div className="flex items-center gap-2">
+                                                    <Label className="text-sm text-muted-foreground">Год начала сотрудничества:</Label>
+                                                    <span className="text-base font-medium text-foreground">{record.year}</span>
+                                                  </div>
+                                                </div>
+                                                {record.responsible && record.responsible.length > 0 && (
+                                                  <div className="flex items-center gap-2">
+                                                    <Label className="text-sm font-semibold">Ответственное лицо Банк:</Label>
+                                                    <div className="flex flex-wrap gap-3">
+                                                      {record.responsible.map((personId, personIndex) => {
+                                                        const person = responsiblePersons.find(p => p.value === personId);
+                                                        return person ? (
+                                                          <div key={personIndex} className="flex items-center gap-2">
+                                                            <Avatar className="h-10 w-10">
+                                                              <AvatarImage src={person.image} alt={person.label} />
+                                                              <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+                                                                {person.label.split(" ").slice(1, 3).map(n => n[0]).join("").toUpperCase()}
+                                                              </AvatarFallback>
+                                                            </Avatar>
+                                                            <div className="flex flex-col">
+                                                              <span className="text-sm font-medium">{person.label}</span>
+                                                              <span className="text-xs text-muted-foreground">{person.position}</span>
+                                                            </div>
+                                                          </div>
+                                                        ) : null;
+                                                      })}
+                                                    </div>
+                                                  </div>
+                                                )}
+                                                {(() => {
+                                                  const contacts = record.universityContacts || (record.universityContact?.name ? [record.universityContact] : []);
+                                                  const contactsKey = `cntr-main-${record.id}`;
+                                                  const isCollapsed = !expandedContacts.has(contactsKey);
+                                                  return contacts.length > 0 || true ? (
+                                                    <div className="pt-3 border-t mt-3">
+                                                      <div
+                                                        className="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded-md px-2 py-1.5 -mx-2 transition-colors"
+                                                        onClick={() => {
+                                                          const next = new Set(expandedContacts);
+                                                          if (isCollapsed) next.add(contactsKey);
+                                                          else next.delete(contactsKey);
+                                                          setExpandedContacts(next);
+                                                        }}
+                                                      >
+                                                        <div className="flex items-center gap-2">
+                                                          {isCollapsed ? <ChevronRight className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+                                                          <Users className="h-4 w-4 text-primary" />
+                                                          <span className="text-sm font-semibold">Контакты ВУза</span>
+                                                          {contacts.length > 0 && (
+                                                            <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs font-medium">{contacts.length}</Badge>
+                                                          )}
+                                                        </div>
+                                                        <Button
+                                                          variant="outline"
+                                                          size="sm"
+                                                          className="h-7 px-2 text-xs"
+                                                          onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleAddContactInMain(university.id, record.id);
+                                                            if (isCollapsed) setExpandedContacts(prev => new Set([...prev, contactsKey]));
+                                                          }}
+                                                        >
+                                                          <Plus className="h-3 w-3 mr-1" />
+                                                          Добавить
+                                                        </Button>
+                                                      </div>
+                                                      {!isCollapsed && (
+                                                        <div className="mt-3">
+                                                          {contacts.length > 0 ? (
+                                                            <div className="rounded-lg border overflow-hidden">
+                                                              <Table>
+                                                                <TableHeader>
+                                                                  <TableRow className="bg-muted/50 hover:bg-muted/50">
+                                                                    <TableHead className="h-9 text-xs font-semibold w-[200px]">ФИО</TableHead>
+                                                                    <TableHead className="h-9 text-xs font-semibold w-[180px]">Должность</TableHead>
+                                                                    <TableHead className="h-9 text-xs font-semibold w-[200px]">Телефон</TableHead>
+                                                                    <TableHead className="h-9 text-xs font-semibold w-[180px]">Email</TableHead>
+                                                                    <TableHead className="h-9 text-xs font-semibold w-[100px] text-center">Публичный</TableHead>
+                                                                    <TableHead className="h-9 text-xs font-semibold w-[50px]"></TableHead>
+                                                                  </TableRow>
+                                                                </TableHeader>
+                                                                <TableBody>
+                                                                  {contacts.map((contact, contactIdx) => (
+                                                                    <TableRow key={contactIdx} className="group">
+                                                                      <TableCell className="py-1.5 px-3">
+                                                                        <Input
+                                                                          value={contact.name}
+                                                                          onChange={(e) => handleUpdateContactInMain(university.id, record.id, contactIdx, { ...contact, name: e.target.value })}
+                                                                          placeholder="ФИО"
+                                                                          className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1"
+                                                                        />
+                                                                      </TableCell>
+                                                                      <TableCell className="py-1.5 px-3">
+                                                                        <Input
+                                                                          value={contact.position || ""}
+                                                                          onChange={(e) => handleUpdateContactInMain(university.id, record.id, contactIdx, { ...contact, position: e.target.value })}
+                                                                          placeholder="Должность"
+                                                                          className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1"
+                                                                        />
+                                                                      </TableCell>
+                                                                      <TableCell className="py-1.5 px-3">
+                                                                        <div className="flex items-center gap-1">
+                                                                          <Phone className="h-3 w-3 text-muted-foreground shrink-0" />
+                                                                          <Input
+                                                                            value={contact.phone || ""}
+                                                                            onChange={(e) => handleUpdateContactInMain(university.id, record.id, contactIdx, { ...contact, phone: e.target.value })}
+                                                                            placeholder="Телефон"
+                                                                            className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1"
+                                                                          />
+                                                                        </div>
+                                                                      </TableCell>
+                                                                      <TableCell className="py-1.5 px-3">
+                                                                        <div className="flex items-center gap-1">
+                                                                          <Mail className="h-3 w-3 text-muted-foreground shrink-0" />
+                                                                          <Input
+                                                                            type="email"
+                                                                            value={contact.email || ""}
+                                                                            onChange={(e) => handleUpdateContactInMain(university.id, record.id, contactIdx, { ...contact, email: e.target.value })}
+                                                                            placeholder="Email"
+                                                                            className="h-7 text-xs border-0 bg-transparent hover:bg-muted/50 focus:bg-background px-1"
+                                                                          />
+                                                                        </div>
+                                                                      </TableCell>
+                                                                      <TableCell className="py-1.5 px-3 text-center">
+                                                                        <div className="flex items-center justify-center">
+                                                                          <Tooltip>
+                                                                            <TooltipTrigger asChild>
+                                                                              <div>
+                                                                                <Checkbox
+                                                                                  id={`cntr-contact-visibility-main-${record.id}-${contactIdx}`}
+                                                                                  checked={contact.isPublic || false}
+                                                                                  onCheckedChange={(checked) => handleToggleContactVisibilityInMain(university.id, record.id, contactIdx, checked === true)}
+                                                                                />
+                                                                              </div>
+                                                                            </TooltipTrigger>
+                                                                            <TooltipContent><p>{contact.isPublic ? "Контакт виден всем" : "Контакт скрыт"}</p></TooltipContent>
+                                                                          </Tooltip>
+                                                                          {contact.isPublic && <Eye className="h-3 w-3 text-green-500 ml-1" />}
+                                                                          {!contact.isPublic && <EyeOff className="h-3 w-3 text-muted-foreground ml-1" />}
+                                                                        </div>
+                                                                      </TableCell>
+                                                                      <TableCell className="py-1.5 px-3">
+                                                                        <Button
+                                                                          variant="ghost"
+                                                                          size="icon"
+                                                                          className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                                                                          onClick={() => handleDeleteContactInMain(university.id, record.id, contactIdx)}
+                                                                        >
+                                                                          <Trash2 className="h-3 w-3 text-destructive" />
+                                                                        </Button>
+                                                                      </TableCell>
+                                                                    </TableRow>
+                                                                  ))}
+                                                                </TableBody>
+                                                              </Table>
+                                                            </div>
+                                                          ) : (
+                                                            <div className="flex flex-col items-center justify-center py-6 text-center border rounded-lg bg-muted/20">
+                                                              <Users className="h-8 w-8 text-muted-foreground/50 mb-2" />
+                                                              <p className="text-sm text-muted-foreground">Контакты не добавлены</p>
+                                                            </div>
+                                                          )}
+                                                        </div>
+                                                      )}
+                                                    </div>
+                                                  ) : null;
+                                                })()}
+                                              </div>
+                                              <div className="flex flex-col items-end gap-2 shrink-0">
+                                                <div className="flex items-center gap-2">
+                                                  <Label htmlFor={`cntr-line-active-${record.id}`} className="text-xs text-muted-foreground whitespace-nowrap">Работа ведётся</Label>
+                                                  <Switch
+                                                    id={`cntr-line-active-${record.id}`}
+                                                    checked={record.isActive !== false}
+                                                    onCheckedChange={(checked) => handleToggleCooperationLineActiveMain(university.id, record.id, checked)}
+                                                  />
+                                                </div>
+                                                <div className="flex gap-1">
+                                                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => { setIsCntrCabinetCooperationLineDialog(true); handleEditCooperationLineInMain(university.id, record.id); }}>
+                                                    <Pencil className="h-3.5 w-3.5" />
+                                                  </Button>
+                                                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteCooperationLineDialog({ open: true, universityId: university.id, lineId: record.id, type: "main" })}>
+                                                    <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                  </Button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </Card>
+                                        ))}
+                                      </div>
+                                    ) : (
+                                      <Card className="p-3">
+                                        <p className="text-sm text-muted-foreground text-center">Линии сотрудничества ЦНТР не добавлены</p>
+                                      </Card>
+                                    );
+                                  })()}
+                                </TabsContent>
+                                {/* Филиалы ВУза — только линии ЦНТР по филиалам */}
+                                <TabsContent value="branches" className="space-y-4 mt-4">
+                                  <div className="flex items-center justify-end w-full">
+                                    <Button onClick={() => setIsBranchDialogOpen(true)} size="sm" disabled={!selectedUniversity}>
+                                      <Plus className="h-4 w-4 mr-2" />
+                                      Добавить филиал
+                                    </Button>
+                                  </div>
+                                  <div className="space-y-3">
+                                    {university.branchCurators && university.branchCurators.length > 0 ? (
+                                      university.branchCurators.map((curator) => {
+                                        const cntrLinesInBranch = (curator.cooperationLines || []).filter((r) => r.line === "cntr");
+                                        return (
+                                          <Card key={curator.id} className="p-3">
+                                            {editingCuratorId === curator.id ? (
+                                              <div className="flex-1 space-y-1.5">
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                                                  <div className="space-y-1">
+                                                    <Label htmlFor={`cntr-edit-curator-city-${curator.id}`} className="text-xs text-muted-foreground">Город</Label>
+                                                    <Input
+                                                      id={`cntr-edit-curator-city-${curator.id}`}
+                                                      placeholder="Москва"
+                                                      value={editingCurator.city}
+                                                      onChange={(e) => setEditingCurator({ ...editingCurator, city: e.target.value })}
+                                                      className="h-9"
+                                                    />
+                                                  </div>
+                                                  <div className="space-y-1">
+                                                    <Label htmlFor={`cntr-edit-curator-branch-${curator.id}`} className="text-xs text-muted-foreground">Филиал</Label>
+                                                    <Input
+                                                      id={`cntr-edit-curator-branch-${curator.id}`}
+                                                      placeholder="Московский филиал"
+                                                      value={editingCurator.branch}
+                                                      onChange={(e) => setEditingCurator({ ...editingCurator, branch: e.target.value })}
+                                                      className="h-9"
+                                                    />
+                                                  </div>
+                                                </div>
+                                                <div className="space-y-2">
+                                                  <Label className="text-xs text-muted-foreground">Линии сотрудничества ЦНТР (максимум 3)</Label>
+                                                  <div className="space-y-3">
+                                                    {editingCurator.cooperationLines.filter((r) => r.line === "cntr").map((record) => {
+                                                      const origIndex = editingCurator.cooperationLines.findIndex((r) => r === record);
+                                                      return (
+                                                        <div key={record.id} className="p-3 border rounded-lg space-y-2">
+                                                          <div className="flex items-center gap-2">
+                                                            <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor("cntr"))}>{getCooperationLineLabel("cntr")}</Badge>
+                                                            <Button
+                                                              variant="ghost"
+                                                              size="icon"
+                                                              onClick={() => {
+                                                                const updated = editingCurator.cooperationLines.filter((_, i) => i !== origIndex);
+                                                                setEditingCurator({ ...editingCurator, cooperationLines: updated });
+                                                              }}
+                                                              className="h-9 w-9"
+                                                            >
+                                                              <X className="h-4 w-4" />
+                                                            </Button>
+                                                          </div>
+                                                          <div className="grid grid-cols-2 gap-2">
+                                                            <div className="space-y-1">
+                                                              <Label className="text-xs text-muted-foreground">Год начала</Label>
+                                                              <Input
+                                                                type="number"
+                                                                value={record.year}
+                                                                onChange={(e) => {
+                                                                  const updated = editingCurator.cooperationLines.map((r, i) =>
+                                                                    i === origIndex ? { ...r, year: parseInt(e.target.value) || new Date().getFullYear() } : r
+                                                                  );
+                                                                  setEditingCurator({ ...editingCurator, cooperationLines: updated });
+                                                                }}
+                                                                placeholder={String(new Date().getFullYear())}
+                                                                className="h-9"
+                                                              />
+                                                            </div>
+                                                            <div className="space-y-1">
+                                                              <Label className="text-xs text-muted-foreground">Ответственное лицо Банк</Label>
+                                                              <MultiSelect
+                                                                options={responsiblePersons.map(p => ({ value: p.value, label: p.label }))}
+                                                                selected={record.responsible}
+                                                                onChange={(selected) => {
+                                                                  const updated = editingCurator.cooperationLines.map((r, i) =>
+                                                                    i === origIndex ? { ...r, responsible: selected } : r
+                                                                  );
+                                                                  setEditingCurator({ ...editingCurator, cooperationLines: updated });
+                                                                }}
+                                                                placeholder="Выберите ответственное лицо Банк"
+                                                              />
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      );
+                                                    })}
+                                                    {editingCurator.cooperationLines.filter((r) => r.line === "cntr").length < 3 && (
+                                                      <Button
+                                                        type="button"
+                                                        variant="outline"
+                                                        size="sm"
+                                                        onClick={() => {
+                                                          const newRecord: CooperationLineRecord = {
+                                                            id: `clr-${Date.now()}`,
+                                                            line: "cntr",
+                                                            year: new Date().getFullYear(),
+                                                            responsible: [],
+                                                          };
+                                                          setEditingCurator({
+                                                            ...editingCurator,
+                                                            cooperationLines: [...editingCurator.cooperationLines, newRecord],
+                                                          });
+                                                        }}
+                                                        className="w-full"
+                                                      >
+                                                        <Plus className="h-4 w-4 mr-2" />
+                                                        Добавить линию
+                                                      </Button>
+                                                    )}
+                                                  </div>
+                                                </div>
+                                                <div className="flex items-center gap-2 justify-end">
+                                                  <Button variant="ghost" size="sm" onClick={handleCancelEditingCurator}>Отмена</Button>
+                                                  <Button
+                                                    variant="default"
+                                                    size="sm"
+                                                    onClick={() => handleUpdateCuratorForUniversity(university.id, curator.id)}
+                                                    disabled={!editingCurator.city.trim() || !editingCurator.branch.trim()}
+                                                  >
+                                                    Сохранить
+                                                  </Button>
+                                                </div>
+                                              </div>
+                                            ) : (
+                                              <>
+                                                <div className="flex items-start justify-between gap-3">
+                                                  <div className="flex-1">
+                                                    <div className="flex items-center gap-3 flex-wrap">
+                                                      <Building className="h-4 w-4 text-muted-foreground" />
+                                                      <span className="font-medium">{curator.branch}</span>
+                                                      <span className="text-sm text-muted-foreground">{curator.city}</span>
+                                                    </div>
+                                                  </div>
+                                                  <div className="flex gap-1">
+                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => { setEditingCuratorId(curator.id); setEditingCurator({ ...curator }); }}>
+                                                      <Pencil className="h-3.5 w-3.5" />
+                                                    </Button>
+                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteBranchDialog({ open: true, universityId: university.id, branchId: curator.id })}>
+                                                      <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                    </Button>
+                                                  </div>
+                                                </div>
+                                                {cntrLinesInBranch.length > 0 ? (
+                                                  <div className="mt-3 space-y-2">
+                                                    {cntrLinesInBranch.map((record) => (
+                                                      <Card key={record.id} className="p-3">
+                                                        <div className="flex items-start justify-between gap-3">
+                                                          <div className="flex items-center gap-2 flex-wrap">
+                                                            <span className={cn("shrink-0 h-2.5 w-2.5 rounded-full", record.isActive !== false ? "bg-green-500 dark:bg-green-400" : "bg-muted-foreground/40")} />
+                                                            <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(record.line))}>{getCooperationLineLabel(record.line)}</Badge>
+                                                            <span className="text-sm text-muted-foreground">Год: {record.year}</span>
+                                                          </div>
+                                                          <div className="flex gap-1">
+                                                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => handleEditCooperationLineInBranch(university.id, curator.id, record.id)}>
+                                                              <Pencil className="h-3.5 w-3.5" />
+                                                            </Button>
+                                                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteCooperationLineDialog({ open: true, universityId: university.id, lineId: record.id, type: "branch", branchId: curator.id })}>
+                                                              <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                            </Button>
+                                                          </div>
+                                                        </div>
+                                                      </Card>
+                                                    ))}
+                                                  </div>
+                                                ) : (
+                                                  <p className="text-sm text-muted-foreground mt-3">Линии сотрудничества ЦНТР по филиалу не добавлены</p>
+                                                )}
+                                              </>
+                                            )}
+                                          </Card>
+                                        );
+                                      })
+                                    ) : (
+                                      <Card className="p-6">
+                                        <div className="flex flex-col items-center justify-center gap-3 text-center">
+                                          <p className="text-sm text-muted-foreground">Филиалы ВУза не добавлены</p>
+                                          <Button onClick={() => setIsBranchDialogOpen(true)} size="sm" variant="outline" disabled={!selectedUniversity}>
+                                            <Plus className="h-4 w-4 mr-2" />
+                                            Добавить филиал
+                                          </Button>
+                                        </div>
+                                      </Card>
+                                    )}
+                                  </div>
+                                </TabsContent>
+                              </Tabs>
+                            </TabsContent>
+                            <div className="w-full mt-4">
                             {/* Подвкладка 1: Развитие научно-технологической инфраструктуры */}
                             <TabsContent value="infrastructure" className="space-y-4 mt-0">
-                              <div className="flex items-center justify-end mb-4">
+                              <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-base font-semibold">Развитие научно-технологической инфраструктуры</span>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <span className="inline-flex text-muted-foreground hover:text-foreground cursor-help">
+                                        <HelpCircle className="h-4 w-4" />
+                                      </span>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      <p className="max-w-xs">Финансирование научно-технологической инфраструктуры ВУЗа: гранты, эндаумент, эндаумент-фонд.</p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </div>
                                 <Dialog open={addInfrastructureDialogOpen} onOpenChange={setAddInfrastructureDialogOpen}>
                                   <DialogTrigger asChild>
                                     <Button variant="default" size="sm" onClick={() => {
@@ -8631,7 +9151,20 @@ export default function UniversitiesPage() {
                             
                             {/* Подвкладка 2: Развитие научно-технологических проектов */}
                             <TabsContent value="projects" className="space-y-4 mt-0">
-                              <div className="flex items-center justify-end mb-4">
+                              <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-base font-semibold">Развитие научно-технологических проектов</span>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <span className="inline-flex text-muted-foreground hover:text-foreground cursor-help">
+                                        <HelpCircle className="h-4 w-4" />
+                                      </span>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      <p className="max-w-xs">Научно-технологические проекты сотрудничества с ВУЗом: софинансирование грантов, заказные НИОКР, целевая благотворительность.</p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </div>
                                 <Dialog open={addProjectDialogOpen} onOpenChange={setAddProjectDialogOpen}>
                                   <DialogTrigger asChild>
                                     <Button variant="default" size="sm" onClick={() => {
@@ -9053,256 +9586,230 @@ export default function UniversitiesPage() {
                             
                             {/* Подвкладка 3: Участие в акселераторе Газпромбанк Тех. Трек Наука */}
                             <TabsContent value="accelerator" className="space-y-4 mt-0">
-                              <Card>
-                                <CardContent className="space-y-6 pt-6">
-                                  <div className="flex items-center justify-between mb-4">
-                                    <Label htmlFor="accelerator-switch" className="text-base font-medium">
-                                      Участие в Акселераторе Газпромбанк.Тех: Наука
-                                    </Label>
-                                    <Switch
-                                      id="accelerator-switch"
-                                      checked={university.cntrAcceleratorEnabled || false}
-                                      onCheckedChange={(checked) => {
-                                        const updatedUniversities = universities.map((u) =>
-                                          u.id === university.id
-                                            ? {
-                                                ...u,
-                                                cntrAcceleratorEnabled: checked,
-                                              }
-                                            : u
-                                        );
-                                        setUniversities(updatedUniversities);
-                                      }}
-                                    />
-                                  </div>
-                                  
-                                  {university.cntrAcceleratorEnabled && (
-                                    <>
-                                      <div className="flex items-center justify-end mb-4">
-                                        <Dialog open={addAcceleratorDialogOpen} onOpenChange={setAddAcceleratorDialogOpen}>
-                                          <DialogTrigger asChild>
-                                            <Button variant="default" size="sm" onClick={() => {
-                                              setNewAccelerator({ developmentType: "", date: "", branch: "", description: "", document: "" });
-                                              setEditingAccelerator(null);
-                                            }}>
-                                              <Plus className="mr-2 h-4 w-4" />
-                                              Добавить
-                                            </Button>
-                                          </DialogTrigger>
-                                          <DialogContent className="max-w-2xl">
-                                            <DialogHeader>
-                                              <DialogTitle>Добавить элемент акселератора</DialogTitle>
-                                            </DialogHeader>
-                                            <div className="space-y-4 py-4">
-                                              <div className="space-y-2">
-                                                <Label htmlFor="accelerator-date">Дата *</Label>
-                                                <Input
-                                                  id="accelerator-date"
-                                                  type="date"
-                                                  value={newAccelerator.date}
-                                                  onChange={(e) => setNewAccelerator({ ...newAccelerator, date: e.target.value })}
-                                                />
-                                              </div>
-                                              <div className="space-y-2">
-                                                <Label htmlFor="accelerator-branch">Головной ВУЗ / Филиал</Label>
-                                                <Select
-                                                  value={newAccelerator.branch}
-                                                  onValueChange={(value) => setNewAccelerator({ ...newAccelerator, branch: value })}
-                                                >
-                                                  <SelectTrigger id="accelerator-branch">
-                                                    <SelectValue placeholder="Выберите ВУЗ/филиал" />
-                                                  </SelectTrigger>
-                                                  <SelectContent>
-                                                    <SelectItem value="Головной ВУЗ">Головной ВУЗ</SelectItem>
-                                                    {university?.branch?.map((branchName) => (
-                                                      <SelectItem key={branchName} value={branchName}>
-                                                        {branchName}
-                                                      </SelectItem>
-                                                    ))}
-                                                  </SelectContent>
-                                                </Select>
-                                              </div>
-                                              <div className="space-y-2">
-                                                <Label htmlFor="accelerator-description">Описание</Label>
-                                                <Textarea
-                                                  id="accelerator-description"
-                                                  placeholder="Введите описание элемента акселератора..."
-                                                  value={newAccelerator.description}
-                                                  onChange={(e) => setNewAccelerator({ ...newAccelerator, description: e.target.value })}
-                                                  rows={4}
-                                                />
-                                              </div>
-                                              <div className="space-y-2">
-                                                <Label htmlFor="accelerator-document">Документ (PDF)</Label>
-                                                <Input
-                                                  id="accelerator-document"
-                                                  type="text"
-                                                  placeholder="URL или путь к PDF файлу..."
-                                                  value={newAccelerator.document}
-                                                  onChange={(e) => setNewAccelerator({ ...newAccelerator, document: e.target.value })}
-                                                />
+                              <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-base font-semibold">Участие в акселераторе Газпромбанк.Тех: Наука</span>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <span className="inline-flex text-muted-foreground hover:text-foreground cursor-help">
+                                        <HelpCircle className="h-4 w-4" />
+                                      </span>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      <p className="max-w-xs">Участие ВУЗа в акселераторе: проекты, менторская поддержка, доступ к инфраструктуре банка и тестирование решений.</p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </div>
+                                <Dialog open={addAcceleratorDialogOpen} onOpenChange={setAddAcceleratorDialogOpen}>
+                                  <DialogTrigger asChild>
+                                    <Button variant="default" size="sm" onClick={() => {
+                                      setNewAccelerator({ developmentType: "", date: "", branch: "", description: "", document: "" });
+                                      setEditingAccelerator(null);
+                                    }}>
+                                      <Plus className="mr-2 h-4 w-4" />
+                                      Добавить
+                                    </Button>
+                                  </DialogTrigger>
+                                  <DialogContent className="max-w-2xl">
+                                    <DialogHeader>
+                                      <DialogTitle>Добавить элемент акселератора</DialogTitle>
+                                    </DialogHeader>
+                                    <div className="space-y-4 py-4">
+                                      <div className="space-y-2">
+                                        <Label htmlFor="accelerator-date">Дата *</Label>
+                                        <Input
+                                          id="accelerator-date"
+                                          type="date"
+                                          value={newAccelerator.date}
+                                          onChange={(e) => setNewAccelerator({ ...newAccelerator, date: e.target.value })}
+                                        />
+                                      </div>
+                                      <div className="space-y-2">
+                                        <Label htmlFor="accelerator-branch">Головной ВУЗ / Филиал</Label>
+                                        <Select
+                                          value={newAccelerator.branch}
+                                          onValueChange={(value) => setNewAccelerator({ ...newAccelerator, branch: value })}
+                                        >
+                                          <SelectTrigger id="accelerator-branch">
+                                            <SelectValue placeholder="Выберите ВУЗ/филиал" />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="Головной ВУЗ">Головной ВУЗ</SelectItem>
+                                            {university?.branch?.map((branchName) => (
+                                              <SelectItem key={branchName} value={branchName}>
+                                                {branchName}
+                                              </SelectItem>
+                                            ))}
+                                          </SelectContent>
+                                        </Select>
+                                      </div>
+                                      <div className="space-y-2">
+                                        <Label htmlFor="accelerator-description">Описание</Label>
+                                        <Textarea
+                                          id="accelerator-description"
+                                          placeholder="Введите описание элемента акселератора..."
+                                          value={newAccelerator.description}
+                                          onChange={(e) => setNewAccelerator({ ...newAccelerator, description: e.target.value })}
+                                          rows={4}
+                                        />
+                                      </div>
+                                      <div className="space-y-2">
+                                        <Label htmlFor="accelerator-document">Документ (PDF)</Label>
+                                        <Input
+                                          id="accelerator-document"
+                                          type="text"
+                                          placeholder="URL или путь к PDF файлу..."
+                                          value={newAccelerator.document}
+                                          onChange={(e) => setNewAccelerator({ ...newAccelerator, document: e.target.value })}
+                                        />
+                                      </div>
+                                    </div>
+                                    <DialogFooter>
+                                      <Button variant="outline" onClick={() => {
+                                        setAddAcceleratorDialogOpen(false);
+                                        setEditingAccelerator(null);
+                                        setNewAccelerator({ developmentType: "", date: "", branch: "", description: "", document: "" });
+                                      }}>
+                                        Отмена
+                                      </Button>
+                                      <Button 
+                                        onClick={() => {
+                                          if (newAccelerator.date && selectedUniversity) {
+                                            const newItem: CNTRAcceleratorItem = {
+                                              id: `cntr-accelerator-${Date.now()}`,
+                                              developmentType: newAccelerator.developmentType as "financing" | "endowment" | "endowment-fund" || undefined,
+                                              date: newAccelerator.date,
+                                              branch: newAccelerator.branch || undefined,
+                                              description: newAccelerator.description?.trim() || undefined,
+                                              document: newAccelerator.document?.trim() || undefined,
+                                            };
+                                            const updatedUniversities = universities.map((u) =>
+                                              u.id === selectedUniversity
+                                                ? {
+                                                    ...u,
+                                                    cntrAcceleratorItems: [...(u.cntrAcceleratorItems || []), newItem],
+                                                  }
+                                                : u
+                                            );
+                                            setUniversities(updatedUniversities);
+                                            setAddAcceleratorDialogOpen(false);
+                                            setNewAccelerator({ developmentType: "", date: "", branch: "", description: "", document: "" });
+                                          }
+                                        }}
+                                        disabled={!newAccelerator.date}
+                                      >
+                                        Сохранить
+                                      </Button>
+                                    </DialogFooter>
+                                  </DialogContent>
+                                </Dialog>
+                              </div>
+                              
+                              {(() => {
+                                const acceleratorItems = university.cntrAcceleratorItems || [];
+                                const formatDate = (dateStr: string) => {
+                                  const [year, month, day] = dateStr.split('-').map(Number);
+                                  return `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`;
+                                };
+                                const handleEditAccelerator = (item: CNTRAcceleratorItem) => {
+                                  if (!selectedUniversity) return;
+                                  setEditingAccelerator({ universityId: selectedUniversity, itemId: item.id });
+                                  setNewAccelerator({
+                                    developmentType: item.developmentType || "",
+                                    date: item.date,
+                                    branch: item.branch || "",
+                                    description: item.description || "",
+                                    document: item.document || "",
+                                  });
+                                  setEditAcceleratorDialogOpen(true);
+                                };
+                                const handleRemoveAccelerator = (itemId: string) => {
+                                  if (!selectedUniversity) return;
+                                  const updatedUniversities = universities.map((u) =>
+                                    u.id === selectedUniversity
+                                      ? {
+                                          ...u,
+                                          cntrAcceleratorItems: (u.cntrAcceleratorItems || []).filter((item) => item.id !== itemId),
+                                        }
+                                      : u
+                                  );
+                                  setUniversities(updatedUniversities);
+                                };
+                                return acceleratorItems.length > 0 ? (
+                                  <div className="space-y-4">
+                                    {acceleratorItems.map((item) => (
+                                      <Card key={item.id} className="p-4">
+                                        <div className="flex items-start justify-between gap-4">
+                                          <div className="flex-1 space-y-3">
+                                            <div className="flex items-center gap-2 flex-wrap">
+                                              {item.branch && (
+                                                <Badge variant="outline" className="text-xs">
+                                                  {item.branch}
+                                                </Badge>
+                                              )}
+                                            </div>
+                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+                                              <div className="flex items-start gap-2">
+                                                <Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                                                <span className="text-muted-foreground whitespace-nowrap">Дата:</span>
+                                                <span className="font-medium">{formatDate(item.date)}</span>
                                               </div>
                                             </div>
-                                            <DialogFooter>
-                                              <Button variant="outline" onClick={() => {
-                                                setAddAcceleratorDialogOpen(false);
-                                                setEditingAccelerator(null);
-                                                setNewAccelerator({ developmentType: "", date: "", branch: "", description: "", document: "" });
-                                              }}>
-                                                Отмена
-                                              </Button>
-                                              <Button 
-                                                onClick={() => {
-                                                  if (newAccelerator.date && selectedUniversity) {
-                                                    const newItem: CNTRAcceleratorItem = {
-                                                      id: `cntr-accelerator-${Date.now()}`,
-                                                      developmentType: newAccelerator.developmentType as "financing" | "endowment" | "endowment-fund" || undefined,
-                                                      date: newAccelerator.date,
-                                                      branch: newAccelerator.branch || undefined,
-                                                      description: newAccelerator.description?.trim() || undefined,
-                                                      document: newAccelerator.document?.trim() || undefined,
-                                                    };
-                                                    const updatedUniversities = universities.map((u) =>
-                                                      u.id === selectedUniversity
-                                                        ? {
-                                                            ...u,
-                                                            cntrAcceleratorItems: [...(u.cntrAcceleratorItems || []), newItem],
-                                                          }
-                                                        : u
-                                                    );
-                                                    setUniversities(updatedUniversities);
-                                                    setAddAcceleratorDialogOpen(false);
-                                                    setNewAccelerator({ developmentType: "", date: "", branch: "", description: "", document: "" });
-                                                  }
-                                                }}
-                                                disabled={!newAccelerator.date}
-                                              >
-                                                Сохранить
-                                              </Button>
-                                            </DialogFooter>
-                                          </DialogContent>
-                                        </Dialog>
-                                      </div>
-                                      
-                                      {(() => {
-                                        const acceleratorItems = university.cntrAcceleratorItems || [];
-                                        
-                                        const formatDate = (dateStr: string) => {
-                                          const [year, month, day] = dateStr.split('-').map(Number);
-                                          return `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`;
-                                        };
-                                        
-                                        const handleEditAccelerator = (item: CNTRAcceleratorItem) => {
-                                          if (!selectedUniversity) return;
-                                          setEditingAccelerator({ universityId: selectedUniversity, itemId: item.id });
-                                          setNewAccelerator({
-                                            developmentType: item.developmentType || "",
-                                            date: item.date,
-                                            branch: item.branch || "",
-                                            description: item.description || "",
-                                            document: item.document || "",
-                                          });
-                                          setEditAcceleratorDialogOpen(true);
-                                        };
-                                        
-                                        const handleRemoveAccelerator = (itemId: string) => {
-                                          if (!selectedUniversity) return;
-                                          const updatedUniversities = universities.map((u) =>
-                                            u.id === selectedUniversity
-                                              ? {
-                                                  ...u,
-                                                  cntrAcceleratorItems: (u.cntrAcceleratorItems || []).filter((item) => item.id !== itemId),
-                                                }
-                                              : u
-                                          );
-                                          setUniversities(updatedUniversities);
-                                        };
-                                        
-                                        return acceleratorItems.length > 0 ? (
-                                          <div className="space-y-4">
-                                            {acceleratorItems.map((item) => (
-                                              <Card key={item.id} className="p-4">
-                                                <div className="flex items-start justify-between gap-4">
-                                                  <div className="flex-1 space-y-3">
-                                                    <div className="flex items-center gap-2 flex-wrap">
-                                                      {item.branch && (
-                                                        <Badge variant="secondary" className="text-xs">
-                                                          {item.branch}
-                                                        </Badge>
-                                                      )}
-                                                    </div>
-                                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
-                                                      <div className="flex items-start gap-2">
-                                                        <Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
-                                                        <span className="text-muted-foreground whitespace-nowrap">Дата:</span>
-                                                        <span className="font-medium">{formatDate(item.date)}</span>
-                                                      </div>
-                                                    </div>
-                                                    {item.description && (
-                                                      <div className="text-sm">
-                                                        <span className="text-muted-foreground">Описание:</span>
-                                                        <p className="mt-1 text-foreground">{item.description}</p>
-                                                      </div>
-                                                    )}
-                                                    {item.document && (
-                                                      <div className="flex items-start gap-2 md:col-span-2 text-sm">
-                                                        <FileText className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
-                                                        <span className="text-muted-foreground whitespace-nowrap">Документ:</span>
-                                                        <a 
-                                                          href={item.document} 
-                                                          target="_blank" 
-                                                          rel="noopener noreferrer" 
-                                                          className="text-primary hover:underline break-all"
-                                                        >
-                                                          {item.document}
-                                                        </a>
-                                                      </div>
-                                                    )}
-                                                  </div>
-                                                  <div className="flex items-center gap-1 flex-shrink-0">
-                                                    <Button
-                                                      variant="ghost"
-                                                      size="sm"
-                                                      className="h-8 w-8 p-0"
-                                                      onClick={() => handleEditAccelerator(item)}
-                                                    >
-                                                      <Pencil className="h-3.5 w-3.5" />
-                                                    </Button>
-                                                    <Button
-                                                      variant="ghost"
-                                                      size="sm"
-                                                      className="h-8 w-8 p-0"
-                                                      onClick={() => handleRemoveAccelerator(item.id)}
-                                                    >
-                                                      <Trash2 className="h-3.5 w-3.5 text-destructive" />
-                                                    </Button>
-                                                  </div>
-                                                </div>
-                                              </Card>
-                                            ))}
-                                          </div>
-                                        ) : (
-                                          <Card>
-                                            <CardContent className="space-y-6 pt-6">
-                                              <div className="text-center py-12 text-muted-foreground">
-                                                <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                                                <p className="text-lg font-medium mb-2">Участие в акселераторе Газпромбанк Тех. Трек Наука</p>
-                                                <p className="text-sm">Элементы акселератора не добавлены</p>
+                                            {item.description && (
+                                              <div className="text-sm">
+                                                <span className="text-muted-foreground">Описание:</span>
+                                                <p className="mt-1 text-foreground">{item.description}</p>
                                               </div>
-                                            </CardContent>
-                                          </Card>
-                                        );
-                                      })()}
-                                    </>
-                                  )}
-                                  
-                                  {!university.cntrAcceleratorEnabled && (
-                                    <div className="text-center py-8 text-muted-foreground">
-                                      <p className="text-sm">Включите участие в акселераторе для добавления элементов</p>
-                                    </div>
-                                  )}
-                                </CardContent>
-                              </Card>
+                                            )}
+                                            {item.document && (
+                                              <div className="flex items-start gap-2 md:col-span-2 text-sm">
+                                                <FileText className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                                                <span className="text-muted-foreground whitespace-nowrap">Документ:</span>
+                                                <a 
+                                                  href={item.document} 
+                                                  target="_blank" 
+                                                  rel="noopener noreferrer" 
+                                                  className="text-primary hover:underline break-all"
+                                                >
+                                                  {item.document}
+                                                </a>
+                                              </div>
+                                            )}
+                                          </div>
+                                          <div className="flex items-center gap-1 flex-shrink-0">
+                                            <Button
+                                              variant="ghost"
+                                              size="sm"
+                                              className="h-8 w-8 p-0"
+                                              onClick={() => handleEditAccelerator(item)}
+                                            >
+                                              <Pencil className="h-3.5 w-3.5" />
+                                            </Button>
+                                            <Button
+                                              variant="ghost"
+                                              size="sm"
+                                              className="h-8 w-8 p-0"
+                                              onClick={() => handleRemoveAccelerator(item.id)}
+                                            >
+                                              <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                            </Button>
+                                          </div>
+                                        </div>
+                                      </Card>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <Card>
+                                    <CardContent className="space-y-6 pt-6">
+                                      <div className="text-center py-12 text-muted-foreground">
+                                        <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                                        <p className="text-lg font-medium mb-2">Участие в акселераторе Газпромбанк.Тех: Наука</p>
+                                        <p className="text-sm">Элементы акселератора не добавлены</p>
+                                      </div>
+                                    </CardContent>
+                                  </Card>
+                                );
+                              })()}
                               
                               {/* Диалог редактирования элемента акселератора */}
                               <Dialog open={editAcceleratorDialogOpen} onOpenChange={setEditAcceleratorDialogOpen}>
@@ -10431,79 +10938,6 @@ export default function UniversitiesPage() {
                                 </DialogContent>
                               </Dialog>
                             </TabsContent>
-                              </div>
-                              
-                              {/* Навигация справа вертикально */}
-                              <div className="w-[280px] shrink-0">
-                                <TabsList className="flex flex-col h-auto bg-transparent p-0 py-2 w-full border-l pl-4">
-                                  <TabsTrigger 
-                                    value="infrastructure" 
-                                    className="w-full justify-between items-center whitespace-normal text-left border border-transparent rounded-md data-[state=active]:border-primary data-[state=active]:bg-primary/5"
-                                  >
-                                    <span>Развитие научно-технологической инфраструктуры</span>
-                                    {university.cntrInfrastructure && university.cntrInfrastructure.length > 0 && (
-                                      <Badge variant="secondary" className="ml-2 shrink-0 bg-primary/10 text-primary border-primary/20">
-                                        {university.cntrInfrastructure.length}
-                                      </Badge>
-                                    )}
-                                  </TabsTrigger>
-                                  <TabsTrigger 
-                                    value="projects" 
-                                    className="w-full justify-between items-center whitespace-normal text-left border border-transparent rounded-md data-[state=active]:border-primary data-[state=active]:bg-primary/5"
-                                  >
-                                    <span>Развитие научно-технологических проектов</span>
-                                    {university.cntrProjects && university.cntrProjects.length > 0 && (
-                                      <Badge variant="secondary" className="ml-2 shrink-0 bg-primary/10 text-primary border-primary/20">
-                                        {university.cntrProjects.length}
-                                      </Badge>
-                                    )}
-                                  </TabsTrigger>
-                                  <TabsTrigger 
-                                    value="accelerator" 
-                                    className="w-full justify-between items-center whitespace-normal text-left border border-transparent rounded-md data-[state=active]:border-primary data-[state=active]:bg-primary/5"
-                                  >
-                                    <span>Участие в акселераторе Газпромбанк Тех. Трек Наука</span>
-                                    {university.cntrAcceleratorItems && university.cntrAcceleratorItems.length > 0 && (
-                                      <Badge variant="secondary" className="ml-2 shrink-0 bg-primary/10 text-primary border-primary/20">
-                                        {university.cntrAcceleratorItems.length}
-                                      </Badge>
-                                    )}
-                                  </TabsTrigger>
-                                  <TabsTrigger 
-                                    value="events" 
-                                    className="w-full justify-between items-center whitespace-normal text-left border border-transparent rounded-md data-[state=active]:border-primary data-[state=active]:bg-primary/5"
-                                  >
-                                    <span>Мероприятия</span>
-                                    {university.cntrEventsItems && university.cntrEventsItems.length > 0 && (
-                                      <Badge variant="secondary" className="ml-2 shrink-0 bg-primary/10 text-primary border-primary/20">
-                                        {university.cntrEventsItems.length}
-                                      </Badge>
-                                    )}
-                                  </TabsTrigger>
-                                  <TabsTrigger 
-                                    value="agreements" 
-                                    className="w-full justify-between items-center whitespace-normal text-left border border-transparent rounded-md data-[state=active]:border-primary data-[state=active]:bg-primary/5"
-                                  >
-                                    <span>Соглашения о сотрудничестве</span>
-                                    {university.cntrAgreementItems && university.cntrAgreementItems.length > 0 && (
-                                      <Badge variant="secondary" className="ml-2 shrink-0 bg-primary/10 text-primary border-primary/20">
-                                        {university.cntrAgreementItems.length}
-                                      </Badge>
-                                    )}
-                                  </TabsTrigger>
-                                  <TabsTrigger 
-                                    value="educational" 
-                                    className="w-full justify-between items-center whitespace-normal text-left border border-transparent rounded-md data-[state=active]:border-primary data-[state=active]:bg-primary/5"
-                                  >
-                                    <span>Образовательные проекты</span>
-                                    {university.cntrEducationalProjectsItems && university.cntrEducationalProjectsItems.length > 0 && (
-                                      <Badge variant="secondary" className="ml-2 shrink-0 bg-primary/10 text-primary border-primary/20">
-                                        {university.cntrEducationalProjectsItems.length}
-                                      </Badge>
-                                    )}
-                                  </TabsTrigger>
-                                </TabsList>
-                              </div>
                             </div>
                           </Tabs>
                         </TabsContent>
@@ -16585,6 +17019,7 @@ export default function UniversitiesPage() {
             setIsMainCooperationLineDialogOpen(open);
             if (!open) {
               setIsDrpCabinetCooperationLineDialog(false);
+              setIsCntrCabinetCooperationLineDialog(false);
               setEditingMainCooperationLine(null);
               setNewCooperationLineForMain({
                 id: `clr-${Date.now()}`,
@@ -16600,11 +17035,11 @@ export default function UniversitiesPage() {
                   {editingMainCooperationLine ? "Редактировать линию сотрудничества" : "Добавить линию сотрудничества"}
                 </DialogTitle>
                 <DialogDescription>
-                  {isDrpCabinetCooperationLineDialog ? "Заполните информацию о линии сотрудничества ДРП" : editingMainCooperationLine ? "Внесите изменения в линию сотрудничества для головного ВУЗа" : "Заполните информацию о линии сотрудничества для головного ВУЗа"}
+                  {isDrpCabinetCooperationLineDialog ? "Заполните информацию о линии сотрудничества ДРП" : isCntrCabinetCooperationLineDialog ? "Заполните информацию о линии сотрудничества ЦНТР" : editingMainCooperationLine ? "Внесите изменения в линию сотрудничества для головного ВУЗа" : "Заполните информацию о линии сотрудничества для головного ВУЗа"}
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
-                {!isDrpCabinetCooperationLineDialog && (
+                {!isDrpCabinetCooperationLineDialog && !isCntrCabinetCooperationLineDialog && (
                 <div className="space-y-2">
                   <Label>Линия сотрудничества</Label>
                   <Select
@@ -16650,6 +17085,7 @@ export default function UniversitiesPage() {
                   variant="outline"
                   onClick={() => {
                     setIsMainCooperationLineDialogOpen(false);
+                    setIsCntrCabinetCooperationLineDialog(false);
                     setEditingMainCooperationLine(null);
                     setNewCooperationLineForMain({
                       id: `clr-${Date.now()}`,
