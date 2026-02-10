@@ -291,6 +291,14 @@ export interface University {
   countryType?: "russian" | "foreign";
 }
 
+// Заметка в личном кабинете БКО (лента комментариев)
+export interface BkoNote {
+  id: string;
+  text: string;
+  author?: string;
+  createdAt: string; // ISO строка даты и времени
+}
+
 // Данные БКО для университета
 export interface UniversityBKOData {
   // Блок Зарплатный проект
@@ -309,8 +317,10 @@ export interface UniversityBKOData {
   limit?: boolean;
   // Блок УК ГПБ фондами ЦК
   ukGpbFundsCk?: boolean;
-  // Комментарий
+  // Комментарий (устаревшее, для обратной совместимости)
   comment?: string;
+  // Лента заметок (блог-стиль)
+  notes?: BkoNote[];
 }
 
 // Тип для студента
