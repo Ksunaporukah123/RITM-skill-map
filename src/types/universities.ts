@@ -187,13 +187,29 @@ export interface CNTRAcceleratorItem {
   document?: string; // Документ (URL или путь к PDF файлу)
 }
 
+// Тип мероприятия ЦНТР (пока только встреча, можно расширить)
+export type CNTREventType = "meeting";
+
+// Статус мероприятия ЦНТР — такой же, как у мероприятий ДРП
+export type CNTREventStatus = "planned" | "in_progress" | "completed" | "cancelled";
+
 // Тип для элемента мероприятий ЦНТР
 export interface CNTREventItem {
   id: string;
+  type?: CNTREventType; // Тип мероприятия (пока только встреча)
   date: string; // Дата (формат YYYY-MM-DD)
+  status?: CNTREventStatus; // Статус: запланировано, в процессе, проведено, отменено
   branch?: string; // Головной ВУЗ или филиал
   description?: string; // Описание
   document?: string; // Документ (URL или путь к PDF файлу)
+}
+
+// Элемент таблицы «Проекты» в личном кабинете ЦНТР (дата, описание, статус)
+export interface CNTRProjectTableItem {
+  id: string;
+  date: string; // Дата (формат YYYY-MM-DD)
+  description?: string; // Описание
+  status?: CNTREventStatus; // Статус: запланировано, в процессе, проведено, отменено
 }
 
 // Тип для элемента образовательных проектов ЦНТР
@@ -279,6 +295,7 @@ export interface University {
   cntrAcceleratorItems?: CNTRAcceleratorItem[]; // Элементы акселератора ЦНТР
   cntrEventsItems?: CNTREventItem[]; // Элементы мероприятий ЦНТР
   cntrEducationalProjectsItems?: CNTREducationalProjectItem[]; // Элементы образовательных проектов ЦНТР
+  cntrProjectTableItems?: CNTRProjectTableItem[]; // Элементы таблицы «Проекты» ЦНТР (дата, описание, статус)
   cntrAgreementEnabled?: boolean; // Соглашение о сотрудничестве
   cntrAgreementItems?: CNTRAgreementItem[]; // Элементы соглашений о сотрудничестве ЦНТР
   region?: string;

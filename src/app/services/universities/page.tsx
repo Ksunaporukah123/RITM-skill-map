@@ -47,8 +47,11 @@ import type {
   CNTRInfrastructureItem,
   CNTRProjectItem,
   CNTRAcceleratorItem,
+  CNTREventType,
+  CNTREventStatus,
   CNTREventItem,
   CNTREducationalProjectItem,
+  CNTRProjectTableItem,
   CNTRAgreementItem,
   CooperationLine,
   UniversityContact,
@@ -2190,7 +2193,7 @@ export default function UniversitiesPage() {
   const [generalSubTab, setGeneralSubTab] = useState<"main" | "branches">("main");
   const [staffSubTab, setStaffSubTab] = useState<"interns" | "practitioners">("interns");
   const [kaleidoscopeSubTab, setKaleidoscopeSubTab] = useState<"drp" | "bko" | "cntr">("drp");
-  const [cntrSubTab, setCntrSubTab] = useState<"general" | "infrastructure" | "projects" | "accelerator" | "events" | "agreements" | "educational">("general");
+  const [cntrSubTab, setCntrSubTab] = useState<"general" | "infrastructure" | "projects" | "accelerator" | "events" | "agreements" | "educational" | "cntr-projects">("general");
   const [cntrGeneralSubTab, setCntrGeneralSubTab] = useState<"main" | "branches">("main");
   const [drpCabinetSubTab, setDrpCabinetSubTab] = useState<"general" | "events" | "contracts" | "staff">("general");
   const [drpCabinetGeneralSubTab, setDrpCabinetGeneralSubTab] = useState<"main" | "branches">("main");
@@ -2242,11 +2245,12 @@ export default function UniversitiesPage() {
   
   // Состояние для добавления элемента мероприятий ЦНТР
   const [addCntrEventDialogOpen, setAddCntrEventDialogOpen] = useState(false);
-  const [newCntrEvent, setNewCntrEvent] = useState({
+  const [newCntrEvent, setNewCntrEvent] = useState<{ type: CNTREventType; date: string; status: CNTREventStatus; branch: string; description: string }>({
+    type: "meeting",
     date: "",
+    status: "planned",
     branch: "",
     description: "",
-    document: "",
   });
   
   // Состояние для редактирования элемента мероприятий ЦНТР
@@ -2279,6 +2283,16 @@ export default function UniversitiesPage() {
   // Состояние для редактирования элемента соглашений о сотрудничестве ЦНТР
   const [editCntrAgreementDialogOpen, setEditCntrAgreementDialogOpen] = useState(false);
   const [editingCntrAgreement, setEditingCntrAgreement] = useState<{ universityId: string; itemId: string } | null>(null);
+
+  // Состояние для таблицы «Проекты» ЦНТР (дата, описание, статус)
+  const [addCntrProjectTableDialogOpen, setAddCntrProjectTableDialogOpen] = useState(false);
+  const [newCntrProjectTable, setNewCntrProjectTable] = useState<{ date: string; description: string; status: string }>({
+    date: "",
+    description: "",
+    status: "planned",
+  });
+  const [editCntrProjectTableDialogOpen, setEditCntrProjectTableDialogOpen] = useState(false);
+  const [editingCntrProjectTable, setEditingCntrProjectTable] = useState<CNTRProjectTableItem | null>(null);
   
   const [universitiesSortOrder, setUniversitiesSortOrder] = useState<"asc" | "desc">("asc");
   const [expandedUniversities, setExpandedUniversities] = useState<Set<string>>(new Set());
@@ -2349,6 +2363,8 @@ export default function UniversitiesPage() {
   }>({ cooperationLine: [], type: [], year: [], status: [] });
   const [drpEventsFeedCurrentPage, setDrpEventsFeedCurrentPage] = useState(1);
   const [drpEventsFeedItemsPerPage, setDrpEventsFeedItemsPerPage] = useState(10);
+  // Фильтры мероприятий в личном кабинете ЦНТР (как в ДРП: выпадающие списки + статус)
+  const [cntrEventsFeedFilters, setCntrEventsFeedFilters] = useState<{ branch: string[]; year: string[]; status: CNTREventStatus[] }>({ branch: [], year: [], status: [] });
   // Фильтры калейдоскопа (линия, тип, период, статус — множественный выбор)
   const [kaleidoscopeFilters, setKaleidoscopeFilters] = useState<{
     cooperationLine: string[];
@@ -8825,9 +8841,17 @@ export default function UniversitiesPage() {
                         {/* Таб 6: Личный кабинет ЦНТР */}
                         <TabsContent value="cntr" className="space-y-4 mt-4">
                           <Tabs value={cntrSubTab} onValueChange={(value) => setCntrSubTab(value as typeof cntrSubTab)} className="w-full">
-                            <TabsList className="grid w-full grid-cols-7">
+                            <TabsList className="flex w-full flex-nowrap overflow-x-auto [&>button]:shrink-0">
                               <TabsTrigger value="general" className="flex items-center justify-center gap-2">
                                 Общая информация
+                              </TabsTrigger>
+                              <TabsTrigger value="events" className="flex items-center justify-center gap-2">
+                                Мероприятия
+                                {university.cntrEventsItems && university.cntrEventsItems.length > 0 && (
+                                  <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
+                                    {university.cntrEventsItems.length}
+                                  </Badge>
+                                )}
                               </TabsTrigger>
                               <TabsTrigger value="infrastructure" className="flex items-center justify-center gap-2">
                                 Инфраструктура
@@ -8838,7 +8862,7 @@ export default function UniversitiesPage() {
                                 )}
                               </TabsTrigger>
                               <TabsTrigger value="projects" className="flex items-center justify-center gap-2">
-                                Проекты
+                                Развитие НТП
                                 {university.cntrProjects && university.cntrProjects.length > 0 && (
                                   <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
                                     {university.cntrProjects.length}
@@ -8850,14 +8874,6 @@ export default function UniversitiesPage() {
                                 {university.cntrAcceleratorItems && university.cntrAcceleratorItems.length > 0 && (
                                   <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
                                     {university.cntrAcceleratorItems.length}
-                                  </Badge>
-                                )}
-                              </TabsTrigger>
-                              <TabsTrigger value="events" className="flex items-center justify-center gap-2">
-                                Мероприятия
-                                {university.cntrEventsItems && university.cntrEventsItems.length > 0 && (
-                                  <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-xs">
-                                    {university.cntrEventsItems.length}
                                   </Badge>
                                 )}
                               </TabsTrigger>
@@ -8876,6 +8892,9 @@ export default function UniversitiesPage() {
                                     {university.cntrEducationalProjectsItems.length}
                                   </Badge>
                                 )}
+                              </TabsTrigger>
+                              <TabsTrigger value="cntr-projects" className="flex items-center justify-center gap-2">
+                                Проекты
                               </TabsTrigger>
                             </TabsList>
                             {/* Подтаб ЦНТР: Общая информация (как в Личном кабинете ДРП, только линии ЦНТР) */}
@@ -10140,7 +10159,7 @@ export default function UniversitiesPage() {
                                       <div className="text-center py-12 text-muted-foreground">
                                         <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
                                         <p className="text-lg font-medium mb-2">Развитие научно-технологических проектов</p>
-                                        <p className="text-sm">Проекты не добавлены</p>
+                                        <p className="text-sm">Развитие НТП не добавлены</p>
                                       </div>
                                     </CardContent>
                                   </Card>
@@ -10476,310 +10495,487 @@ export default function UniversitiesPage() {
                               </Dialog>
                             </TabsContent>
                             
-                            {/* Подвкладка 4: Мероприятия */}
-                            <TabsContent value="events" className="space-y-4 mt-0">
-                              <div className="flex items-center justify-end mb-4">
-                                <Dialog open={addCntrEventDialogOpen} onOpenChange={setAddCntrEventDialogOpen}>
-                                  <DialogTrigger asChild>
-                                    <Button variant="default" size="sm" onClick={() => {
-                                      setNewCntrEvent({ date: "", branch: "", description: "", document: "" });
-                                      setEditingCntrEvent(null);
-                                    }}>
-                                      <Plus className="mr-2 h-4 w-4" />
-                                      Добавить
-                                    </Button>
-                                  </DialogTrigger>
-                                  <DialogContent className="max-w-2xl">
-                                    <DialogHeader>
-                                      <DialogTitle>Добавить мероприятие</DialogTitle>
-                                    </DialogHeader>
-                                    <div className="space-y-4 py-4">
-                                      <div className="space-y-2">
-                                        <Label htmlFor="cntr-event-date">Дата *</Label>
-                                        <Input
-                                          id="cntr-event-date"
-                                          type="date"
-                                          value={newCntrEvent.date}
-                                          onChange={(e) => setNewCntrEvent({ ...newCntrEvent, date: e.target.value })}
-                                        />
+                            {/* Подвкладка 4: Мероприятия — такой же вид и состав, как в личном кабинете ДРП */}
+                            <TabsContent value="events" className="space-y-4 mt-4">
+                              <div className="space-y-4">
+                                {(() => {
+                                  const eventItems = university.cntrEventsItems || [];
+                                  const branchesFromItems = Array.from(new Set(eventItems.map((e) => e.branch).filter(Boolean))) as string[];
+                                  const branchOptions = Array.from(new Set(["Головной ВУЗ", ...(university.branchCurators?.map((b) => b.branch) ?? []), ...branchesFromItems]));
+                                  const yearsMap = eventItems.reduce<Record<string, number>>((acc, e) => {
+                                    const y = e.date ? e.date.slice(0, 4) : "";
+                                    if (y) acc[y] = (acc[y] || 0) + 1;
+                                    return acc;
+                                  }, {});
+                                  const yearsSorted = Object.keys(yearsMap).sort((a, b) => Number(a) - Number(b));
+                                  const cntrEventStatusLabels: Record<CNTREventStatus, string> = {
+                                    planned: "Запланировано",
+                                    in_progress: "В процессе",
+                                    completed: "Проведено",
+                                    cancelled: "Отменено",
+                                  };
+                                  const byStatus = {
+                                    planned: eventItems.filter((e) => (e.status || "planned") === "planned").length,
+                                    in_progress: eventItems.filter((e) => e.status === "in_progress").length,
+                                    completed: eventItems.filter((e) => e.status === "completed").length,
+                                    cancelled: eventItems.filter((e) => e.status === "cancelled").length,
+                                  };
+                                  const filteredItems = eventItems.filter((item) => {
+                                    if (cntrEventsFeedFilters.branch.length > 0 && (!item.branch || !cntrEventsFeedFilters.branch.includes(item.branch))) return false;
+                                    if (cntrEventsFeedFilters.year.length > 0) {
+                                      const y = item.date ? item.date.slice(0, 4) : "";
+                                      if (!y || !cntrEventsFeedFilters.year.includes(y)) return false;
+                                    }
+                                    if (cntrEventsFeedFilters.status.length > 0 && !cntrEventsFeedFilters.status.includes(item.status || "planned")) return false;
+                                    return true;
+                                  });
+                                  const formatDate = (dateStr: string) => {
+                                    if (!dateStr) return "—";
+                                    const [year, month, day] = dateStr.split("-").map(Number);
+                                    return `${String(day).padStart(2, "0")}.${String(month).padStart(2, "0")}.${year}`;
+                                  };
+                                  const handleEditCntrEvent = (item: CNTREventItem) => {
+                                    if (!selectedUniversity) return;
+                                    setEditingCntrEvent({ universityId: selectedUniversity, itemId: item.id });
+                                    setNewCntrEvent({ type: item.type || "meeting", date: item.date, status: item.status || "planned", branch: item.branch || "", description: item.description || "" });
+                                    setEditCntrEventDialogOpen(true);
+                                  };
+                                  const handleRemoveCntrEvent = (itemId: string) => {
+                                    if (!selectedUniversity) return;
+                                    const updatedUniversities = universities.map((u) =>
+                                      u.id === selectedUniversity ? { ...u, cntrEventsItems: (u.cntrEventsItems || []).filter((item) => item.id !== itemId) } : u
+                                    );
+                                    setUniversities(updatedUniversities);
+                                  };
+                                  return (
+                                    <>
+                                      <div className="grid grid-cols-[1fr_1fr_1fr_1fr_auto] gap-x-4 gap-y-2 mb-4 items-start">
+                                        <div className="min-w-0">
+                                          <Label className="text-base font-semibold">ВУЗ / филиал вуза</Label>
+                                        </div>
+                                        <div className="min-w-0">
+                                          <Label className="text-base font-semibold">Год</Label>
+                                        </div>
+                                        <div className="min-w-0">
+                                          <Label className="text-base font-semibold">Статус</Label>
+                                        </div>
+                                        <div className="min-w-0" />
+                                        <div />
+                                        <div className="min-w-0 space-y-1">
+                                          <MultiSelect
+                                            options={branchOptions.map((b) => ({ value: b, label: b }))}
+                                            selected={cntrEventsFeedFilters.branch}
+                                            onChange={(selected) => setCntrEventsFeedFilters((p) => ({ ...p, branch: selected }))}
+                                            placeholder="Выберите филиал"
+                                          />
+                                          {branchOptions.length === 0 && <span className="text-sm text-muted-foreground">Нет данных</span>}
+                                        </div>
+                                        <div className="min-w-0 space-y-1">
+                                          <MultiSelect
+                                            options={yearsSorted.map((y) => ({ value: y, label: `${y} (${yearsMap[y] ?? 0})` }))}
+                                            selected={cntrEventsFeedFilters.year}
+                                            onChange={(selected) => setCntrEventsFeedFilters((p) => ({ ...p, year: selected }))}
+                                            placeholder="Выберите год"
+                                          />
+                                          {yearsSorted.length === 0 && <span className="text-sm text-muted-foreground">Нет данных</span>}
+                                        </div>
+                                        <div className="min-w-0">
+                                          <MultiSelect
+                                            options={([
+                                              { value: "planned" as const, label: "Запланировано", count: byStatus.planned },
+                                              { value: "in_progress" as const, label: "В процессе", count: byStatus.in_progress },
+                                              { value: "completed" as const, label: "Проведено", count: byStatus.completed },
+                                              { value: "cancelled" as const, label: "Отменено", count: byStatus.cancelled },
+                                            ] as const).filter((item) => item.count > 0 || cntrEventsFeedFilters.status.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
+                                            selected={cntrEventsFeedFilters.status}
+                                            onChange={(selected) => setCntrEventsFeedFilters((p) => ({ ...p, status: selected as CNTREventStatus[] }))}
+                                            placeholder="Выберите статусы"
+                                          />
+                                          {eventItems.length === 0 && <span className="text-sm text-muted-foreground">Нет данных</span>}
+                                        </div>
+                                        <div className="min-w-0" />
+                                        <div className="flex items-center h-10">
+                                          <Button
+                                            size="sm"
+                                            onClick={() => {
+                                              setNewCntrEvent({ type: "meeting", date: "", status: "planned", branch: "", description: "" });
+                                              setEditingCntrEvent(null);
+                                              setAddCntrEventDialogOpen(true);
+                                            }}
+                                            disabled={!selectedUniversity}
+                                          >
+                                            <Plus className="h-4 w-4 mr-1" />
+                                            Добавить мероприятие
+                                          </Button>
+                                        </div>
                                       </div>
-                                      <div className="space-y-2">
-                                        <Label htmlFor="cntr-event-branch">Головной ВУЗ / Филиал</Label>
-                                        <Select
-                                          value={newCntrEvent.branch}
-                                          onValueChange={(value) => setNewCntrEvent({ ...newCntrEvent, branch: value })}
-                                        >
-                                          <SelectTrigger id="cntr-event-branch">
-                                            <SelectValue placeholder="Выберите ВУЗ/филиал" />
+                                      {(cntrEventsFeedFilters.branch.length > 0 || cntrEventsFeedFilters.year.length > 0 || cntrEventsFeedFilters.status.length > 0) && (
+                                        <div className="flex flex-wrap items-center gap-2 mb-3">
+                                          {cntrEventsFeedFilters.branch.length > 0 && (
+                                            <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1">
+                                              <span className="text-sm">Филиал: {cntrEventsFeedFilters.branch.join(", ")}</span>
+                                              <button type="button" onClick={() => setCntrEventsFeedFilters((p) => ({ ...p, branch: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button>
+                                            </Badge>
+                                          )}
+                                          {cntrEventsFeedFilters.year.length > 0 && (
+                                            <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1">
+                                              <span className="text-sm">Год: {cntrEventsFeedFilters.year.join(", ")}</span>
+                                              <button type="button" onClick={() => setCntrEventsFeedFilters((p) => ({ ...p, year: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button>
+                                            </Badge>
+                                          )}
+                                          {cntrEventsFeedFilters.status.length > 0 && (
+                                            <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1">
+                                              <span className="text-sm">Статус: {cntrEventsFeedFilters.status.map((s) => cntrEventStatusLabels[s]).join(", ")}</span>
+                                              <button type="button" onClick={() => setCntrEventsFeedFilters((p) => ({ ...p, status: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button>
+                                            </Badge>
+                                          )}
+                                        </div>
+                                      )}
+                                      <div className="mb-2">
+                                        <div className="text-sm text-muted-foreground">
+                                          Найдено: <span className="font-semibold text-foreground">{filteredItems.length}</span>{" "}
+                                          {filteredItems.length === 1 ? "мероприятие" : filteredItems.length > 1 && filteredItems.length < 5 ? "мероприятия" : "мероприятий"}
+                                          {filteredItems.length !== eventItems.length && <span className="ml-1">из {eventItems.length}</span>}
+                                        </div>
+                                      </div>
+                                      {eventItems.length > 0 ? (
+                                        filteredItems.length > 0 ? (
+                                          <div className="space-y-3">
+                                            {filteredItems.map((item) => (
+                                              <Card key={item.id} className="p-3">
+                                                <div className="flex items-start justify-between gap-3">
+                                                  <div className="flex-1 space-y-1.5">
+                                                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                                                      <div className="flex items-center gap-2 flex-wrap">
+                                                        <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor("cntr"))}>
+                                                          {getCooperationLineLabel("cntr")}
+                                                        </Badge>
+                                                        {(item.type === "meeting" || !item.type) && (
+                                                          <Badge variant="outline" className="text-xs !bg-gray-500/10 !text-gray-700 dark:!text-gray-300 !border-gray-400">
+                                                            Встреча
+                                                          </Badge>
+                                                        )}
+                                                        <Calendar className="h-4 w-4 text-muted-foreground" />
+                                                        <span className="text-sm font-semibold">{formatDate(item.date)}</span>
+                                                      </div>
+                                                      <Badge variant="outline" className={cn("text-xs", getStatusBadgeColor(item.status || "planned"))}>
+                                                        {cntrEventStatusLabels[item.status || "planned"]}
+                                                      </Badge>
+                                                    </div>
+                                                    {item.description && (
+                                                      <div className="flex items-center gap-2">
+                                                        <Label className="text-sm font-semibold">Комментарий:</Label>
+                                                        <span className="text-sm text-muted-foreground">{item.description}</span>
+                                                      </div>
+                                                    )}
+                                                    {item.branch && (
+                                                      <div className="pt-2.5 mt-2 border-t">
+                                                        <Badge variant="secondary" className="text-xs">
+                                                          {item.branch}
+                                                        </Badge>
+                                                      </div>
+                                                    )}
+                                                  </div>
+                                                  <div className="flex gap-1 shrink-0">
+                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => handleEditCntrEvent(item)}>
+                                                      <Pencil className="h-3.5 w-3.5" />
+                                                    </Button>
+                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => handleRemoveCntrEvent(item.id)}>
+                                                      <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                    </Button>
+                                                  </div>
+                                                </div>
+                                              </Card>
+                                            ))}
+                                          </div>
+                                        ) : (
+                                          <div className="text-center py-8 text-muted-foreground">
+                                            <Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                                            <p className="text-base">Мероприятия не найдены по выбранным фильтрам</p>
+                                          </div>
+                                        )
+                                      ) : (
+                                        <div className="text-center py-8 text-muted-foreground">
+                                          <Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                                          <p className="text-base">Мероприятия не добавлены</p>
+                                          <Button
+                                            size="sm"
+                                            className="mt-3"
+                                            onClick={() => {
+                                              setNewCntrEvent({ type: "meeting", date: "", status: "planned", branch: "", description: "" });
+                                              setAddCntrEventDialogOpen(true);
+                                            }}
+                                            disabled={!selectedUniversity}
+                                          >
+                                            <Plus className="mr-2 h-4 w-4" />
+                                            Добавить мероприятие
+                                          </Button>
+                                        </div>
+                                      )}
+                                    </>
+                                  );
+                                })()}
+                              </div>
+
+                              {/* Диалог добавления мероприятия ЦНТР — такой же вид, как в личном кабинете ДРП */}
+                              <Dialog open={addCntrEventDialogOpen} onOpenChange={setAddCntrEventDialogOpen}>
+                                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                                  <DialogHeader>
+                                    <DialogTitle>Добавить мероприятие</DialogTitle>
+                                    <DialogDescription>Заполните информацию о мероприятии</DialogDescription>
+                                  </DialogHeader>
+                                  <div className="space-y-4 py-4">
+                                    <div className="flex items-end gap-2">
+                                      <div className="flex-1 space-y-2">
+                                        <div className="flex items-center gap-1">
+                                          <Label htmlFor="cntr-event-type">Тип мероприятия</Label>
+                                          <Tooltip>
+                                            <TooltipTrigger asChild>
+                                              <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                              <p>Выберите тип мероприятия (пока доступна только встреча)</p>
+                                            </TooltipContent>
+                                          </Tooltip>
+                                        </div>
+                                        <Select value={newCntrEvent.type} onValueChange={(value) => setNewCntrEvent({ ...newCntrEvent, type: value as CNTREventType })}>
+                                          <SelectTrigger id="cntr-event-type" className="w-full">
+                                            <SelectValue placeholder="Выберите тип" />
                                           </SelectTrigger>
                                           <SelectContent>
-                                            <SelectItem value="Головной ВУЗ">Головной ВУЗ</SelectItem>
-                                            {university?.branch?.map((branchName) => (
-                                              <SelectItem key={branchName} value={branchName}>
-                                                {branchName}
-                                              </SelectItem>
+                                            <SelectItem value="meeting">Встреча</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      </div>
+                                      <div className="flex-1 space-y-2">
+                                        <div className="flex items-center gap-1">
+                                          <Label htmlFor="cntr-event-date">Дата</Label>
+                                          <Tooltip>
+                                            <TooltipTrigger asChild>
+                                              <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                              <p>Укажите дату проведения мероприятия</p>
+                                            </TooltipContent>
+                                          </Tooltip>
+                                        </div>
+                                        <Input id="cntr-event-date" type="date" value={newCntrEvent.date} onChange={(e) => setNewCntrEvent({ ...newCntrEvent, date: e.target.value })} className="w-full" />
+                                      </div>
+                                      <div className="flex-1 space-y-2">
+                                        <div className="flex items-center gap-1">
+                                          <Label htmlFor="cntr-event-branch">Место проведения</Label>
+                                          <Tooltip>
+                                            <TooltipTrigger asChild>
+                                              <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                              <p>Головной вуз или филиал, к которому относится мероприятие</p>
+                                            </TooltipContent>
+                                          </Tooltip>
+                                        </div>
+                                        <Select value={newCntrEvent.branch} onValueChange={(value) => setNewCntrEvent({ ...newCntrEvent, branch: value })}>
+                                          <SelectTrigger id="cntr-event-branch" className="w-full">
+                                            <SelectValue placeholder="Головной вуз или филиал" />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="Головной ВУЗ">Головной вуз</SelectItem>
+                                            {(university?.branchCurators?.map((b) => b.branch) ?? []).filter((v, i, a) => a.indexOf(v) === i).map((branchName) => (
+                                              <SelectItem key={branchName} value={branchName}>{branchName}</SelectItem>
                                             ))}
                                           </SelectContent>
                                         </Select>
                                       </div>
-                                      <div className="space-y-2">
-                                        <Label htmlFor="cntr-event-description">Описание</Label>
-                                        <Textarea
-                                          id="cntr-event-description"
-                                          placeholder="Введите описание мероприятия..."
-                                          value={newCntrEvent.description}
-                                          onChange={(e) => setNewCntrEvent({ ...newCntrEvent, description: e.target.value })}
-                                          rows={4}
-                                        />
-                                      </div>
-                                      <div className="space-y-2">
-                                        <Label htmlFor="cntr-event-document">Документ (PDF)</Label>
-                                        <Input
-                                          id="cntr-event-document"
-                                          type="text"
-                                          placeholder="URL или путь к PDF файлу..."
-                                          value={newCntrEvent.document}
-                                          onChange={(e) => setNewCntrEvent({ ...newCntrEvent, document: e.target.value })}
-                                        />
-                                      </div>
-                                    </div>
-                                    <DialogFooter>
-                                      <Button variant="outline" onClick={() => {
-                                        setAddCntrEventDialogOpen(false);
-                                        setEditingCntrEvent(null);
-                                        setNewCntrEvent({ date: "", branch: "", description: "", document: "" });
-                                      }}>
-                                        Отмена
-                                      </Button>
-                                      <Button 
-                                        onClick={() => {
-                                          if (newCntrEvent.date && selectedUniversity) {
-                                            const newItem: CNTREventItem = {
-                                              id: `cntr-event-${Date.now()}`,
-                                              date: newCntrEvent.date,
-                                              branch: newCntrEvent.branch || undefined,
-                                              description: newCntrEvent.description?.trim() || undefined,
-                                              document: newCntrEvent.document?.trim() || undefined,
-                                            };
-                                            const updatedUniversities = universities.map((u) =>
-                                              u.id === selectedUniversity
-                                                ? {
-                                                    ...u,
-                                                    cntrEventsItems: [...(u.cntrEventsItems || []), newItem],
-                                                  }
-                                                : u
-                                            );
-                                            setUniversities(updatedUniversities);
-                                            setAddCntrEventDialogOpen(false);
-                                            setNewCntrEvent({ date: "", branch: "", description: "", document: "" });
-                                          }
-                                        }}
-                                        disabled={!newCntrEvent.date}
-                                      >
-                                        Сохранить
-                                      </Button>
-                                    </DialogFooter>
-                                  </DialogContent>
-                                </Dialog>
-                              </div>
-                              
-                              {(() => {
-                                const eventItems = university.cntrEventsItems || [];
-                                
-                                const formatDate = (dateStr: string) => {
-                                  const [year, month, day] = dateStr.split('-').map(Number);
-                                  return `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`;
-                                };
-                                
-                                const handleEditCntrEvent = (item: CNTREventItem) => {
-                                  if (!selectedUniversity) return;
-                                  setEditingCntrEvent({ universityId: selectedUniversity, itemId: item.id });
-                                  setNewCntrEvent({
-                                    date: item.date,
-                                    branch: item.branch || "",
-                                    description: item.description || "",
-                                    document: item.document || "",
-                                  });
-                                  setEditCntrEventDialogOpen(true);
-                                };
-                                
-                                const handleRemoveCntrEvent = (itemId: string) => {
-                                  if (!selectedUniversity) return;
-                                  const updatedUniversities = universities.map((u) =>
-                                    u.id === selectedUniversity
-                                      ? {
-                                          ...u,
-                                          cntrEventsItems: (u.cntrEventsItems || []).filter((item) => item.id !== itemId),
-                                        }
-                                      : u
-                                  );
-                                  setUniversities(updatedUniversities);
-                                };
-                                
-                                return eventItems.length > 0 ? (
-                                  <div className="space-y-4">
-                                    {eventItems.map((item) => (
-                                      <Card key={item.id} className="p-4">
-                                        <div className="flex items-start justify-between gap-4">
-                                          <div className="flex-1 space-y-3">
-                                            <div className="flex items-center gap-2 flex-wrap">
-                                              {item.branch && (
-                                                <Badge variant="secondary" className="text-xs">
-                                                  {item.branch}
-                                                </Badge>
-                                              )}
-                                            </div>
-                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
-                                              <div className="flex items-start gap-2">
-                                                <Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
-                                                <span className="text-muted-foreground whitespace-nowrap">Дата:</span>
-                                                <span className="font-medium">{formatDate(item.date)}</span>
-                                              </div>
-                                            </div>
-                                            {item.description && (
-                                              <div className="text-sm">
-                                                <span className="text-muted-foreground">Описание:</span>
-                                                <p className="mt-1 text-foreground">{item.description}</p>
-                                              </div>
-                                            )}
-                                            {item.document && (
-                                              <div className="flex items-start gap-2 md:col-span-2 text-sm">
-                                                <FileText className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
-                                                <span className="text-muted-foreground whitespace-nowrap">Документ:</span>
-                                                <a 
-                                                  href={item.document} 
-                                                  target="_blank" 
-                                                  rel="noopener noreferrer" 
-                                                  className="text-primary hover:underline break-all"
-                                                >
-                                                  {item.document}
-                                                </a>
-                                              </div>
-                                            )}
-                                          </div>
-                                          <div className="flex items-center gap-1 flex-shrink-0">
-                                            <Button
-                                              variant="ghost"
-                                              size="sm"
-                                              className="h-8 w-8 p-0"
-                                              onClick={() => handleEditCntrEvent(item)}
-                                            >
-                                              <Pencil className="h-3.5 w-3.5" />
-                                            </Button>
-                                            <Button
-                                              variant="ghost"
-                                              size="sm"
-                                              className="h-8 w-8 p-0"
-                                              onClick={() => handleRemoveCntrEvent(item.id)}
-                                            >
-                                              <Trash2 className="h-3.5 w-3.5 text-destructive" />
-                                            </Button>
-                                          </div>
+                                      <div className="flex-1 space-y-2">
+                                        <div className="flex items-center gap-1">
+                                          <Label htmlFor="cntr-event-status">Статус</Label>
+                                          <Tooltip>
+                                            <TooltipTrigger asChild>
+                                              <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                              <p>Выберите статус мероприятия: запланировано, в процессе, проведено или отменено</p>
+                                            </TooltipContent>
+                                          </Tooltip>
                                         </div>
-                                      </Card>
-                                    ))}
-                                  </div>
-                                ) : (
-                                  <Card>
-                                    <CardContent className="space-y-6 pt-6">
-                                      <div className="text-center py-12 text-muted-foreground">
-                                        <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                                        <p className="text-lg font-medium mb-2">Мероприятия</p>
-                                        <p className="text-sm">Мероприятия не добавлены</p>
+                                        <Select value={newCntrEvent.status} onValueChange={(value) => setNewCntrEvent({ ...newCntrEvent, status: value as CNTREventStatus })}>
+                                          <SelectTrigger id="cntr-event-status" className="w-full">
+                                            <SelectValue placeholder="Выберите статус" />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="planned">Запланировано</SelectItem>
+                                            <SelectItem value="in_progress">В процессе</SelectItem>
+                                            <SelectItem value="completed">Проведено</SelectItem>
+                                            <SelectItem value="cancelled">Отменено</SelectItem>
+                                          </SelectContent>
+                                        </Select>
                                       </div>
-                                    </CardContent>
-                                  </Card>
-                                );
-                              })()}
-                              
-                              {/* Диалог редактирования мероприятия */}
-                              <Dialog open={editCntrEventDialogOpen} onOpenChange={setEditCntrEventDialogOpen}>
-                                <DialogContent className="max-w-2xl">
-                                  <DialogHeader>
-                                    <DialogTitle>Редактировать мероприятие</DialogTitle>
-                                  </DialogHeader>
-                                  <div className="space-y-4 py-4">
-                                    <div className="space-y-2">
-                                      <Label htmlFor="edit-cntr-event-date">Дата *</Label>
-                                      <Input
-                                        id="edit-cntr-event-date"
-                                        type="date"
-                                        value={newCntrEvent.date}
-                                        onChange={(e) => setNewCntrEvent({ ...newCntrEvent, date: e.target.value })}
-                                      />
                                     </div>
                                     <div className="space-y-2">
-                                      <Label htmlFor="edit-cntr-event-branch">Головной ВУЗ / Филиал</Label>
-                                      <Select
-                                        value={newCntrEvent.branch}
-                                        onValueChange={(value) => setNewCntrEvent({ ...newCntrEvent, branch: value })}
-                                      >
-                                        <SelectTrigger id="edit-cntr-event-branch">
-                                          <SelectValue placeholder="Выберите ВУЗ/филиал" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                          <SelectItem value="Головной ВУЗ">Головной ВУЗ</SelectItem>
-                                          {university?.branch?.map((branchName) => (
-                                            <SelectItem key={branchName} value={branchName}>
-                                              {branchName}
-                                            </SelectItem>
-                                          ))}
-                                        </SelectContent>
-                                      </Select>
-                                    </div>
-                                    <div className="space-y-2">
-                                      <Label htmlFor="edit-cntr-event-description">Описание</Label>
-                                      <Textarea
-                                        id="edit-cntr-event-description"
-                                        placeholder="Введите описание мероприятия..."
-                                        value={newCntrEvent.description}
-                                        onChange={(e) => setNewCntrEvent({ ...newCntrEvent, description: e.target.value })}
-                                        rows={4}
-                                      />
-                                    </div>
-                                    <div className="space-y-2">
-                                      <Label htmlFor="edit-cntr-event-document">Документ (PDF)</Label>
-                                      <Input
-                                        id="edit-cntr-event-document"
-                                        type="text"
-                                        placeholder="URL или путь к PDF файлу..."
-                                        value={newCntrEvent.document}
-                                        onChange={(e) => setNewCntrEvent({ ...newCntrEvent, document: e.target.value })}
-                                      />
+                                      <div className="flex items-center gap-1">
+                                        <Label htmlFor="cntr-event-description">Комментарий</Label>
+                                        <Tooltip>
+                                          <TooltipTrigger asChild>
+                                            <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                                          </TooltipTrigger>
+                                          <TooltipContent>
+                                            <p>Дополнительная информация о мероприятии (необязательное поле)</p>
+                                          </TooltipContent>
+                                        </Tooltip>
+                                      </div>
+                                      <Textarea id="cntr-event-description" placeholder="Введите описание или комментарий..." value={newCntrEvent.description} onChange={(e) => setNewCntrEvent({ ...newCntrEvent, description: e.target.value })} rows={4} className="w-full" />
                                     </div>
                                   </div>
                                   <DialogFooter>
-                                    <Button variant="outline" onClick={() => {
-                                      setEditCntrEventDialogOpen(false);
-                                      setEditingCntrEvent(null);
-                                      setNewCntrEvent({ date: "", branch: "", description: "", document: "" });
-                                    }}>
-                                      Отмена
+                                    <Button variant="outline" onClick={() => { setAddCntrEventDialogOpen(false); setNewCntrEvent({ type: "meeting", date: "", status: "planned", branch: "", description: "" }); }}>Отмена</Button>
+                                    <Button
+                                      onClick={() => {
+                                        if (newCntrEvent.date && selectedUniversity) {
+                                          const newItem: CNTREventItem = {
+                                            id: `cntr-event-${Date.now()}`,
+                                            type: newCntrEvent.type,
+                                            date: newCntrEvent.date,
+                                            status: newCntrEvent.status,
+                                            branch: newCntrEvent.branch || undefined,
+                                            description: newCntrEvent.description?.trim() || undefined,
+                                          };
+                                          const updatedUniversities = universities.map((u) =>
+                                            u.id === selectedUniversity ? { ...u, cntrEventsItems: [...(u.cntrEventsItems || []), newItem] } : u
+                                          );
+                                          setUniversities(updatedUniversities);
+                                          setAddCntrEventDialogOpen(false);
+                                          setNewCntrEvent({ type: "meeting", date: "", status: "planned", branch: "", description: "" });
+                                        }
+                                      }}
+                                      disabled={!newCntrEvent.date}
+                                    >
+                                      <Plus className="h-4 w-4 mr-1" />
+                                      Добавить
                                     </Button>
-                                    <Button 
+                                  </DialogFooter>
+                                </DialogContent>
+                              </Dialog>
+
+                              {/* Диалог редактирования мероприятия ЦНТР — такой же вид, как в личном кабинете ДРП */}
+                              <Dialog open={editCntrEventDialogOpen} onOpenChange={setEditCntrEventDialogOpen}>
+                                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                                  <DialogHeader>
+                                    <DialogTitle>Редактировать мероприятие</DialogTitle>
+                                    <DialogDescription>Внесите изменения в мероприятие</DialogDescription>
+                                  </DialogHeader>
+                                  <div className="space-y-4 py-4">
+                                    <div className="flex items-end gap-2">
+                                      <div className="flex-1 space-y-2">
+                                        <div className="flex items-center gap-1">
+                                          <Label htmlFor="edit-cntr-event-type">Тип мероприятия</Label>
+                                          <Tooltip>
+                                            <TooltipTrigger asChild>
+                                              <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                              <p>Выберите тип мероприятия (пока доступна только встреча)</p>
+                                            </TooltipContent>
+                                          </Tooltip>
+                                        </div>
+                                        <Select value={newCntrEvent.type} onValueChange={(value) => setNewCntrEvent({ ...newCntrEvent, type: value as CNTREventType })}>
+                                          <SelectTrigger id="edit-cntr-event-type" className="w-full">
+                                            <SelectValue placeholder="Выберите тип" />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="meeting">Встреча</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      </div>
+                                      <div className="flex-1 space-y-2">
+                                        <div className="flex items-center gap-1">
+                                          <Label htmlFor="edit-cntr-event-date">Дата</Label>
+                                          <Tooltip>
+                                            <TooltipTrigger asChild>
+                                              <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                              <p>Укажите дату проведения мероприятия</p>
+                                            </TooltipContent>
+                                          </Tooltip>
+                                        </div>
+                                        <Input id="edit-cntr-event-date" type="date" value={newCntrEvent.date} onChange={(e) => setNewCntrEvent({ ...newCntrEvent, date: e.target.value })} className="w-full" />
+                                      </div>
+                                      <div className="flex-1 space-y-2">
+                                        <div className="flex items-center gap-1">
+                                          <Label htmlFor="edit-cntr-event-branch">Место проведения</Label>
+                                          <Tooltip>
+                                            <TooltipTrigger asChild>
+                                              <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                              <p>Головной вуз или филиал, к которому относится мероприятие</p>
+                                            </TooltipContent>
+                                          </Tooltip>
+                                        </div>
+                                        <Select value={newCntrEvent.branch} onValueChange={(value) => setNewCntrEvent({ ...newCntrEvent, branch: value })}>
+                                          <SelectTrigger id="edit-cntr-event-branch" className="w-full">
+                                            <SelectValue placeholder="Головной вуз или филиал" />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="Головной ВУЗ">Головной вуз</SelectItem>
+                                            {(university?.branchCurators?.map((b) => b.branch) ?? []).filter((v, i, a) => a.indexOf(v) === i).map((branchName) => (
+                                              <SelectItem key={branchName} value={branchName}>{branchName}</SelectItem>
+                                            ))}
+                                          </SelectContent>
+                                        </Select>
+                                      </div>
+                                      <div className="flex-1 space-y-2">
+                                        <div className="flex items-center gap-1">
+                                          <Label htmlFor="edit-cntr-event-status">Статус</Label>
+                                          <Tooltip>
+                                            <TooltipTrigger asChild>
+                                              <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                              <p>Выберите статус мероприятия: запланировано, в процессе, проведено или отменено</p>
+                                            </TooltipContent>
+                                          </Tooltip>
+                                        </div>
+                                        <Select value={newCntrEvent.status} onValueChange={(value) => setNewCntrEvent({ ...newCntrEvent, status: value as CNTREventStatus })}>
+                                          <SelectTrigger id="edit-cntr-event-status" className="w-full">
+                                            <SelectValue placeholder="Выберите статус" />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="planned">Запланировано</SelectItem>
+                                            <SelectItem value="in_progress">В процессе</SelectItem>
+                                            <SelectItem value="completed">Проведено</SelectItem>
+                                            <SelectItem value="cancelled">Отменено</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                      <div className="flex items-center gap-1">
+                                        <Label htmlFor="edit-cntr-event-description">Комментарий</Label>
+                                        <Tooltip>
+                                          <TooltipTrigger asChild>
+                                            <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                                          </TooltipTrigger>
+                                          <TooltipContent>
+                                            <p>Дополнительная информация о мероприятии (необязательное поле)</p>
+                                          </TooltipContent>
+                                        </Tooltip>
+                                      </div>
+                                      <Textarea id="edit-cntr-event-description" placeholder="Введите описание или комментарий..." value={newCntrEvent.description} onChange={(e) => setNewCntrEvent({ ...newCntrEvent, description: e.target.value })} rows={4} className="w-full" />
+                                    </div>
+                                  </div>
+                                  <DialogFooter>
+                                    <Button variant="outline" onClick={() => { setEditCntrEventDialogOpen(false); setEditingCntrEvent(null); setNewCntrEvent({ type: "meeting", date: "", status: "planned", branch: "", description: "" }); }}>Отмена</Button>
+                                    <Button
                                       onClick={() => {
                                         if (newCntrEvent.date && selectedUniversity && editingCntrEvent) {
                                           const updatedUniversities = universities.map((u) =>
                                             u.id === selectedUniversity
-                                              ? {
-                                                  ...u,
-                                                  cntrEventsItems: (u.cntrEventsItems || []).map((item) =>
-                                                    item.id === editingCntrEvent.itemId
-                                                      ? {
-                                                          ...item,
-                                                          date: newCntrEvent.date,
-                                                          branch: newCntrEvent.branch || undefined,
-                                                          description: newCntrEvent.description?.trim() || undefined,
-                                                          document: newCntrEvent.document?.trim() || undefined,
-                                                        }
-                                                      : item
-                                                  ),
-                                                }
+                                              ? { ...u, cntrEventsItems: (u.cntrEventsItems || []).map((item) => (item.id === editingCntrEvent.itemId ? { ...item, type: newCntrEvent.type, date: newCntrEvent.date, status: newCntrEvent.status, branch: newCntrEvent.branch || undefined, description: newCntrEvent.description?.trim() || undefined } : item)) }
                                               : u
                                           );
                                           setUniversities(updatedUniversities);
                                           setEditCntrEventDialogOpen(false);
-                                          setNewCntrEvent({ date: "", branch: "", description: "", document: "" });
+                                          setNewCntrEvent({ type: "meeting", date: "", status: "planned", branch: "", description: "" });
                                           setEditingCntrEvent(null);
                                         }
                                       }}
@@ -11495,6 +11691,252 @@ export default function UniversitiesPage() {
                                         }
                                       }}
                                       disabled={!newCntrEducationalProject.date}
+                                    >
+                                      Сохранить
+                                    </Button>
+                                  </DialogFooter>
+                                </DialogContent>
+                              </Dialog>
+                            </TabsContent>
+
+                            {/* Подвкладка: Проекты (таблица: дата, описание, статус) */}
+                            <TabsContent value="cntr-projects" className="space-y-4 mt-0">
+                              <div className="flex items-center justify-end mb-4">
+                                <Dialog open={addCntrProjectTableDialogOpen} onOpenChange={setAddCntrProjectTableDialogOpen}>
+                                  <DialogTrigger asChild>
+                                    <Button variant="default" size="sm" onClick={() => setNewCntrProjectTable({ date: "", description: "", status: "planned" })}>
+                                      <Plus className="mr-2 h-4 w-4" />
+                                      Добавить
+                                    </Button>
+                                  </DialogTrigger>
+                                  <DialogContent className="max-w-lg">
+                                    <DialogHeader>
+                                      <DialogTitle>Добавить проект</DialogTitle>
+                                    </DialogHeader>
+                                    <div className="space-y-4 py-4">
+                                      <div className="space-y-2">
+                                        <Label htmlFor="cntr-project-table-date">Дата *</Label>
+                                        <Input
+                                          id="cntr-project-table-date"
+                                          type="date"
+                                          value={newCntrProjectTable.date}
+                                          onChange={(e) => setNewCntrProjectTable({ ...newCntrProjectTable, date: e.target.value })}
+                                        />
+                                      </div>
+                                      <div className="space-y-2">
+                                        <Label htmlFor="cntr-project-table-description">Описание</Label>
+                                        <Textarea
+                                          id="cntr-project-table-description"
+                                          placeholder="Введите описание..."
+                                          value={newCntrProjectTable.description}
+                                          onChange={(e) => setNewCntrProjectTable({ ...newCntrProjectTable, description: e.target.value })}
+                                          rows={3}
+                                        />
+                                      </div>
+                                      <div className="space-y-2">
+                                        <Label htmlFor="cntr-project-table-status">Статус</Label>
+                                        <Select
+                                          value={newCntrProjectTable.status}
+                                          onValueChange={(value) => setNewCntrProjectTable({ ...newCntrProjectTable, status: value })}
+                                        >
+                                          <SelectTrigger id="cntr-project-table-status">
+                                            <SelectValue />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="planned">Запланировано</SelectItem>
+                                            <SelectItem value="in_progress">В процессе</SelectItem>
+                                            <SelectItem value="completed">Проведено</SelectItem>
+                                            <SelectItem value="cancelled">Отменено</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      </div>
+                                    </div>
+                                    <DialogFooter>
+                                      <Button variant="outline" onClick={() => setAddCntrProjectTableDialogOpen(false)}>Отмена</Button>
+                                      <Button
+                                        onClick={() => {
+                                          if (newCntrProjectTable.date && selectedUniversity) {
+                                            const newItem: CNTRProjectTableItem = {
+                                              id: `cntr-project-table-${Date.now()}`,
+                                              date: newCntrProjectTable.date,
+                                              description: newCntrProjectTable.description?.trim() || undefined,
+                                              status: newCntrProjectTable.status as CNTRProjectTableItem["status"],
+                                            };
+                                            const updatedUniversities = universities.map((u) =>
+                                              u.id === selectedUniversity
+                                                ? { ...u, cntrProjectTableItems: [...(u.cntrProjectTableItems || []), newItem] }
+                                                : u
+                                            );
+                                            setUniversities(updatedUniversities);
+                                            setAddCntrProjectTableDialogOpen(false);
+                                            setNewCntrProjectTable({ date: "", description: "", status: "planned" });
+                                          }
+                                        }}
+                                        disabled={!newCntrProjectTable.date}
+                                      >
+                                        Сохранить
+                                      </Button>
+                                    </DialogFooter>
+                                  </DialogContent>
+                                </Dialog>
+                              </div>
+                              <div className="rounded-md border bg-card overflow-hidden">
+                                <Table>
+                                  <TableHeader>
+                                    <TableRow className="bg-muted/50">
+                                      <TableHead className="w-[140px]">Дата</TableHead>
+                                      <TableHead>Описание</TableHead>
+                                      <TableHead className="w-[160px]">Статус</TableHead>
+                                      <TableHead className="w-[100px] text-right">Действия</TableHead>
+                                    </TableRow>
+                                  </TableHeader>
+                                  <TableBody>
+                                    {(() => {
+                                      const items = university.cntrProjectTableItems || [];
+                                      const formatDate = (dateStr: string) => {
+                                        const [y, m, d] = dateStr.split("-").map(Number);
+                                        return `${String(d).padStart(2, "0")}.${String(m).padStart(2, "0")}.${y}`;
+                                      };
+                                      const statusLabels: Record<string, string> = {
+                                        planned: "Запланировано",
+                                        in_progress: "В процессе",
+                                        completed: "Проведено",
+                                        cancelled: "Отменено",
+                                      };
+                                      const statusVariant: Record<string, string> = {
+                                        planned: "bg-slate-50 text-slate-700 border-slate-200",
+                                        in_progress: "bg-amber-50 text-amber-700 border-amber-200",
+                                        completed: "bg-green-50 text-green-700 border-green-200",
+                                        cancelled: "bg-red-50 text-red-700 border-red-200",
+                                      };
+                                      if (items.length === 0) {
+                                        return (
+                                          <TableRow>
+                                            <TableCell colSpan={4} className="text-center text-muted-foreground py-8">
+                                              Проекты не добавлены
+                                            </TableCell>
+                                          </TableRow>
+                                        );
+                                      }
+                                      return items.map((item) => (
+                                        <TableRow key={item.id} className="group">
+                                          <TableCell className="whitespace-nowrap">{formatDate(item.date)}</TableCell>
+                                          <TableCell className="whitespace-normal">{item.description || "—"}</TableCell>
+                                          <TableCell>
+                                            <Badge variant="outline" className={statusVariant[item.status || "planned"] || ""}>
+                                              {statusLabels[item.status || "planned"]}
+                                            </Badge>
+                                          </TableCell>
+                                          <TableCell className="text-right">
+                                            <Button
+                                              variant="ghost"
+                                              size="icon"
+                                              className="h-8 w-8"
+                                              onClick={() => {
+                                                setEditingCntrProjectTable(item);
+                                                setNewCntrProjectTable({
+                                                  date: item.date,
+                                                  description: item.description || "",
+                                                  status: item.status || "planned",
+                                                });
+                                                setEditCntrProjectTableDialogOpen(true);
+                                              }}
+                                            >
+                                              <Pencil className="h-4 w-4" />
+                                            </Button>
+                                            <Button
+                                              variant="ghost"
+                                              size="icon"
+                                              className="h-8 w-8 text-destructive"
+                                              onClick={() => {
+                                                const updatedUniversities = universities.map((u) =>
+                                                  u.id === university.id
+                                                    ? { ...u, cntrProjectTableItems: (u.cntrProjectTableItems || []).filter((i) => i.id !== item.id) }
+                                                    : u
+                                                );
+                                                setUniversities(updatedUniversities);
+                                              }}
+                                            >
+                                              <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                          </TableCell>
+                                        </TableRow>
+                                      ));
+                                    })()}
+                                  </TableBody>
+                                </Table>
+                              </div>
+                              <Dialog open={editCntrProjectTableDialogOpen} onOpenChange={setEditCntrProjectTableDialogOpen}>
+                                <DialogContent className="max-w-lg">
+                                  <DialogHeader>
+                                    <DialogTitle>Редактировать проект</DialogTitle>
+                                  </DialogHeader>
+                                  <div className="space-y-4 py-4">
+                                    <div className="space-y-2">
+                                      <Label htmlFor="edit-cntr-project-table-date">Дата *</Label>
+                                      <Input
+                                        id="edit-cntr-project-table-date"
+                                        type="date"
+                                        value={newCntrProjectTable.date}
+                                        onChange={(e) => setNewCntrProjectTable({ ...newCntrProjectTable, date: e.target.value })}
+                                      />
+                                    </div>
+                                    <div className="space-y-2">
+                                      <Label htmlFor="edit-cntr-project-table-description">Описание</Label>
+                                      <Textarea
+                                        id="edit-cntr-project-table-description"
+                                        placeholder="Введите описание..."
+                                        value={newCntrProjectTable.description}
+                                        onChange={(e) => setNewCntrProjectTable({ ...newCntrProjectTable, description: e.target.value })}
+                                        rows={3}
+                                      />
+                                    </div>
+                                    <div className="space-y-2">
+                                      <Label htmlFor="edit-cntr-project-table-status">Статус</Label>
+                                      <Select
+                                        value={newCntrProjectTable.status}
+                                        onValueChange={(value) => setNewCntrProjectTable({ ...newCntrProjectTable, status: value })}
+                                      >
+                                        <SelectTrigger id="edit-cntr-project-table-status">
+                                          <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          <SelectItem value="planned">Запланировано</SelectItem>
+                                          <SelectItem value="in_progress">В процессе</SelectItem>
+                                          <SelectItem value="completed">Проведено</SelectItem>
+                                          <SelectItem value="cancelled">Отменено</SelectItem>
+                                        </SelectContent>
+                                      </Select>
+                                    </div>
+                                  </div>
+                                  <DialogFooter>
+                                    <Button variant="outline" onClick={() => { setEditCntrProjectTableDialogOpen(false); setEditingCntrProjectTable(null); }}>Отмена</Button>
+                                    <Button
+                                      onClick={() => {
+                                        if (editingCntrProjectTable && newCntrProjectTable.date && selectedUniversity) {
+                                          const updatedUniversities = universities.map((u) =>
+                                            u.id === selectedUniversity
+                                              ? {
+                                                  ...u,
+                                                  cntrProjectTableItems: (u.cntrProjectTableItems || []).map((i) =>
+                                                    i.id === editingCntrProjectTable.id
+                                                      ? {
+                                                          ...i,
+                                                          date: newCntrProjectTable.date,
+                                                          description: newCntrProjectTable.description?.trim() || undefined,
+                                                          status: newCntrProjectTable.status as CNTRProjectTableItem["status"],
+                                                        }
+                                                      : i
+                                                  ),
+                                                }
+                                              : u
+                                          );
+                                          setUniversities(updatedUniversities);
+                                          setEditCntrProjectTableDialogOpen(false);
+                                          setEditingCntrProjectTable(null);
+                                        }
+                                      }}
+                                      disabled={!newCntrProjectTable.date}
                                     >
                                       Сохранить
                                     </Button>
