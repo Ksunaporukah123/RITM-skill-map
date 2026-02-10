@@ -39,7 +39,7 @@ export interface Event {
   type: "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication"; // Тип мероприятия
   date: string; // Дата начала проведения
   endDate: string; // Дата окончания проведения
-  status: "planned" | "in_progress" | "completed"; // Статус мероприятия
+  status: "planned" | "in_progress" | "completed" | "cancelled"; // Статус мероприятия
   comments?: string; // Комментарии
   responsiblePerson: string[]; // Ответственные лица Банк (массив ID)
   responsiblePersonImage?: string; // Фото ответтельного лица (устаревшее, для обратной совместимости)

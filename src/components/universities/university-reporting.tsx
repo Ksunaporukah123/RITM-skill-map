@@ -51,7 +51,7 @@ interface Event {
   type: "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication";
   date: string;
   endDate: string;
-  status: "planned" | "in_progress" | "completed";
+  status: "planned" | "in_progress" | "completed" | "cancelled";
   responsiblePerson: string[];
   comments?: string;
 }
@@ -396,6 +396,7 @@ export function UniversityReporting({ universities }: UniversityReportingProps) 
       planned: "Запланировано",
       in_progress: "В процессе",
       completed: "Завершено",
+      cancelled: "Отменено",
     };
     return statuses[status] || status;
   };
@@ -1248,6 +1249,7 @@ export function UniversityReporting({ universities }: UniversityReportingProps) 
                           { value: "planned", label: "Запланировано" },
                           { value: "in_progress", label: "В процессе" },
                           { value: "completed", label: "Завершено" },
+                          { value: "cancelled", label: "Отменено" },
                         ].map((status) => (
                           <div key={status.value} className="flex items-center space-x-2">
                             <Checkbox

@@ -780,7 +780,10 @@ const mockUniversities: University[] = [
       { id: "event-hse-24", type: "communication", date: "2024-11-05", endDate: "2024-11-05", status: "planned", responsiblePerson: ["person-3"], comments: "Информационная рассылка о программах стажировок 2025 года. Охват — все студенты 2-4 курсов профильных направлений (около 1500 человек). В рассылке: описание программ, сроки подачи заявок, истории успеха прошлых стажёров. Запланирована серия reminder-писем.", cooperationLine: ["cntr"], branch: "Центральный офис", addedAt: "2024-10-25", addedBy: "Козлов Д.П." },
       { id: "event-hse-25", type: "expertParticipation", date: "2024-11-18", endDate: "2024-11-18", status: "planned", responsiblePerson: ["person-4"], comments: "Участие в межвузовской конференции «Банк и университет: модели эффективного партнёрства». Запланирован доклад о лучших практиках сотрудничества и совместной подготовки кадров. Ожидается участие представителей 25 вузов и 15 банков. Хорошая площадка для обмена опытом.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-11-05", addedBy: "Соколов А.Н." },
       { id: "event-hse-26", type: "caseChampionships", date: "2024-12-02", endDate: "2024-12-04", status: "planned", responsiblePerson: ["person-5"], comments: "Зимний кейс-чемпионат по цифровым продуктам и инновациям в банкинге. Кейс разработан продуктовыми командами банка на основе реальных бизнес-задач. Участники предложат решения по улучшению мобильного приложения и внедрению новых цифровых сервисов. Призовой фонд — 350 000 рублей.", cooperationLine: ["bko"], branch: "Санкт-Петербургский филиал", addedAt: "2024-11-20", addedBy: "Волкова М.К." },
-      { id: "event-hse-27", type: "careerDays", date: "2024-12-15", endDate: "2024-12-17", status: "planned", responsiblePerson: ["person-6"], comments: "Дни карьеры для выпускников бакалавриата — завершающее крупное мероприятие года. Программа адаптирована под студентов, заканчивающих обучение зимой. Особый фокус на программы management trainee и позиции с быстрым карьерным ростом. Планируется участие 120 студентов.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2024-12-02", addedBy: "Новиков Р.С." },
+      { id: "event-hse-27", type: "meeting", date: "2024-08-05", endDate: "2024-08-05", status: "cancelled", responsiblePerson: ["person-6"], comments: "Встреча с деканатом по согласованию осеннего графика отменена по инициативе вуза в связи с изменением внутреннего расписания.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-07-20", addedBy: "Новиков Р.С." },
+      { id: "event-hse-27b", type: "careerDays", date: "2024-12-15", endDate: "2024-12-17", status: "planned", responsiblePerson: ["person-6"], comments: "Дни карьеры для выпускников бакалавриата — завершающее крупное мероприятие года. Программа адаптирована под студентов, заканчивающих обучение зимой. Особый фокус на программы management trainee и позиции с быстрым карьерным ростом. Планируется участие 120 студентов.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2024-12-02", addedBy: "Новиков Р.С." },
+      { id: "event-hse-drp-cancelled-2", type: "expertParticipation", date: "2024-09-12", endDate: "2024-09-12", status: "cancelled", responsiblePerson: ["person-2"], comments: "Экспертное участие в защите магистерских работ отменено в связи с переносом сроков защиты на факультете.", cooperationLine: ["drp"], branch: "Московский филиал", addedAt: "2024-09-01", addedBy: "Петров А.В." },
+      { id: "event-hse-drp-cancelled-3", type: "careerDays", date: "2024-11-08", endDate: "2024-11-10", status: "cancelled", responsiblePerson: ["person-4"], comments: "Дни карьеры ДРП отменены по согласованию сторон из-за ограничений по помещению со стороны вуза.", cooperationLine: ["drp"], branch: "Санкт-Петербургский филиал", addedAt: "2024-10-20", addedBy: "Козлов Д.П." },
       { id: "event-hse-28", type: "meeting", date: "2025-01-20", endDate: "2025-01-20", status: "planned", responsiblePerson: ["person-7"], comments: "Стартовая встреча по плану мероприятий 2025 года. Презентация стратегии работы с вузами, утверждение календаря мероприятий, распределение бюджетов и ответственных. Планируется расширить сотрудничество — добавить 3 новых формата мероприятий и увеличить охват студентов на 30%.", cooperationLine: ["drp"], branch: "Московский филиал", addedAt: "2025-01-10", addedBy: "Морозова Т.И." },
       { id: "event-hse-29", type: "communication", date: "2025-02-10", endDate: "2025-02-10", status: "planned", responsiblePerson: ["person-1"], comments: "Презентация летних стажировок для магистрантов первого года обучения. Онлайн-формат с возможностью задать вопросы напрямую HR-специалистам и бывшим стажёрам. Представлены 12 направлений стажировок с описанием задач, команд и карьерных перспектив. Ожидается 150+ участников.", cooperationLine: ["bko"], branch: "Центральный офис", addedAt: "2025-01-28", addedBy: "Лебедева А.С." },
       { id: "event-hse-30", type: "expertParticipation", date: "2025-03-05", endDate: "2025-03-05", status: "planned", responsiblePerson: ["person-2"], comments: "Экспертная сессия по тематике ЦНТР — центров научно-технологического развития. Обсуждение перспективных направлений сотрудничества: совместные R&D проекты, создание лабораторий, привлечение студентов к исследовательской работе. Участвуют представители научного блока университета и инновационного подразделения банка.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2025-02-22", addedBy: "Федорова М.Д." },
@@ -2329,8 +2332,13 @@ export default function UniversitiesPage() {
     year: number[];
     status: Event["status"][];
   }>({ cooperationLine: [], type: [], year: [], status: [] });
-  // Фильтры мероприятий в Личном кабинете ДРП (стилистика вкладки «Мероприятия» + период как на ленте)
-  const [drpEventsFeedFilters, setDrpEventsFeedFilters] = useState<{ type: Event["type"] | null; year: number | null }>({ type: null, year: null });
+  // Фильтры мероприятий в Личном кабинете ДРП — те же, что на вкладке «Лента мероприятий» (выпадающие списки)
+  const [drpEventsFeedFilters, setDrpEventsFeedFilters] = useState<{
+    cooperationLine: string[];
+    type: Event["type"][];
+    year: number[];
+    status: Event["status"][];
+  }>({ cooperationLine: [], type: [], year: [], status: [] });
   const [drpEventsFeedCurrentPage, setDrpEventsFeedCurrentPage] = useState(1);
   const [drpEventsFeedItemsPerPage, setDrpEventsFeedItemsPerPage] = useState(10);
   // Фильтры калейдоскопа (линия, тип, период, статус — множественный выбор)
@@ -2369,7 +2377,7 @@ export default function UniversitiesPage() {
   // При открытии вкладки «Мероприятия» в Личном кабинете ДРП — сброс фильтров и страницы
   useEffect(() => {
     if (!selectedUniversity || universityDetailTab !== "drpCabinet" || drpCabinetSubTab !== "events") return;
-    setDrpEventsFeedFilters({ type: null, year: null });
+    setDrpEventsFeedFilters({ cooperationLine: [], type: [], year: [], status: [] });
     setDrpEventsFeedCurrentPage(1);
   }, [selectedUniversity, universityDetailTab, drpCabinetSubTab]);
 
@@ -2774,7 +2782,7 @@ export default function UniversitiesPage() {
     type: "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication" | "";
     date: string;
     endDate: string;
-    status: "planned" | "in_progress" | "completed";
+    status: Event["status"];
     comments: string;
     responsiblePerson: string[];
     mainCooperationLine: string;
@@ -4501,6 +4509,7 @@ export default function UniversitiesPage() {
       planned: university.events.filter(e => e.status === "planned").length,
       in_progress: university.events.filter(e => e.status === "in_progress").length,
       completed: university.events.filter(e => e.status === "completed").length,
+      cancelled: university.events.filter(e => e.status === "cancelled").length,
     };
     return {
       byType,
@@ -7096,6 +7105,7 @@ export default function UniversitiesPage() {
                                 planned: "Запланировано",
                                 in_progress: "В процессе",
                                 completed: "Проведено",
+                                cancelled: "Отменено",
                               };
                               const allEvents = (university.events || []).filter((e) => e.showInEventsFeed !== false);
                               // Для каждого блока — мероприятия, отфильтрованные по двум другим критериям (чтобы блоки сужали варианты)
@@ -7156,6 +7166,7 @@ export default function UniversitiesPage() {
                                 planned: eventsForStatusBlock.filter((e) => e.status === "planned").length,
                                 in_progress: eventsForStatusBlock.filter((e) => e.status === "in_progress").length,
                                 completed: eventsForStatusBlock.filter((e) => e.status === "completed").length,
+                                cancelled: eventsForStatusBlock.filter((e) => e.status === "cancelled").length,
                               };
                               const eventsList = allEvents.filter((e) => {
                                 if (eventsFeedFilters.cooperationLine.length > 0 && !e.cooperationLine?.some((l) => eventsFeedFilters.cooperationLine.includes(l))) return false;
@@ -7235,6 +7246,7 @@ export default function UniversitiesPage() {
                                           { value: "planned", label: "Запланировано", count: byStatus.planned },
                                           { value: "in_progress", label: "В процессе", count: byStatus.in_progress },
                                           { value: "completed", label: "Проведено", count: byStatus.completed },
+                                          { value: "cancelled", label: "Отменено", count: byStatus.cancelled },
                                         ] as const).filter((item) => item.count > 0 || eventsFeedFilters.status.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
                                         selected={eventsFeedFilters.status}
                                         onChange={(selected) => {
@@ -7761,6 +7773,25 @@ export default function UniversitiesPage() {
                                               {stats.byStatus.completed}
                                             </Badge>
                                                 </div>
+                                          <div className="text-base">
+                                            <span className="text-muted-foreground">Отменено: </span>
+                                            <Badge 
+                                              variant="outline" 
+                                              className={cn(
+                                                "cursor-pointer",
+                                                getStatusBadgeColor("cancelled"),
+                                                eventFilters.status === "cancelled" && "ring-2 ring-primary"
+                                              )}
+                                              onClick={() => {
+                                                setEventFilters(prev => ({
+                                                  ...prev,
+                                                  status: prev.status === "cancelled" ? null : "cancelled"
+                                                }));
+                                              }}
+                                            >
+                                              {stats.byStatus.cancelled}
+                                            </Badge>
+                                                </div>
                                                         </div>
                                                     </div>
                                     </Card>
@@ -7802,6 +7833,7 @@ export default function UniversitiesPage() {
                                     planned: "Запланировано",
                                     in_progress: "В процессе",
                                     completed: "Проведено",
+                                    cancelled: "Отменено",
                                   };
                                   const getEventTypeBadgeVariant = (type: Event["type"]): "outline" => {
                                     return "outline"; // Используем outline для всех, чтобы кастомные цвета работали
@@ -11677,98 +11709,191 @@ export default function UniversitiesPage() {
                                     </Tabs>
                                   </TabsContent>
 
-                                  {/* Подтаб: Мероприятия — в стилистике вкладки «Мероприятия», с возможностью добавления через ДРП */}
+                                  {/* Подтаб: Мероприятия — те же выпадающие фильтры, что на вкладке «Лента мероприятий» */}
                                   <TabsContent value="events" className="space-y-4 mt-4">
                                     <div className="space-y-4">
                                       {(() => {
-                                        const stats = {
-                                          byType: {
-                                            careerDays: drpEvents.filter((e) => e.type === "careerDays").length,
-                                            expertParticipation: drpEvents.filter((e) => e.type === "expertParticipation").length,
-                                            caseChampionships: drpEvents.filter((e) => e.type === "caseChampionships").length,
-                                            meeting: drpEvents.filter((e) => e.type === "meeting").length,
-                                            communication: drpEvents.filter((e) => e.type === "communication").length,
-                                          },
+                                        const eventStatusLabels: Record<Event["status"], string> = {
+                                          planned: "Запланировано",
+                                          in_progress: "В процессе",
+                                          completed: "Проведено",
+                                          cancelled: "Отменено",
                                         };
-                                        const yearsMap = drpEvents.reduce<Record<number, number>>((acc, e) => {
+                                        const eventsForLineBlock = drpEvents.filter((e) => {
+                                          if (drpEventsFeedFilters.type.length > 0 && !drpEventsFeedFilters.type.includes(e.type)) return false;
+                                          if (drpEventsFeedFilters.year.length > 0) {
+                                            const eventYear = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
+                                            if (!eventYear || !drpEventsFeedFilters.year.includes(eventYear)) return false;
+                                          }
+                                          if (drpEventsFeedFilters.status.length > 0 && !drpEventsFeedFilters.status.includes(e.status)) return false;
+                                          return true;
+                                        });
+                                        const eventsForTypeBlock = drpEvents.filter((e) => {
+                                          if (drpEventsFeedFilters.cooperationLine.length > 0 && !e.cooperationLine?.some((l) => drpEventsFeedFilters.cooperationLine.includes(l))) return false;
+                                          if (drpEventsFeedFilters.year.length > 0) {
+                                            const eventYear = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
+                                            if (!eventYear || !drpEventsFeedFilters.year.includes(eventYear)) return false;
+                                          }
+                                          if (drpEventsFeedFilters.status.length > 0 && !drpEventsFeedFilters.status.includes(e.status)) return false;
+                                          return true;
+                                        });
+                                        const eventsForYearBlock = drpEvents.filter((e) => {
+                                          if (drpEventsFeedFilters.cooperationLine.length > 0 && !e.cooperationLine?.some((l) => drpEventsFeedFilters.cooperationLine.includes(l))) return false;
+                                          if (drpEventsFeedFilters.type.length > 0 && !drpEventsFeedFilters.type.includes(e.type)) return false;
+                                          if (drpEventsFeedFilters.status.length > 0 && !drpEventsFeedFilters.status.includes(e.status)) return false;
+                                          return true;
+                                        });
+                                        const eventsForStatusBlock = drpEvents.filter((e) => {
+                                          if (drpEventsFeedFilters.cooperationLine.length > 0 && !e.cooperationLine?.some((l) => drpEventsFeedFilters.cooperationLine.includes(l))) return false;
+                                          if (drpEventsFeedFilters.type.length > 0 && !drpEventsFeedFilters.type.includes(e.type)) return false;
+                                          if (drpEventsFeedFilters.year.length > 0) {
+                                            const eventYear = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
+                                            if (!eventYear || !drpEventsFeedFilters.year.includes(eventYear)) return false;
+                                          }
+                                          return true;
+                                        });
+                                        const byCooperationLine = {
+                                          drp: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("drp")).length,
+                                          bko: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("bko")).length,
+                                          cntr: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("cntr")).length,
+                                          ecosystem: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("ecosystem")).length,
+                                          dkm: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("dkm")).length,
+                                        };
+                                        const byType = {
+                                          careerDays: eventsForTypeBlock.filter((e) => e.type === "careerDays").length,
+                                          expertParticipation: eventsForTypeBlock.filter((e) => e.type === "expertParticipation").length,
+                                          caseChampionships: eventsForTypeBlock.filter((e) => e.type === "caseChampionships").length,
+                                          meeting: eventsForTypeBlock.filter((e) => e.type === "meeting").length,
+                                          communication: eventsForTypeBlock.filter((e) => e.type === "communication").length,
+                                        };
+                                        const yearsMap = eventsForYearBlock.reduce<Record<number, number>>((acc, e) => {
                                           const y = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
                                           if (y) acc[y] = (acc[y] || 0) + 1;
                                           return acc;
                                         }, {});
                                         const yearsSorted = Object.keys(yearsMap).map(Number).sort((a, b) => a - b);
+                                        const byStatus = {
+                                          planned: eventsForStatusBlock.filter((e) => e.status === "planned").length,
+                                          in_progress: eventsForStatusBlock.filter((e) => e.status === "in_progress").length,
+                                          completed: eventsForStatusBlock.filter((e) => e.status === "completed").length,
+                                          cancelled: eventsForStatusBlock.filter((e) => e.status === "cancelled").length,
+                                        };
                                         const filteredDrpEvents = drpEvents.filter((e) => {
-                                          if (drpEventsFeedFilters.type && e.type !== drpEventsFeedFilters.type) return false;
-                                          if (drpEventsFeedFilters.year != null) {
+                                          if (drpEventsFeedFilters.cooperationLine.length > 0 && !e.cooperationLine?.some((l) => drpEventsFeedFilters.cooperationLine.includes(l))) return false;
+                                          if (drpEventsFeedFilters.type.length > 0 && !drpEventsFeedFilters.type.includes(e.type)) return false;
+                                          if (drpEventsFeedFilters.year.length > 0) {
                                             const eventYear = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
-                                            if (eventYear !== drpEventsFeedFilters.year) return false;
+                                            if (!eventYear || !drpEventsFeedFilters.year.includes(eventYear)) return false;
                                           }
+                                          if (drpEventsFeedFilters.status.length > 0 && !drpEventsFeedFilters.status.includes(e.status)) return false;
                                           return true;
                                         });
                                         return (
                                           <>
-                                            <div className="flex items-center gap-4 w-full">
-                                              <Card className="p-3 flex-[2]">
-                                                <div className="space-y-2">
-                                                  <Label className="text-base font-semibold">Тип мероприятия</Label>
-                                                  <div className="flex flex-wrap gap-3">
-                                                    <div className="text-base">
-                                                      <span className="text-muted-foreground">Дни карьеры: </span>
-                                                      <Badge variant="outline" className={cn("!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600 cursor-pointer", drpEventsFeedFilters.type === "careerDays" && "ring-2 ring-blue-600")} onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, type: p.type === "careerDays" ? null : "careerDays" }))}>{stats.byType.careerDays}</Badge>
-                                                    </div>
-                                                    <div className="text-base">
-                                                      <span className="text-muted-foreground">Экспертное участие: </span>
-                                                      <Badge variant="outline" className={cn("!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600 cursor-pointer", drpEventsFeedFilters.type === "expertParticipation" && "ring-2 ring-purple-600")} onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, type: p.type === "expertParticipation" ? null : "expertParticipation" }))}>{stats.byType.expertParticipation}</Badge>
-                                                    </div>
-                                                    <div className="text-base">
-                                                      <span className="text-muted-foreground">Кейс-чемпионат: </span>
-                                                      <Badge variant="outline" className={cn("!bg-green-500 !text-white !border-green-500 hover:!bg-green-600 cursor-pointer", drpEventsFeedFilters.type === "caseChampionships" && "ring-2 ring-green-600")} onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, type: p.type === "caseChampionships" ? null : "caseChampionships" }))}>{stats.byType.caseChampionships}</Badge>
-                                                    </div>
-                                                    <div className="text-base">
-                                                      <span className="text-muted-foreground">Встреча: </span>
-                                                      <Badge variant="outline" className={cn("!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600 cursor-pointer", drpEventsFeedFilters.type === "meeting" && "ring-2 ring-gray-600")} onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, type: p.type === "meeting" ? null : "meeting" }))}>{stats.byType.meeting}</Badge>
-                                                    </div>
-                                                    <div className="text-base">
-                                                      <span className="text-muted-foreground">Коммуникация: </span>
-                                                      <Badge variant="outline" className={cn("!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600 cursor-pointer", drpEventsFeedFilters.type === "communication" && "ring-2 ring-cyan-600")} onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, type: p.type === "communication" ? null : "communication" }))}>{stats.byType.communication}</Badge>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </Card>
-                                              <Card className="p-3 flex-[0.75] min-w-[140px]">
-                                                <div className="space-y-2">
-                                                  <Label className="text-base font-semibold">Период действия</Label>
-                                                  <div className="flex flex-wrap gap-3">
-                                                    {yearsSorted.length > 0 ? (
-                                                      yearsSorted.map((year) => {
-                                                        const count = yearsMap[year] ?? 0;
-                                                        const isActive = drpEventsFeedFilters.year === year;
-                                                        return (
-                                                          <div key={year} className="text-base">
-                                                            <span className="text-muted-foreground">{year}: </span>
-                                                            <Badge
-                                                              variant="outline"
-                                                              className={cn(
-                                                                "cursor-pointer bg-muted hover:bg-muted/80",
-                                                                isActive && "ring-4 ring-primary"
-                                                              )}
-                                                              onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, year: p.year === year ? null : year }))}
-                                                            >
-                                                              {count}
-                                                            </Badge>
-                                                          </div>
-                                                        );
-                                                      })
-                                                    ) : (
-                                                      <span className="text-sm text-muted-foreground">Нет данных</span>
-                                                    )}
-                                                  </div>
-                                                </div>
-                                              </Card>
+                                            <div className="flex flex-wrap items-end gap-4 mb-4">
+                                              <div className="flex-1 min-w-[180px] space-y-2">
+                                                <Label className="text-base font-semibold">Линия сотрудничества</Label>
+                                                <MultiSelect
+                                                  options={(["drp", "bko", "cntr", "ecosystem", "dkm"] as const)
+                                                    .filter((line) => (byCooperationLine[line] ?? 0) > 0 || drpEventsFeedFilters.cooperationLine.includes(line))
+                                                    .map((line) => ({ value: line, label: `${getCooperationLineLabel(line)} (${byCooperationLine[line] ?? 0})` }))}
+                                                  selected={drpEventsFeedFilters.cooperationLine}
+                                                  onChange={(selected) => {
+                                                    setDrpEventsFeedFilters((p) => ({ ...p, cooperationLine: selected }));
+                                                    setDrpEventsFeedCurrentPage(1);
+                                                  }}
+                                                  placeholder="Выберите линии"
+                                                />
+                                                {(["drp", "bko", "cntr", "ecosystem", "dkm"] as const).every((l) => (byCooperationLine[l] ?? 0) === 0) && (
+                                                  <span className="text-sm text-muted-foreground">Нет данных</span>
+                                                )}
+                                              </div>
+                                              <div className="flex-1 min-w-[180px] space-y-2">
+                                                <Label className="text-base font-semibold">Тип мероприятия</Label>
+                                                <MultiSelect
+                                                  options={([
+                                                    { value: "careerDays", label: "Дни карьеры", count: byType.careerDays },
+                                                    { value: "expertParticipation", label: "Экспертное участие", count: byType.expertParticipation },
+                                                    { value: "caseChampionships", label: "Кейс-чемпионат", count: byType.caseChampionships },
+                                                    { value: "meeting", label: "Встреча", count: byType.meeting },
+                                                    { value: "communication", label: "Коммуникация", count: byType.communication },
+                                                  ] as const).filter((item) => item.count > 0 || drpEventsFeedFilters.type.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
+                                                  selected={drpEventsFeedFilters.type}
+                                                  onChange={(selected) => {
+                                                    setDrpEventsFeedFilters((p) => ({ ...p, type: selected as Event["type"][] }));
+                                                    setDrpEventsFeedCurrentPage(1);
+                                                  }}
+                                                  placeholder="Выберите типы"
+                                                />
+                                              </div>
+                                              <div className="flex-1 min-w-[180px] space-y-2">
+                                                <Label className="text-base font-semibold">Период действия</Label>
+                                                <MultiSelect
+                                                  options={yearsSorted.map((year) => ({
+                                                    value: String(year),
+                                                    label: `${year} (${yearsMap[year] ?? 0})`,
+                                                  }))}
+                                                  selected={drpEventsFeedFilters.year.map(String)}
+                                                  onChange={(selected) => {
+                                                    setDrpEventsFeedFilters((p) => ({ ...p, year: selected.map(Number) }));
+                                                    setDrpEventsFeedCurrentPage(1);
+                                                  }}
+                                                  placeholder="Выберите годы"
+                                                />
+                                                {yearsSorted.length === 0 && (
+                                                  <span className="text-sm text-muted-foreground">Нет данных</span>
+                                                )}
+                                              </div>
+                                              <div className="flex-1 min-w-[180px] space-y-2">
+                                                <Label className="text-base font-semibold">Статус</Label>
+                                                <MultiSelect
+                                                  options={([
+                                                    { value: "planned", label: "Запланировано", count: byStatus.planned },
+                                                    { value: "in_progress", label: "В процессе", count: byStatus.in_progress },
+                                                    { value: "completed", label: "Проведено", count: byStatus.completed },
+                                                    { value: "cancelled", label: "Отменено", count: byStatus.cancelled },
+                                                  ] as const).filter((item) => item.count > 0 || drpEventsFeedFilters.status.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
+                                                  selected={drpEventsFeedFilters.status}
+                                                  onChange={(selected) => {
+                                                    setDrpEventsFeedFilters((p) => ({ ...p, status: selected as Event["status"][] }));
+                                                    setDrpEventsFeedCurrentPage(1);
+                                                  }}
+                                                  placeholder="Выберите статусы"
+                                                />
+                                              </div>
                                               <Button size="sm" onClick={() => { setIsDrpCabinetEventDialog(true); setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "drp", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" } }); setIsEventDialogOpen(true); }} disabled={!selectedUniversity}>
                                                 <Plus className="h-4 w-4 mr-1" />
                                                 Добавить мероприятие
                                               </Button>
                                             </div>
+                                            {(drpEventsFeedFilters.cooperationLine.length > 0 || drpEventsFeedFilters.type.length > 0 || drpEventsFeedFilters.year.length > 0 || drpEventsFeedFilters.status.length > 0) && (
+                                              <div className="flex flex-wrap items-center gap-2 mb-3">
+                                                {drpEventsFeedFilters.cooperationLine.length > 0 && (
+                                                  <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1">
+                                                    <span className="text-sm">Линия: {drpEventsFeedFilters.cooperationLine.map(getCooperationLineLabel).join(", ")}</span>
+                                                    <button type="button" onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, cooperationLine: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button>
+                                                  </Badge>
+                                                )}
+                                                {drpEventsFeedFilters.type.length > 0 && (
+                                                  <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1">
+                                                    <span className="text-sm">Тип: {drpEventsFeedFilters.type.map((t) => ({ careerDays: "Дни карьеры", expertParticipation: "Экспертное участие", caseChampionships: "Кейс-чемпионат", meeting: "Встреча", communication: "Коммуникация" }[t])).join(", ")}</span>
+                                                    <button type="button" onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, type: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button>
+                                                  </Badge>
+                                                )}
+                                                {drpEventsFeedFilters.year.length > 0 && (
+                                                  <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1">
+                                                    <span className="text-sm">Год: {drpEventsFeedFilters.year.join(", ")}</span>
+                                                    <button type="button" onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, year: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button>
+                                                  </Badge>
+                                                )}
+                                                {drpEventsFeedFilters.status.length > 0 && (
+                                                  <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1">
+                                                    <span className="text-sm">Статус: {drpEventsFeedFilters.status.map((s) => eventStatusLabels[s]).join(", ")}</span>
+                                                    <button type="button" onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, status: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button>
+                                                  </Badge>
+                                                )}
+                                              </div>
+                                            )}
                                             <div className="mb-2">
                                               <div className="text-sm text-muted-foreground">
                                                 Найдено: <span className="font-semibold text-foreground">{filteredDrpEvents.length}</span>{" "}
@@ -11793,6 +11918,7 @@ export default function UniversitiesPage() {
                                                     planned: "Запланировано",
                                                     in_progress: "В процессе",
                                                     completed: "Проведено",
+                                                    cancelled: "Отменено",
                                                   };
                                                   const getEventTypeBadgeClassName = (type: Event["type"]) => {
                                                     switch (type) {
@@ -16343,7 +16469,7 @@ export default function UniversitiesPage() {
                     </div>
                       <Select
                       value={newEvent.status}
-                      onValueChange={(value) => setNewEvent({ ...newEvent, status: value as "planned" | "in_progress" | "completed" })}
+                      onValueChange={(value) => setNewEvent({ ...newEvent, status: value as Event["status"] })}
                       >
                       <SelectTrigger id="event-status-dialog" className="w-full">
                           <SelectValue />
@@ -16351,7 +16477,8 @@ export default function UniversitiesPage() {
                         <SelectContent>
                           <SelectItem value="planned">Запланировано</SelectItem>
                           <SelectItem value="in_progress">В процессе</SelectItem>
-                        <SelectItem value="completed">Проведено</SelectItem>
+                          <SelectItem value="completed">Проведено</SelectItem>
+                          <SelectItem value="cancelled">Отменено</SelectItem>
                         </SelectContent>
                       </Select>
                   </div>
