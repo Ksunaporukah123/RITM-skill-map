@@ -33,10 +33,23 @@ export interface BankDepartment {
   name: string; // Название кафедры
 }
 
+// Единый тип мероприятия для ЦНТР, ДРП и Экосистемы
+export type EventType =
+  | "businessGame"    // Деловая игра
+  | "diplomaDefense"  // защита диплома
+  | "webinar"         // вебинар
+  | "lecture"         // лекция
+  | "conference"      // конференция
+  | "masterClass"     // мастер-класс
+  | "contact";        // контакт
+
+/** Варианты типа мероприятия и подписи — реэкспорт из lib для надёжной загрузки */
+export { EVENT_TYPE_OPTIONS, EVENT_TYPE_LABELS } from "@/lib/event-types";
+
 // Тип для мероприятия
 export interface Event {
   id: string;
-  type: "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication"; // Тип мероприятия
+  type: EventType; // Тип мероприятия
   date: string; // Дата начала проведения
   endDate: string; // Дата окончания проведения
   status: "planned" | "in_progress" | "completed" | "cancelled"; // Статус мероприятия
@@ -195,11 +208,19 @@ export interface CNTRAcceleratorItem {
   document?: string; // Документ (URL или путь к PDF файлу)
 }
 
-// Тип мероприятия ЦНТР (пока только встреча, можно расширить)
-export type CNTREventType = "meeting";
+// Тип мероприятия ЦНТР — тот же набор, что у ДРП и Экосистемы
+export type CNTREventType = EventType;
 
 // Статус мероприятия ЦНТР — такой же, как у мероприятий ДРП
 export type CNTREventStatus = "planned" | "in_progress" | "completed" | "cancelled";
+
+// Материал мероприятия (файл)
+export interface EventMaterial {
+  id: string;
+  name: string;
+  url: string;
+  uploadedAt: string;
+}
 
 // Тип для элемента мероприятий ЦНТР
 export interface CNTREventItem {
@@ -210,6 +231,8 @@ export interface CNTREventItem {
   branch?: string; // Головной ВУЗ или филиал
   description?: string; // Описание
   document?: string; // Документ (URL или путь к PDF файлу)
+  /** Информационные материалы (PDF, Word) */
+  materials?: EventMaterial[];
 }
 
 // Элемент таблицы «Проекты» в личном кабинете ЦНТР (дата, описание, статус)

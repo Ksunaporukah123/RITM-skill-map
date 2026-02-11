@@ -46,7 +46,7 @@ interface Contract {
 
 interface Event {
   id: string;
-  type: "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication";
+  type: "businessGame" | "diplomaDefense" | "webinar" | "lecture" | "conference" | "masterClass" | "contact";
   date: string;
   status: "planned" | "in_progress" | "completed";
 }
@@ -164,11 +164,13 @@ export function UniversityDashboard({ universities }: UniversityDashboardProps) 
       return eventYear === currentYear;
     });
     const eventsByType = {
-      careerDays: currentYearEvents.filter(e => e.type === "careerDays").length,
-      expertParticipation: currentYearEvents.filter(e => e.type === "expertParticipation").length,
-      caseChampionships: currentYearEvents.filter(e => e.type === "caseChampionships").length,
-      meeting: currentYearEvents.filter(e => e.type === "meeting").length,
-      communication: currentYearEvents.filter(e => e.type === "communication").length,
+      businessGame: currentYearEvents.filter(e => e.type === "businessGame").length,
+      diplomaDefense: currentYearEvents.filter(e => e.type === "diplomaDefense").length,
+      webinar: currentYearEvents.filter(e => e.type === "webinar").length,
+      lecture: currentYearEvents.filter(e => e.type === "lecture").length,
+      conference: currentYearEvents.filter(e => e.type === "conference").length,
+      masterClass: currentYearEvents.filter(e => e.type === "masterClass").length,
+      contact: currentYearEvents.filter(e => e.type === "contact").length,
     };
     const eventsByStatus = {
       planned: currentYearEvents.filter(e => e.status === "planned").length,
@@ -328,9 +330,13 @@ export function UniversityDashboard({ universities }: UniversityDashboardProps) 
           notMeets: drpPractitioners.filter(p => p.practiceStatus === "not_meets").length,
         },
         eventsByType: {
-          careerDays: drpEvents.filter(e => e.type === "careerDays").length,
-          expertParticipation: drpEvents.filter(e => e.type === "expertParticipation").length,
-          caseChampionships: drpEvents.filter(e => e.type === "caseChampionships").length,
+          businessGame: drpEvents.filter(e => e.type === "businessGame").length,
+          diplomaDefense: drpEvents.filter(e => e.type === "diplomaDefense").length,
+          webinar: drpEvents.filter(e => e.type === "webinar").length,
+          lecture: drpEvents.filter(e => e.type === "lecture").length,
+          conference: drpEvents.filter(e => e.type === "conference").length,
+          masterClass: drpEvents.filter(e => e.type === "masterClass").length,
+          contact: drpEvents.filter(e => e.type === "contact").length,
         },
       },
       bko: bkoStats,
@@ -551,11 +557,13 @@ export function UniversityDashboard({ universities }: UniversityDashboardProps) 
           <CardContent>
             <ResponsiveContainer width="100%" height={280}>
               <BarChart data={[
-                { name: "Дни карьеры", value: metrics.eventsByType.careerDays },
-                { name: "Экспертное участие", value: metrics.eventsByType.expertParticipation },
-                { name: "Кейс-чемпионаты", value: metrics.eventsByType.caseChampionships },
-                { name: "Встречи", value: metrics.eventsByType.meeting },
-                { name: "Коммуникации", value: metrics.eventsByType.communication },
+                { name: "Деловая игра", value: metrics.eventsByType.businessGame },
+                { name: "Защита диплома", value: metrics.eventsByType.diplomaDefense },
+                { name: "Вебинар", value: metrics.eventsByType.webinar },
+                { name: "Лекция", value: metrics.eventsByType.lecture },
+                { name: "Конференция", value: metrics.eventsByType.conference },
+                { name: "Мастер-класс", value: metrics.eventsByType.masterClass },
+                { name: "Контакт", value: metrics.eventsByType.contact },
               ]}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                 <XAxis 
@@ -972,9 +980,13 @@ export function UniversityDashboard({ universities }: UniversityDashboardProps) 
               <CardContent>
                 <ResponsiveContainer width="100%" height={280}>
                   <BarChart data={[
-                    { name: "Дни карьеры", value: lineData.drp.eventsByType.careerDays },
-                    { name: "Экспертное участие", value: lineData.drp.eventsByType.expertParticipation },
-                    { name: "Кейс-чемпионаты", value: lineData.drp.eventsByType.caseChampionships },
+                    { name: "Деловая игра", value: lineData.drp.eventsByType.businessGame },
+                    { name: "Защита диплома", value: lineData.drp.eventsByType.diplomaDefense },
+                    { name: "Вебинар", value: lineData.drp.eventsByType.webinar },
+                    { name: "Лекция", value: lineData.drp.eventsByType.lecture },
+                    { name: "Конференция", value: lineData.drp.eventsByType.conference },
+                    { name: "Мастер-класс", value: lineData.drp.eventsByType.masterClass },
+                    { name: "Контакт", value: lineData.drp.eventsByType.contact },
                   ]}>
                     <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                     <XAxis 

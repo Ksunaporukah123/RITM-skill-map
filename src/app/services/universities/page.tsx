@@ -59,8 +59,10 @@ import type {
   CooperationLineRecord,
   University,
   Student,
+  EventType,
 } from "@/types/universities";
 import { CASE_CHAMPIONSHIP_DIRECTIONS } from "@/types/universities";
+import { EVENT_TYPE_OPTIONS, EVENT_TYPE_LABELS } from "@/lib/event-types";
 import { 
   mockInternships, 
   mockApplications, 
@@ -277,12 +279,12 @@ const mockUniversities: University[] = [
       },
     ],
     events: [
-      { id: "event-mgu-1", type: "careerDays", date: "2024-02-10", endDate: "2024-02-12", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов факультета вычислительной математики и кибернетики.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-01-25", addedBy: "Иванова Е.С." },
-      { id: "event-mgu-2", type: "expertParticipation", date: "2024-06-15", endDate: "2024-06-15", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите магистерских диссертаций.", cooperationLine: ["bko"], branch: "Московский филиал", addedAt: "2024-06-01", addedBy: "Петров А.В." },
+      { id: "event-mgu-1", type: "conference", date: "2024-02-10", endDate: "2024-02-12", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов факультета вычислительной математики и кибернетики.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-01-25", addedBy: "Иванова Е.С." },
+      { id: "event-mgu-2", type: "diplomaDefense", date: "2024-06-15", endDate: "2024-06-15", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите магистерских диссертаций.", cooperationLine: ["bko"], branch: "Московский филиал", addedAt: "2024-06-01", addedBy: "Петров А.В." },
     ],
-    careerDays: true,
-    expertParticipation: true,
-    caseChampionships: true,
+    conference: true,
+    diplomaDefense: true,
+    businessGame: true,
     allEmployees: 150,
     internHiring: true,
     averageInternsPerYear: 25,
@@ -405,12 +407,12 @@ const mockUniversities: University[] = [
       },
     ],
     events: [
-      { id: "event-spbgu-1", type: "careerDays", date: "2024-03-20", endDate: "2024-03-22", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов экономического факультета СПбГУ.", cooperationLine: ["bko"], branch: "Санкт-Петербургский филиал", addedAt: "2024-03-05", addedBy: "Смирнова О.И." },
-      { id: "event-spbgu-2", type: "caseChampionships", date: "2024-05-25", endDate: "2024-05-27", status: "completed", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по финансовому моделированию.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2024-05-10", addedBy: "Козлов Д.П." },
+      { id: "event-spbgu-1", type: "conference", date: "2024-03-20", endDate: "2024-03-22", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для студентов экономического факультета СПбГУ.", cooperationLine: ["bko"], branch: "Санкт-Петербургский филиал", addedAt: "2024-03-05", addedBy: "Смирнова О.И." },
+      { id: "event-spbgu-2", type: "businessGame", date: "2024-05-25", endDate: "2024-05-27", status: "completed", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по финансовому моделированию.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2024-05-10", addedBy: "Козлов Д.П." },
     ],
-    careerDays: true,
-    expertParticipation: false,
-    caseChampionships: true,
+    conference: true,
+    diplomaDefense: false,
+    businessGame: true,
     allEmployees: 120,
     internHiring: true,
     averageInternsPerYear: 18,
@@ -487,13 +489,13 @@ const mockUniversities: University[] = [
       },
     ],
     events: [
-      { id: "event-mfti-1", type: "expertParticipation", date: "2024-04-05", endDate: "2024-04-05", status: "completed", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на конференции по машинному обучению.", cooperationLine: ["drp"], branch: "Московский филиал", addedAt: "2024-03-20", addedBy: "Соколов А.Н." },
-      { id: "event-mfti-2", type: "caseChampionships", date: "2024-06-01", endDate: "2024-06-03", status: "completed", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по разработке финансовых алгоритмов.", cooperationLine: ["bko"], branch: "Головной ВУЗ", addedAt: "2024-05-15", addedBy: "Волкова М.К." },
-      { id: "event-mfti-3", type: "expertParticipation", date: "2024-11-10", endDate: "2024-11-10", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на защите дипломных проектов.", cooperationLine: ["cntr"], branch: "Центральный офис", addedAt: "2024-10-28", addedBy: "Новиков Р.С." },
+      { id: "event-mfti-1", type: "diplomaDefense", date: "2024-04-05", endDate: "2024-04-05", status: "completed", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на конференции по машинному обучению.", cooperationLine: ["drp"], branch: "Московский филиал", addedAt: "2024-03-20", addedBy: "Соколов А.Н." },
+      { id: "event-mfti-2", type: "businessGame", date: "2024-06-01", endDate: "2024-06-03", status: "completed", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по разработке финансовых алгоритмов.", cooperationLine: ["bko"], branch: "Головной ВУЗ", addedAt: "2024-05-15", addedBy: "Волкова М.К." },
+      { id: "event-mfti-3", type: "diplomaDefense", date: "2024-11-10", endDate: "2024-11-10", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на защите дипломных проектов.", cooperationLine: ["cntr"], branch: "Центральный офис", addedAt: "2024-10-28", addedBy: "Новиков Р.С." },
     ],
-    careerDays: false,
-    expertParticipation: true,
-    caseChampionships: true,
+    conference: false,
+    diplomaDefense: true,
+    businessGame: true,
     allEmployees: 95,
     internHiring: true,
     averageInternsPerYear: 30,
@@ -771,48 +773,48 @@ const mockUniversities: University[] = [
       },
     ],
     events: [
-      { id: "event-hse-1", type: "careerDays", date: "2024-03-15", endDate: "2024-03-17", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Проведены дни карьеры для студентов экономического факультета. В мероприятии приняли участие более 150 студентов 3-4 курсов. Были организованы мастер-классы по подготовке резюме, тренинги по прохождению собеседований и презентации карьерных треков в банке. Особый интерес вызвала секция по работе с корпоративными клиентами.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-03-01", addedBy: "Иванова Е.С.", universityContact: { name: "Кузнецова Анна Владимировна", position: "Доцент кафедры финансов, куратор карьерного центра", phone: "+7 (495) 772-95-90", email: "a.kuznetsova@hse.ru" } },
-      { id: "event-hse-2", type: "expertParticipation", date: "2024-04-20", endDate: "2024-04-20", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите дипломных работ по направлению 'Финансы и кредит'. Оценено 12 выпускных работ, из которых 4 рекомендованы к публикации. Дана обратная связь по практической применимости исследований в банковской сфере. Три студента получили приглашение на стажировку.", cooperationLine: ["bko"], branch: "Московский филиал", addedAt: "2024-04-05", addedBy: "Петров А.В.", universityContact: { name: "Сидоров Дмитрий Петрович", position: "Заведующий кафедрой банковского дела", phone: "+7 (495) 772-95-91", email: "d.sidorov@hse.ru" } },
-      { id: "event-hse-3", type: "caseChampionships", date: "2024-05-10", endDate: "2024-05-12", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по банковскому делу. В финал вышли 8 команд из 24 участвовавших. Победила команда студентов 3 курса с проектом по оптимизации процессов кредитования МСБ. Призовой фонд составил 300 000 рублей. Все финалисты получили приоритетное право на стажировку.", cooperationLine: ["cntr"], branch: "Центральный офис", addedAt: "2024-04-25", addedBy: "Смирнова О.И.", universityContact: { name: "Орлова Мария Сергеевна", position: "Руководитель департамента развития карьеры студентов", phone: "+7 (495) 772-95-92", email: "m.orlova@hse.ru" } },
-      { id: "event-hse-4", type: "careerDays", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Запланированы дни карьеры для студентов IT-направления. Ожидается участие более 200 студентов. В программе: хакатон по разработке финтех-решений, воркшопы по машинному обучению в банкинге, нетворкинг-сессии с техническими лидерами банка. Подготовлены специальные треки для backend и frontend разработчиков.", cooperationLine: ["drp"], branch: "Санкт-Петербургский филиал", addedAt: "2024-09-10", addedBy: "Козлов Д.П." },
-      { id: "event-hse-5", type: "expertParticipation", date: "2024-10-15", endDate: "2024-10-15", status: "planned", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на международной конференции по финансовым технологиям. Запланирован доклад на тему «Трансформация банковских продуктов в эпоху AI». Ожидается участие представителей 15 университетов и 20 финансовых организаций. Будет организована панельная дискуссия с Q&A сессией.", cooperationLine: ["bko"], branch: "Головной ВУЗ", addedAt: "2024-09-30", addedBy: "Соколов А.Н." },
-      { id: "event-hse-6", type: "caseChampionships", date: "2024-11-20", endDate: "2024-11-22", status: "planned", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Организация кейс-чемпионата по управлению рисками в банковской сфере. Тематика включает кредитные, операционные и рыночные риски. Приглашены команды из 10 ведущих вузов страны. Общий призовой фонд — 500 000 рублей. Победители получат возможность пройти стажировку в департаменте риск-менеджмента.", cooperationLine: ["cntr"], branch: "Московский филиал", addedAt: "2024-11-05", addedBy: "Волкова М.К." },
-      { id: "event-hse-7", type: "careerDays", date: "2024-12-05", endDate: "2024-12-07", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для выпускников магистратуры. Фокус на карьерные возможности в банковском секторе для специалистов с углублённой подготовкой. Запланированы индивидуальные консультации с HR-партнёрами, экскурсии в офисы банка, презентации лидерских программ развития. Ожидается участие 80+ магистрантов.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-11-20", addedBy: "Новиков Р.С." },
-      { id: "event-hse-8", type: "meeting", date: "2024-01-15", endDate: "2024-01-15", status: "completed", responsiblePerson: ["person-1"], comments: "Встреча с руководством факультета по вопросам расширения сотрудничества. Обсуждены новые форматы взаимодействия: создание совместной магистерской программы, организация практикумов на базе банка, привлечение преподавателей в качестве консультантов. Подписан протокол о намерениях на 2024 год.", cooperationLine: ["bko"], branch: "Центральный офис", addedAt: "2024-01-08", addedBy: "Морозова Т.И.", universityContact: { name: "Волков Андрей Николаевич", position: "Декан факультета экономических наук", phone: "+7 (495) 772-95-93", email: "a.volkov@hse.ru" } },
-      { id: "event-hse-9", type: "communication", date: "2024-02-01", endDate: "2024-02-01", status: "completed", responsiblePerson: ["person-2"], comments: "Презентация программ стажировок для студентов 2 курса. Проведена в формате онлайн-вебинара с интерактивными элементами. Подключились 180 студентов. Представлены 8 направлений стажировок, условия участия, карьерные перспективы. Получено 45 заявок на участие в отборе непосредственно после мероприятия.", cooperationLine: ["cntr"], branch: "Московский филиал", addedAt: "2024-01-22", addedBy: "Лебедева А.С.", universityContact: { name: "Федорова Елена Игоревна", position: "Координатор программ стажировок", phone: "+7 (495) 772-95-94", email: "e.fedorova@hse.ru" } },
-      { id: "event-hse-10", type: "expertParticipation", date: "2024-02-20", endDate: "2024-02-20", status: "completed", responsiblePerson: ["person-3"], comments: "Экспертиза студенческих проектов по направлению «Финансовые технологии». Рассмотрено 15 проектов на различных стадиях готовности. Даны рекомендации по доработке для 8 команд. Три проекта отобраны для пилотирования в рамках акселератора банка. Выделено менторское сопровождение для перспективных команд.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-02-12", addedBy: "Федорова М.Д." },
-      { id: "event-hse-11", type: "caseChampionships", date: "2024-03-01", endDate: "2024-03-03", status: "completed", responsiblePerson: ["person-4"], comments: "Кейс-чемпионат по корпоративным финансам. Участвовало 20 команд, в финал вышли 6 лучших. Кейс был посвящён оптимизации структуры капитала крупного промышленного холдинга. Победители получили денежные призы и приглашение на летнюю стажировку в инвестиционном блоке банка.", cooperationLine: ["bko"], branch: "Санкт-Петербургский филиал", addedAt: "2024-02-18", addedBy: "Иванова Е.С." },
-      { id: "event-hse-12", type: "careerDays", date: "2024-04-05", endDate: "2024-04-07", status: "completed", responsiblePerson: ["person-5"], comments: "Дни карьеры для магистрантов программы «Финансы». Трёхдневное мероприятие включало: день знакомства с корпоративной культурой, день погружения в бизнес-процессы, день карьерного планирования. Участвовало 65 магистрантов. 28 из них подали заявки на позиции junior-аналитиков.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2024-03-22", addedBy: "Петров А.В." },
-      { id: "event-hse-13", type: "meeting", date: "2024-04-18", endDate: "2024-04-18", status: "completed", responsiblePerson: ["person-6"], comments: "Совещание по плану совместных мероприятий на 2024 год. Утверждён календарь из 24 мероприятий. Согласованы бюджеты на кейс-чемпионаты, дни карьеры и научные конференции. Определены ответственные лица с обеих сторон. Запланированы ежеквартальные статус-встречи для контроля выполнения.", cooperationLine: ["drp"], branch: "Московский филиал", addedAt: "2024-04-08", addedBy: "Смирнова О.И.", universityContact: { name: "Павлова Ольга Александровна", position: "Начальник управления по работе с партнёрами", phone: "+7 (495) 772-95-95", email: "o.pavlova@hse.ru" } },
-      { id: "event-hse-14", type: "communication", date: "2024-05-05", endDate: "2024-05-05", status: "completed", responsiblePerson: ["person-7"], comments: "Вебинар о карьерных возможностях в банке для студентов всех направлений. Спикеры — руководители ключевых подразделений банка. Охвачены темы: розничный бизнес, корпоративный блок, IT, риски, операционная деятельность. Зарегистрировалось 250 участников, средняя продолжительность просмотра — 75 минут.", cooperationLine: ["bko"], branch: "Центральный офис", addedAt: "2024-04-28", addedBy: "Козлов Д.П." },
-      { id: "event-hse-15", type: "expertParticipation", date: "2024-05-22", endDate: "2024-05-22", status: "completed", responsiblePerson: ["person-1"], comments: "Участие в жюри олимпиады по экономике среди студентов. Оценивались решения кейсов по макроэкономике и финансовым рынкам. В олимпиаде приняли участие 120 студентов из 8 вузов. Вручены специальные призы от банка трём лучшим участникам с приглашением на экскурсию в головной ВУЗ.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2024-05-12", addedBy: "Соколов А.Н." },
-      { id: "event-hse-16", type: "caseChampionships", date: "2024-06-10", endDate: "2024-06-12", status: "in_progress", responsiblePerson: ["person-2"], comments: "Кейс-чемпионат по риск-менеджменту в активной фазе. Регистрация завершена — подано 32 заявки от команд. Кейс посвящён разработке модели оценки кредитного риска для сегмента МСБ. Полуфиналы пройдут онлайн, финал — очно в офисе банка. Призовой фонд — 400 000 рублей.", cooperationLine: ["drp"], branch: "Санкт-Петербургский филиал", addedAt: "2024-05-28", addedBy: "Волкова М.К." },
-      { id: "event-hse-17", type: "careerDays", date: "2024-07-01", endDate: "2024-07-03", status: "planned", responsiblePerson: ["person-3"], comments: "Летняя школа «Карьера в банке» для студентов 1-3 курсов. Интенсивная трёхдневная программа: лекции от топ-менеджеров, бизнес-симуляции, работа в командах над мини-проектами. Планируется участие 100 студентов. Лучшие участники получат возможность досрочного зачисления в кадровый резерв.", cooperationLine: ["bko"], branch: "Головной ВУЗ", addedAt: "2024-06-18", addedBy: "Новиков Р.С." },
-      { id: "event-hse-18", type: "meeting", date: "2024-07-15", endDate: "2024-07-15", status: "planned", responsiblePerson: ["person-4"], comments: "Планирование осенних мероприятий с кафедрой банковского дела. На повестке: согласование тем для гостевых лекций, обсуждение формата осеннего кейс-чемпионата, планирование совместной научной конференции. Участвуют заведующий кафедрой, ведущие преподаватели и представители HR-блока банка.", cooperationLine: ["cntr"], branch: "Московский филиал", addedAt: "2024-07-05", addedBy: "Морозова Т.И." },
-      { id: "event-hse-19", type: "communication", date: "2024-08-20", endDate: "2024-08-20", status: "planned", responsiblePerson: ["person-5"], comments: "Онлайн-встреча с кураторами студенческих групп перед началом учебного года. Цель — информирование о программах сотрудничества банка с университетом, планах на семестр, возможностях для студентов. Кураторы получат информационные материалы для распространения среди студентов.", cooperationLine: ["drp"], branch: "Центральный офис", addedAt: "2024-08-08", addedBy: "Лебедева А.С." },
-      { id: "event-hse-20", type: "expertParticipation", date: "2024-09-10", endDate: "2024-09-10", status: "planned", responsiblePerson: ["person-6"], comments: "Экспертиза магистерских работ по направлению БКО. Планируется оценка 18 работ на тему управления банковскими операциями и клиентским опытом. Эксперты дадут развёрнутую обратную связь и рекомендации по развитию исследований. Лучшие работы будут рекомендованы к публикации в отраслевых журналах.", cooperationLine: ["bko"], branch: "Головной ВУЗ", addedAt: "2024-08-28", addedBy: "Федорова М.Д." },
-      { id: "event-hse-21", type: "caseChampionships", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-7"], comments: "Кейс-чемпионат по устойчивому развитию и ESG в банковской сфере. Актуальная тематика привлекает повышенный интерес студентов. Планируется участие команд из 12 вузов. Кейс разработан совместно с ESG-подразделением банка. Призёры получат возможность стажировки в проектах устойчивого развития.", cooperationLine: ["cntr"], branch: "Санкт-Петербургский филиал", addedAt: "2024-09-12", addedBy: "Иванова Е.С." },
-      { id: "event-hse-22", type: "careerDays", date: "2024-10-10", endDate: "2024-10-12", status: "planned", responsiblePerson: ["person-1"], comments: "Осенние дни карьеры для бакалавров 4 курса — целевой аудитории для программы Graduate Recruitment. Программа включает: ярмарку вакансий, speed-dating с руководителями подразделений, воркшопы по soft skills. Ожидается участие 180+ студентов. Цель — закрыть 40 позиций молодых специалистов.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-09-26", addedBy: "Петров А.В." },
-      { id: "event-hse-23", type: "meeting", date: "2024-10-25", endDate: "2024-10-25", status: "planned", responsiblePerson: ["person-2"], comments: "Подведение итогов года сотрудничества с руководством факультета. Будут представлены метрики эффективности: количество проведённых мероприятий, охват студентов, конверсия в стажёры и сотрудники. Обсуждение планов на 2025 год и новых форматов сотрудничества.", cooperationLine: ["bko"], branch: "Московский филиал", addedAt: "2024-10-14", addedBy: "Смирнова О.И." },
-      { id: "event-hse-24", type: "communication", date: "2024-11-05", endDate: "2024-11-05", status: "planned", responsiblePerson: ["person-3"], comments: "Информационная рассылка о программах стажировок 2025 года. Охват — все студенты 2-4 курсов профильных направлений (около 1500 человек). В рассылке: описание программ, сроки подачи заявок, истории успеха прошлых стажёров. Запланирована серия reminder-писем.", cooperationLine: ["cntr"], branch: "Центральный офис", addedAt: "2024-10-25", addedBy: "Козлов Д.П." },
-      { id: "event-hse-25", type: "expertParticipation", date: "2024-11-18", endDate: "2024-11-18", status: "planned", responsiblePerson: ["person-4"], comments: "Участие в межвузовской конференции «Банк и университет: модели эффективного партнёрства». Запланирован доклад о лучших практиках сотрудничества и совместной подготовки кадров. Ожидается участие представителей 25 вузов и 15 банков. Хорошая площадка для обмена опытом.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-11-05", addedBy: "Соколов А.Н." },
-      { id: "event-hse-26", type: "caseChampionships", date: "2024-12-02", endDate: "2024-12-04", status: "planned", responsiblePerson: ["person-5"], comments: "Зимний кейс-чемпионат по цифровым продуктам и инновациям в банкинге. Кейс разработан продуктовыми командами банка на основе реальных бизнес-задач. Участники предложат решения по улучшению мобильного приложения и внедрению новых цифровых сервисов. Призовой фонд — 350 000 рублей.", cooperationLine: ["bko"], branch: "Санкт-Петербургский филиал", addedAt: "2024-11-20", addedBy: "Волкова М.К." },
-      { id: "event-hse-27", type: "meeting", date: "2024-08-05", endDate: "2024-08-05", status: "cancelled", responsiblePerson: ["person-6"], comments: "Встреча с деканатом по согласованию осеннего графика отменена по инициативе вуза в связи с изменением внутреннего расписания.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-07-20", addedBy: "Новиков Р.С." },
-      { id: "event-hse-27b", type: "careerDays", date: "2024-12-15", endDate: "2024-12-17", status: "planned", responsiblePerson: ["person-6"], comments: "Дни карьеры для выпускников бакалавриата — завершающее крупное мероприятие года. Программа адаптирована под студентов, заканчивающих обучение зимой. Особый фокус на программы management trainee и позиции с быстрым карьерным ростом. Планируется участие 120 студентов.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2024-12-02", addedBy: "Новиков Р.С." },
-      { id: "event-hse-drp-cancelled-2", type: "expertParticipation", date: "2024-09-12", endDate: "2024-09-12", status: "cancelled", responsiblePerson: ["person-2"], comments: "Экспертное участие в защите магистерских работ отменено в связи с переносом сроков защиты на факультете.", cooperationLine: ["drp"], branch: "Московский филиал", addedAt: "2024-09-01", addedBy: "Петров А.В." },
-      { id: "event-hse-drp-cancelled-3", type: "careerDays", date: "2024-11-08", endDate: "2024-11-10", status: "cancelled", responsiblePerson: ["person-4"], comments: "Дни карьеры ДРП отменены по согласованию сторон из-за ограничений по помещению со стороны вуза.", cooperationLine: ["drp"], branch: "Санкт-Петербургский филиал", addedAt: "2024-10-20", addedBy: "Козлов Д.П." },
-      { id: "event-hse-28", type: "meeting", date: "2025-01-20", endDate: "2025-01-20", status: "planned", responsiblePerson: ["person-7"], comments: "Стартовая встреча по плану мероприятий 2025 года. Презентация стратегии работы с вузами, утверждение календаря мероприятий, распределение бюджетов и ответственных. Планируется расширить сотрудничество — добавить 3 новых формата мероприятий и увеличить охват студентов на 30%.", cooperationLine: ["drp"], branch: "Московский филиал", addedAt: "2025-01-10", addedBy: "Морозова Т.И." },
-      { id: "event-hse-29", type: "communication", date: "2025-02-10", endDate: "2025-02-10", status: "planned", responsiblePerson: ["person-1"], comments: "Презентация летних стажировок для магистрантов первого года обучения. Онлайн-формат с возможностью задать вопросы напрямую HR-специалистам и бывшим стажёрам. Представлены 12 направлений стажировок с описанием задач, команд и карьерных перспектив. Ожидается 150+ участников.", cooperationLine: ["bko"], branch: "Центральный офис", addedAt: "2025-01-28", addedBy: "Лебедева А.С." },
-      { id: "event-hse-30", type: "expertParticipation", date: "2025-03-05", endDate: "2025-03-05", status: "planned", responsiblePerson: ["person-2"], comments: "Экспертная сессия по тематике ЦНТР — центров научно-технологического развития. Обсуждение перспективных направлений сотрудничества: совместные R&D проекты, создание лабораторий, привлечение студентов к исследовательской работе. Участвуют представители научного блока университета и инновационного подразделения банка.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2025-02-22", addedBy: "Федорова М.Д." },
-      { id: "event-hse-ecosystem-1", type: "careerDays", date: "2025-04-10", endDate: "2025-04-12", status: "planned", responsiblePerson: ["person-1"], comments: "Дни карьеры Экосистема для студентов ВШЭ. Презентация программ партнёрской экосистемы банка, возможностей для стартапов и проектов в сфере финтех.", cooperationLine: ["ecosystem"], branch: "Головной ВУЗ", addedAt: "2025-03-20", addedBy: "Иванова Е.С.", universityContact: { name: "Кузнецова Анна Владимировна", position: "Куратор центра карьеры", phone: "+7 (495) 772-95-90", email: "a.kuznetsova@hse.ru" }, ecosystemData: { materials: [{ id: "m1", name: "Презентация Экосистема 2025.pdf", url: "#", uploadedAt: "2025-03-18T10:00:00Z" }], universityRating: 5, eventRating: 4, participantsCount: 180, interestedPersons: [{ id: "ip1", name: "Кузнецова Анна Владимировна", phone: "+7 (495) 772-95-90", comment: "" }, { id: "ip2", name: "Сидоров Дмитрий", phone: "+7 (495) 772-95-91", comment: "" }] } },
-      { id: "event-hse-ecosystem-2", type: "expertParticipation", date: "2025-04-25", endDate: "2025-04-25", status: "planned", responsiblePerson: ["person-3"], comments: "Участие в качестве эксперта в акселераторе стартапов Экосистема. Оценка проектов студентов ВШЭ в области финансовых технологий и digital-решений.", cooperationLine: ["ecosystem"], branch: "Московский филиал", addedAt: "2025-04-01", addedBy: "Смирнова О.И.", ecosystemData: { materials: [], universityRating: 4, eventRating: 5, participantsCount: 45, interestedPersons: [{ id: "ip3", name: "Орлова Мария Сергеевна", phone: "+7 (495) 772-95-92", comment: "" }] } },
-      { id: "event-hse-ecosystem-3", type: "caseChampionships", date: "2025-05-15", endDate: "2025-05-17", status: "planned", responsiblePerson: ["person-5"], comments: "Кейс-чемпионат Экосистема по интеграции API банковских сервисов. Студенты разрабатывают решения для подключения к экосистеме партнёров банка.", cooperationLine: ["ecosystem"], branch: "Головной ВУЗ", addedAt: "2025-04-28", addedBy: "Соколов А.Н.", universityContact: { name: "Орлова Мария Сергеевна", position: "Руководитель департамента карьеры", phone: "+7 (495) 772-95-92", email: "m.orlova@hse.ru" }, ecosystemData: { materials: [{ id: "m2", name: "Регламент кейс-чемпионата.docx", url: "#", uploadedAt: "2025-04-25T14:30:00Z" }, { id: "m3", name: "API-документация.pdf", url: "#", uploadedAt: "2025-04-26T09:00:00Z" }], universityRating: 5, eventRating: 5, participantsCount: 120, interestedPersons: [{ id: "ip4", name: "Орлова Мария Сергеевна", phone: "+7 (495) 772-95-92", comment: "" }, { id: "ip5", name: "Волков Андрей Николаевич", phone: "+7 (495) 772-95-93", comment: "" }] } },
-      { id: "event-hse-ecosystem-4", type: "meeting", date: "2025-03-18", endDate: "2025-03-18", status: "completed", responsiblePerson: ["person-2"], comments: "Встреча по запуску партнёрской программы Экосистема с ВШЭ. Обсуждение форматов взаимодействия: хакатоны, менторство, доступ к песочнице API.", cooperationLine: ["ecosystem"], branch: "Центральный офис", addedAt: "2025-03-05", addedBy: "Петров А.В.", universityContact: { name: "Волков Андрей Николаевич", position: "Декан факультета", phone: "+7 (495) 772-95-93", email: "a.volkov@hse.ru" }, ecosystemData: { materials: [{ id: "m4", name: "Протокол встречи.pdf", url: "#", uploadedAt: "2025-03-19T11:00:00Z" }], universityRating: 5, eventRating: 5, participantsCount: 12, interestedPersons: [{ id: "ip6", name: "Волков Андрей Николаевич", phone: "+7 (495) 772-95-93", comment: "" }, { id: "ip7", name: "Павлова Ольга", phone: "+7 (495) 772-95-95", comment: "" }] } },
-      { id: "event-hse-ecosystem-5", type: "communication", date: "2025-06-01", endDate: "2025-06-01", status: "planned", responsiblePerson: ["person-4"], comments: "Вебинар о возможностях экосистемы банка для студентов и выпускников ВШЭ. Презентация API Marketplace, программ для разработчиков и стартапов.", cooperationLine: ["ecosystem"], branch: "Московский филиал", addedAt: "2025-05-15", addedBy: "Козлов Д.П.", ecosystemData: { materials: [], universityRating: 4, eventRating: 4, participantsCount: 0, interestedPersons: [] } },
+      { id: "event-hse-1", type: "conference", date: "2024-03-15", endDate: "2024-03-17", status: "completed", responsiblePerson: ["person-1"], responsiblePersonImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face", comments: "Проведены дни карьеры для студентов экономического факультета. В мероприятии приняли участие более 150 студентов 3-4 курсов. Были организованы мастер-классы по подготовке резюме, тренинги по прохождению собеседований и презентации карьерных треков в банке. Особый интерес вызвала секция по работе с корпоративными клиентами.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-03-01", addedBy: "Иванова Е.С.", universityContact: { name: "Кузнецова Анна Владимировна", position: "Доцент кафедры финансов, куратор карьерного центра", phone: "+7 (495) 772-95-90", email: "a.kuznetsova@hse.ru" } },
+      { id: "event-hse-2", type: "diplomaDefense", date: "2024-04-20", endDate: "2024-04-20", status: "completed", responsiblePerson: ["person-2"], responsiblePersonImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face", comments: "Участие в качестве эксперта на защите дипломных работ по направлению 'Финансы и кредит'. Оценено 12 выпускных работ, из которых 4 рекомендованы к публикации. Дана обратная связь по практической применимости исследований в банковской сфере. Три студента получили приглашение на стажировку.", cooperationLine: ["bko"], branch: "Московский филиал", addedAt: "2024-04-05", addedBy: "Петров А.В.", universityContact: { name: "Сидоров Дмитрий Петрович", position: "Заведующий кафедрой банковского дела", phone: "+7 (495) 772-95-91", email: "d.sidorov@hse.ru" } },
+      { id: "event-hse-3", type: "businessGame", date: "2024-05-10", endDate: "2024-05-12", status: "completed", responsiblePerson: ["person-3"], responsiblePersonImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face", comments: "Кейс-чемпионат по банковскому делу. В финал вышли 8 команд из 24 участвовавших. Победила команда студентов 3 курса с проектом по оптимизации процессов кредитования МСБ. Призовой фонд составил 300 000 рублей. Все финалисты получили приоритетное право на стажировку.", cooperationLine: ["cntr"], branch: "Центральный офис", addedAt: "2024-04-25", addedBy: "Смирнова О.И.", universityContact: { name: "Орлова Мария Сергеевна", position: "Руководитель департамента развития карьеры студентов", phone: "+7 (495) 772-95-92", email: "m.orlova@hse.ru" } },
+      { id: "event-hse-4", type: "conference", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-4"], responsiblePersonImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face", comments: "Запланированы дни карьеры для студентов IT-направления. Ожидается участие более 200 студентов. В программе: хакатон по разработке финтех-решений, воркшопы по машинному обучению в банкинге, нетворкинг-сессии с техническими лидерами банка. Подготовлены специальные треки для backend и frontend разработчиков.", cooperationLine: ["drp"], branch: "Санкт-Петербургский филиал", addedAt: "2024-09-10", addedBy: "Козлов Д.П." },
+      { id: "event-hse-5", type: "diplomaDefense", date: "2024-10-15", endDate: "2024-10-15", status: "planned", responsiblePerson: ["person-5"], responsiblePersonImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face", comments: "Планируется участие в качестве эксперта на международной конференции по финансовым технологиям. Запланирован доклад на тему «Трансформация банковских продуктов в эпоху AI». Ожидается участие представителей 15 университетов и 20 финансовых организаций. Будет организована панельная дискуссия с Q&A сессией.", cooperationLine: ["bko"], branch: "Головной ВУЗ", addedAt: "2024-09-30", addedBy: "Соколов А.Н." },
+      { id: "event-hse-6", type: "businessGame", date: "2024-11-20", endDate: "2024-11-22", status: "planned", responsiblePerson: ["person-6"], responsiblePersonImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face", comments: "Организация кейс-чемпионата по управлению рисками в банковской сфере. Тематика включает кредитные, операционные и рыночные риски. Приглашены команды из 10 ведущих вузов страны. Общий призовой фонд — 500 000 рублей. Победители получат возможность пройти стажировку в департаменте риск-менеджмента.", cooperationLine: ["cntr"], branch: "Московский филиал", addedAt: "2024-11-05", addedBy: "Волкова М.К." },
+      { id: "event-hse-7", type: "conference", date: "2024-12-05", endDate: "2024-12-07", status: "planned", responsiblePerson: ["person-7"], responsiblePersonImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop&crop=face", comments: "Дни карьеры для выпускников магистратуры. Фокус на карьерные возможности в банковском секторе для специалистов с углублённой подготовкой. Запланированы индивидуальные консультации с HR-партнёрами, экскурсии в офисы банка, презентации лидерских программ развития. Ожидается участие 80+ магистрантов.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-11-20", addedBy: "Новиков Р.С." },
+      { id: "event-hse-8", type: "contact", date: "2024-01-15", endDate: "2024-01-15", status: "completed", responsiblePerson: ["person-1"], comments: "Встреча с руководством факультета по вопросам расширения сотрудничества. Обсуждены новые форматы взаимодействия: создание совместной магистерской программы, организация практикумов на базе банка, привлечение преподавателей в качестве консультантов. Подписан протокол о намерениях на 2024 год.", cooperationLine: ["bko"], branch: "Центральный офис", addedAt: "2024-01-08", addedBy: "Морозова Т.И.", universityContact: { name: "Волков Андрей Николаевич", position: "Декан факультета экономических наук", phone: "+7 (495) 772-95-93", email: "a.volkov@hse.ru" } },
+      { id: "event-hse-9", type: "webinar", date: "2024-02-01", endDate: "2024-02-01", status: "completed", responsiblePerson: ["person-2"], comments: "Презентация программ стажировок для студентов 2 курса. Проведена в формате онлайн-вебинара с интерактивными элементами. Подключились 180 студентов. Представлены 8 направлений стажировок, условия участия, карьерные перспективы. Получено 45 заявок на участие в отборе непосредственно после мероприятия.", cooperationLine: ["cntr"], branch: "Московский филиал", addedAt: "2024-01-22", addedBy: "Лебедева А.С.", universityContact: { name: "Федорова Елена Игоревна", position: "Координатор программ стажировок", phone: "+7 (495) 772-95-94", email: "e.fedorova@hse.ru" } },
+      { id: "event-hse-10", type: "diplomaDefense", date: "2024-02-20", endDate: "2024-02-20", status: "completed", responsiblePerson: ["person-3"], comments: "Экспертиза студенческих проектов по направлению «Финансовые технологии». Рассмотрено 15 проектов на различных стадиях готовности. Даны рекомендации по доработке для 8 команд. Три проекта отобраны для пилотирования в рамках акселератора банка. Выделено менторское сопровождение для перспективных команд.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-02-12", addedBy: "Федорова М.Д." },
+      { id: "event-hse-11", type: "businessGame", date: "2024-03-01", endDate: "2024-03-03", status: "completed", responsiblePerson: ["person-4"], comments: "Кейс-чемпионат по корпоративным финансам. Участвовало 20 команд, в финал вышли 6 лучших. Кейс был посвящён оптимизации структуры капитала крупного промышленного холдинга. Победители получили денежные призы и приглашение на летнюю стажировку в инвестиционном блоке банка.", cooperationLine: ["bko"], branch: "Санкт-Петербургский филиал", addedAt: "2024-02-18", addedBy: "Иванова Е.С." },
+      { id: "event-hse-12", type: "conference", date: "2024-04-05", endDate: "2024-04-07", status: "completed", responsiblePerson: ["person-5"], comments: "Дни карьеры для магистрантов программы «Финансы». Трёхдневное мероприятие включало: день знакомства с корпоративной культурой, день погружения в бизнес-процессы, день карьерного планирования. Участвовало 65 магистрантов. 28 из них подали заявки на позиции junior-аналитиков.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2024-03-22", addedBy: "Петров А.В." },
+      { id: "event-hse-13", type: "contact", date: "2024-04-18", endDate: "2024-04-18", status: "completed", responsiblePerson: ["person-6"], comments: "Совещание по плану совместных мероприятий на 2024 год. Утверждён календарь из 24 мероприятий. Согласованы бюджеты на кейс-чемпионаты, дни карьеры и научные конференции. Определены ответственные лица с обеих сторон. Запланированы ежеквартальные статус-встречи для контроля выполнения.", cooperationLine: ["drp"], branch: "Московский филиал", addedAt: "2024-04-08", addedBy: "Смирнова О.И.", universityContact: { name: "Павлова Ольга Александровна", position: "Начальник управления по работе с партнёрами", phone: "+7 (495) 772-95-95", email: "o.pavlova@hse.ru" } },
+      { id: "event-hse-14", type: "webinar", date: "2024-05-05", endDate: "2024-05-05", status: "completed", responsiblePerson: ["person-7"], comments: "Вебинар о карьерных возможностях в банке для студентов всех направлений. Спикеры — руководители ключевых подразделений банка. Охвачены темы: розничный бизнес, корпоративный блок, IT, риски, операционная деятельность. Зарегистрировалось 250 участников, средняя продолжительность просмотра — 75 минут.", cooperationLine: ["bko"], branch: "Центральный офис", addedAt: "2024-04-28", addedBy: "Козлов Д.П." },
+      { id: "event-hse-15", type: "diplomaDefense", date: "2024-05-22", endDate: "2024-05-22", status: "completed", responsiblePerson: ["person-1"], comments: "Участие в жюри олимпиады по экономике среди студентов. Оценивались решения кейсов по макроэкономике и финансовым рынкам. В олимпиаде приняли участие 120 студентов из 8 вузов. Вручены специальные призы от банка трём лучшим участникам с приглашением на экскурсию в головной ВУЗ.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2024-05-12", addedBy: "Соколов А.Н." },
+      { id: "event-hse-16", type: "businessGame", date: "2024-06-10", endDate: "2024-06-12", status: "in_progress", responsiblePerson: ["person-2"], comments: "Кейс-чемпионат по риск-менеджменту в активной фазе. Регистрация завершена — подано 32 заявки от команд. Кейс посвящён разработке модели оценки кредитного риска для сегмента МСБ. Полуфиналы пройдут онлайн, финал — очно в офисе банка. Призовой фонд — 400 000 рублей.", cooperationLine: ["drp"], branch: "Санкт-Петербургский филиал", addedAt: "2024-05-28", addedBy: "Волкова М.К." },
+      { id: "event-hse-17", type: "conference", date: "2024-07-01", endDate: "2024-07-03", status: "planned", responsiblePerson: ["person-3"], comments: "Летняя школа «Карьера в банке» для студентов 1-3 курсов. Интенсивная трёхдневная программа: лекции от топ-менеджеров, бизнес-симуляции, работа в командах над мини-проектами. Планируется участие 100 студентов. Лучшие участники получат возможность досрочного зачисления в кадровый резерв.", cooperationLine: ["bko"], branch: "Головной ВУЗ", addedAt: "2024-06-18", addedBy: "Новиков Р.С." },
+      { id: "event-hse-18", type: "contact", date: "2024-07-15", endDate: "2024-07-15", status: "planned", responsiblePerson: ["person-4"], comments: "Планирование осенних мероприятий с кафедрой банковского дела. На повестке: согласование тем для гостевых лекций, обсуждение формата осеннего кейс-чемпионата, планирование совместной научной конференции. Участвуют заведующий кафедрой, ведущие преподаватели и представители HR-блока банка.", cooperationLine: ["cntr"], branch: "Московский филиал", addedAt: "2024-07-05", addedBy: "Морозова Т.И." },
+      { id: "event-hse-19", type: "webinar", date: "2024-08-20", endDate: "2024-08-20", status: "planned", responsiblePerson: ["person-5"], comments: "Онлайн-встреча с кураторами студенческих групп перед началом учебного года. Цель — информирование о программах сотрудничества банка с университетом, планах на семестр, возможностях для студентов. Кураторы получат информационные материалы для распространения среди студентов.", cooperationLine: ["drp"], branch: "Центральный офис", addedAt: "2024-08-08", addedBy: "Лебедева А.С." },
+      { id: "event-hse-20", type: "diplomaDefense", date: "2024-09-10", endDate: "2024-09-10", status: "planned", responsiblePerson: ["person-6"], comments: "Экспертиза магистерских работ по направлению БКО. Планируется оценка 18 работ на тему управления банковскими операциями и клиентским опытом. Эксперты дадут развёрнутую обратную связь и рекомендации по развитию исследований. Лучшие работы будут рекомендованы к публикации в отраслевых журналах.", cooperationLine: ["bko"], branch: "Головной ВУЗ", addedAt: "2024-08-28", addedBy: "Федорова М.Д." },
+      { id: "event-hse-21", type: "businessGame", date: "2024-09-25", endDate: "2024-09-27", status: "planned", responsiblePerson: ["person-7"], comments: "Кейс-чемпионат по устойчивому развитию и ESG в банковской сфере. Актуальная тематика привлекает повышенный интерес студентов. Планируется участие команд из 12 вузов. Кейс разработан совместно с ESG-подразделением банка. Призёры получат возможность стажировки в проектах устойчивого развития.", cooperationLine: ["cntr"], branch: "Санкт-Петербургский филиал", addedAt: "2024-09-12", addedBy: "Иванова Е.С." },
+      { id: "event-hse-22", type: "conference", date: "2024-10-10", endDate: "2024-10-12", status: "planned", responsiblePerson: ["person-1"], comments: "Осенние дни карьеры для бакалавров 4 курса — целевой аудитории для программы Graduate Recruitment. Программа включает: ярмарку вакансий, speed-dating с руководителями подразделений, воркшопы по soft skills. Ожидается участие 180+ студентов. Цель — закрыть 40 позиций молодых специалистов.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-09-26", addedBy: "Петров А.В." },
+      { id: "event-hse-23", type: "contact", date: "2024-10-25", endDate: "2024-10-25", status: "planned", responsiblePerson: ["person-2"], comments: "Подведение итогов года сотрудничества с руководством факультета. Будут представлены метрики эффективности: количество проведённых мероприятий, охват студентов, конверсия в стажёры и сотрудники. Обсуждение планов на 2025 год и новых форматов сотрудничества.", cooperationLine: ["bko"], branch: "Московский филиал", addedAt: "2024-10-14", addedBy: "Смирнова О.И." },
+      { id: "event-hse-24", type: "webinar", date: "2024-11-05", endDate: "2024-11-05", status: "planned", responsiblePerson: ["person-3"], comments: "Информационная рассылка о программах стажировок 2025 года. Охват — все студенты 2-4 курсов профильных направлений (около 1500 человек). В рассылке: описание программ, сроки подачи заявок, истории успеха прошлых стажёров. Запланирована серия reminder-писем.", cooperationLine: ["cntr"], branch: "Центральный офис", addedAt: "2024-10-25", addedBy: "Козлов Д.П." },
+      { id: "event-hse-25", type: "diplomaDefense", date: "2024-11-18", endDate: "2024-11-18", status: "planned", responsiblePerson: ["person-4"], comments: "Участие в межвузовской конференции «Банк и университет: модели эффективного партнёрства». Запланирован доклад о лучших практиках сотрудничества и совместной подготовки кадров. Ожидается участие представителей 25 вузов и 15 банков. Хорошая площадка для обмена опытом.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-11-05", addedBy: "Соколов А.Н." },
+      { id: "event-hse-26", type: "businessGame", date: "2024-12-02", endDate: "2024-12-04", status: "planned", responsiblePerson: ["person-5"], comments: "Зимний кейс-чемпионат по цифровым продуктам и инновациям в банкинге. Кейс разработан продуктовыми командами банка на основе реальных бизнес-задач. Участники предложат решения по улучшению мобильного приложения и внедрению новых цифровых сервисов. Призовой фонд — 350 000 рублей.", cooperationLine: ["bko"], branch: "Санкт-Петербургский филиал", addedAt: "2024-11-20", addedBy: "Волкова М.К." },
+      { id: "event-hse-27", type: "contact", date: "2024-08-05", endDate: "2024-08-05", status: "cancelled", responsiblePerson: ["person-6"], comments: "Встреча с деканатом по согласованию осеннего графика отменена по инициативе вуза в связи с изменением внутреннего расписания.", cooperationLine: ["drp"], branch: "Головной ВУЗ", addedAt: "2024-07-20", addedBy: "Новиков Р.С." },
+      { id: "event-hse-27b", type: "conference", date: "2024-12-15", endDate: "2024-12-17", status: "planned", responsiblePerson: ["person-6"], comments: "Дни карьеры для выпускников бакалавриата — завершающее крупное мероприятие года. Программа адаптирована под студентов, заканчивающих обучение зимой. Особый фокус на программы management trainee и позиции с быстрым карьерным ростом. Планируется участие 120 студентов.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2024-12-02", addedBy: "Новиков Р.С." },
+      { id: "event-hse-drp-cancelled-2", type: "diplomaDefense", date: "2024-09-12", endDate: "2024-09-12", status: "cancelled", responsiblePerson: ["person-2"], comments: "Экспертное участие в защите магистерских работ отменено в связи с переносом сроков защиты на факультете.", cooperationLine: ["drp"], branch: "Московский филиал", addedAt: "2024-09-01", addedBy: "Петров А.В." },
+      { id: "event-hse-drp-cancelled-3", type: "conference", date: "2024-11-08", endDate: "2024-11-10", status: "cancelled", responsiblePerson: ["person-4"], comments: "Дни карьеры ДРП отменены по согласованию сторон из-за ограничений по помещению со стороны вуза.", cooperationLine: ["drp"], branch: "Санкт-Петербургский филиал", addedAt: "2024-10-20", addedBy: "Козлов Д.П." },
+      { id: "event-hse-28", type: "contact", date: "2025-01-20", endDate: "2025-01-20", status: "planned", responsiblePerson: ["person-7"], comments: "Стартовая встреча по плану мероприятий 2025 года. Презентация стратегии работы с вузами, утверждение календаря мероприятий, распределение бюджетов и ответственных. Планируется расширить сотрудничество — добавить 3 новых формата мероприятий и увеличить охват студентов на 30%.", cooperationLine: ["drp"], branch: "Московский филиал", addedAt: "2025-01-10", addedBy: "Морозова Т.И." },
+      { id: "event-hse-29", type: "webinar", date: "2025-02-10", endDate: "2025-02-10", status: "planned", responsiblePerson: ["person-1"], comments: "Презентация летних стажировок для магистрантов первого года обучения. Онлайн-формат с возможностью задать вопросы напрямую HR-специалистам и бывшим стажёрам. Представлены 12 направлений стажировок с описанием задач, команд и карьерных перспектив. Ожидается 150+ участников.", cooperationLine: ["bko"], branch: "Центральный офис", addedAt: "2025-01-28", addedBy: "Лебедева А.С." },
+      { id: "event-hse-30", type: "diplomaDefense", date: "2025-03-05", endDate: "2025-03-05", status: "planned", responsiblePerson: ["person-2"], comments: "Экспертная сессия по тематике ЦНТР — центров научно-технологического развития. Обсуждение перспективных направлений сотрудничества: совместные R&D проекты, создание лабораторий, привлечение студентов к исследовательской работе. Участвуют представители научного блока университета и инновационного подразделения банка.", cooperationLine: ["cntr"], branch: "Головной ВУЗ", addedAt: "2025-02-22", addedBy: "Федорова М.Д." },
+      { id: "event-hse-ecosystem-1", type: "conference", date: "2025-04-10", endDate: "2025-04-12", status: "planned", responsiblePerson: ["person-1"], comments: "Дни карьеры Экосистема для студентов ВШЭ. Презентация программ партнёрской экосистемы банка, возможностей для стартапов и проектов в сфере финтех.", cooperationLine: ["ecosystem"], branch: "Головной ВУЗ", addedAt: "2025-03-20", addedBy: "Иванова Е.С.", universityContact: { name: "Кузнецова Анна Владимировна", position: "Куратор центра карьеры", phone: "+7 (495) 772-95-90", email: "a.kuznetsova@hse.ru" }, ecosystemData: { materials: [{ id: "m1", name: "Презентация Экосистема 2025.pdf", url: "#", uploadedAt: "2025-03-18T10:00:00Z" }], universityRating: 5, eventRating: 4, participantsCount: 180, interestedPersons: [{ id: "ip1", name: "Кузнецова Анна Владимировна", phone: "+7 (495) 772-95-90", comment: "" }, { id: "ip2", name: "Сидоров Дмитрий", phone: "+7 (495) 772-95-91", comment: "" }] } },
+      { id: "event-hse-ecosystem-2", type: "diplomaDefense", date: "2025-04-25", endDate: "2025-04-25", status: "planned", responsiblePerson: ["person-3"], comments: "Участие в качестве эксперта в акселераторе стартапов Экосистема. Оценка проектов студентов ВШЭ в области финансовых технологий и digital-решений.", cooperationLine: ["ecosystem"], branch: "Московский филиал", addedAt: "2025-04-01", addedBy: "Смирнова О.И.", ecosystemData: { materials: [], universityRating: 4, eventRating: 5, participantsCount: 45, interestedPersons: [{ id: "ip3", name: "Орлова Мария Сергеевна", phone: "+7 (495) 772-95-92", comment: "" }] } },
+      { id: "event-hse-ecosystem-3", type: "businessGame", date: "2025-05-15", endDate: "2025-05-17", status: "planned", responsiblePerson: ["person-5"], comments: "Кейс-чемпионат Экосистема по интеграции API банковских сервисов. Студенты разрабатывают решения для подключения к экосистеме партнёров банка.", cooperationLine: ["ecosystem"], branch: "Головной ВУЗ", addedAt: "2025-04-28", addedBy: "Соколов А.Н.", universityContact: { name: "Орлова Мария Сергеевна", position: "Руководитель департамента карьеры", phone: "+7 (495) 772-95-92", email: "m.orlova@hse.ru" }, ecosystemData: { materials: [{ id: "m2", name: "Регламент кейс-чемпионата.docx", url: "#", uploadedAt: "2025-04-25T14:30:00Z" }, { id: "m3", name: "API-документация.pdf", url: "#", uploadedAt: "2025-04-26T09:00:00Z" }], universityRating: 5, eventRating: 5, participantsCount: 120, interestedPersons: [{ id: "ip4", name: "Орлова Мария Сергеевна", phone: "+7 (495) 772-95-92", comment: "" }, { id: "ip5", name: "Волков Андрей Николаевич", phone: "+7 (495) 772-95-93", comment: "" }] } },
+      { id: "event-hse-ecosystem-4", type: "contact", date: "2025-03-18", endDate: "2025-03-18", status: "completed", responsiblePerson: ["person-2"], comments: "Встреча по запуску партнёрской программы Экосистема с ВШЭ. Обсуждение форматов взаимодействия: хакатоны, менторство, доступ к песочнице API.", cooperationLine: ["ecosystem"], branch: "Центральный офис", addedAt: "2025-03-05", addedBy: "Петров А.В.", universityContact: { name: "Волков Андрей Николаевич", position: "Декан факультета", phone: "+7 (495) 772-95-93", email: "a.volkov@hse.ru" }, ecosystemData: { materials: [{ id: "m4", name: "Протокол встречи.pdf", url: "#", uploadedAt: "2025-03-19T11:00:00Z" }], universityRating: 5, eventRating: 5, participantsCount: 12, interestedPersons: [{ id: "ip6", name: "Волков Андрей Николаевич", phone: "+7 (495) 772-95-93", comment: "" }, { id: "ip7", name: "Павлова Ольга", phone: "+7 (495) 772-95-95", comment: "" }] } },
+      { id: "event-hse-ecosystem-5", type: "webinar", date: "2025-06-01", endDate: "2025-06-01", status: "planned", responsiblePerson: ["person-4"], comments: "Вебинар о возможностях экосистемы банка для студентов и выпускников ВШЭ. Презентация API Marketplace, программ для разработчиков и стартапов.", cooperationLine: ["ecosystem"], branch: "Московский филиал", addedAt: "2025-05-15", addedBy: "Козлов Д.П.", ecosystemData: { materials: [], universityRating: 4, eventRating: 4, participantsCount: 0, interestedPersons: [] } },
     ],
-    careerDays: true,
-    expertParticipation: true,
-    caseChampionships: true,
+    conference: true,
+    diplomaDefense: true,
+    businessGame: true,
     allEmployees: 200,
     internHiring: true,
     averageInternsPerYear: 35,
@@ -1375,9 +1377,9 @@ const mockUniversities: University[] = [
         contractBranch: "Уральский филиал"
       },
     ],
-    careerDays: true,
-    expertParticipation: false,
-    caseChampionships: false,
+    conference: true,
+    diplomaDefense: false,
+    businessGame: false,
     allEmployees: 80,
     internHiring: true,
     averageInternsPerYear: 15,
@@ -1438,9 +1440,9 @@ const mockUniversities: University[] = [
         contractBranch: "Головной ВУЗ"
       },
     ],
-    careerDays: false,
-    expertParticipation: true,
-    caseChampionships: true,
+    conference: false,
+    diplomaDefense: true,
+    businessGame: true,
     allEmployees: 70,
     internHiring: true,
     averageInternsPerYear: 12,
@@ -1509,9 +1511,9 @@ const mockUniversities: University[] = [
         contractBranch: "Головной ВУЗ"
       },
     ],
-    careerDays: true,
-    expertParticipation: true,
-    caseChampionships: false,
+    conference: true,
+    diplomaDefense: true,
+    businessGame: false,
     allEmployees: 110,
     internHiring: true,
     averageInternsPerYear: 20,
@@ -1568,9 +1570,9 @@ const mockUniversities: University[] = [
         contractBranch: "Дальневосточный филиал"
       },
     ],
-    careerDays: true,
-    expertParticipation: false,
-    caseChampionships: true,
+    conference: true,
+    diplomaDefense: false,
+    businessGame: true,
     allEmployees: 90,
     internHiring: true,
     averageInternsPerYear: 16,
@@ -1647,9 +1649,9 @@ const mockUniversities: University[] = [
         contractBranch: "Головной ВУЗ"
       },
     ],
-    careerDays: true,
-    expertParticipation: true,
-    caseChampionships: true,
+    conference: true,
+    diplomaDefense: true,
+    businessGame: true,
     allEmployees: 130,
     internHiring: true,
     averageInternsPerYear: 28,
@@ -1728,9 +1730,9 @@ const mockUniversities: University[] = [
         contractBranch: "Головной ВУЗ"
       },
     ],
-    careerDays: true,
-    expertParticipation: true,
-    caseChampionships: true,
+    conference: true,
+    diplomaDefense: true,
+    businessGame: true,
     allEmployees: 140,
     internHiring: true,
     averageInternsPerYear: 22,
@@ -1781,9 +1783,9 @@ const mockUniversities: University[] = [
         contractBranch: "Южный филиал"
       },
     ],
-    careerDays: true,
-    expertParticipation: false,
-    caseChampionships: false,
+    conference: true,
+    diplomaDefense: false,
+    businessGame: false,
     allEmployees: 75,
     internHiring: true,
     averageInternsPerYear: 14,
@@ -1836,9 +1838,9 @@ const mockUniversities: University[] = [
         contractBranch: "Головной ВУЗ",
       },
     ],
-    careerDays: true,
-    expertParticipation: true,
-    caseChampionships: false,
+    conference: true,
+    diplomaDefense: true,
+    businessGame: false,
     allEmployees: 90,
     internHiring: true,
     averageInternsPerYear: 18,
@@ -1890,9 +1892,9 @@ const mockUniversities: University[] = [
         contractBranch: "Дальневосточный филиал"
       },
     ],
-    careerDays: false,
-    expertParticipation: true,
-    caseChampionships: false,
+    conference: false,
+    diplomaDefense: true,
+    businessGame: false,
     allEmployees: 60,
     internHiring: false,
     averageInternsPerYear: 8,
@@ -1952,9 +1954,9 @@ const mockUniversities: University[] = [
         contractBranch: "Головной ВУЗ"
       },
     ],
-    careerDays: true,
-    expertParticipation: false,
-    caseChampionships: true,
+    conference: true,
+    diplomaDefense: false,
+    businessGame: true,
     allEmployees: 85,
     internHiring: true,
     averageInternsPerYear: 17,
@@ -1994,9 +1996,9 @@ const mockUniversities: University[] = [
         cooperationLine: "drp",
       },
     ],
-    careerDays: true,
-    expertParticipation: true,
-    caseChampionships: false,
+    conference: true,
+    diplomaDefense: true,
+    businessGame: false,
     allEmployees: 12,
     internHiring: true,
     region: "Великобритания",
@@ -2034,9 +2036,9 @@ const mockUniversities: University[] = [
         cooperationLine: "cntr",
       },
     ],
-    careerDays: false,
-    expertParticipation: true,
-    caseChampionships: true,
+    conference: false,
+    diplomaDefense: true,
+    businessGame: true,
     allEmployees: 5,
     internHiring: false,
     region: "Сингапур",
@@ -2259,13 +2261,15 @@ export default function UniversitiesPage() {
   
   // Состояние для добавления элемента мероприятий ЦНТР
   const [addCntrEventDialogOpen, setAddCntrEventDialogOpen] = useState(false);
-  const [newCntrEvent, setNewCntrEvent] = useState<{ type: CNTREventType; date: string; status: CNTREventStatus; branch: string; description: string }>({
-    type: "meeting",
+  const [newCntrEvent, setNewCntrEvent] = useState<{ type: CNTREventType; date: string; status: CNTREventStatus; branch: string; description: string; materials: { id: string; name: string; url: string; uploadedAt: string }[] }>({
+    type: "contact",
     date: "",
     status: "planned",
     branch: "",
     description: "",
+    materials: [],
   });
+  const cntrEventMaterialsFileInputRef = useRef<HTMLInputElement>(null);
   
   // Состояние для редактирования элемента мероприятий ЦНТР
   const [editCntrEventDialogOpen, setEditCntrEventDialogOpen] = useState(false);
@@ -2757,7 +2761,7 @@ export default function UniversitiesPage() {
   const [editingEvent, setEditingEvent] = useState<{ universityId: string; event: Event } | null>(null);
   const [isEventDialogOpen, setIsEventDialogOpen] = useState(false);
   const [eventFilters, setEventFilters] = useState<{
-    type: Event["type"] | null;
+    type: EventType | null;
     status: Event["status"] | null;
   }>({
     type: null,
@@ -2808,6 +2812,7 @@ export default function UniversitiesPage() {
   const [isCntrCabinetCooperationLineDialog, setIsCntrCabinetCooperationLineDialog] = useState(false);
   const [isEcosystemCabinetCooperationLineDialog, setIsEcosystemCabinetCooperationLineDialog] = useState(false);
   const [isDrpCabinetBranchLineDialog, setIsDrpCabinetBranchLineDialog] = useState(false);
+  const [isCntrCabinetBranchLineDialog, setIsCntrCabinetBranchLineDialog] = useState(false);
   const [isEcosystemCabinetBranchLineDialog, setIsEcosystemCabinetBranchLineDialog] = useState(false);
   const [isDrpCabinetEventDialog, setIsDrpCabinetEventDialog] = useState(false);
   const [isEcosystemCabinetEventDialog, setIsEcosystemCabinetEventDialog] = useState(false);
@@ -2851,7 +2856,7 @@ export default function UniversitiesPage() {
   ] as const;
 
   const [newEvent, setNewEvent] = useState<{
-    type: "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication" | "";
+    type: EventType | "";
     date: string;
     endDate: string;
     status: Event["status"];
@@ -3323,6 +3328,7 @@ export default function UniversitiesPage() {
     );
     setUniversities(updatedUniversities);
     setIsDrpCabinetBranchLineDialog(false);
+    setIsCntrCabinetBranchLineDialog(false);
     setIsEcosystemCabinetBranchLineDialog(false);
     setIsCooperationLineDialogOpen(false);
     setSelectedBranchId(null);
@@ -3392,6 +3398,7 @@ export default function UniversitiesPage() {
     );
     setUniversities(updatedUniversities);
     setIsDrpCabinetBranchLineDialog(false);
+    setIsCntrCabinetBranchLineDialog(false);
     setIsEcosystemCabinetBranchLineDialog(false);
     setIsCooperationLineDialogOpen(false);
     setEditingCooperationLine(null);
@@ -3759,16 +3766,20 @@ export default function UniversitiesPage() {
       const lines = main ? [main, ...additional] : additional;
       return lines.length > 0 ? (lines as Event["cooperationLine"]) : undefined;
     };
-    const ecosystemData = isEcosystemCabinetEventDialog ? {
-      materials: newEvent.ecosystemMaterials,
-      universityRating: newEvent.ecosystemUniversityRating,
-      eventRating: newEvent.ecosystemEventRating,
-      participantsCount: newEvent.ecosystemParticipantsCount || undefined,
-      interestedPersons: newEvent.ecosystemInterestedPersons.length > 0 ? newEvent.ecosystemInterestedPersons : undefined,
-    } : undefined;
+    const ecosystemData = isEcosystemCabinetEventDialog
+      ? {
+          materials: newEvent.ecosystemMaterials,
+          universityRating: newEvent.ecosystemUniversityRating,
+          eventRating: newEvent.ecosystemEventRating,
+          participantsCount: newEvent.ecosystemParticipantsCount || undefined,
+          interestedPersons: newEvent.ecosystemInterestedPersons.length > 0 ? newEvent.ecosystemInterestedPersons : undefined,
+        }
+      : (isDrpCabinetEventDialog && (newEvent.ecosystemMaterials?.length ?? 0) > 0)
+        ? { materials: newEvent.ecosystemMaterials }
+        : undefined;
     const event: Event = {
       id: `event-${Date.now()}`,
-      type: newEvent.type as "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication",
+      type: newEvent.type as EventType,
       date: newEvent.date,
       endDate: newEvent.endDate,
       status: newEvent.status,
@@ -3861,7 +3872,7 @@ export default function UniversitiesPage() {
         e.id === editingEvent.event.id
           ? {
               ...e,
-              type: newEvent.type as "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication",
+              type: newEvent.type as EventType,
               date: newEvent.date,
               endDate: newEvent.endDate,
               status: newEvent.status,
@@ -3873,13 +3884,17 @@ export default function UniversitiesPage() {
               universityContact: hasUniversityContact
                 ? { name: newEvent.universityContact.name.trim(), position: newEvent.universityContact.position?.trim() || undefined, phone: newEvent.universityContact.phone?.trim() || undefined, email: newEvent.universityContact.email?.trim() || undefined }
                 : undefined,
-              ecosystemData: isEcosystemCabinetEventDialog ? {
-                materials: newEvent.ecosystemMaterials,
-                universityRating: newEvent.ecosystemUniversityRating,
-                eventRating: newEvent.ecosystemEventRating,
-                participantsCount: newEvent.ecosystemParticipantsCount || undefined,
-                interestedPersons: newEvent.ecosystemInterestedPersons.length > 0 ? newEvent.ecosystemInterestedPersons : undefined,
-              } : e.ecosystemData,
+              ecosystemData: isEcosystemCabinetEventDialog
+                ? {
+                    materials: newEvent.ecosystemMaterials,
+                    universityRating: newEvent.ecosystemUniversityRating,
+                    eventRating: newEvent.ecosystemEventRating,
+                    participantsCount: newEvent.ecosystemParticipantsCount || undefined,
+                    interestedPersons: newEvent.ecosystemInterestedPersons.length > 0 ? newEvent.ecosystemInterestedPersons : undefined,
+                  }
+                : isDrpCabinetEventDialog
+                  ? { ...e.ecosystemData, materials: newEvent.ecosystemMaterials }
+                  : e.ecosystemData,
             }
           : e
       ) || [];
@@ -4163,7 +4178,7 @@ export default function UniversitiesPage() {
       const newEventId = `event-${Date.now()}`;
       const newEvent: Event = {
         id: newEventId,
-        type: "caseChampionships",
+        type: "businessGame",
         date: newParticipant.eventStartDate,
         endDate: newParticipant.eventEndDate,
         status: "completed",
@@ -4316,7 +4331,7 @@ export default function UniversitiesPage() {
       if (u.id === editingParticipant.universityId) {
         // Обновляем мероприятие, если оно существует
         const updatedEvents = u.events?.map(e => 
-          e.id === editingParticipant.eventId && e.type === "caseChampionships"
+          e.id === editingParticipant.eventId && e.type === "businessGame"
             ? {
                 ...e,
                 comments: editingParticipant.eventName.trim(),
@@ -4330,7 +4345,7 @@ export default function UniversitiesPage() {
         if (!u.events?.find(e => e.id === editingParticipant.eventId)) {
           const newEvent: Event = {
             id: editingParticipant.eventId,
-            type: "caseChampionships",
+            type: "businessGame",
             date: editingParticipant.eventStartDate,
             endDate: editingParticipant.eventEndDate,
             status: "completed",
@@ -4673,17 +4688,19 @@ export default function UniversitiesPage() {
     const university = universities.find(u => u.id === universityId);
     if (!university || !university.events) {
     return {
-        byType: { careerDays: 0, expertParticipation: 0, caseChampionships: 0, meeting: 0, communication: 0 },
+        byType: { businessGame: 0, diplomaDefense: 0, webinar: 0, lecture: 0, conference: 0, masterClass: 0, contact: 0 },
         byStatus: { planned: 0, in_progress: 0, completed: 0 },
         total: 0,
       };
     }
     const byType = {
-      careerDays: university.events.filter(e => e.type === "careerDays").length,
-      expertParticipation: university.events.filter(e => e.type === "expertParticipation").length,
-      caseChampionships: university.events.filter(e => e.type === "caseChampionships").length,
-      meeting: university.events.filter(e => e.type === "meeting").length,
-      communication: university.events.filter(e => e.type === "communication").length,
+      businessGame: university.events.filter(e => e.type === "businessGame").length,
+      diplomaDefense: university.events.filter(e => e.type === "diplomaDefense").length,
+      webinar: university.events.filter(e => e.type === "webinar").length,
+      lecture: university.events.filter(e => e.type === "lecture").length,
+      conference: university.events.filter(e => e.type === "conference").length,
+      masterClass: university.events.filter(e => e.type === "masterClass").length,
+      contact: university.events.filter(e => e.type === "contact").length,
     };
     const byStatus = {
       planned: university.events.filter(e => e.status === "planned").length,
@@ -7263,19 +7280,15 @@ export default function UniversitiesPage() {
                         <TabsContent value="eventsFeed" className="space-y-4 mt-4 outline-none focus:outline-none focus-visible:outline-none ring-0 focus-visible:ring-0 [&:focus]:outline-none [&:focus]:ring-0">
                           <div className="space-y-4 outline-none">
                             {(() => {
-                              const eventTypeLabels: Record<Event["type"], string> = {
-                                careerDays: "Дни карьеры",
-                                expertParticipation: "Экспертное участие",
-                                caseChampionships: "Кейс-чемпионат",
-                                meeting: "Встреча",
-                                communication: "Коммуникация",
-                              };
-                              const eventTypeBadgeColors: Record<Event["type"], string> = {
-                                careerDays: "bg-blue-100 text-blue-700 border-blue-300 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700",
-                                expertParticipation: "bg-purple-100 text-purple-700 border-purple-300 dark:bg-purple-900 dark:text-purple-200 dark:border-purple-700",
-                                caseChampionships: "bg-green-100 text-green-700 border-green-300 dark:bg-green-900 dark:text-green-200 dark:border-green-700",
-                                meeting: "bg-gray-100 text-gray-700 border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700",
-                                communication: "bg-cyan-100 text-cyan-700 border-cyan-300 dark:bg-cyan-900 dark:text-cyan-200 dark:border-cyan-700",
+                              const eventTypeLabels = EVENT_TYPE_LABELS;
+                              const eventTypeBadgeColors: Record<EventType, string> = {
+                                businessGame: "bg-blue-100 text-blue-700 border-blue-300 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700",
+                                diplomaDefense: "bg-purple-100 text-purple-700 border-purple-300 dark:bg-purple-900 dark:text-purple-200 dark:border-purple-700",
+                                webinar: "bg-cyan-100 text-cyan-700 border-cyan-300 dark:bg-cyan-900 dark:text-cyan-200 dark:border-cyan-700",
+                                lecture: "bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-900 dark:text-amber-200 dark:border-amber-700",
+                                conference: "bg-green-100 text-green-700 border-green-300 dark:bg-green-900 dark:text-green-200 dark:border-green-700",
+                                masterClass: "bg-orange-100 text-orange-700 border-orange-300 dark:bg-orange-900 dark:text-orange-200 dark:border-orange-700",
+                                contact: "bg-gray-100 text-gray-700 border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700",
                               };
                               const formatDate = (dateStr: string) => {
                                 if (!dateStr) return "—";
@@ -7330,12 +7343,14 @@ export default function UniversitiesPage() {
                                 ecosystem: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("ecosystem")).length,
                                 dkm: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("dkm")).length,
                               };
-                              const byType = {
-                                careerDays: eventsForTypeBlock.filter((e) => e.type === "careerDays").length,
-                                expertParticipation: eventsForTypeBlock.filter((e) => e.type === "expertParticipation").length,
-                                caseChampionships: eventsForTypeBlock.filter((e) => e.type === "caseChampionships").length,
-                                meeting: eventsForTypeBlock.filter((e) => e.type === "meeting").length,
-                                communication: eventsForTypeBlock.filter((e) => e.type === "communication").length,
+                              const byType: Record<EventType, number> = {
+                                businessGame: eventsForTypeBlock.filter((e) => e.type === "businessGame").length,
+                                diplomaDefense: eventsForTypeBlock.filter((e) => e.type === "diplomaDefense").length,
+                                webinar: eventsForTypeBlock.filter((e) => e.type === "webinar").length,
+                                lecture: eventsForTypeBlock.filter((e) => e.type === "lecture").length,
+                                conference: eventsForTypeBlock.filter((e) => e.type === "conference").length,
+                                masterClass: eventsForTypeBlock.filter((e) => e.type === "masterClass").length,
+                                contact: eventsForTypeBlock.filter((e) => e.type === "contact").length,
                               };
                               const yearsMap = eventsForYearBlock.reduce<Record<number, number>>((acc, e) => {
                                 const y = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
@@ -7387,16 +7402,10 @@ export default function UniversitiesPage() {
                                     <div className="flex-1 min-w-[180px] space-y-2">
                                       <Label className="text-base font-semibold">Тип мероприятия</Label>
                                       <MultiSelect
-                                        options={([
-                                          { value: "careerDays", label: "Дни карьеры", count: byType.careerDays },
-                                          { value: "expertParticipation", label: "Экспертное участие", count: byType.expertParticipation },
-                                          { value: "caseChampionships", label: "Кейс-чемпионат", count: byType.caseChampionships },
-                                          { value: "meeting", label: "Встреча", count: byType.meeting },
-                                          { value: "communication", label: "Коммуникация", count: byType.communication },
-                                        ] as const).filter((item) => item.count > 0 || eventsFeedFilters.type.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
+                                        options={EVENT_TYPE_OPTIONS.map(({ value, label }) => ({ value, label, count: byType[value] })).filter((item) => item.count > 0 || eventsFeedFilters.type.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
                                         selected={eventsFeedFilters.type}
                                         onChange={(selected) => {
-                                          setEventsFeedFilters((p) => ({ ...p, type: selected as Event["type"][] }));
+                                          setEventsFeedFilters((p) => ({ ...p, type: selected as EventType[] }));
                                           setEventsFeedCurrentPage(1);
                                         }}
                                         placeholder="Выберите типы"
@@ -7814,82 +7823,18 @@ export default function UniversitiesPage() {
                                     <Card className="p-3 flex-[2]">
                         <div className="space-y-2">
                                         <Label className="text-base font-semibold">Тип мероприятия</Label>
-                                        <div className="flex items-center gap-3">
-                                          <div className="text-base">
-                                            <span className="text-muted-foreground">Дни карьеры: </span>
-                          <Badge
-                            variant="outline"
-                                              className={`!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600 cursor-pointer ${eventFilters.type === "careerDays" ? "ring-2 ring-blue-600" : ""}`}
-                                              onClick={() => {
-                                                setEventFilters(prev => ({
-                                                  ...prev,
-                                                  type: prev.type === "careerDays" ? null : "careerDays"
-                                                }));
-                                              }}
-                                            >
-                                              {stats.byType.careerDays}
-                          </Badge>
-                        </div>
-                                          <div className="text-base">
-                                            <span className="text-muted-foreground">Экспертное участие: </span>
-                                            <Badge 
-                                variant="outline"
-                                              className={`!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600 cursor-pointer ${eventFilters.type === "expertParticipation" ? "ring-2 ring-purple-600" : ""}`}
-                                onClick={() => {
-                                                setEventFilters(prev => ({
-                                                  ...prev,
-                                                  type: prev.type === "expertParticipation" ? null : "expertParticipation"
-                                                }));
-                                              }}
-                                            >
-                                              {stats.byType.expertParticipation}
-                                            </Badge>
-                            </div>
-                                          <div className="text-base">
-                                            <span className="text-muted-foreground">Кейс-чемпионат: </span>
-                                            <Badge 
-                                              variant="outline" 
-                                              className={`!bg-green-500 !text-white !border-green-500 hover:!bg-green-600 cursor-pointer ${eventFilters.type === "caseChampionships" ? "ring-2 ring-green-600" : ""}`}
-                                              onClick={() => {
-                                                setEventFilters(prev => ({
-                                                  ...prev,
-                                                  type: prev.type === "caseChampionships" ? null : "caseChampionships"
-                                                }));
-                                              }}
-                                            >
-                                              {stats.byType.caseChampionships}
-                                            </Badge>
-                          </div>
-                                          <div className="text-base">
-                                            <span className="text-muted-foreground">Встреча: </span>
-                                            <Badge 
-                                              variant="outline" 
-                                              className={`!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600 cursor-pointer ${eventFilters.type === "meeting" ? "ring-2 ring-gray-600" : ""}`}
-                                              onClick={() => {
-                                                setEventFilters(prev => ({
-                                                  ...prev,
-                                                  type: prev.type === "meeting" ? null : "meeting"
-                                                }));
-                                              }}
-                                            >
-                                              {stats.byType.meeting}
-                                            </Badge>
-                          </div>
-                                          <div className="text-base">
-                                            <span className="text-muted-foreground">Коммуникация: </span>
-                                            <Badge 
-                                              variant="outline" 
-                                              className={`!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600 cursor-pointer ${eventFilters.type === "communication" ? "ring-2 ring-cyan-600" : ""}`}
-                                              onClick={() => {
-                                                setEventFilters(prev => ({
-                                                  ...prev,
-                                                  type: prev.type === "communication" ? null : "communication"
-                                                }));
-                                              }}
-                                            >
-                                              {stats.byType.communication}
-                                            </Badge>
-                          </div>
+                                        <div className="flex items-center gap-3 flex-wrap">
+                                          {EVENT_TYPE_OPTIONS.map(({ value, label }) => {
+                                            const colors: Record<EventType, string> = { businessGame: "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600 ring-blue-600", diplomaDefense: "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600 ring-purple-600", webinar: "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600 ring-cyan-600", lecture: "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600 ring-amber-600", conference: "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600 ring-green-600", masterClass: "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600 ring-orange-600", contact: "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600 ring-gray-600" };
+                                            return (
+                                              <div key={value} className="text-base">
+                                                <span className="text-muted-foreground">{label}: </span>
+                                                <Badge variant="outline" className={`${colors[value]} cursor-pointer ${eventFilters.type === value ? "ring-2" : ""}`} onClick={() => setEventFilters(prev => ({ ...prev, type: prev.type === value ? null : value }))}>
+                                                  {stats.byType[value]}
+                                                </Badge>
+                                              </div>
+                                            );
+                                          })}
                                         </div>
                                       </div>
                                     </Card>
@@ -8003,37 +7948,17 @@ export default function UniversitiesPage() {
                               return filteredEvents.length > 0 ? (
                               <div className="space-y-3">
                                   {filteredEvents.map((event) => {
-                                  const eventTypeLabels: Record<Event["type"], string> = {
-                                    careerDays: "Дни карьеры",
-                                    expertParticipation: "Экспертное участие",
-                                    caseChampionships: "Кейс-чемпионат",
-                                    meeting: "Встреча",
-                                    communication: "Коммуникация",
-                                  };
+                                  const eventTypeLabels = EVENT_TYPE_LABELS;
                                   const eventStatusLabels: Record<Event["status"], string> = {
                                     planned: "Запланировано",
                                     in_progress: "В процессе",
                                     completed: "Проведено",
                                     cancelled: "Отменено",
                                   };
-                                  const getEventTypeBadgeVariant = (type: Event["type"]): "outline" => {
-                                    return "outline"; // Используем outline для всех, чтобы кастомные цвета работали
-                                  };
-                                  const getEventTypeBadgeClassName = (type: Event["type"]) => {
-                                    switch (type) {
-                                      case "careerDays":
-                                        return "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600";
-                                      case "expertParticipation":
-                                        return "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600";
-                                      case "caseChampionships":
-                                        return "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600";
-                                      case "meeting":
-                                        return "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600";
-                                      case "communication":
-                                        return "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600";
-                                      default:
-                                        return "";
-                                    }
+                                  const getEventTypeBadgeVariant = (_type: EventType): "outline" => "outline";
+                                  const getEventTypeBadgeClassName = (type: EventType) => {
+                                    const map: Record<EventType, string> = { businessGame: "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600", diplomaDefense: "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600", webinar: "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600", lecture: "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600", conference: "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600", masterClass: "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600", contact: "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600" };
+                                    return map[type] ?? "";
                                   };
                                   return (
                                     <Card key={event.id} className="p-3">
@@ -8082,11 +8007,24 @@ export default function UniversitiesPage() {
                                               <span className="text-sm text-muted-foreground">{event.comments}</span>
                                             </div>
                                           )}
+                                          {(event.ecosystemData?.materials?.length ?? 0) > 0 && (
+                                            <div className="flex items-center gap-2 flex-wrap">
+                                              <Label className="text-sm font-semibold">Материалы:</Label>
+                                              <div className="flex flex-wrap gap-1">
+                                                {event.ecosystemData.materials.map((mat) => (
+                                                  <span key={mat.id} className="inline-flex items-center gap-1 rounded-md border bg-muted/30 px-2 py-0.5 text-xs">
+                                                    <FileText className="h-3 w-3 text-muted-foreground" />
+                                                    <span className="truncate max-w-[120px]" title={mat.name}>{mat.name}</span>
+                                                  </span>
+                                                ))}
+                                              </div>
+                                            </div>
+                                          )}
                                       <div className="flex items-center gap-2">
                                             <Label className="text-sm font-semibold">Ответственное лицо:</Label>
                                             <div className="flex items-center gap-2 flex-wrap">
-                                              {event.responsiblePerson.length > 0 ? (
-                                                event.responsiblePerson.map((personId, index) => {
+                                              {(event.responsiblePerson?.length ?? 0) > 0 ? (
+                                                (event.responsiblePerson ?? []).map((personId, index) => {
                                                   const person = responsiblePersons.find(p => p.value === personId);
                                                   return person ? (
                                                     <div key={index} className="flex items-center gap-2">
@@ -9438,44 +9376,148 @@ export default function UniversitiesPage() {
                                                 <div className="flex items-start justify-between gap-3">
                                                   <div className="flex-1">
                                                     <div className="flex items-center gap-3 flex-wrap">
-                                                      <Building className="h-4 w-4 text-muted-foreground" />
-                                                      <span className="font-medium">{curator.branch}</span>
-                                                      <span className="text-sm text-muted-foreground">{curator.city}</span>
+                                                      <Button
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        className="h-8 w-8 p-0 shrink-0"
+                                                        onClick={() => {
+                                                          const newCollapsed = new Set(collapsedBranches);
+                                                          if (newCollapsed.has(curator.id)) newCollapsed.delete(curator.id);
+                                                          else newCollapsed.add(curator.id);
+                                                          setCollapsedBranches(newCollapsed);
+                                                        }}
+                                                        title={collapsedBranches.has(curator.id) ? "Развернуть" : "Свернуть"}
+                                                      >
+                                                        {collapsedBranches.has(curator.id) ? <ChevronRight className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+                                                      </Button>
+                                                      <Badge variant="secondary" className="text-sm font-semibold px-3 py-1.5 flex items-center gap-1.5 bg-primary/10 text-primary border-primary/20">
+                                                        <Building2 className="h-4 w-4" />
+                                                        <span className="text-sm text-muted-foreground font-normal">Филиал:</span>
+                                                        <span className="text-base font-bold">{curator.branch}</span>
+                                                      </Badge>
+                                                      <Separator orientation="vertical" className="h-6" />
+                                                      <Badge variant="secondary" className="text-sm font-semibold px-3 py-1.5 flex items-center gap-1.5 bg-primary/10 text-primary border-primary/20">
+                                                        <MapPin className="h-4 w-4" />
+                                                        <span className="text-sm text-muted-foreground font-normal">Город:</span>
+                                                        <span className="text-base font-bold">{curator.city}</span>
+                                                      </Badge>
+                                                      {cntrLinesInBranch.length > 0 && (
+                                                        <>
+                                                          <Separator orientation="vertical" className="h-6" />
+                                                          <div className="flex items-center gap-2 flex-wrap">
+                                                            {cntrLinesInBranch.map((record, idx) => (
+                                                              <Badge key={record.id || idx} variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(record.line))}>
+                                                                {getCooperationLineLabel(record.line)}
+                                                              </Badge>
+                                                            ))}
+                                                          </div>
+                                                        </>
+                                                      )}
                                                     </div>
                                                   </div>
-                                                  <div className="flex gap-1">
-                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => { setEditingCuratorId(curator.id); setEditingCurator({ ...curator }); }}>
+                                                  <div className="flex gap-1 shrink-0">
+                                                    {cntrLinesInBranch.length < 3 && (
+                                                      <Button
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        className="h-8 w-8 p-0 shrink-0"
+                                                        onClick={() => {
+                                                          setIsCntrCabinetBranchLineDialog(true);
+                                                          setSelectedBranchId(curator.id);
+                                                          setNewCooperationLineForBranch({
+                                                            id: `clr-${Date.now()}`,
+                                                            line: "cntr",
+                                                            year: new Date().getFullYear(),
+                                                            responsible: [],
+                                                          });
+                                                          setIsCooperationLineDialogOpen(true);
+                                                        }}
+                                                        title="Добавить линию сотрудничества"
+                                                      >
+                                                        <Plus className="h-3.5 w-3.5" />
+                                                      </Button>
+                                                    )}
+                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => handleStartEditingCurator(curator)} title="Редактировать">
                                                       <Pencil className="h-3.5 w-3.5" />
                                                     </Button>
-                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteBranchDialog({ open: true, universityId: university.id, branchId: curator.id })}>
+                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteBranchDialog({ open: true, universityId: university.id, branchId: curator.id, branchName: curator.branch })} title="Удалить">
                                                       <Trash2 className="h-3.5 w-3.5 text-destructive" />
                                                     </Button>
                                                   </div>
                                                 </div>
-                                                {cntrLinesInBranch.length > 0 ? (
-                                                  <div className="mt-3 space-y-2">
-                                                    {cntrLinesInBranch.map((record) => (
-                                                      <Card key={record.id} className="p-3">
-                                                        <div className="flex items-start justify-between gap-3">
-                                                          <div className="flex items-center gap-2 flex-wrap">
-                                                            <span className={cn("shrink-0 h-2.5 w-2.5 rounded-full", record.isActive !== false ? "bg-green-500 dark:bg-green-400" : "bg-muted-foreground/40")} />
-                                                            <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(record.line))}>{getCooperationLineLabel(record.line)}</Badge>
-                                                            <span className="text-sm text-muted-foreground">Год: {record.year}</span>
+                                                {!collapsedBranches.has(curator.id) && (
+                                                  <div className="space-y-3 mt-3 pt-3 border-t">
+                                                    {cntrLinesInBranch.length > 0 ? (
+                                                      cntrLinesInBranch.map((record) => (
+                                                        <Card key={record.id} className="p-3">
+                                                          <div className="flex items-start justify-between gap-3">
+                                                            <div className="flex-1 space-y-1.5">
+                                                              <div className="flex items-center gap-2 flex-wrap">
+                                                                <span
+                                                                  className={cn(
+                                                                    "shrink-0 h-2.5 w-2.5 rounded-full",
+                                                                    record.isActive !== false ? "bg-green-500 dark:bg-green-400" : "bg-muted-foreground/40"
+                                                                  )}
+                                                                  title={record.isActive !== false ? "Работа с ВУЗом ведётся" : "Работа не ведётся"}
+                                                                />
+                                                                <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(record.line))}>
+                                                                  {getCooperationLineLabel(record.line)}
+                                                                </Badge>
+                                                                <div className="flex items-center gap-2">
+                                                                  <Label className="text-sm text-muted-foreground">Год начала сотрудничества:</Label>
+                                                                  <span className="text-base font-medium text-foreground">{record.year}</span>
+                                                                </div>
+                                                              </div>
+                                                              {record.responsible && record.responsible.length > 0 && (
+                                                                <div className="flex items-center gap-2">
+                                                                  <Label className="text-sm font-semibold">Ответственное лицо Банк:</Label>
+                                                                  <div className="flex flex-wrap gap-3">
+                                                                    {record.responsible.map((personId, personIndex) => {
+                                                                      const person = responsiblePersons.find(p => p.value === personId);
+                                                                      return person ? (
+                                                                        <div key={personIndex} className="flex items-center gap-2">
+                                                                          <Avatar className="h-10 w-10">
+                                                                            <AvatarImage src={person.image} alt={person.label} />
+                                                                            <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+                                                                              {person.label.split(" ").slice(1, 3).map(n => n[0]).join("").toUpperCase()}
+                                                                            </AvatarFallback>
+                                                                          </Avatar>
+                                                                          <div className="flex flex-col">
+                                                                            <span className="text-sm font-medium">{person.label}</span>
+                                                                            <span className="text-xs text-muted-foreground">{person.position}</span>
+                                                                          </div>
+                                                                        </div>
+                                                                      ) : null;
+                                                                    })}
+                                                                  </div>
+                                                                </div>
+                                                              )}
+                                                            </div>
+                                                            <div className="flex flex-col items-end gap-2 shrink-0">
+                                                              <div className="flex items-center gap-2">
+                                                                <Label htmlFor={`cntr-branch-line-active-${curator.id}-${record.id}`} className="text-xs text-muted-foreground whitespace-nowrap">Работа ведётся</Label>
+                                                                <Switch
+                                                                  id={`cntr-branch-line-active-${curator.id}-${record.id}`}
+                                                                  checked={record.isActive !== false}
+                                                                  onCheckedChange={(checked) => handleToggleCooperationLineActiveBranch(university.id, curator.id, record.id, checked)}
+                                                                />
+                                                              </div>
+                                                              <div className="flex gap-1">
+                                                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => handleEditCooperationLineInBranch(university.id, curator.id, record.id)}>
+                                                                  <Pencil className="h-3.5 w-3.5" />
+                                                                </Button>
+                                                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteCooperationLineDialog({ open: true, universityId: university.id, lineId: record.id, type: "branch", branchId: curator.id })}>
+                                                                  <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                                </Button>
+                                                              </div>
+                                                            </div>
                                                           </div>
-                                                          <div className="flex gap-1">
-                                                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => handleEditCooperationLineInBranch(university.id, curator.id, record.id)}>
-                                                              <Pencil className="h-3.5 w-3.5" />
-                                                            </Button>
-                                                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 shrink-0" onClick={() => setDeleteCooperationLineDialog({ open: true, universityId: university.id, lineId: record.id, type: "branch", branchId: curator.id })}>
-                                                              <Trash2 className="h-3.5 w-3.5 text-destructive" />
-                                                            </Button>
-                                                          </div>
-                                                        </div>
-                                                      </Card>
-                                                    ))}
+                                                        </Card>
+                                                      ))
+                                                    ) : (
+                                                      <p className="text-sm text-muted-foreground">Линии сотрудничества ЦНТР по филиалу не добавлены</p>
+                                                    )}
                                                   </div>
-                                                ) : (
-                                                  <p className="text-sm text-muted-foreground mt-3">Линии сотрудничества ЦНТР по филиалу не добавлены</p>
                                                 )}
                                               </>
                                             )}
@@ -10683,7 +10725,7 @@ export default function UniversitiesPage() {
                                   const handleEditCntrEvent = (item: CNTREventItem) => {
                                     if (!selectedUniversity) return;
                                     setEditingCntrEvent({ universityId: selectedUniversity, itemId: item.id });
-                                    setNewCntrEvent({ type: item.type || "meeting", date: item.date, status: item.status || "planned", branch: item.branch || "", description: item.description || "" });
+                                    setNewCntrEvent({ type: item.type || "contact", date: item.date, status: item.status || "planned", branch: item.branch || "", description: item.description || "", materials: item.materials ?? [] });
                                     setEditCntrEventDialogOpen(true);
                                   };
                                   const handleRemoveCntrEvent = (itemId: string) => {
@@ -10744,7 +10786,7 @@ export default function UniversitiesPage() {
                                           <Button
                                             size="sm"
                                             onClick={() => {
-                                              setNewCntrEvent({ type: "meeting", date: "", status: "planned", branch: "", description: "" });
+                                              setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", materials: [] });
                                               setEditingCntrEvent(null);
                                               setAddCntrEventDialogOpen(true);
                                             }}
@@ -10796,9 +10838,9 @@ export default function UniversitiesPage() {
                                                         <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor("cntr"))}>
                                                           {getCooperationLineLabel("cntr")}
                                                         </Badge>
-                                                        {(item.type === "meeting" || !item.type) && (
+                                                        {(item.type || "contact") && (
                                                           <Badge variant="outline" className="text-xs !bg-gray-500/10 !text-gray-700 dark:!text-gray-300 !border-gray-400">
-                                                            Встреча
+                                                            {EVENT_TYPE_LABELS[item.type || "contact"]}
                                                           </Badge>
                                                         )}
                                                         <Calendar className="h-4 w-4 text-muted-foreground" />
@@ -10812,6 +10854,19 @@ export default function UniversitiesPage() {
                                                       <div className="flex items-center gap-2">
                                                         <Label className="text-sm font-semibold">Комментарий:</Label>
                                                         <span className="text-sm text-muted-foreground">{item.description}</span>
+                                                      </div>
+                                                    )}
+                                                    {(item.materials?.length ?? 0) > 0 && (
+                                                      <div className="flex items-center gap-2 flex-wrap">
+                                                        <Label className="text-sm font-semibold">Материалы:</Label>
+                                                        <div className="flex flex-wrap gap-1">
+                                                          {item.materials.map((mat) => (
+                                                            <span key={mat.id} className="inline-flex items-center gap-1 rounded-md border bg-muted/30 px-2 py-0.5 text-xs">
+                                                              <FileText className="h-3 w-3 text-muted-foreground" />
+                                                              <span className="truncate max-w-[120px]" title={mat.name}>{mat.name}</span>
+                                                            </span>
+                                                          ))}
+                                                        </div>
                                                       </div>
                                                     )}
                                                     {item.branch && (
@@ -10848,7 +10903,7 @@ export default function UniversitiesPage() {
                                             size="sm"
                                             className="mt-3"
                                             onClick={() => {
-                                              setNewCntrEvent({ type: "meeting", date: "", status: "planned", branch: "", description: "" });
+                                              setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", materials: [] });
                                               setAddCntrEventDialogOpen(true);
                                             }}
                                             disabled={!selectedUniversity}
@@ -10880,7 +10935,7 @@ export default function UniversitiesPage() {
                                               <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                              <p>Выберите тип мероприятия (пока доступна только встреча)</p>
+                                              <p>Выберите тип мероприятия: Деловая игра, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт</p>
                                             </TooltipContent>
                                           </Tooltip>
                                         </div>
@@ -10889,7 +10944,9 @@ export default function UniversitiesPage() {
                                             <SelectValue placeholder="Выберите тип" />
                                           </SelectTrigger>
                                           <SelectContent>
-                                            <SelectItem value="meeting">Встреча</SelectItem>
+                                            {EVENT_TYPE_OPTIONS.map(({ value, label }) => (
+                                              <SelectItem key={value} value={value}>{label}</SelectItem>
+                                            ))}
                                           </SelectContent>
                                         </Select>
                                       </div>
@@ -10970,9 +11027,64 @@ export default function UniversitiesPage() {
                                       </div>
                                       <Textarea id="cntr-event-description" placeholder="Введите описание или комментарий..." value={newCntrEvent.description} onChange={(e) => setNewCntrEvent({ ...newCntrEvent, description: e.target.value })} rows={4} className="w-full" />
                                     </div>
+                                    <div className="space-y-2">
+                                      <Label>Информационные материалы</Label>
+                                      <p className="text-sm text-muted-foreground">PDF, Word (.doc, .docx)</p>
+                                      <input
+                                        ref={cntrEventMaterialsFileInputRef}
+                                        type="file"
+                                        accept=".pdf,.doc,.docx"
+                                        multiple
+                                        className="hidden"
+                                        onChange={(e) => {
+                                          const files = Array.from(e.target.files ?? []);
+                                          if (files.length === 0) return;
+                                          const validExts = [".pdf", ".doc", ".docx"];
+                                          const newMaterials = files
+                                            .filter((file) => {
+                                              const ext = file.name.toLowerCase().slice(file.name.lastIndexOf("."));
+                                              return validExts.includes(ext);
+                                            })
+                                            .map((file) => ({
+                                              id: `m-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+                                              name: file.name,
+                                              url: URL.createObjectURL(file),
+                                              uploadedAt: new Date().toISOString(),
+                                            }));
+                                          if (newMaterials.length > 0) {
+                                            setNewCntrEvent({ ...newCntrEvent, materials: [...(newCntrEvent.materials ?? []), ...newMaterials] });
+                                          }
+                                          e.target.value = "";
+                                        }}
+                                      />
+                                      <div className="flex flex-wrap gap-2">
+                                        <Button type="button" variant="outline" size="sm" onClick={() => cntrEventMaterialsFileInputRef.current?.click()}>
+                                          <Upload className="h-4 w-4 mr-2" />
+                                          Загрузить файлы
+                                        </Button>
+                                        {(newCntrEvent.materials ?? []).map((m) => (
+                                          <div key={m.id} className="flex items-center gap-1 rounded-md border bg-muted/30 px-2 py-1 text-sm">
+                                            <FileText className="h-3.5 w-3.5 text-muted-foreground" />
+                                            <span className="truncate max-w-[180px]" title={m.name}>{m.name}</span>
+                                            <Button
+                                              type="button"
+                                              variant="ghost"
+                                              size="icon"
+                                              className="h-5 w-5"
+                                              onClick={() => {
+                                                if (m.url.startsWith("blob:")) URL.revokeObjectURL(m.url);
+                                                setNewCntrEvent({ ...newCntrEvent, materials: (newCntrEvent.materials ?? []).filter((x) => x.id !== m.id) });
+                                              }}
+                                            >
+                                              <X className="h-3 w-3" />
+                                            </Button>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
                                   </div>
                                   <DialogFooter>
-                                    <Button variant="outline" onClick={() => { setAddCntrEventDialogOpen(false); setNewCntrEvent({ type: "meeting", date: "", status: "planned", branch: "", description: "" }); }}>Отмена</Button>
+                                    <Button variant="outline" onClick={() => { setAddCntrEventDialogOpen(false); setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", materials: [] }); }}>Отмена</Button>
                                     <Button
                                       onClick={() => {
                                         if (newCntrEvent.date && selectedUniversity) {
@@ -10983,13 +11095,14 @@ export default function UniversitiesPage() {
                                             status: newCntrEvent.status,
                                             branch: newCntrEvent.branch || undefined,
                                             description: newCntrEvent.description?.trim() || undefined,
+                                            materials: (newCntrEvent.materials?.length ?? 0) > 0 ? newCntrEvent.materials : undefined,
                                           };
                                           const updatedUniversities = universities.map((u) =>
                                             u.id === selectedUniversity ? { ...u, cntrEventsItems: [...(u.cntrEventsItems || []), newItem] } : u
                                           );
                                           setUniversities(updatedUniversities);
                                           setAddCntrEventDialogOpen(false);
-                                          setNewCntrEvent({ type: "meeting", date: "", status: "planned", branch: "", description: "" });
+                                          setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", materials: [] });
                                         }
                                       }}
                                       disabled={!newCntrEvent.date}
@@ -11018,7 +11131,7 @@ export default function UniversitiesPage() {
                                               <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                              <p>Выберите тип мероприятия (пока доступна только встреча)</p>
+                                              <p>Выберите тип мероприятия: Деловая игра, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт</p>
                                             </TooltipContent>
                                           </Tooltip>
                                         </div>
@@ -11027,7 +11140,9 @@ export default function UniversitiesPage() {
                                             <SelectValue placeholder="Выберите тип" />
                                           </SelectTrigger>
                                           <SelectContent>
-                                            <SelectItem value="meeting">Встреча</SelectItem>
+                                            {EVENT_TYPE_OPTIONS.map(({ value, label }) => (
+                                              <SelectItem key={value} value={value}>{label}</SelectItem>
+                                            ))}
                                           </SelectContent>
                                         </Select>
                                       </div>
@@ -11108,20 +11223,75 @@ export default function UniversitiesPage() {
                                       </div>
                                       <Textarea id="edit-cntr-event-description" placeholder="Введите описание или комментарий..." value={newCntrEvent.description} onChange={(e) => setNewCntrEvent({ ...newCntrEvent, description: e.target.value })} rows={4} className="w-full" />
                                     </div>
+                                    <div className="space-y-2">
+                                      <Label>Информационные материалы</Label>
+                                      <p className="text-sm text-muted-foreground">PDF, Word (.doc, .docx)</p>
+                                      <input
+                                        ref={cntrEventMaterialsFileInputRef}
+                                        type="file"
+                                        accept=".pdf,.doc,.docx"
+                                        multiple
+                                        className="hidden"
+                                        onChange={(e) => {
+                                          const files = Array.from(e.target.files ?? []);
+                                          if (files.length === 0) return;
+                                          const validExts = [".pdf", ".doc", ".docx"];
+                                          const newMaterials = files
+                                            .filter((file) => {
+                                              const ext = file.name.toLowerCase().slice(file.name.lastIndexOf("."));
+                                              return validExts.includes(ext);
+                                            })
+                                            .map((file) => ({
+                                              id: `m-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+                                              name: file.name,
+                                              url: URL.createObjectURL(file),
+                                              uploadedAt: new Date().toISOString(),
+                                            }));
+                                          if (newMaterials.length > 0) {
+                                            setNewCntrEvent({ ...newCntrEvent, materials: [...(newCntrEvent.materials ?? []), ...newMaterials] });
+                                          }
+                                          e.target.value = "";
+                                        }}
+                                      />
+                                      <div className="flex flex-wrap gap-2">
+                                        <Button type="button" variant="outline" size="sm" onClick={() => cntrEventMaterialsFileInputRef.current?.click()}>
+                                          <Upload className="h-4 w-4 mr-2" />
+                                          Загрузить файлы
+                                        </Button>
+                                        {(newCntrEvent.materials ?? []).map((m) => (
+                                          <div key={m.id} className="flex items-center gap-1 rounded-md border bg-muted/30 px-2 py-1 text-sm">
+                                            <FileText className="h-3.5 w-3.5 text-muted-foreground" />
+                                            <span className="truncate max-w-[180px]" title={m.name}>{m.name}</span>
+                                            <Button
+                                              type="button"
+                                              variant="ghost"
+                                              size="icon"
+                                              className="h-5 w-5"
+                                              onClick={() => {
+                                                if (m.url.startsWith("blob:")) URL.revokeObjectURL(m.url);
+                                                setNewCntrEvent({ ...newCntrEvent, materials: (newCntrEvent.materials ?? []).filter((x) => x.id !== m.id) });
+                                              }}
+                                            >
+                                              <X className="h-3 w-3" />
+                                            </Button>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
                                   </div>
                                   <DialogFooter>
-                                    <Button variant="outline" onClick={() => { setEditCntrEventDialogOpen(false); setEditingCntrEvent(null); setNewCntrEvent({ type: "meeting", date: "", status: "planned", branch: "", description: "" }); }}>Отмена</Button>
+                                    <Button variant="outline" onClick={() => { setEditCntrEventDialogOpen(false); setEditingCntrEvent(null); setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", materials: [] }); }}>Отмена</Button>
                                     <Button
                                       onClick={() => {
                                         if (newCntrEvent.date && selectedUniversity && editingCntrEvent) {
                                           const updatedUniversities = universities.map((u) =>
                                             u.id === selectedUniversity
-                                              ? { ...u, cntrEventsItems: (u.cntrEventsItems || []).map((item) => (item.id === editingCntrEvent.itemId ? { ...item, type: newCntrEvent.type, date: newCntrEvent.date, status: newCntrEvent.status, branch: newCntrEvent.branch || undefined, description: newCntrEvent.description?.trim() || undefined } : item)) }
+                                              ? { ...u, cntrEventsItems: (u.cntrEventsItems || []).map((item) => (item.id === editingCntrEvent.itemId ? { ...item, type: newCntrEvent.type, date: newCntrEvent.date, status: newCntrEvent.status, branch: newCntrEvent.branch || undefined, description: newCntrEvent.description?.trim() || undefined, materials: (newCntrEvent.materials?.length ?? 0) > 0 ? newCntrEvent.materials : undefined } : item)) }
                                               : u
                                           );
                                           setUniversities(updatedUniversities);
                                           setEditCntrEventDialogOpen(false);
-                                          setNewCntrEvent({ type: "meeting", date: "", status: "planned", branch: "", description: "" });
+                                          setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", materials: [] });
                                           setEditingCntrEvent(null);
                                         }
                                       }}
@@ -12879,12 +13049,14 @@ export default function UniversitiesPage() {
                                           ecosystem: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("ecosystem")).length,
                                           dkm: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("dkm")).length,
                                         };
-                                        const byType = {
-                                          careerDays: eventsForTypeBlock.filter((e) => e.type === "careerDays").length,
-                                          expertParticipation: eventsForTypeBlock.filter((e) => e.type === "expertParticipation").length,
-                                          caseChampionships: eventsForTypeBlock.filter((e) => e.type === "caseChampionships").length,
-                                          meeting: eventsForTypeBlock.filter((e) => e.type === "meeting").length,
-                                          communication: eventsForTypeBlock.filter((e) => e.type === "communication").length,
+                                        const byType: Record<EventType, number> = {
+                                          businessGame: eventsForTypeBlock.filter((e) => e.type === "businessGame").length,
+                                          diplomaDefense: eventsForTypeBlock.filter((e) => e.type === "diplomaDefense").length,
+                                          webinar: eventsForTypeBlock.filter((e) => e.type === "webinar").length,
+                                          lecture: eventsForTypeBlock.filter((e) => e.type === "lecture").length,
+                                          conference: eventsForTypeBlock.filter((e) => e.type === "conference").length,
+                                          masterClass: eventsForTypeBlock.filter((e) => e.type === "masterClass").length,
+                                          contact: eventsForTypeBlock.filter((e) => e.type === "contact").length,
                                         };
                                         const yearsMap = eventsForYearBlock.reduce<Record<number, number>>((acc, e) => {
                                           const y = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
@@ -12942,16 +13114,10 @@ export default function UniversitiesPage() {
                                               </div>
                                               <div className="min-w-0">
                                                 <MultiSelect
-                                                  options={([
-                                                    { value: "careerDays", label: "Дни карьеры", count: byType.careerDays },
-                                                    { value: "expertParticipation", label: "Экспертное участие", count: byType.expertParticipation },
-                                                    { value: "caseChampionships", label: "Кейс-чемпионат", count: byType.caseChampionships },
-                                                    { value: "meeting", label: "Встреча", count: byType.meeting },
-                                                    { value: "communication", label: "Коммуникация", count: byType.communication },
-                                                  ] as const).filter((item) => item.count > 0 || drpEventsFeedFilters.type.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
+                                                  options={EVENT_TYPE_OPTIONS.map(({ value, label }) => ({ value, label, count: byType[value] })).filter((item) => item.count > 0 || drpEventsFeedFilters.type.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
                                                   selected={drpEventsFeedFilters.type}
                                                   onChange={(selected) => {
-                                                    setDrpEventsFeedFilters((p) => ({ ...p, type: selected as Event["type"][] }));
+                                                    setDrpEventsFeedFilters((p) => ({ ...p, type: selected as EventType[] }));
                                                     setDrpEventsFeedCurrentPage(1);
                                                   }}
                                                   placeholder="Выберите типы"
@@ -13007,7 +13173,7 @@ export default function UniversitiesPage() {
                                                 )}
                                                 {drpEventsFeedFilters.type.length > 0 && (
                                                   <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1">
-                                                    <span className="text-sm">Тип: {drpEventsFeedFilters.type.map((t) => ({ careerDays: "Дни карьеры", expertParticipation: "Экспертное участие", caseChampionships: "Кейс-чемпионат", meeting: "Встреча", communication: "Коммуникация" }[t])).join(", ")}</span>
+                                                    <span className="text-sm">Тип: {drpEventsFeedFilters.type.map((t) => EVENT_TYPE_LABELS[t]).join(", ")}</span>
                                                     <button type="button" onClick={() => setDrpEventsFeedFilters((p) => ({ ...p, type: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button>
                                                   </Badge>
                                                 )}
@@ -13038,26 +13204,22 @@ export default function UniversitiesPage() {
                                               filteredDrpEvents.length > 0 ? (
                                               <div className="space-y-3">
                                                 {filteredDrpEvents.map((event) => {
-                                                  const eventTypeLabels: Record<Event["type"], string> = {
-                                                    careerDays: "Дни карьеры",
-                                                    expertParticipation: "Экспертное участие",
-                                                    caseChampionships: "Кейс-чемпионат",
-                                                    meeting: "Встреча",
-                                                    communication: "Коммуникация",
-                                                  };
+                                                  const eventTypeLabels = EVENT_TYPE_LABELS;
                                                   const eventStatusLabels: Record<Event["status"], string> = {
                                                     planned: "Запланировано",
                                                     in_progress: "В процессе",
                                                     completed: "Проведено",
                                                     cancelled: "Отменено",
                                                   };
-                                                  const getEventTypeBadgeClassName = (type: Event["type"]) => {
+                                                  const getEventTypeBadgeClassName = (type: EventType) => {
                                                     switch (type) {
-                                                      case "careerDays": return "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600";
-                                                      case "expertParticipation": return "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600";
-                                                      case "caseChampionships": return "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600";
-                                                      case "meeting": return "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600";
-                                                      case "communication": return "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600";
+                                                      case "businessGame": return "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600";
+                                                      case "diplomaDefense": return "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600";
+                                                      case "webinar": return "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600";
+                                                      case "lecture": return "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600";
+                                                      case "conference": return "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600";
+                                                      case "masterClass": return "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600";
+                                                      case "contact": return "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600";
                                                       default: return "";
                                                     }
                                                   };
@@ -13088,6 +13250,19 @@ export default function UniversitiesPage() {
                                                             <div className="flex items-center gap-2">
                                                               <Label className="text-sm font-semibold">Комментарий:</Label>
                                                               <span className="text-sm text-muted-foreground">{event.comments}</span>
+                                                            </div>
+                                                          )}
+                                                          {(event.ecosystemData?.materials?.length ?? 0) > 0 && (
+                                                            <div className="flex items-center gap-2 flex-wrap">
+                                                              <Label className="text-sm font-semibold">Материалы:</Label>
+                                                              <div className="flex flex-wrap gap-1">
+                                                                {event.ecosystemData.materials.map((mat) => (
+                                                                  <span key={mat.id} className="inline-flex items-center gap-1 rounded-md border bg-muted/30 px-2 py-0.5 text-xs">
+                                                                    <FileText className="h-3 w-3 text-muted-foreground" />
+                                                                    <span className="truncate max-w-[120px]" title={mat.name}>{mat.name}</span>
+                                                                  </span>
+                                                                ))}
+                                                              </div>
                                                             </div>
                                                           )}
                                                           {/* Горизонтальная черта и блок: тег филиала, ВУЗ (контакт мероприятия или университета), Банк */}
@@ -16123,7 +16298,7 @@ export default function UniversitiesPage() {
                                                   
                                                   {/* Таблица: Заинтересованные лица */}
                                                   {practitionersSubTab === "interestedPersons" && (() => {
-                                                    const eventTypeLabels: Record<Event["type"], string> = { careerDays: "Дни карьеры", expertParticipation: "Экспертное участие", caseChampionships: "Кейс-чемпионат", meeting: "Встреча", communication: "Коммуникация" };
+                                                    const eventTypeLabels = EVENT_TYPE_LABELS;
                                                     const formatDate = (d: string) => d ? `${d.split("-").reverse().join(".")}` : "—";
                                                     const flatList: { person: { id: string; name: string; phone: string; comment: string }; event: Event; personIndex: number }[] = [];
                                                     (university.events || []).forEach((event) => {
@@ -17663,7 +17838,7 @@ export default function UniversitiesPage() {
                                           return true;
                                         });
                                         const byCooperationLine = { drp: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("drp")).length, bko: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("bko")).length, cntr: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("cntr")).length, ecosystem: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("ecosystem")).length, dkm: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("dkm")).length };
-                                        const byType = { careerDays: eventsForTypeBlock.filter((e) => e.type === "careerDays").length, expertParticipation: eventsForTypeBlock.filter((e) => e.type === "expertParticipation").length, caseChampionships: eventsForTypeBlock.filter((e) => e.type === "caseChampionships").length, meeting: eventsForTypeBlock.filter((e) => e.type === "meeting").length, communication: eventsForTypeBlock.filter((e) => e.type === "communication").length };
+                                        const byType: Record<EventType, number> = { businessGame: eventsForTypeBlock.filter((e) => e.type === "businessGame").length, diplomaDefense: eventsForTypeBlock.filter((e) => e.type === "diplomaDefense").length, webinar: eventsForTypeBlock.filter((e) => e.type === "webinar").length, lecture: eventsForTypeBlock.filter((e) => e.type === "lecture").length, conference: eventsForTypeBlock.filter((e) => e.type === "conference").length, masterClass: eventsForTypeBlock.filter((e) => e.type === "masterClass").length, contact: eventsForTypeBlock.filter((e) => e.type === "contact").length };
                                         const yearsMap = eventsForYearBlock.reduce<Record<number, number>>((acc, e) => { const y = e.date ? parseInt(e.date.slice(0, 4), 10) : 0; if (y) acc[y] = (acc[y] || 0) + 1; return acc; }, {});
                                         const yearsSorted = Object.keys(yearsMap).map(Number).sort((a, b) => a - b);
                                         const byStatus = { planned: eventsForStatusBlock.filter((e) => e.status === "planned").length, in_progress: eventsForStatusBlock.filter((e) => e.status === "in_progress").length, completed: eventsForStatusBlock.filter((e) => e.status === "completed").length, cancelled: eventsForStatusBlock.filter((e) => e.status === "cancelled").length };
@@ -17674,8 +17849,8 @@ export default function UniversitiesPage() {
                                           if (ecosystemEventsFeedFilters.status.length > 0 && !ecosystemEventsFeedFilters.status.includes(e.status)) return false;
                                           return true;
                                         });
-                                        const eventTypeLabels: Record<Event["type"], string> = { careerDays: "Дни карьеры", expertParticipation: "Экспертное участие", caseChampionships: "Кейс-чемпионат", meeting: "Встреча", communication: "Коммуникация" };
-                                        const getEventTypeBadgeClassName = (type: Event["type"]) => { switch (type) { case "careerDays": return "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600"; case "expertParticipation": return "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600"; case "caseChampionships": return "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600"; case "meeting": return "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600"; case "communication": return "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600"; default: return ""; } };
+                                        const eventTypeLabels = EVENT_TYPE_LABELS;
+                                        const getEventTypeBadgeClassName = (type: EventType) => { const m: Record<EventType, string> = { businessGame: "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600", diplomaDefense: "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600", webinar: "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600", lecture: "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600", conference: "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600", masterClass: "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600", contact: "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600" }; return m[type] ?? ""; };
                                         const formatDate = (dateString: string) => { if (!dateString) return "Не указано"; const [year, month, day] = dateString.split("-").map(Number); if (isNaN(year) || isNaN(month) || isNaN(day)) return "Неверный формат"; return `${String(day).padStart(2, "0")}.${String(month).padStart(2, "0")}.${year}`; };
                                         return (
                                           <>
@@ -17690,7 +17865,7 @@ export default function UniversitiesPage() {
                                                 {(["drp", "bko", "cntr", "ecosystem", "dkm"] as const).every((l) => (byCooperationLine[l] ?? 0) === 0) && <span className="text-sm text-muted-foreground">Нет данных</span>}
                                               </div>
                                               <div className="min-w-0">
-                                                <MultiSelect options={([{ value: "careerDays", label: "Дни карьеры", count: byType.careerDays }, { value: "expertParticipation", label: "Экспертное участие", count: byType.expertParticipation }, { value: "caseChampionships", label: "Кейс-чемпионат", count: byType.caseChampionships }, { value: "meeting", label: "Встреча", count: byType.meeting }, { value: "communication", label: "Коммуникация", count: byType.communication }] as const).filter((item) => item.count > 0 || ecosystemEventsFeedFilters.type.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))} selected={ecosystemEventsFeedFilters.type} onChange={(selected) => { setEcosystemEventsFeedFilters((p) => ({ ...p, type: selected as Event["type"][] })); setEcosystemEventsFeedCurrentPage(1); }} placeholder="Выберите типы" />
+                                                <MultiSelect options={EVENT_TYPE_OPTIONS.map(({ value, label }) => ({ value, label, count: byType[value] })).filter((item) => item.count > 0 || ecosystemEventsFeedFilters.type.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))} selected={ecosystemEventsFeedFilters.type} onChange={(selected) => { setEcosystemEventsFeedFilters((p) => ({ ...p, type: selected as EventType[] })); setEcosystemEventsFeedCurrentPage(1); }} placeholder="Выберите типы" />
                                               </div>
                                               <div className="min-w-0 space-y-1">
                                                 <MultiSelect options={yearsSorted.map((year) => ({ value: String(year), label: `${year} (${yearsMap[year] ?? 0})` }))} selected={ecosystemEventsFeedFilters.year.map(String)} onChange={(selected) => { setEcosystemEventsFeedFilters((p) => ({ ...p, year: selected.map(Number) })); setEcosystemEventsFeedCurrentPage(1); }} placeholder="Выберите годы" />
@@ -17708,7 +17883,7 @@ export default function UniversitiesPage() {
                                             {(ecosystemEventsFeedFilters.cooperationLine.length > 0 || ecosystemEventsFeedFilters.type.length > 0 || ecosystemEventsFeedFilters.year.length > 0 || ecosystemEventsFeedFilters.status.length > 0) && (
                                               <div className="flex flex-wrap items-center gap-2 mb-3">
                                                 {ecosystemEventsFeedFilters.cooperationLine.length > 0 && <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1"><span className="text-sm">Линия: {ecosystemEventsFeedFilters.cooperationLine.map(getCooperationLineLabel).join(", ")}</span><button type="button" onClick={() => setEcosystemEventsFeedFilters((p) => ({ ...p, cooperationLine: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button></Badge>}
-                                                {ecosystemEventsFeedFilters.type.length > 0 && <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1"><span className="text-sm">Тип: {ecosystemEventsFeedFilters.type.map((t) => ({ careerDays: "Дни карьеры", expertParticipation: "Экспертное участие", caseChampionships: "Кейс-чемпионат", meeting: "Встреча", communication: "Коммуникация" }[t])).join(", ")}</span><button type="button" onClick={() => setEcosystemEventsFeedFilters((p) => ({ ...p, type: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button></Badge>}
+                                                {ecosystemEventsFeedFilters.type.length > 0 && <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1"><span className="text-sm">Тип: {ecosystemEventsFeedFilters.type.map((t) => EVENT_TYPE_LABELS[t]).join(", ")}</span><button type="button" onClick={() => setEcosystemEventsFeedFilters((p) => ({ ...p, type: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button></Badge>}
                                                 {ecosystemEventsFeedFilters.year.length > 0 && <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1"><span className="text-sm">Год: {ecosystemEventsFeedFilters.year.join(", ")}</span><button type="button" onClick={() => setEcosystemEventsFeedFilters((p) => ({ ...p, year: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button></Badge>}
                                                 {ecosystemEventsFeedFilters.status.length > 0 && <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1"><span className="text-sm">Статус: {ecosystemEventsFeedFilters.status.map((s) => eventStatusLabels[s]).join(", ")}</span><button type="button" onClick={() => setEcosystemEventsFeedFilters((p) => ({ ...p, status: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button></Badge>}
                                               </div>
@@ -18426,23 +18601,21 @@ export default function UniversitiesPage() {
                           <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Выберите тип мероприятия: дни карьеры, экспертное участие, кейс-чемпионат, встреча или коммуникация</p>
+                          <p>Выберите тип мероприятия: Деловая игра, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт</p>
                         </TooltipContent>
                       </Tooltip>
                   </div>
                     <Select
                       value={newEvent.type}
-                      onValueChange={(value) => setNewEvent({ ...newEvent, type: value as "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication" })}
+                      onValueChange={(value) => setNewEvent({ ...newEvent, type: value as EventType })}
                     >
                       <SelectTrigger id="event-type-dialog" className="w-full">
                         <SelectValue placeholder="Выберите тип" />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="careerDays">Дни карьеры</SelectItem>
-                        <SelectItem value="expertParticipation">Экспертное участие</SelectItem>
-                        <SelectItem value="caseChampionships">Кейс-чемпионат</SelectItem>
-                        <SelectItem value="meeting">Встреча</SelectItem>
-                        <SelectItem value="communication">Коммуникация</SelectItem>
+                        <SelectContent>
+                        {EVENT_TYPE_OPTIONS.map(({ value, label }) => (
+                          <SelectItem key={value} value={value}>{label}</SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
@@ -18688,6 +18861,64 @@ export default function UniversitiesPage() {
                         onCheckedChange={(checked) => setNewEvent({ ...newEvent, showInEventsFeed: checked })}
                       />
                     </div>
+                    {/* Информационные материалы для ДРП */}
+                    {isDrpCabinetEventDialog && (
+                      <div className="space-y-2">
+                        <Label>Информационные материалы</Label>
+                        <p className="text-sm text-muted-foreground">PDF, Word (.doc, .docx)</p>
+                        <input
+                          ref={ecosystemMaterialsFileInputRef}
+                          type="file"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                          className="hidden"
+                          onChange={(e) => {
+                            const files = Array.from(e.target.files ?? []);
+                            if (files.length === 0) return;
+                            const validExts = [".pdf", ".doc", ".docx"];
+                            const newMaterials = files
+                              .filter((file) => {
+                                const ext = file.name.toLowerCase().slice(file.name.lastIndexOf("."));
+                                return validExts.includes(ext);
+                              })
+                              .map((file) => ({
+                                id: `m-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+                                name: file.name,
+                                url: URL.createObjectURL(file),
+                                uploadedAt: new Date().toISOString(),
+                              }));
+                            if (newMaterials.length > 0) {
+                              setNewEvent({ ...newEvent, ecosystemMaterials: [...(newEvent.ecosystemMaterials ?? []), ...newMaterials] });
+                            }
+                            e.target.value = "";
+                          }}
+                        />
+                        <div className="flex flex-wrap gap-2">
+                          <Button type="button" variant="outline" size="sm" onClick={() => ecosystemMaterialsFileInputRef.current?.click()}>
+                            <Upload className="h-4 w-4 mr-2" />
+                            Загрузить файлы
+                          </Button>
+                          {(newEvent.ecosystemMaterials ?? []).map((m) => (
+                            <div key={m.id} className="flex items-center gap-1 rounded-md border bg-muted/30 px-2 py-1 text-sm">
+                              <FileText className="h-3.5 w-3.5 text-muted-foreground" />
+                              <span className="truncate max-w-[180px]" title={m.name}>{m.name}</span>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                className="h-5 w-5"
+                                onClick={() => {
+                                  if (m.url.startsWith("blob:")) URL.revokeObjectURL(m.url);
+                                  setNewEvent({ ...newEvent, ecosystemMaterials: (newEvent.ecosystemMaterials ?? []).filter((x) => x.id !== m.id) });
+                                }}
+                              >
+                                <X className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                 </>
                 )}
                 {isEcosystemCabinetEventDialog && eventEcosystemDialogStep === 2 && (
@@ -19223,6 +19454,7 @@ export default function UniversitiesPage() {
             setIsCooperationLineDialogOpen(open);
             if (!open) {
               setIsDrpCabinetBranchLineDialog(false);
+              setIsCntrCabinetBranchLineDialog(false);
               setIsEcosystemCabinetBranchLineDialog(false);
               setSelectedBranchId(null);
               setEditingCooperationLine(null);
@@ -19254,7 +19486,7 @@ export default function UniversitiesPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {(isDrpCabinetBranchLineDialog ? cooperationLines.filter((l) => l.value === "drp") : isEcosystemCabinetBranchLineDialog ? cooperationLines.filter((l) => l.value === "ecosystem") : cooperationLines).map((line) => (
+                      {(isDrpCabinetBranchLineDialog ? cooperationLines.filter((l) => l.value === "drp") : isCntrCabinetBranchLineDialog ? cooperationLines.filter((l) => l.value === "cntr") : isEcosystemCabinetBranchLineDialog ? cooperationLines.filter((l) => l.value === "ecosystem") : cooperationLines).map((line) => (
                         <SelectItem key={line.value} value={line.value}>
                           {line.label}
                         </SelectItem>
@@ -19288,6 +19520,7 @@ export default function UniversitiesPage() {
                   variant="outline"
                   onClick={() => {
                     setIsDrpCabinetBranchLineDialog(false);
+                    setIsCntrCabinetBranchLineDialog(false);
                     setIsEcosystemCabinetBranchLineDialog(false);
                     setIsCooperationLineDialogOpen(false);
                     setSelectedBranchId(null);

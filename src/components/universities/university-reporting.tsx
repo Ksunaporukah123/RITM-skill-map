@@ -11,6 +11,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { getCooperationLineBadgeColor } from "@/lib/badge-colors";
 import { cn } from "@/lib/utils";
+import { EVENT_TYPE_OPTIONS, EVENT_TYPE_LABELS } from "@/lib/event-types";
 import { formatDateOrDefault } from "@/lib/date-utils";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -48,7 +49,7 @@ interface Contract {
 
 interface Event {
   id: string;
-  type: "careerDays" | "expertParticipation" | "caseChampionships" | "meeting" | "communication";
+  type: "businessGame" | "diplomaDefense" | "webinar" | "lecture" | "conference" | "masterClass" | "contact";
   date: string;
   endDate: string;
   status: "planned" | "in_progress" | "completed" | "cancelled";
@@ -380,16 +381,7 @@ export function UniversityReporting({ universities }: UniversityReportingProps) 
     return types[type] || type;
   };
 
-  const getEventTypeName = (type: string) => {
-    const types: Record<string, string> = {
-      careerDays: "Дни карьеры",
-      expertParticipation: "Экспертное участие",
-      caseChampionships: "Кейс-чемпионат",
-      meeting: "Встреча",
-      communication: "Коммуникация",
-    };
-    return types[type] || type;
-  };
+  const getEventTypeName = (type: string) => EVENT_TYPE_LABELS[type as keyof typeof EVENT_TYPE_LABELS] ?? type;
 
   const getEventStatusName = (status: string) => {
     const statuses: Record<string, string> = {
@@ -1205,13 +1197,7 @@ export function UniversityReporting({ universities }: UniversityReportingProps) 
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Тип мероприятия</Label>
                       <div className="space-y-1.5">
-                        {[
-                          { value: "careerDays", label: "Дни карьеры" },
-                          { value: "expertParticipation", label: "Экспертное участие" },
-                          { value: "caseChampionships", label: "Кейс-чемпионаты" },
-                          { value: "meeting", label: "Встречи" },
-                          { value: "communication", label: "Коммуникации" },
-                        ].map((type) => (
+                        {EVENT_TYPE_OPTIONS.map((type) => (
                           <div key={type.value} className="flex items-center space-x-2">
                             <Checkbox
                               id={`filter-event-type-${type.value}`}
