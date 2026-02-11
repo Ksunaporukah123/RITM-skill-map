@@ -227,12 +227,21 @@ export interface CNTREventItem {
   id: string;
   type?: CNTREventType; // Тип мероприятия (пока только встреча)
   date: string; // Дата (формат YYYY-MM-DD)
+  endDate?: string; // Дата окончания (формат YYYY-MM-DD), для единообразия с ДРП
   status?: CNTREventStatus; // Статус: запланировано, в процессе, проведено, отменено
   branch?: string; // Головной ВУЗ или филиал
   description?: string; // Описание
   document?: string; // Документ (URL или путь к PDF файлу)
   /** Информационные материалы (PDF, Word) */
   materials?: EventMaterial[];
+  /** Показывать в ленте мероприятий (как в ДРП) */
+  showInEventsFeed?: boolean;
+  /** Контакт со стороны ВУЗа (для единообразия с ДРП) */
+  universityContact?: UniversityContact;
+  /** Ответственные со стороны банка (ID), для единообразия с ДРП */
+  responsiblePerson?: string[];
+  addedAt?: string;
+  addedBy?: string;
 }
 
 // Элемент таблицы «Проекты» в личном кабинете ЦНТР (дата, описание, статус)

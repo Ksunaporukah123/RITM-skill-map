@@ -1251,34 +1251,44 @@ const mockUniversities: University[] = [
     cntrEventsItems: [
       {
         id: "cntr-event-hse-1",
+        type: "conference",
         date: "2023-09-15",
+        status: "completed",
         branch: "Головной ВУЗ",
         description: "Международная конференция по финансовым технологиям и цифровой экономике. Мероприятие собрало ведущих экспертов в области финтех, представителей банковского сектора и академического сообщества. Обсуждены вопросы развития цифровых платежных систем, блокчейн-технологий и искусственного интеллекта в финансовой сфере.",
-        document: "https://example.com/documents/fintech-conference-2023.pdf"
+        materials: [{ id: "m-cntr-1", name: "fintech-conference-2023.pdf", url: "https://example.com/documents/fintech-conference-2023.pdf", uploadedAt: "2023-09-20T10:00:00Z" }],
       },
       {
         id: "cntr-event-hse-2",
+        type: "conference",
         date: "2023-11-20",
+        status: "completed",
         branch: "Московский филиал",
         description: "День карьеры для студентов IT-направлений. Банк представил возможности стажировок и трудоустройства для студентов ВШЭ. Проведены мастер-классы по финансовому моделированию, разработке банковских систем и работе с большими данными. Более 200 студентов приняли участие в мероприятии.",
-        document: "https://example.com/documents/career-day-hse-2023.pdf"
+        materials: [{ id: "m-cntr-2", name: "career-day-hse-2023.pdf", url: "https://example.com/documents/career-day-hse-2023.pdf", uploadedAt: "2023-11-25T14:00:00Z" }],
       },
       {
         id: "cntr-event-hse-3",
+        type: "lecture",
         date: "2024-02-10",
+        status: "completed",
         branch: "Головной ВУЗ",
         description: "Семинар по применению машинного обучения в банковской аналитике. Эксперты банка поделились опытом использования алгоритмов машинного обучения для оценки кредитных рисков, выявления мошенничества и персонализации финансовых продуктов. Студенты и преподаватели ВШЭ представили результаты своих исследований.",
       },
       {
         id: "cntr-event-hse-4",
+        type: "businessGame",
         date: "2024-04-25",
+        status: "completed",
         branch: "Головной ВУЗ",
         description: "Кейс-чемпионат по финансовому моделированию и анализу данных. Студенты ВШЭ решали реальные бизнес-кейсы, предоставленные банком. Участники разрабатывали модели для прогнозирования оттока клиентов, оптимизации продуктовой линейки и оценки эффективности маркетинговых кампаний. Победители получили приглашение на стажировку в банке.",
-        document: "https://example.com/documents/case-championship-2024.pdf"
+        materials: [{ id: "m-cntr-4", name: "case-championship-2024.pdf", url: "https://example.com/documents/case-championship-2024.pdf", uploadedAt: "2024-05-01T09:00:00Z" }],
       },
       {
         id: "cntr-event-hse-5",
+        type: "contact",
         date: "2024-06-12",
+        status: "completed",
         branch: "Московский филиал",
         description: "Выпускное мероприятие программы стажировок для студентов ВШЭ. Подведены итоги годовой программы сотрудничества, награждены лучшие стажеры. Выпускники программы поделились опытом работы в банке и возможностями карьерного роста. Заключены соглашения о дальнейшем сотрудничестве и развитии совместных образовательных программ.",
       },
@@ -3538,24 +3548,40 @@ export default function UniversitiesPage() {
   
   // Добавление контакта в линию сотрудничества головного ВУЗа
   const handleAddContactInMain = (universityId: string, lineId: string) => {
-    const updatedUniversities = universities.map((u) =>
-      u.id === universityId
-        ? {
-            ...u,
-            cooperationLines: (u.cooperationLines || []).map((cl) =>
-              cl.id === lineId
-                ? {
-                    ...cl,
-                    universityContacts: [
-                      ...(cl.universityContacts || []),
-                      { name: "", position: "", phone: "", email: "", isPublic: false },
-                    ],
-                  }
-                : cl
-            ),
-          }
-        : u
-    );
+    const newContact = { name: "", position: "", phone: "", email: "", isPublic: false };
+    const updatedUniversities = universities.map((u) => {
+      if (u.id !== universityId) return u;
+      const lines = u.cooperationLines || [];
+      const hasLine = lines.some((cl) => cl.id === lineId);
+      if (hasLine) {
+        return {
+          ...u,
+          cooperationLines: lines.map((cl) =>
+            cl.id === lineId
+              ? {
+                  ...cl,
+                  universityContacts: [...(cl.universityContacts || []), newContact],
+                }
+              : cl
+          ),
+        };
+      }
+      // Линия отсутствует (legacy): создаём запись и добавляем контакт (ЦНТР/ДРП/БКО)
+      const lineType = lineId === "legacy-cntr" ? "cntr" : lineId === "legacy-drp" ? "drp" : lineId === "legacy-bko" ? "bko" : "drp";
+      return {
+        ...u,
+        cooperationLines: [
+          ...lines,
+          {
+            id: lineId,
+            line: lineType,
+            year: u.cooperationLineYear ?? new Date().getFullYear(),
+            responsible: [],
+            universityContacts: [newContact],
+          },
+        ],
+      };
+    });
     setUniversities(updatedUniversities);
   };
   
@@ -4026,6 +4052,19 @@ export default function UniversitiesPage() {
             ...u,
             events: (u.events || []).map(e =>
               e.id === eventId ? { ...e, showInEventsFeed } : e
+            ),
+          }
+        : u
+    ));
+  };
+
+  const handleToggleCntrEventShowInFeed = (universityId: string, itemId: string, showInEventsFeed: boolean) => {
+    setUniversities(universities.map(u =>
+      u.id === universityId
+        ? {
+            ...u,
+            cntrEventsItems: (u.cntrEventsItems || []).map((item) =>
+              item.id === itemId ? { ...item, showInEventsFeed } : item
             ),
           }
         : u
@@ -11619,65 +11658,147 @@ export default function UniversitiesPage() {
                                       {eventItems.length > 0 ? (
                                         filteredItems.length > 0 ? (
                                           <div className="space-y-3">
-                                            {filteredItems.map((item) => (
-                                              <Card key={item.id} className="p-3">
-                                                <div className="flex items-start justify-between gap-3">
-                                                  <div className="flex-1 space-y-1.5">
-                                                    <div className="flex items-center justify-between gap-2 flex-wrap">
-                                                      <div className="flex items-center gap-2 flex-wrap">
-                                                        <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor("cntr"))}>
-                                                          {getCooperationLineLabel("cntr")}
-                                                        </Badge>
-                                                        {(item.type || "contact") && (
-                                                          <Badge variant="outline" className="text-xs !bg-gray-500/10 !text-gray-700 dark:!text-gray-300 !border-gray-400">
-                                                            {EVENT_TYPE_LABELS[item.type || "contact"]}
+                                            {filteredItems.map((item) => {
+                                              const getEventTypeBadgeClassName = (type: EventType) => {
+                                                switch (type) {
+                                                  case "businessGame": return "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600";
+                                                  case "diplomaDefense": return "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600";
+                                                  case "webinar": return "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600";
+                                                  case "lecture": return "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600";
+                                                  case "conference": return "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600";
+                                                  case "masterClass": return "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600";
+                                                  case "contact": return "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600";
+                                                  default: return "";
+                                                }
+                                              };
+                                              const eventType = (item.type || "contact") as EventType;
+                                              return (
+                                                <Card key={item.id} className="p-3">
+                                                  <div className="flex items-start justify-between gap-3">
+                                                    <div className="flex-1 space-y-1.5">
+                                                      <div className="flex items-center justify-between gap-2 flex-wrap">
+                                                        <div className="flex items-center gap-2 flex-wrap">
+                                                          <Badge variant="outline" className={getEventTypeBadgeClassName(eventType)}>{EVENT_TYPE_LABELS[eventType]}</Badge>
+                                                          <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor("cntr"))}>
+                                                            {getCooperationLineLabel("cntr")}
+                                                          </Badge>
+                                                          <Calendar className="h-4 w-4 text-muted-foreground" />
+                                                          <span className="text-sm font-semibold">{formatDate(item.date)}{item.endDate ? ` - ${formatDate(item.endDate)}` : ""}</span>
+                                                        </div>
+                                                        <Badge variant="outline" className={cn(getStatusBadgeColor(item.status || "planned"))}>{cntrEventStatusLabels[item.status || "planned"]}</Badge>
+                                                      </div>
+                                                      {item.description && (
+                                                        <div className="flex items-center gap-2">
+                                                          <Label className="text-sm font-semibold">Комментарий:</Label>
+                                                          <span className="text-sm text-muted-foreground">{item.description}</span>
+                                                        </div>
+                                                      )}
+                                                      {(item.materials?.length ?? 0) > 0 && (
+                                                        <div className="flex items-center gap-2 flex-wrap">
+                                                          <Label className="text-sm font-semibold">Материалы:</Label>
+                                                          <div className="flex flex-wrap gap-1">
+                                                            {item.materials.map((mat) => (
+                                                              <span key={mat.id} className="inline-flex items-center gap-1 rounded-md border bg-muted/30 px-2 py-0.5 text-xs">
+                                                                <FileText className="h-3 w-3 text-muted-foreground" />
+                                                                <span className="truncate max-w-[120px]" title={mat.name}>{mat.name}</span>
+                                                              </span>
+                                                            ))}
+                                                          </div>
+                                                        </div>
+                                                      )}
+                                                      <div className="pt-2.5 mt-2 border-t space-y-2.5">
+                                                        {item.branch && (
+                                                          <Badge variant="secondary" className="text-xs">
+                                                            {item.branch}
                                                           </Badge>
                                                         )}
-                                                        <Calendar className="h-4 w-4 text-muted-foreground" />
-                                                        <span className="text-sm font-semibold">{formatDate(item.date)}</span>
-                                                      </div>
-                                                      <Badge variant="outline" className={cn("text-xs", getStatusBadgeColor(item.status || "planned"))}>
-                                                        {cntrEventStatusLabels[item.status || "planned"]}
-                                                      </Badge>
-                                                    </div>
-                                                    {item.description && (
-                                                      <div className="flex items-center gap-2">
-                                                        <Label className="text-sm font-semibold">Комментарий:</Label>
-                                                        <span className="text-sm text-muted-foreground">{item.description}</span>
-                                                      </div>
-                                                    )}
-                                                    {(item.materials?.length ?? 0) > 0 && (
-                                                      <div className="flex items-center gap-2 flex-wrap">
-                                                        <Label className="text-sm font-semibold">Материалы:</Label>
-                                                        <div className="flex flex-wrap gap-1">
-                                                          {item.materials.map((mat) => (
-                                                            <span key={mat.id} className="inline-flex items-center gap-1 rounded-md border bg-muted/30 px-2 py-0.5 text-xs">
-                                                              <FileText className="h-3 w-3 text-muted-foreground" />
-                                                              <span className="truncate max-w-[120px]" title={mat.name}>{mat.name}</span>
-                                                            </span>
-                                                          ))}
+                                                        <div className="flex gap-2 text-sm">
+                                                          <Building2 className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                                                          <div>
+                                                            <span className="text-muted-foreground">ВУЗ: </span>
+                                                            {item.universityContact && (item.universityContact.name || item.universityContact.position || item.universityContact.phone || item.universityContact.email) ? (
+                                                              <>
+                                                                <span className="font-medium">{item.universityContact.name || "—"}</span>
+                                                                {item.universityContact.position && <span className="text-muted-foreground"> ({item.universityContact.position})</span>}
+                                                                {(item.universityContact.phone || item.universityContact.email) && (
+                                                                  <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-0.5 text-muted-foreground text-xs">
+                                                                    {item.universityContact.phone && <span className="flex items-center gap-1"><Phone className="h-3 w-3" />{item.universityContact.phone}</span>}
+                                                                    {item.universityContact.email && <span className="flex items-center gap-1"><Mail className="h-3 w-3" />{item.universityContact.email}</span>}
+                                                                  </div>
+                                                                )}
+                                                              </>
+                                                            ) : university.universityContacts?.length > 0 ? (
+                                                              university.universityContacts.map((contact, idx) => (
+                                                                <span key={idx}>
+                                                                  {idx > 0 && ", "}
+                                                                  <span className="font-medium">{contact.name}</span>
+                                                                  {contact.position && <span className="text-muted-foreground"> ({contact.position})</span>}
+                                                                </span>
+                                                              ))
+                                                            ) : university.universityContact?.name ? (
+                                                              <span>
+                                                                <span className="font-medium">{university.universityContact.name}</span>
+                                                                {university.universityContact.position && <span className="text-muted-foreground"> ({university.universityContact.position})</span>}
+                                                              </span>
+                                                            ) : (
+                                                              <span className="text-muted-foreground">—</span>
+                                                            )}
+                                                          </div>
                                                         </div>
+                                                        <div className="flex gap-2 text-sm">
+                                                          <UserCheck className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
+                                                          <div>
+                                                            <span className="text-muted-foreground">Банк: </span>
+                                                            {item.responsiblePerson?.length > 0 ? (
+                                                              item.responsiblePerson.map((personId, idx) => {
+                                                                const person = responsiblePersons.find((p) => p.value === personId);
+                                                                return person ? (
+                                                                  <span key={idx}>
+                                                                    {idx > 0 && ", "}
+                                                                    <span className="font-medium">{person.label}</span>
+                                                                  </span>
+                                                                ) : null;
+                                                              })
+                                                            ) : (
+                                                              <span className="text-muted-foreground">—</span>
+                                                            )}
+                                                          </div>
+                                                        </div>
+                                                        {(item.addedAt || item.addedBy) && (
+                                                          <div className="flex items-center justify-end gap-2 pt-2 border-t text-sm text-muted-foreground">
+                                                            <Clock className="h-3.5 w-3.5" />
+                                                            <span>{item.addedAt ? formatDate(item.addedAt) : "—"}</span>
+                                                            {item.addedBy && <span>• {item.addedBy}</span>}
+                                                          </div>
+                                                        )}
                                                       </div>
-                                                    )}
-                                                    {item.branch && (
-                                                      <div className="pt-2.5 mt-2 border-t">
-                                                        <Badge variant="secondary" className="text-xs">
-                                                          {item.branch}
-                                                        </Badge>
+                                                    </div>
+                                                    <div className="flex flex-col items-end gap-2 shrink-0">
+                                                      <div className="flex items-center gap-2">
+                                                        <Label htmlFor={`cntr-event-feed-switch-${item.id}`} className="text-xs text-muted-foreground cursor-pointer leading-tight block text-right">
+                                                          В ленте
+                                                          <br />
+                                                          мероприятий
+                                                        </Label>
+                                                        <Switch
+                                                          id={`cntr-event-feed-switch-${item.id}`}
+                                                          checked={item.showInEventsFeed !== false}
+                                                          onCheckedChange={(checked) => handleToggleCntrEventShowInFeed(university.id, item.id, checked)}
+                                                        />
                                                       </div>
-                                                    )}
+                                                      <div className="flex gap-1">
+                                                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => handleEditCntrEvent(item)}>
+                                                          <Pencil className="h-3.5 w-3.5" />
+                                                        </Button>
+                                                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => handleRemoveCntrEvent(item.id)}>
+                                                          <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                        </Button>
+                                                      </div>
+                                                    </div>
                                                   </div>
-                                                  <div className="flex gap-1 shrink-0">
-                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => handleEditCntrEvent(item)}>
-                                                      <Pencil className="h-3.5 w-3.5" />
-                                                    </Button>
-                                                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => handleRemoveCntrEvent(item.id)}>
-                                                      <Trash2 className="h-3.5 w-3.5 text-destructive" />
-                                                    </Button>
-                                                  </div>
-                                                </div>
-                                              </Card>
-                                            ))}
+                                                </Card>
+                                              );
+                                            })}
                                           </div>
                                         ) : (
                                           <div className="text-center py-8 text-muted-foreground">
