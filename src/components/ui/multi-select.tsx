@@ -33,6 +33,7 @@ export function MultiSelect({
 }: MultiSelectProps) {
   const [open, setOpen] = React.useState(false)
   const containerRef = React.useRef<HTMLDivElement>(null)
+  const selectedArray = selected ?? []
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -51,22 +52,22 @@ export function MultiSelect({
   }, [open])
 
   const toggleOption = (value: string) => {
-    if (selected.includes(value)) {
-      onChange(selected.filter((item) => item !== value))
+    if (selectedArray.includes(value)) {
+      onChange(selectedArray.filter((item) => item !== value))
     } else {
-      if (maxCount && selected.length >= maxCount) {
+      if (maxCount && selectedArray.length >= maxCount) {
         return
       }
-      onChange([...selected, value])
+      onChange([...selectedArray, value])
     }
   }
 
   const removeOption = (value: string, e: React.MouseEvent) => {
     e.stopPropagation()
-    onChange(selected.filter((item) => item !== value))
+    onChange(selectedArray.filter((item) => item !== value))
   }
 
-  const selectedOptions = options.filter((option) => selected.includes(option.value))
+  const selectedOptions = options.filter((option) => selectedArray.includes(option.value))
 
   return (
     <div ref={containerRef} className={cn("relative w-full", className)}>
@@ -77,12 +78,12 @@ export function MultiSelect({
         aria-expanded={open}
         className={cn(
           "w-full justify-between text-left font-normal min-h-10 h-auto py-2 items-start",
-          !selected.length && "text-muted-foreground"
+          !selectedArray.length && "text-muted-foreground"
         )}
         onClick={() => setOpen(!open)}
       >
         <div className="flex flex-wrap gap-1 flex-1 min-w-0">
-          {selected.length === 0 ? (
+          {selectedArray.length === 0 ? (
             <span className="text-muted-foreground">{placeholder}</span>
           ) : (
             selectedOptions.map((option) => (
@@ -130,7 +131,7 @@ export function MultiSelect({
               </div>
             ) : (
               options.map((option) => {
-                const isSelected = selected.includes(option.value)
+                const isSelected = selectedArray.includes(option.value)
                 return (
                   <div
                     key={option.value}

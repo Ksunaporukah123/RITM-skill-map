@@ -55,6 +55,14 @@ export interface Event {
   addedBy?: string;
   /** Контактное лицо со стороны ВУЗа (ФИО, должность, телефон, email) */
   universityContact?: UniversityContact;
+  /** Данные экосистемы (только для мероприятий линии Экосистема) */
+  ecosystemData?: {
+    materials?: { id: string; name: string; url: string; uploadedAt: string }[];
+    universityRating?: number;
+    eventRating?: number;
+    participantsCount?: number;
+    interestedPersons?: { id: string; name: string; phone: string; comment: string }[];
+  };
 }
 
 // Тип для стажера
