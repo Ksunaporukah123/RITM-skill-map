@@ -2484,7 +2484,10 @@ export default function UniversitiesPage() {
   const [practitionersItemsPerPage, setPractitionersItemsPerPage] = useState(10);
   
   // Состояние для переключения между практикантами, участниками кейс-чемпионатов, целевыми практикантами и именными стипендиантами
-  const [practitionersSubTab, setPractitionersSubTab] = useState<"practitioners" | "caseChampionships" | "targetPractitioners" | "namedScholars">("practitioners");
+  const [practitionersSubTab, setPractitionersSubTab] = useState<"practitioners" | "caseChampionships" | "targetPractitioners" | "namedScholars" | "interestedPersons">("practitioners");
+  const [interestedPersonsFilters, setInterestedPersonsFilters] = useState<{ name: string; cooperationLine: string[]; eventType: string[] }>({ name: "", cooperationLine: [], eventType: [] });
+  const [interestedPersonsFilterDialogOpen, setInterestedPersonsFilterDialogOpen] = useState(false);
+  const [commentDialogInterestedPerson, setCommentDialogInterestedPerson] = useState<{ universityId: string; eventId: string; personIndex: number; person: { id: string; name: string; phone: string; comment: string } } | null>(null);
   
   // Состояние для добавления практиканта
   const [addPractitionerDialogOpen, setAddPractitionerDialogOpen] = useState(false);
@@ -14364,6 +14367,17 @@ export default function UniversitiesPage() {
                                                         <Badge variant="secondary" className="ml-2">{university.namedScholars.length}</Badge>
                                                       )}
                                                     </Button>
+                                                    <Button
+                                                      variant={practitionersSubTab === "interestedPersons" ? "default" : "outline"}
+                                                      size="sm"
+                                                      onClick={() => setPractitionersSubTab("interestedPersons")}
+                                                    >
+                                                      Заинтересованные лица
+                                                      {(() => {
+                                                        const count = (university.events || []).reduce((acc, e) => acc + (e.ecosystemData?.interestedPersons?.length ?? 0), 0);
+                                                        return count > 0 ? <Badge variant="secondary" className="ml-2">{count}</Badge> : null;
+                                                      })()}
+                                                    </Button>
                                                   </div>
                     
                                                   {/* Таблица практикантов */}
@@ -16107,6 +16121,109 @@ export default function UniversitiesPage() {
                                                     );
                                                   })()}
                                                   
+                                                  {/* Таблица: Заинтересованные лица */}
+                                                  {practitionersSubTab === "interestedPersons" && (() => {
+                                                    const eventTypeLabels: Record<Event["type"], string> = { careerDays: "Дни карьеры", expertParticipation: "Экспертное участие", caseChampionships: "Кейс-чемпионат", meeting: "Встреча", communication: "Коммуникация" };
+                                                    const formatDate = (d: string) => d ? `${d.split("-").reverse().join(".")}` : "—";
+                                                    const flatList: { person: { id: string; name: string; phone: string; comment: string }; event: Event; personIndex: number }[] = [];
+                                                    (university.events || []).forEach((event) => {
+                                                      (event.ecosystemData?.interestedPersons || []).forEach((person, idx) => {
+                                                        flatList.push({ person, event, personIndex: idx });
+                                                      });
+                                                    });
+                                                    const filteredList = flatList.filter(({ person, event }) => {
+                                                      if (interestedPersonsFilters.name && !person.name.toLowerCase().includes(interestedPersonsFilters.name.toLowerCase())) return false;
+                                                      if (interestedPersonsFilters.cooperationLine.length > 0 && (!event.cooperationLine || !event.cooperationLine.some((l) => interestedPersonsFilters.cooperationLine.includes(l)))) return false;
+                                                      if (interestedPersonsFilters.eventType.length > 0 && !interestedPersonsFilters.eventType.includes(event.type)) return false;
+                                                      return true;
+                                                    });
+                                                    const activeFiltersCount = (interestedPersonsFilters.name ? 1 : 0) + interestedPersonsFilters.cooperationLine.length + interestedPersonsFilters.eventType.length;
+                                                    const cooperationLines = [...new Set(flatList.flatMap(({ event }) => event.cooperationLine || []))];
+                                                    const eventTypes = [...new Set(flatList.map(({ event }) => event.type))];
+                                                    return (
+                                                      <>
+                                                        <div className="flex items-center justify-between mb-2">
+                                                          <div className="text-sm text-muted-foreground">
+                                                            Найдено заинтересованных лиц: <span className="font-semibold text-foreground">{filteredList.length}</span>
+                                                            {filteredList.length !== flatList.length && <span className="ml-1">из {flatList.length}</span>}
+                                                          </div>
+                                                          <Dialog open={interestedPersonsFilterDialogOpen} onOpenChange={setInterestedPersonsFilterDialogOpen}>
+                                                            <DialogTrigger asChild>
+                                                              <Button variant="outline">
+                                                                <Filter className="mr-2 h-4 w-4" />
+                                                                Фильтры
+                                                                {activeFiltersCount > 0 && <Badge variant="secondary" className="ml-2">{activeFiltersCount}</Badge>}
+                                                              </Button>
+                                                            </DialogTrigger>
+                                                            <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+                                                              <DialogHeader className="pb-3">
+                                                                <DialogTitle className="text-lg">Фильтры заинтересованных лиц</DialogTitle>
+                                                              </DialogHeader>
+                                                              <div className="space-y-4 py-2">
+                                                                <div className="space-y-2">
+                                                                  <Label className="text-sm font-medium">ФИО</Label>
+                                                                  <Input placeholder="Поиск по ФИО..." value={interestedPersonsFilters.name} onChange={(e) => setInterestedPersonsFilters({ ...interestedPersonsFilters, name: e.target.value })} />
+                                                                </div>
+                                                                <div className="space-y-2">
+                                                                  <Label className="text-sm font-medium">Линия сотрудничества</Label>
+                                                                  <MultiSelect options={cooperationLines.map((l) => ({ value: l, label: getCooperationLineLabel(l) }))} selected={interestedPersonsFilters.cooperationLine} onChange={(s) => setInterestedPersonsFilters({ ...interestedPersonsFilters, cooperationLine: s })} placeholder="Выберите линии" />
+                                                                </div>
+                                                                <div className="space-y-2">
+                                                                  <Label className="text-sm font-medium">Тип мероприятия</Label>
+                                                                  <MultiSelect options={eventTypes.map((t) => ({ value: t, label: eventTypeLabels[t] }))} selected={interestedPersonsFilters.eventType} onChange={(s) => setInterestedPersonsFilters({ ...interestedPersonsFilters, eventType: s })} placeholder="Выберите типы" />
+                                                                </div>
+                                                              </div>
+                                                              <DialogFooter>
+                                                                <Button variant="outline" onClick={() => setInterestedPersonsFilters({ name: "", cooperationLine: [], eventType: [] })}>Сбросить</Button>
+                                                                <Button onClick={() => setInterestedPersonsFilterDialogOpen(false)}>Применить</Button>
+                                                              </DialogFooter>
+                                                            </DialogContent>
+                                                          </Dialog>
+                                                        </div>
+                                                        {filteredList.length > 0 ? (
+                                                          <div className="rounded-lg border overflow-hidden">
+                                                            <Table>
+                                                              <TableHeader>
+                                                                <TableRow className="bg-muted/50 hover:bg-muted/50">
+                                                                  <TableHead className="px-4">ФИО</TableHead>
+                                                                  <TableHead className="px-4">Линия сотрудничества</TableHead>
+                                                                  <TableHead className="px-4">Мероприятие</TableHead>
+                                                                  <TableHead className="px-4">Период проведения мероприятия</TableHead>
+                                                                  <TableHead className="px-4">Контакты</TableHead>
+                                                                  <TableHead className="px-4 w-[60px] text-center">Комментарий</TableHead>
+                                                                </TableRow>
+                                                              </TableHeader>
+                                                              <TableBody>
+                                                                {filteredList.map(({ person, event, personIndex }) => (
+                                                                  <TableRow key={`${event.id}-${person.id}`}>
+                                                                    <TableCell className="px-4">{person.name || "—"}</TableCell>
+                                                                    <TableCell className="px-4">
+                                                                      {event.cooperationLine && event.cooperationLine.length > 0 ? event.cooperationLine.map((l) => (
+                                                                        <Badge key={l} variant="outline" className={cn("text-xs mr-1", getCooperationLineBadgeColor(l))}>{getCooperationLineLabel(l)}</Badge>
+                                                                      )) : "—"}
+                                                                    </TableCell>
+                                                                    <TableCell className="px-4">{eventTypeLabels[event.type]}</TableCell>
+                                                                    <TableCell className="px-4">{formatDate(event.date)}{event.endDate && event.endDate !== event.date ? ` — ${formatDate(event.endDate)}` : ""}</TableCell>
+                                                                    <TableCell className="px-4">{person.phone ? <span className="flex items-center gap-1"><Phone className="h-3.5 w-3.5 text-muted-foreground" />{person.phone}</span> : "—"}</TableCell>
+                                                                    <TableCell className="px-4 text-center">
+                                                                      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setCommentDialogInterestedPerson({ universityId: university.id, eventId: event.id, personIndex, person })}>
+                                                                        <MessageSquare className={cn("h-4 w-4", person.comment ? "text-primary" : "text-muted-foreground")} />
+                                                                      </Button>
+                                                                    </TableCell>
+                                                                  </TableRow>
+                                                                ))}
+                                                              </TableBody>
+                                                            </Table>
+                                                          </div>
+                                                        ) : (
+                                                          <div className="border rounded-lg p-8 text-center text-muted-foreground">
+                                                            Заинтересованные лица не найдены
+                                                          </div>
+                                                        )}
+                                                      </>
+                                                    );
+                                                  })()}
+                                                  
                                                   {/* Модальное окно редактирования именного стипендианта */}
                                                   <Dialog open={editNamedScholarDialogOpen} onOpenChange={setEditNamedScholarDialogOpen}>
                                                     <DialogContent className="max-w-md">
@@ -16321,6 +16438,27 @@ export default function UniversitiesPage() {
                                                         <Button onClick={() => handleUpdatePractitionerComment(commentDialogPractitioner?.comment || "")}>
                                                           Сохранить
                                                         </Button>
+                                                      </DialogFooter>
+                                                    </DialogContent>
+                                                  </Dialog>
+                                                  
+                                                  {/* Модальное окно комментария заинтересованного лица */}
+                                                  <Dialog open={!!commentDialogInterestedPerson} onOpenChange={(open) => !open && setCommentDialogInterestedPerson(null)}>
+                                                    <DialogContent className="max-w-md">
+                                                      <DialogHeader>
+                                                        <DialogTitle>Комментарий</DialogTitle>
+                                                      </DialogHeader>
+                                                      {commentDialogInterestedPerson && (
+                                                        <div className="space-y-4 py-4">
+                                                          <div className="space-y-2">
+                                                            <Label>Комментарий</Label>
+                                                            <Input value={commentDialogInterestedPerson.person.comment} onChange={(e) => setCommentDialogInterestedPerson({ ...commentDialogInterestedPerson, person: { ...commentDialogInterestedPerson.person, comment: e.target.value } })} placeholder="Введите комментарий..." />
+                                                          </div>
+                                                        </div>
+                                                      )}
+                                                      <DialogFooter>
+                                                        <Button variant="outline" onClick={() => setCommentDialogInterestedPerson(null)}>Отмена</Button>
+                                                        <Button onClick={() => { if (commentDialogInterestedPerson) { handleUpdateEcosystemInterestedPerson(commentDialogInterestedPerson.universityId, commentDialogInterestedPerson.eventId, commentDialogInterestedPerson.personIndex, { ...commentDialogInterestedPerson.person }); setCommentDialogInterestedPerson(null); } }}>Сохранить</Button>
                                                       </DialogFooter>
                                                     </DialogContent>
                                                   </Dialog>
@@ -17598,11 +17736,21 @@ export default function UniversitiesPage() {
                                                           <div className="flex gap-2 text-sm"><UserCheck className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" /><div><span className="text-muted-foreground">Банк: </span>{event.responsiblePerson?.length > 0 ? event.responsiblePerson.map((personId, idx) => { const person = responsiblePersons.find((p) => p.value === personId); return person ? (<span key={idx}>{idx > 0 && ", "}<span className="font-medium">{person.label}</span></span>) : null; }) : <span className="text-muted-foreground">—</span>}</div></div>
                                                           {event.ecosystemData && (
                                                             <div className="pt-2 border-t space-y-2">
-                                                              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
-                                                                {(event.ecosystemData.universityRating != null) && <div><span className="text-muted-foreground">Оценка ВУЗа: </span><span className="font-medium">{event.ecosystemData.universityRating}</span><span className="text-muted-foreground">/5</span></div>}
-                                                                {(event.ecosystemData.eventRating != null) && <div><span className="text-muted-foreground">Оценка мероприятия: </span><span className="font-medium">{event.ecosystemData.eventRating}</span><span className="text-muted-foreground">/5</span></div>}
-                                                                {(event.ecosystemData.participantsCount != null && event.ecosystemData.participantsCount > 0) && <div><span className="text-muted-foreground">Участников: </span><span className="font-medium">{event.ecosystemData.participantsCount}</span></div>}
-                                                              </div>
+                                                              {((event.ecosystemData.universityRating != null) || (event.ecosystemData.eventRating != null) || (event.ecosystemData.participantsCount != null && event.ecosystemData.participantsCount > 0)) && (
+                                                                <div className="rounded-lg border p-3 bg-muted/20">
+                                                                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+                                                                    {(event.ecosystemData.universityRating != null) && (
+                                                                      <div><span className="text-muted-foreground">Оценка ВУЗа: </span><span className="font-medium">{event.ecosystemData.universityRating}</span><span className="text-muted-foreground">/5</span></div>
+                                                                    )}
+                                                                    {(event.ecosystemData.eventRating != null) && (
+                                                                      <div><span className="text-muted-foreground">Оценка мероприятия: </span><span className="font-medium">{event.ecosystemData.eventRating}</span><span className="text-muted-foreground">/5</span></div>
+                                                                    )}
+                                                                    {(event.ecosystemData.participantsCount != null && event.ecosystemData.participantsCount > 0) && (
+                                                                      <div><span className="text-muted-foreground">Участники: </span><span className="font-medium">{event.ecosystemData.participantsCount}</span></div>
+                                                                    )}
+                                                                  </div>
+                                                                </div>
+                                                              )}
                                                               {event.ecosystemData.materials && event.ecosystemData.materials.length > 0 && (
                                                                 <div className="space-y-2">
                                                                   {event.ecosystemData.materials.map((m) => (
