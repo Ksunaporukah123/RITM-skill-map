@@ -2391,8 +2391,8 @@ export default function UniversitiesPage() {
   }>({ cooperationLine: [], type: [], year: [], status: [] });
   const [ecosystemEventsFeedCurrentPage, setEcosystemEventsFeedCurrentPage] = useState(1);
   const [ecosystemEventsFeedItemsPerPage, setEcosystemEventsFeedItemsPerPage] = useState(10);
-  // Фильтры мероприятий в личном кабинете ЦНТР (как в ДРП: выпадающие списки + статус)
-  const [cntrEventsFeedFilters, setCntrEventsFeedFilters] = useState<{ branch: string[]; year: string[]; status: CNTREventStatus[] }>({ branch: [], year: [], status: [] });
+  // Фильтры мероприятий в личном кабинете ЦНТР — такой же набор, как в ДРП (линия, тип, период, статус)
+  const [cntrEventsFeedFilters, setCntrEventsFeedFilters] = useState<{ cooperationLine: string[]; type: EventType[]; year: string[]; status: CNTREventStatus[] }>({ cooperationLine: [], type: [], year: [], status: [] });
   // Фильтры калейдоскопа (линия, тип, период, статус — множественный выбор)
   const [kaleidoscopeFilters, setKaleidoscopeFilters] = useState<{
     cooperationLine: string[];
@@ -2815,6 +2815,7 @@ export default function UniversitiesPage() {
   const [isCntrCabinetBranchLineDialog, setIsCntrCabinetBranchLineDialog] = useState(false);
   const [isEcosystemCabinetBranchLineDialog, setIsEcosystemCabinetBranchLineDialog] = useState(false);
   const [isDrpCabinetEventDialog, setIsDrpCabinetEventDialog] = useState(false);
+  const [isCntrCabinetEventDialog, setIsCntrCabinetEventDialog] = useState(false);
   const [isEcosystemCabinetEventDialog, setIsEcosystemCabinetEventDialog] = useState(false);
   const [eventEcosystemDialogStep, setEventEcosystemDialogStep] = useState<1 | 2>(1);
   const ecosystemMaterialsFileInputRef = useRef<HTMLInputElement>(null);
@@ -3751,6 +3752,26 @@ export default function UniversitiesPage() {
   
   // Добавление мероприятия
   const handleAddEvent = (universityId: string) => {
+    if (isCntrCabinetEventDialog && selectedUniversity) {
+      if (!newEvent.type || !newEvent.date.trim()) return;
+      const newItem: CNTREventItem = {
+        id: `cntr-event-${Date.now()}`,
+        type: newEvent.type as EventType,
+        date: newEvent.date,
+        status: newEvent.status,
+        branch: newEvent.branch?.trim() || undefined,
+        description: newEvent.comments?.trim() || undefined,
+        materials: (newEvent.ecosystemMaterials?.length ?? 0) > 0 ? newEvent.ecosystemMaterials : undefined,
+      };
+      const updatedUniversities = universities.map((u) =>
+        u.id === selectedUniversity ? { ...u, cntrEventsItems: [...(u.cntrEventsItems || []), newItem] } : u
+      );
+      setUniversities(updatedUniversities);
+      setIsEventDialogOpen(false);
+      setIsCntrCabinetEventDialog(false);
+      setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
+      return;
+    }
     if (!newEvent.type || !newEvent.date.trim() || !newEvent.endDate.trim() || newEvent.responsiblePerson.length === 0) {
       return;
     }
@@ -3810,6 +3831,34 @@ export default function UniversitiesPage() {
       setIsDrpCabinetEventDialog(false);
       setIsEcosystemCabinetEventDialog(false);
     }
+  };
+
+  const handleSaveCntrEvent = () => {
+    if (!editingCntrEvent || !newEvent.type || !newEvent.date.trim()) return;
+    setUniversities((prev) =>
+      prev.map((u) => {
+        if (u.id !== editingCntrEvent.universityId) return u;
+        const items = u.cntrEventsItems || [];
+        const updated = items.map((item) =>
+          item.id === editingCntrEvent.itemId
+            ? {
+                ...item,
+                type: newEvent.type as EventType,
+                date: newEvent.date,
+                status: newEvent.status,
+                branch: newEvent.branch?.trim() || undefined,
+                description: newEvent.comments?.trim() || undefined,
+                materials: (newEvent.ecosystemMaterials?.length ?? 0) > 0 ? newEvent.ecosystemMaterials : undefined,
+              }
+            : item
+        );
+        return { ...u, cntrEventsItems: updated };
+      })
+    );
+    setIsEventDialogOpen(false);
+    setIsCntrCabinetEventDialog(false);
+    setEditingCntrEvent(null);
+    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
   };
   
   // Редактирование мероприятия
@@ -10688,8 +10737,6 @@ export default function UniversitiesPage() {
                               <div className="space-y-4">
                                 {(() => {
                                   const eventItems = university.cntrEventsItems || [];
-                                  const branchesFromItems = Array.from(new Set(eventItems.map((e) => e.branch).filter(Boolean))) as string[];
-                                  const branchOptions = Array.from(new Set(["Головной ВУЗ", ...(university.branchCurators?.map((b) => b.branch) ?? []), ...branchesFromItems]));
                                   const yearsMap = eventItems.reduce<Record<string, number>>((acc, e) => {
                                     const y = e.date ? e.date.slice(0, 4) : "";
                                     if (y) acc[y] = (acc[y] || 0) + 1;
@@ -10709,7 +10756,8 @@ export default function UniversitiesPage() {
                                     cancelled: eventItems.filter((e) => e.status === "cancelled").length,
                                   };
                                   const filteredItems = eventItems.filter((item) => {
-                                    if (cntrEventsFeedFilters.branch.length > 0 && (!item.branch || !cntrEventsFeedFilters.branch.includes(item.branch))) return false;
+                                    if (cntrEventsFeedFilters.cooperationLine.length > 0 && !cntrEventsFeedFilters.cooperationLine.includes("cntr")) return false;
+                                    if (cntrEventsFeedFilters.type.length > 0 && !cntrEventsFeedFilters.type.includes(item.type || "contact")) return false;
                                     if (cntrEventsFeedFilters.year.length > 0) {
                                       const y = item.date ? item.date.slice(0, 4) : "";
                                       if (!y || !cntrEventsFeedFilters.year.includes(y)) return false;
@@ -10717,6 +10765,15 @@ export default function UniversitiesPage() {
                                     if (cntrEventsFeedFilters.status.length > 0 && !cntrEventsFeedFilters.status.includes(item.status || "planned")) return false;
                                     return true;
                                   });
+                                  const byTypeCntr: Record<EventType, number> = {
+                                    businessGame: eventItems.filter((e) => e.type === "businessGame").length,
+                                    diplomaDefense: eventItems.filter((e) => e.type === "diplomaDefense").length,
+                                    webinar: eventItems.filter((e) => e.type === "webinar").length,
+                                    lecture: eventItems.filter((e) => e.type === "lecture").length,
+                                    conference: eventItems.filter((e) => e.type === "conference").length,
+                                    masterClass: eventItems.filter((e) => e.type === "masterClass").length,
+                                    contact: eventItems.filter((e) => (e.type || "contact") === "contact").length,
+                                  };
                                   const formatDate = (dateStr: string) => {
                                     if (!dateStr) return "—";
                                     const [year, month, day] = dateStr.split("-").map(Number);
@@ -10725,8 +10782,26 @@ export default function UniversitiesPage() {
                                   const handleEditCntrEvent = (item: CNTREventItem) => {
                                     if (!selectedUniversity) return;
                                     setEditingCntrEvent({ universityId: selectedUniversity, itemId: item.id });
-                                    setNewCntrEvent({ type: item.type || "contact", date: item.date, status: item.status || "planned", branch: item.branch || "", description: item.description || "", materials: item.materials ?? [] });
-                                    setEditCntrEventDialogOpen(true);
+                                    setNewEvent({
+                                      type: item.type || "contact",
+                                      date: item.date,
+                                      endDate: item.date,
+                                      status: item.status || "planned",
+                                      comments: item.description || "",
+                                      responsiblePerson: [],
+                                      mainCooperationLine: "cntr",
+                                      additionalCooperationLines: [],
+                                      branch: item.branch || "",
+                                      showInEventsFeed: true,
+                                      universityContact: { name: "", position: "", phone: "", email: "" },
+                                      ecosystemMaterials: item.materials ?? [],
+                                      ecosystemUniversityRating: 3,
+                                      ecosystemEventRating: 3,
+                                      ecosystemParticipantsCount: 0,
+                                      ecosystemInterestedPersons: [],
+                                    });
+                                    setIsCntrCabinetEventDialog(true);
+                                    setIsEventDialogOpen(true);
                                   };
                                   const handleRemoveCntrEvent = (itemId: string) => {
                                     if (!selectedUniversity) return;
@@ -10739,31 +10814,40 @@ export default function UniversitiesPage() {
                                     <>
                                       <div className="grid grid-cols-[1fr_1fr_1fr_1fr_auto] gap-x-4 gap-y-2 mb-4 items-start">
                                         <div className="min-w-0">
-                                          <Label className="text-base font-semibold">ВУЗ / филиал вуза</Label>
+                                          <Label className="text-base font-semibold">Линия сотрудничества</Label>
                                         </div>
                                         <div className="min-w-0">
-                                          <Label className="text-base font-semibold">Год</Label>
+                                          <Label className="text-base font-semibold">Тип мероприятия</Label>
+                                        </div>
+                                        <div className="min-w-0">
+                                          <Label className="text-base font-semibold">Период</Label>
                                         </div>
                                         <div className="min-w-0">
                                           <Label className="text-base font-semibold">Статус</Label>
                                         </div>
-                                        <div className="min-w-0" />
                                         <div />
                                         <div className="min-w-0 space-y-1">
                                           <MultiSelect
-                                            options={branchOptions.map((b) => ({ value: b, label: b }))}
-                                            selected={cntrEventsFeedFilters.branch}
-                                            onChange={(selected) => setCntrEventsFeedFilters((p) => ({ ...p, branch: selected }))}
-                                            placeholder="Выберите филиал"
+                                            options={[{ value: "cntr", label: `ЦНТР (${eventItems.length})` }]}
+                                            selected={cntrEventsFeedFilters.cooperationLine}
+                                            onChange={(selected) => setCntrEventsFeedFilters((p) => ({ ...p, cooperationLine: selected }))}
+                                            placeholder="Выберите линии"
                                           />
-                                          {branchOptions.length === 0 && <span className="text-sm text-muted-foreground">Нет данных</span>}
+                                        </div>
+                                        <div className="min-w-0">
+                                          <MultiSelect
+                                            options={EVENT_TYPE_OPTIONS.map(({ value, label }) => ({ value, label, count: byTypeCntr[value] })).filter((item) => item.count > 0 || cntrEventsFeedFilters.type.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))}
+                                            selected={cntrEventsFeedFilters.type}
+                                            onChange={(selected) => setCntrEventsFeedFilters((p) => ({ ...p, type: selected as EventType[] }))}
+                                            placeholder="Выберите типы"
+                                          />
                                         </div>
                                         <div className="min-w-0 space-y-1">
                                           <MultiSelect
                                             options={yearsSorted.map((y) => ({ value: y, label: `${y} (${yearsMap[y] ?? 0})` }))}
                                             selected={cntrEventsFeedFilters.year}
                                             onChange={(selected) => setCntrEventsFeedFilters((p) => ({ ...p, year: selected }))}
-                                            placeholder="Выберите год"
+                                            placeholder="Выберите годы"
                                           />
                                           {yearsSorted.length === 0 && <span className="text-sm text-muted-foreground">Нет данных</span>}
                                         </div>
@@ -10781,14 +10865,14 @@ export default function UniversitiesPage() {
                                           />
                                           {eventItems.length === 0 && <span className="text-sm text-muted-foreground">Нет данных</span>}
                                         </div>
-                                        <div className="min-w-0" />
                                         <div className="flex items-center h-10">
                                           <Button
                                             size="sm"
                                             onClick={() => {
-                                              setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", materials: [] });
                                               setEditingCntrEvent(null);
-                                              setAddCntrEventDialogOpen(true);
+                                              setIsCntrCabinetEventDialog(true);
+                                              setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "cntr", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
+                                              setIsEventDialogOpen(true);
                                             }}
                                             disabled={!selectedUniversity}
                                           >
@@ -10797,12 +10881,18 @@ export default function UniversitiesPage() {
                                           </Button>
                                         </div>
                                       </div>
-                                      {(cntrEventsFeedFilters.branch.length > 0 || cntrEventsFeedFilters.year.length > 0 || cntrEventsFeedFilters.status.length > 0) && (
+                                      {(cntrEventsFeedFilters.cooperationLine.length > 0 || cntrEventsFeedFilters.type.length > 0 || cntrEventsFeedFilters.year.length > 0 || cntrEventsFeedFilters.status.length > 0) && (
                                         <div className="flex flex-wrap items-center gap-2 mb-3">
-                                          {cntrEventsFeedFilters.branch.length > 0 && (
+                                          {cntrEventsFeedFilters.cooperationLine.length > 0 && (
                                             <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1">
-                                              <span className="text-sm">Филиал: {cntrEventsFeedFilters.branch.join(", ")}</span>
-                                              <button type="button" onClick={() => setCntrEventsFeedFilters((p) => ({ ...p, branch: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button>
+                                              <span className="text-sm">Линия: {cntrEventsFeedFilters.cooperationLine.map(getCooperationLineLabel).join(", ")}</span>
+                                              <button type="button" onClick={() => setCntrEventsFeedFilters((p) => ({ ...p, cooperationLine: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button>
+                                            </Badge>
+                                          )}
+                                          {cntrEventsFeedFilters.type.length > 0 && (
+                                            <Badge variant="secondary" className="flex items-center gap-1 px-2 py-1">
+                                              <span className="text-sm">Тип: {cntrEventsFeedFilters.type.map((t) => EVENT_TYPE_LABELS[t]).join(", ")}</span>
+                                              <button type="button" onClick={() => setCntrEventsFeedFilters((p) => ({ ...p, type: [] }))} className="ml-1 rounded hover:bg-muted"><X className="h-3 w-3" /></button>
                                             </Badge>
                                           )}
                                           {cntrEventsFeedFilters.year.length > 0 && (
@@ -10903,8 +10993,10 @@ export default function UniversitiesPage() {
                                             size="sm"
                                             className="mt-3"
                                             onClick={() => {
-                                              setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", materials: [] });
-                                              setAddCntrEventDialogOpen(true);
+                                              setEditingCntrEvent(null);
+                                              setIsCntrCabinetEventDialog(true);
+                                              setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "cntr", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
+                                              setIsEventDialogOpen(true);
                                             }}
                                             disabled={!selectedUniversity}
                                           >
@@ -18498,19 +18590,21 @@ export default function UniversitiesPage() {
             setIsEventDialogOpen(open);
             if (!open) {
               setIsDrpCabinetEventDialog(false);
+              setIsCntrCabinetEventDialog(false);
               setIsEcosystemCabinetEventDialog(false);
               setEventEcosystemDialogStep(1);
               setEditingEvent(null);
+              setEditingCntrEvent(null);
               setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
             }
           }}>
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>
-                  {editingEvent && editingEvent.universityId === selectedUniversity ? "Редактировать мероприятие" : "Добавить мероприятие"}
+                  {editingCntrEvent ? "Редактировать мероприятие" : editingEvent && editingEvent.universityId === selectedUniversity ? "Редактировать мероприятие" : "Добавить мероприятие"}
                 </DialogTitle>
                 <DialogDescription>
-                  {editingEvent && editingEvent.universityId === selectedUniversity 
+                  {editingCntrEvent ? "Внесите изменения в мероприятие" : editingEvent && editingEvent.universityId === selectedUniversity 
                     ? "Внесите изменения в мероприятие" 
                     : "Заполните информацию о мероприятии"}
                 </DialogDescription>
@@ -18576,16 +18670,6 @@ export default function UniversitiesPage() {
                         </div>
                       );
                     })}
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-bold">
-                      {eventEcosystemDialogStep === 1 ? "Общая информация" : "Экосистема"}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {eventEcosystemDialogStep === 1
-                        ? "Тип мероприятия, даты, статус, контакты и другие параметры"
-                        : "Дополнительные параметры мероприятия Экосистема"}
-                    </p>
                   </div>
                 </div>
               )}
@@ -18690,10 +18774,10 @@ export default function UniversitiesPage() {
                 <div className="flex items-end gap-2">
                   <div className="flex-1 space-y-2">
                     <Label>Основная линия сотрудничества</Label>
-                    {(isDrpCabinetEventDialog || isEcosystemCabinetEventDialog) ? (
+                    {(isDrpCabinetEventDialog || isEcosystemCabinetEventDialog || isCntrCabinetEventDialog) ? (
                       <div className="flex items-center h-10 px-3 rounded-md border bg-muted/50">
-                        <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(isDrpCabinetEventDialog ? "drp" : "ecosystem"))}>
-                          {isDrpCabinetEventDialog ? "ДРП" : "Экосистема"}
+                        <Badge variant="outline" className={cn("text-xs", getCooperationLineBadgeColor(isDrpCabinetEventDialog ? "drp" : isEcosystemCabinetEventDialog ? "ecosystem" : "cntr"))}>
+                          {isDrpCabinetEventDialog ? "ДРП" : isEcosystemCabinetEventDialog ? "Экосистема" : "ЦНТР"}
                         </Badge>
                       </div>
                     ) : (
@@ -18716,7 +18800,7 @@ export default function UniversitiesPage() {
                     <Label>Дополнительная линия сотрудничества</Label>
                     <MultiSelect
                       options={COOPERATION_LINE_OPTIONS
-                        .filter((opt) => opt.value !== (isDrpCabinetEventDialog ? "drp" : isEcosystemCabinetEventDialog ? "ecosystem" : newEvent.mainCooperationLine))
+                        .filter((opt) => opt.value !== (isDrpCabinetEventDialog ? "drp" : isEcosystemCabinetEventDialog ? "ecosystem" : isCntrCabinetEventDialog ? "cntr" : newEvent.mainCooperationLine))
                         .map((opt) => ({ value: opt.value, label: opt.label }))}
                       selected={newEvent.additionalCooperationLines}
                       onChange={(selected) => setNewEvent({ ...newEvent, additionalCooperationLines: selected })}
@@ -18850,19 +18934,8 @@ export default function UniversitiesPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between rounded-lg border p-4">
-                      <div className="space-y-0.5">
-                        <Label htmlFor="event-show-in-feed-dialog">Показывать в ленте мероприятий</Label>
-                        <p className="text-sm text-muted-foreground">Если выключено, мероприятие не отображается на вкладке «Лента мероприятий»</p>
-                      </div>
-                      <Switch
-                        id="event-show-in-feed-dialog"
-                        checked={newEvent.showInEventsFeed}
-                        onCheckedChange={(checked) => setNewEvent({ ...newEvent, showInEventsFeed: checked })}
-                      />
-                    </div>
-                    {/* Информационные материалы для ДРП */}
-                    {isDrpCabinetEventDialog && (
+                    {/* Информационные материалы для ДРП и ЦНТР */}
+                    {(isDrpCabinetEventDialog || isCntrCabinetEventDialog) && (
                       <div className="space-y-2">
                         <Label>Информационные материалы</Label>
                         <p className="text-sm text-muted-foreground">PDF, Word (.doc, .docx)</p>
@@ -18919,81 +18992,93 @@ export default function UniversitiesPage() {
                         </div>
                       </div>
                     )}
+                    {/* Информационные материалы для Экосистемы (шаг 1) */}
+                    {isEcosystemCabinetEventDialog && (
+                      <div className="space-y-2">
+                        <Label>Информационные материалы</Label>
+                        <p className="text-sm text-muted-foreground">PDF, Word (.doc, .docx)</p>
+                        <input
+                          ref={ecosystemMaterialsFileInputRef}
+                          type="file"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                          className="hidden"
+                          onChange={(e) => {
+                            const files = Array.from(e.target.files ?? []);
+                            if (files.length === 0) return;
+                            const validExts = [".pdf", ".doc", ".docx"];
+                            const newMaterials = files
+                              .filter((file) => {
+                                const ext = file.name.toLowerCase().slice(file.name.lastIndexOf("."));
+                                return validExts.includes(ext);
+                              })
+                              .map((file) => ({
+                                id: `m-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+                                name: file.name,
+                                url: URL.createObjectURL(file),
+                                uploadedAt: new Date().toISOString(),
+                              }));
+                            if (newMaterials.length > 0) {
+                              setNewEvent({
+                                ...newEvent,
+                                ecosystemMaterials: [...(newEvent.ecosystemMaterials ?? []), ...newMaterials],
+                              });
+                            }
+                            e.target.value = "";
+                          }}
+                        />
+                        <div className="flex flex-wrap gap-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => ecosystemMaterialsFileInputRef.current?.click()}
+                          >
+                            <Upload className="h-4 w-4 mr-2" />
+                            Загрузить файлы
+                          </Button>
+                          {(newEvent.ecosystemMaterials ?? []).map((m) => (
+                            <div
+                              key={m.id}
+                              className="flex items-center gap-1 rounded-md border bg-muted/30 px-2 py-1 text-sm"
+                            >
+                              <FileText className="h-3.5 w-3.5 text-muted-foreground" />
+                              <span className="truncate max-w-[180px]" title={m.name}>{m.name}</span>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                className="h-5 w-5"
+                                onClick={() => {
+                                  if (m.url.startsWith("blob:")) URL.revokeObjectURL(m.url);
+                                  setNewEvent({
+                                    ...newEvent,
+                                    ecosystemMaterials: (newEvent.ecosystemMaterials ?? []).filter((x) => x.id !== m.id),
+                                  });
+                                }}
+                              >
+                                <X className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between rounded-lg border p-4">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="event-show-in-feed-dialog">Показывать в ленте мероприятий</Label>
+                        <p className="text-sm text-muted-foreground">Если выключено, мероприятие не отображается на вкладке «Лента мероприятий»</p>
+                      </div>
+                      <Switch
+                        id="event-show-in-feed-dialog"
+                        checked={newEvent.showInEventsFeed}
+                        onCheckedChange={(checked) => setNewEvent({ ...newEvent, showInEventsFeed: checked })}
+                      />
+                    </div>
                 </>
                 )}
                 {isEcosystemCabinetEventDialog && eventEcosystemDialogStep === 2 && (
                   <div className="space-y-6">
-                    {/* Информационные материалы */}
-                    <div className="space-y-2">
-                      <Label>Информационные материалы</Label>
-                      <p className="text-sm text-muted-foreground">PDF, Word (.doc, .docx)</p>
-                      <input
-                        ref={ecosystemMaterialsFileInputRef}
-                        type="file"
-                        accept=".pdf,.doc,.docx"
-                        multiple
-                        className="hidden"
-                        onChange={(e) => {
-                          const files = Array.from(e.target.files ?? []);
-                          if (files.length === 0) return;
-                          const validExts = [".pdf", ".doc", ".docx"];
-                          const newMaterials = files
-                            .filter((file) => {
-                              const ext = file.name.toLowerCase().slice(file.name.lastIndexOf("."));
-                              return validExts.includes(ext);
-                            })
-                            .map((file) => ({
-                              id: `m-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
-                              name: file.name,
-                              url: URL.createObjectURL(file),
-                              uploadedAt: new Date().toISOString(),
-                            }));
-                          if (newMaterials.length > 0) {
-                            setNewEvent({
-                              ...newEvent,
-                              ecosystemMaterials: [...newEvent.ecosystemMaterials, ...newMaterials],
-                            });
-                          }
-                          e.target.value = "";
-                        }}
-                      />
-                      <div className="flex flex-wrap gap-2">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => ecosystemMaterialsFileInputRef.current?.click()}
-                        >
-                          <Upload className="h-4 w-4 mr-2" />
-                          Загрузить файлы
-                        </Button>
-                        {newEvent.ecosystemMaterials.map((m) => (
-                          <div
-                            key={m.id}
-                            className="flex items-center gap-1 rounded-md border bg-muted/30 px-2 py-1 text-sm"
-                          >
-                            <FileText className="h-3.5 w-3.5 text-muted-foreground" />
-                            <span className="truncate max-w-[180px]" title={m.name}>{m.name}</span>
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="icon"
-                              className="h-5 w-5"
-                              onClick={() => {
-                                URL.revokeObjectURL(m.url);
-                                setNewEvent({
-                                  ...newEvent,
-                                  ecosystemMaterials: newEvent.ecosystemMaterials.filter((x) => x.id !== m.id),
-                                });
-                              }}
-                            >
-                              <X className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
                     {/* Оценки */}
                     <div className="grid grid-cols-2 gap-6">
                       <div className="space-y-3">
@@ -19067,6 +19152,13 @@ export default function UniversitiesPage() {
                   >
                     Далее
                   </Button>
+                ) : editingCntrEvent ? (
+                    <Button
+                      onClick={() => handleSaveCntrEvent()}
+                      disabled={!newEvent.type || !newEvent.date.trim()}
+                    >
+                      Сохранить
+                    </Button>
                 ) : editingEvent && editingEvent.universityId === selectedUniversity ? (
                     <Button 
                     onClick={() => {
@@ -19083,7 +19175,7 @@ export default function UniversitiesPage() {
                         handleAddEvent(selectedUniversity);
                       }
                     }}
-                    disabled={!newEvent.type || !newEvent.date.trim() || !newEvent.endDate.trim() || newEvent.responsiblePerson.length === 0 || !selectedUniversity}
+                    disabled={isCntrCabinetEventDialog ? (!newEvent.type || !newEvent.date.trim() || !selectedUniversity) : (!newEvent.type || !newEvent.date.trim() || !newEvent.endDate.trim() || newEvent.responsiblePerson.length === 0 || !selectedUniversity)}
                   >
                     <Plus className="h-4 w-4 mr-1" />
                     Добавить
