@@ -244,12 +244,15 @@ export interface CNTREventItem {
   addedBy?: string;
 }
 
+// Статус проекта в таблице «Проекты» ЦНТР
+export type CNTRProjectStatus = "pending" | "accepted" | "rejected"; // на рассмотрении, принят, отклонён
+
 // Элемент таблицы «Проекты» в личном кабинете ЦНТР (дата, описание, статус)
 export interface CNTRProjectTableItem {
   id: string;
   date: string; // Дата (формат YYYY-MM-DD)
   description?: string; // Описание
-  status?: CNTREventStatus; // Статус: запланировано, в процессе, проведено, отменено
+  status?: CNTRProjectStatus; // Статус: на рассмотрении, принят, отклонён
 }
 
 // Тип для элемента образовательных проектов ЦНТР

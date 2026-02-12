@@ -1326,6 +1326,23 @@ const mockUniversities: University[] = [
         document: "https://example.com/documents/agreement-hse-2023.pdf"
       },
     ],
+    cntrProjectTableItems: [
+      { id: "cntr-pt-hse-1", date: "2024-01-15", description: "Исследование применения машинного обучения для прогнозирования оттока клиентов", status: "accepted" as const },
+      { id: "cntr-pt-hse-2", date: "2024-02-20", description: "Разработка платформы для анализа транзакционных данных в реальном времени", status: "accepted" as const },
+      { id: "cntr-pt-hse-3", date: "2024-03-10", description: "Совместный проект по созданию центра компетенций в области финтех", status: "accepted" as const },
+      { id: "cntr-pt-hse-4", date: "2024-04-05", description: "Исследование блокчейн-технологий для банковских платежных систем", status: "accepted" as const },
+      { id: "cntr-pt-hse-5", date: "2024-05-18", description: "Разработка алгоритмов выявления мошенничества с использованием нейросетей", status: "accepted" as const },
+      { id: "cntr-pt-hse-6", date: "2024-06-22", description: "Пилотный проект по интеграции API открытого банкинга", status: "pending" as const },
+      { id: "cntr-pt-hse-7", date: "2024-07-14", description: "Исследование потенциала квантовых вычислений в кредитном скоринге", status: "pending" as const },
+      { id: "cntr-pt-hse-8", date: "2024-08-30", description: "Разработка системы персонализации финансовых продуктов", status: "pending" as const },
+      { id: "cntr-pt-hse-9", date: "2024-09-12", description: "Проект по созданию sandbox для тестирования финтех-решений", status: "pending" as const },
+      { id: "cntr-pt-hse-10", date: "2024-10-05", description: "Исследование репутационных рисков в цифровых каналах", status: "pending" as const },
+      { id: "cntr-pt-hse-11", date: "2024-11-20", description: "Проект автоматизации скоринга малого бизнеса — не прошёл внутреннюю экспертизу", status: "rejected" as const },
+      { id: "cntr-pt-hse-12", date: "2024-12-02", description: "Инициатива по внедрению криптовалютных сервисов — отклонена регулятором", status: "rejected" as const },
+      { id: "cntr-pt-hse-13", date: "2025-01-10", description: "Проект голосовой биометрии — дублирование существующих решений", status: "rejected" as const },
+      { id: "cntr-pt-hse-14", date: "2025-02-15", description: "Исследование NFT для банковских продуктов — вне текущей стратегии", status: "rejected" as const },
+      { id: "cntr-pt-hse-15", date: "2025-03-01", description: "Пилот по распознаванию лиц в отделениях — превышение бюджета", status: "rejected" as const },
+    ],
     region: "Московская область",
     description: "Ведущий экономический и IT-университет",
     image: "https://www.hse.ru//images/main/main_logo_ru_full.svg",
@@ -2305,7 +2322,7 @@ export default function UniversitiesPage() {
   const [newCntrProjectTable, setNewCntrProjectTable] = useState<{ date: string; description: string; status: string }>({
     date: "",
     description: "",
-    status: "planned",
+    status: "pending",
   });
   const [editCntrProjectTableDialogOpen, setEditCntrProjectTableDialogOpen] = useState(false);
   const [editingCntrProjectTable, setEditingCntrProjectTable] = useState<CNTRProjectTableItem | null>(null);
@@ -12933,7 +12950,7 @@ export default function UniversitiesPage() {
                               <div className="flex items-center justify-end mb-4">
                                 <Dialog open={addCntrProjectTableDialogOpen} onOpenChange={setAddCntrProjectTableDialogOpen}>
                                   <DialogTrigger asChild>
-                                    <Button variant="default" size="sm" onClick={() => setNewCntrProjectTable({ date: "", description: "", status: "planned" })}>
+                                    <Button variant="default" size="sm" onClick={() => setNewCntrProjectTable({ date: "", description: "", status: "pending" })}>
                                       <Plus className="mr-2 h-4 w-4" />
                                       Добавить
                                     </Button>
@@ -12972,10 +12989,9 @@ export default function UniversitiesPage() {
                                             <SelectValue />
                                           </SelectTrigger>
                                           <SelectContent>
-                                            <SelectItem value="planned">Запланировано</SelectItem>
-                                            <SelectItem value="in_progress">В процессе</SelectItem>
-                                            <SelectItem value="completed">Проведено</SelectItem>
-                                            <SelectItem value="cancelled">Отменено</SelectItem>
+                                            <SelectItem value="pending">На рассмотрении</SelectItem>
+                                            <SelectItem value="accepted">Принят</SelectItem>
+                                            <SelectItem value="rejected">Отклонён</SelectItem>
                                           </SelectContent>
                                         </Select>
                                       </div>
@@ -12998,7 +13014,7 @@ export default function UniversitiesPage() {
                                             );
                                             setUniversities(updatedUniversities);
                                             setAddCntrProjectTableDialogOpen(false);
-                                            setNewCntrProjectTable({ date: "", description: "", status: "planned" });
+                                            setNewCntrProjectTable({ date: "", description: "", status: "pending" });
                                           }
                                         }}
                                         disabled={!newCntrProjectTable.date}
@@ -13027,16 +13043,14 @@ export default function UniversitiesPage() {
                                         return `${String(d).padStart(2, "0")}.${String(m).padStart(2, "0")}.${y}`;
                                       };
                                       const statusLabels: Record<string, string> = {
-                                        planned: "Запланировано",
-                                        in_progress: "В процессе",
-                                        completed: "Проведено",
-                                        cancelled: "Отменено",
+                                        pending: "На рассмотрении",
+                                        accepted: "Принят",
+                                        rejected: "Отклонён",
                                       };
                                       const statusVariant: Record<string, string> = {
-                                        planned: "bg-slate-50 text-slate-700 border-slate-200",
-                                        in_progress: "bg-amber-50 text-amber-700 border-amber-200",
-                                        completed: "bg-green-50 text-green-700 border-green-200",
-                                        cancelled: "bg-red-50 text-red-700 border-red-200",
+                                        pending: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800",
+                                        accepted: "bg-green-50 text-green-700 border-green-200 dark:bg-green-950/30 dark:text-green-400 dark:border-green-800",
+                                        rejected: "bg-red-50 text-red-700 border-red-200 dark:bg-red-950/30 dark:text-red-400 dark:border-red-800",
                                       };
                                       if (items.length === 0) {
                                         return (
@@ -13052,8 +13066,8 @@ export default function UniversitiesPage() {
                                           <TableCell className="whitespace-nowrap">{formatDate(item.date)}</TableCell>
                                           <TableCell className="whitespace-normal">{item.description || "—"}</TableCell>
                                           <TableCell>
-                                            <Badge variant="outline" className={statusVariant[item.status || "planned"] || ""}>
-                                              {statusLabels[item.status || "planned"]}
+                                            <Badge variant="outline" className={statusVariant[item.status || "pending"] || ""}>
+                                              {statusLabels[item.status || "pending"]}
                                             </Badge>
                                           </TableCell>
                                           <TableCell className="text-right">
@@ -13066,7 +13080,7 @@ export default function UniversitiesPage() {
                                                 setNewCntrProjectTable({
                                                   date: item.date,
                                                   description: item.description || "",
-                                                  status: item.status || "planned",
+                                                  status: item.status || "pending",
                                                 });
                                                 setEditCntrProjectTableDialogOpen(true);
                                               }}
@@ -13130,10 +13144,9 @@ export default function UniversitiesPage() {
                                           <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent>
-                                          <SelectItem value="planned">Запланировано</SelectItem>
-                                          <SelectItem value="in_progress">В процессе</SelectItem>
-                                          <SelectItem value="completed">Проведено</SelectItem>
-                                          <SelectItem value="cancelled">Отменено</SelectItem>
+                                          <SelectItem value="pending">На рассмотрении</SelectItem>
+                                          <SelectItem value="accepted">Принят</SelectItem>
+                                          <SelectItem value="rejected">Отклонён</SelectItem>
                                         </SelectContent>
                                       </Select>
                                     </div>
