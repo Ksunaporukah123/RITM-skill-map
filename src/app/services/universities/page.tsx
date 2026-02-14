@@ -2276,12 +2276,13 @@ export default function UniversitiesPage() {
   
   // Состояние для добавления элемента мероприятий ЦНТР
   const [addCntrEventDialogOpen, setAddCntrEventDialogOpen] = useState(false);
-  const [newCntrEvent, setNewCntrEvent] = useState<{ type: CNTREventType; date: string; status: CNTREventStatus; branch: string; description: string; materials: { id: string; name: string; url: string; uploadedAt: string }[] }>({
+  const [newCntrEvent, setNewCntrEvent] = useState<{ type: CNTREventType; date: string; status: CNTREventStatus; branch: string; description: string; participantsCount: number; materials: { id: string; name: string; url: string; uploadedAt: string }[] }>({
     type: "contact",
     date: "",
     status: "planned",
     branch: "",
     description: "",
+    participantsCount: 0,
     materials: [],
   });
   const cntrEventMaterialsFileInputRef = useRef<HTMLInputElement>(null);
@@ -2885,6 +2886,7 @@ export default function UniversitiesPage() {
     branch: string;
     showInEventsFeed: boolean;
     universityContact: { name: string; position: string; phone: string; email: string };
+    participantsCount: number;
     ecosystemMaterials: { id: string; name: string; url: string; uploadedAt: string }[];
     ecosystemUniversityRating: number;
     ecosystemEventRating: number;
@@ -2902,6 +2904,7 @@ export default function UniversitiesPage() {
     branch: "",
     showInEventsFeed: true,
     universityContact: { name: "", position: "", phone: "", email: "" },
+    participantsCount: 0,
     ecosystemMaterials: [],
     ecosystemUniversityRating: 3,
     ecosystemEventRating: 3,
@@ -3796,6 +3799,7 @@ export default function UniversitiesPage() {
         status: newEvent.status,
         branch: newEvent.branch?.trim() || undefined,
         description: newEvent.comments?.trim() || undefined,
+        participantsCount: newEvent.participantsCount > 0 ? newEvent.participantsCount : undefined,
         materials: (newEvent.ecosystemMaterials?.length ?? 0) > 0 ? newEvent.ecosystemMaterials : undefined,
       };
       const updatedUniversities = universities.map((u) =>
@@ -3804,7 +3808,7 @@ export default function UniversitiesPage() {
       setUniversities(updatedUniversities);
       setIsEventDialogOpen(false);
       setIsCntrCabinetEventDialog(false);
-      setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
+      setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, participantsCount: 0, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
       return;
     }
     if (!newEvent.type || !newEvent.date.trim() || !newEvent.endDate.trim() || newEvent.responsiblePerson.length === 0) {
@@ -3844,6 +3848,7 @@ export default function UniversitiesPage() {
       cooperationLine: buildCooperationLine(),
       branch: newEvent.branch.trim() || undefined,
       showInEventsFeed: newEvent.showInEventsFeed,
+      participantsCount: (isEcosystemCabinetEventDialog ? newEvent.ecosystemParticipantsCount : newEvent.participantsCount) > 0 ? (isEcosystemCabinetEventDialog ? newEvent.ecosystemParticipantsCount : newEvent.participantsCount) : undefined,
       addedAt: new Date().toISOString().split("T")[0],
       universityContact: hasUniversityContact
         ? {
@@ -3861,7 +3866,7 @@ export default function UniversitiesPage() {
       setUniversities(universities.map(u => 
         u.id === universityId ? { ...u, events: updatedEvents } : u
       ));
-      setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
+      setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, participantsCount: 0, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
       setIsEventDialogOpen(false);
       setIsDrpCabinetEventDialog(false);
       setIsEcosystemCabinetEventDialog(false);
@@ -3883,6 +3888,7 @@ export default function UniversitiesPage() {
                 status: newEvent.status,
                 branch: newEvent.branch?.trim() || undefined,
                 description: newEvent.comments?.trim() || undefined,
+                participantsCount: newEvent.participantsCount > 0 ? newEvent.participantsCount : undefined,
                 materials: (newEvent.ecosystemMaterials?.length ?? 0) > 0 ? newEvent.ecosystemMaterials : undefined,
               }
             : item
@@ -3893,7 +3899,7 @@ export default function UniversitiesPage() {
     setIsEventDialogOpen(false);
     setIsCntrCabinetEventDialog(false);
     setEditingCntrEvent(null);
-    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
+    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, participantsCount: 0, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
   };
   
   // Редактирование мероприятия
@@ -3921,6 +3927,7 @@ export default function UniversitiesPage() {
         universityContact: event.universityContact
           ? { name: event.universityContact.name || "", position: event.universityContact.position || "", phone: event.universityContact.phone || "", email: event.universityContact.email || "" }
           : { name: "", position: "", phone: "", email: "" },
+        participantsCount: event.participantsCount ?? 0,
         ecosystemMaterials: ed?.materials ?? [],
         ecosystemUniversityRating: ed?.universityRating ?? 3,
         ecosystemEventRating: ed?.eventRating ?? 3,
@@ -3965,6 +3972,7 @@ export default function UniversitiesPage() {
               cooperationLine: buildCooperationLineForSave(),
               branch: newEvent.branch.trim() || undefined,
               showInEventsFeed: newEvent.showInEventsFeed,
+              participantsCount: (isEcosystemCabinetEventDialog ? newEvent.ecosystemParticipantsCount : newEvent.participantsCount) > 0 ? (isEcosystemCabinetEventDialog ? newEvent.ecosystemParticipantsCount : newEvent.participantsCount) : undefined,
               universityContact: hasUniversityContact
                 ? { name: newEvent.universityContact.name.trim(), position: newEvent.universityContact.position?.trim() || undefined, phone: newEvent.universityContact.phone?.trim() || undefined, email: newEvent.universityContact.email?.trim() || undefined }
                 : undefined,
@@ -3986,13 +3994,13 @@ export default function UniversitiesPage() {
       u.id === editingEvent.universityId ? { ...u, events: updatedEvents } : u
     ));
     setEditingEvent(null);
-    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
+    setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, participantsCount: 0, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
     setIsEventDialogOpen(false);
     setIsDrpCabinetEventDialog(false);
     setIsEcosystemCabinetEventDialog(false);
   };
 
-  // Обновление заинтересованного лица в мероприятии экосистемы
+  // Обновление студента в мероприятии экосистемы
   const handleUpdateEcosystemInterestedPerson = (universityId: string, eventId: string, personIndex: number, person: { id: string; name: string; phone: string; comment: string }) => {
     setUniversities(universities.map(u =>
       u.id === universityId
@@ -4014,7 +4022,7 @@ export default function UniversitiesPage() {
     ));
   };
 
-  // Удаление заинтересованного лица из мероприятия экосистемы
+  // Удаление студента из мероприятия экосистемы
   const handleDeleteEcosystemInterestedPerson = (universityId: string, eventId: string, personIndex: number) => {
     setUniversities(universities.map(u =>
       u.id === universityId
@@ -4036,7 +4044,7 @@ export default function UniversitiesPage() {
     ));
   };
 
-  // Добавление заинтересованного лица в мероприятие экосистемы
+  // Добавление студента в мероприятие экосистемы
   const handleAddEcosystemInterestedPerson = (universityId: string, eventId: string) => {
     setUniversities(universities.map(u =>
       u.id === universityId
@@ -4798,6 +4806,7 @@ export default function UniversitiesPage() {
       conference: university.events.filter(e => e.type === "conference").length,
       masterClass: university.events.filter(e => e.type === "masterClass").length,
       contact: university.events.filter(e => e.type === "contact").length,
+      meeting: university.events.filter(e => e.type === "meeting").length,
     };
     const byStatus = {
       planned: university.events.filter(e => e.status === "planned").length,
@@ -7457,6 +7466,7 @@ export default function UniversitiesPage() {
                                 conference: eventsForTypeBlock.filter((e) => e.type === "conference").length,
                                 masterClass: eventsForTypeBlock.filter((e) => e.type === "masterClass").length,
                                 contact: eventsForTypeBlock.filter((e) => e.type === "contact").length,
+                                meeting: eventsForTypeBlock.filter((e) => e.type === "meeting").length,
                               };
                               const yearsMap = eventsForYearBlock.reduce<Record<number, number>>((acc, e) => {
                                 const y = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
@@ -8033,7 +8043,7 @@ export default function UniversitiesPage() {
                               <Button
                                 onClick={() => {
                                   setEditingEvent(null);
-                                  setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
+                                  setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, participantsCount: 0, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
                                   setIsEventDialogOpen(true);
                                 }}
                                 disabled={!selectedUniversity}
@@ -8063,7 +8073,7 @@ export default function UniversitiesPage() {
                                   };
                                   const getEventTypeBadgeVariant = (_type: EventType): "outline" => "outline";
                                   const getEventTypeBadgeClassName = (type: EventType) => {
-                                    const map: Record<EventType, string> = { businessGame: "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600", diplomaDefense: "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600", webinar: "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600", lecture: "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600", conference: "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600", masterClass: "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600", contact: "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600" };
+                                    const map: Record<EventType, string> = { businessGame: "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600", diplomaDefense: "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600", webinar: "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600", lecture: "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600", conference: "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600", masterClass: "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600", contact: "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600", meeting: "!bg-indigo-500 !text-white !border-indigo-500 hover:!bg-indigo-600" };
                                     return map[type] ?? "";
                                   };
                                   return (
@@ -11529,6 +11539,7 @@ export default function UniversitiesPage() {
                                     conference: eventItems.filter((e) => e.type === "conference").length,
                                     masterClass: eventItems.filter((e) => e.type === "masterClass").length,
                                     contact: eventItems.filter((e) => (e.type || "contact") === "contact").length,
+                                    meeting: eventItems.filter((e) => e.type === "meeting").length,
                                   };
                                   const formatDate = (dateStr: string) => {
                                     if (!dateStr) return "—";
@@ -11550,10 +11561,11 @@ export default function UniversitiesPage() {
                                       branch: item.branch || "",
                                       showInEventsFeed: true,
                                       universityContact: { name: "", position: "", phone: "", email: "" },
+                                      participantsCount: item.participantsCount ?? 0,
                                       ecosystemMaterials: item.materials ?? [],
                                       ecosystemUniversityRating: 3,
                                       ecosystemEventRating: 3,
-                                      ecosystemParticipantsCount: 0,
+                                      ecosystemParticipantsCount: item.participantsCount ?? 0,
                                       ecosystemInterestedPersons: [],
                                     });
                                     setIsCntrCabinetEventDialog(true);
@@ -11627,7 +11639,7 @@ export default function UniversitiesPage() {
                                             onClick={() => {
                                               setEditingCntrEvent(null);
                                               setIsCntrCabinetEventDialog(true);
-                                              setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "cntr", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
+                                              setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "cntr", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, participantsCount: 0, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
                                               setIsEventDialogOpen(true);
                                             }}
                                             disabled={!selectedUniversity}
@@ -11685,6 +11697,7 @@ export default function UniversitiesPage() {
                                                   case "conference": return "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600";
                                                   case "masterClass": return "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600";
                                                   case "contact": return "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600";
+                                                  case "meeting": return "!bg-indigo-500 !text-white !border-indigo-500 hover:!bg-indigo-600";
                                                   default: return "";
                                                 }
                                               };
@@ -11721,6 +11734,12 @@ export default function UniversitiesPage() {
                                                               </span>
                                                             ))}
                                                           </div>
+                                                        </div>
+                                                      )}
+                                                      {(item.participantsCount != null && item.participantsCount > 0) && (
+                                                        <div className="flex items-center gap-2">
+                                                          <Label className="text-sm font-semibold">Количество участников:</Label>
+                                                          <span className="text-sm text-muted-foreground">{item.participantsCount}</span>
                                                         </div>
                                                       )}
                                                       <div className="pt-2.5 mt-2 border-t space-y-2.5">
@@ -11833,7 +11852,7 @@ export default function UniversitiesPage() {
                                             onClick={() => {
                                               setEditingCntrEvent(null);
                                               setIsCntrCabinetEventDialog(true);
-                                              setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "cntr", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
+                                              setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "cntr", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, participantsCount: 0, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
                                               setIsEventDialogOpen(true);
                                             }}
                                             disabled={!selectedUniversity}
@@ -11865,7 +11884,7 @@ export default function UniversitiesPage() {
                                               <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                              <p>Выберите тип мероприятия: Деловая игра, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт</p>
+                                              <p>Выберите тип мероприятия: Деловая игра, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт, Встреча</p>
                                             </TooltipContent>
                                           </Tooltip>
                                         </div>
@@ -11958,6 +11977,21 @@ export default function UniversitiesPage() {
                                       <Textarea id="cntr-event-description" placeholder="Введите описание или комментарий..." value={newCntrEvent.description} onChange={(e) => setNewCntrEvent({ ...newCntrEvent, description: e.target.value })} rows={4} className="w-full" />
                                     </div>
                                     <div className="space-y-2">
+                                      <Label htmlFor="cntr-event-participants">Количество участников</Label>
+                                      <Input
+                                        id="cntr-event-participants"
+                                        type="number"
+                                        min={0}
+                                        value={newCntrEvent.participantsCount === 0 ? "" : newCntrEvent.participantsCount}
+                                        onChange={(e) => {
+                                          const v = e.target.value === "" ? 0 : parseInt(e.target.value, 10);
+                                          setNewCntrEvent({ ...newCntrEvent, participantsCount: isNaN(v) ? 0 : Math.max(0, v) });
+                                        }}
+                                        placeholder="0"
+                                        className="w-32"
+                                      />
+                                    </div>
+                                    <div className="space-y-2">
                                       <Label>Информационные материалы</Label>
                                       <p className="text-sm text-muted-foreground">PDF, Word (.doc, .docx)</p>
                                       <input
@@ -12014,7 +12048,7 @@ export default function UniversitiesPage() {
                                     </div>
                                   </div>
                                   <DialogFooter>
-                                    <Button variant="outline" onClick={() => { setAddCntrEventDialogOpen(false); setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", materials: [] }); }}>Отмена</Button>
+                                    <Button variant="outline" onClick={() => { setAddCntrEventDialogOpen(false); setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", participantsCount: 0, materials: [] }); }}>Отмена</Button>
                                     <Button
                                       onClick={() => {
                                         if (newCntrEvent.date && selectedUniversity) {
@@ -12025,6 +12059,7 @@ export default function UniversitiesPage() {
                                             status: newCntrEvent.status,
                                             branch: newCntrEvent.branch || undefined,
                                             description: newCntrEvent.description?.trim() || undefined,
+                                            participantsCount: newCntrEvent.participantsCount > 0 ? newCntrEvent.participantsCount : undefined,
                                             materials: (newCntrEvent.materials?.length ?? 0) > 0 ? newCntrEvent.materials : undefined,
                                           };
                                           const updatedUniversities = universities.map((u) =>
@@ -12032,7 +12067,7 @@ export default function UniversitiesPage() {
                                           );
                                           setUniversities(updatedUniversities);
                                           setAddCntrEventDialogOpen(false);
-                                          setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", materials: [] });
+                                          setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", participantsCount: 0, materials: [] });
                                         }
                                       }}
                                       disabled={!newCntrEvent.date}
@@ -12061,7 +12096,7 @@ export default function UniversitiesPage() {
                                               <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                              <p>Выберите тип мероприятия: Деловая игра, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт</p>
+                                              <p>Выберите тип мероприятия: Деловая игра, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт, Встреча</p>
                                             </TooltipContent>
                                           </Tooltip>
                                         </div>
@@ -12154,6 +12189,21 @@ export default function UniversitiesPage() {
                                       <Textarea id="edit-cntr-event-description" placeholder="Введите описание или комментарий..." value={newCntrEvent.description} onChange={(e) => setNewCntrEvent({ ...newCntrEvent, description: e.target.value })} rows={4} className="w-full" />
                                     </div>
                                     <div className="space-y-2">
+                                      <Label htmlFor="edit-cntr-event-participants">Количество участников</Label>
+                                      <Input
+                                        id="edit-cntr-event-participants"
+                                        type="number"
+                                        min={0}
+                                        value={newCntrEvent.participantsCount === 0 ? "" : newCntrEvent.participantsCount}
+                                        onChange={(e) => {
+                                          const v = e.target.value === "" ? 0 : parseInt(e.target.value, 10);
+                                          setNewCntrEvent({ ...newCntrEvent, participantsCount: isNaN(v) ? 0 : Math.max(0, v) });
+                                        }}
+                                        placeholder="0"
+                                        className="w-32"
+                                      />
+                                    </div>
+                                    <div className="space-y-2">
                                       <Label>Информационные материалы</Label>
                                       <p className="text-sm text-muted-foreground">PDF, Word (.doc, .docx)</p>
                                       <input
@@ -12210,18 +12260,18 @@ export default function UniversitiesPage() {
                                     </div>
                                   </div>
                                   <DialogFooter>
-                                    <Button variant="outline" onClick={() => { setEditCntrEventDialogOpen(false); setEditingCntrEvent(null); setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", materials: [] }); }}>Отмена</Button>
+                                    <Button variant="outline" onClick={() => { setEditCntrEventDialogOpen(false); setEditingCntrEvent(null); setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", participantsCount: 0, materials: [] }); }}>Отмена</Button>
                                     <Button
                                       onClick={() => {
                                         if (newCntrEvent.date && selectedUniversity && editingCntrEvent) {
                                           const updatedUniversities = universities.map((u) =>
                                             u.id === selectedUniversity
-                                              ? { ...u, cntrEventsItems: (u.cntrEventsItems || []).map((item) => (item.id === editingCntrEvent.itemId ? { ...item, type: newCntrEvent.type, date: newCntrEvent.date, status: newCntrEvent.status, branch: newCntrEvent.branch || undefined, description: newCntrEvent.description?.trim() || undefined, materials: (newCntrEvent.materials?.length ?? 0) > 0 ? newCntrEvent.materials : undefined } : item)) }
+                                              ? { ...u, cntrEventsItems: (u.cntrEventsItems || []).map((item) => (item.id === editingCntrEvent.itemId ? { ...item, type: newCntrEvent.type, date: newCntrEvent.date, status: newCntrEvent.status, branch: newCntrEvent.branch || undefined, description: newCntrEvent.description?.trim() || undefined, participantsCount: newCntrEvent.participantsCount > 0 ? newCntrEvent.participantsCount : undefined, materials: (newCntrEvent.materials?.length ?? 0) > 0 ? newCntrEvent.materials : undefined } : item)) }
                                               : u
                                           );
                                           setUniversities(updatedUniversities);
                                           setEditCntrEventDialogOpen(false);
-                                          setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", materials: [] });
+                                          setNewCntrEvent({ type: "contact", date: "", status: "planned", branch: "", description: "", participantsCount: 0, materials: [] });
                                           setEditingCntrEvent(null);
                                         }
                                       }}
@@ -13983,6 +14033,7 @@ export default function UniversitiesPage() {
                                           conference: eventsForTypeBlock.filter((e) => e.type === "conference").length,
                                           masterClass: eventsForTypeBlock.filter((e) => e.type === "masterClass").length,
                                           contact: eventsForTypeBlock.filter((e) => e.type === "contact").length,
+                                          meeting: eventsForTypeBlock.filter((e) => e.type === "meeting").length,
                                         };
                                         const yearsMap = eventsForYearBlock.reduce<Record<number, number>>((acc, e) => {
                                           const y = e.date ? parseInt(e.date.slice(0, 4), 10) : 0;
@@ -14083,7 +14134,7 @@ export default function UniversitiesPage() {
                                                 />
                                               </div>
                                               <div className="flex items-center h-10">
-                                                <Button size="sm" onClick={() => { setIsDrpCabinetEventDialog(true); setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "drp", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] }); setIsEventDialogOpen(true); }} disabled={!selectedUniversity}>
+                                                <Button size="sm" onClick={() => { setIsDrpCabinetEventDialog(true); setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "drp", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, participantsCount: 0, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] }); setIsEventDialogOpen(true); }} disabled={!selectedUniversity}>
                                                   <Plus className="h-4 w-4 mr-1" />
                                                   Добавить мероприятие
                                                 </Button>
@@ -14146,6 +14197,7 @@ export default function UniversitiesPage() {
                                                       case "conference": return "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600";
                                                       case "masterClass": return "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600";
                                                       case "contact": return "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600";
+                                                      case "meeting": return "!bg-indigo-500 !text-white !border-indigo-500 hover:!bg-indigo-600";
                                                       default: return "";
                                                     }
                                                   };
@@ -14189,6 +14241,12 @@ export default function UniversitiesPage() {
                                                                   </span>
                                                                 ))}
                                                               </div>
+                                                            </div>
+                                                          )}
+                                                          {((event.participantsCount != null && event.participantsCount > 0) || (event.ecosystemData?.participantsCount != null && event.ecosystemData.participantsCount > 0)) && (
+                                                            <div className="flex items-center gap-2">
+                                                              <Label className="text-sm font-semibold">Количество участников:</Label>
+                                                              <span className="text-sm text-muted-foreground">{event.participantsCount ?? event.ecosystemData?.participantsCount ?? 0}</span>
                                                             </div>
                                                           )}
                                                           {/* Горизонтальная черта и блок: тег филиала, ВУЗ (контакт мероприятия или университета), Банк */}
@@ -14296,7 +14354,7 @@ export default function UniversitiesPage() {
                                               <div className="text-center py-8 text-muted-foreground">
                                                 <Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" />
                                                 <p className="text-base">Мероприятия ДРП не добавлены</p>
-                                                <Button size="sm" className="mt-3" onClick={() => { setIsDrpCabinetEventDialog(true); setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "drp", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] }); setIsEventDialogOpen(true); }} disabled={!selectedUniversity}>
+                                                <Button size="sm" className="mt-3" onClick={() => { setIsDrpCabinetEventDialog(true); setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "drp", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, participantsCount: 0, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] }); setIsEventDialogOpen(true); }} disabled={!selectedUniversity}>
                                                   <Plus className="mr-2 h-4 w-4" />
                                                   Добавить мероприятие
                                                 </Button>
@@ -15473,7 +15531,7 @@ export default function UniversitiesPage() {
                                                       size="sm"
                                                       onClick={() => setPractitionersSubTab("interestedPersons")}
                                                     >
-                                                      Заинтересованные лица
+                                                      Студенты
                                                       {(() => {
                                                         const count = (university.events || []).reduce((acc, e) => acc + (e.ecosystemData?.interestedPersons?.length ?? 0), 0);
                                                         return count > 0 ? <Badge variant="secondary" className="ml-2">{count}</Badge> : null;
@@ -17222,7 +17280,7 @@ export default function UniversitiesPage() {
                                                     );
                                                   })()}
                                                   
-                                                  {/* Таблица: Заинтересованные лица */}
+                                                  {/* Таблица: Студенты */}
                                                   {practitionersSubTab === "interestedPersons" && (() => {
                                                     const eventTypeLabels = EVENT_TYPE_LABELS;
                                                     const formatDate = (d: string) => d ? `${d.split("-").reverse().join(".")}` : "—";
@@ -17245,7 +17303,7 @@ export default function UniversitiesPage() {
                                                       <>
                                                         <div className="flex items-center justify-between mb-2">
                                                           <div className="text-sm text-muted-foreground">
-                                                            Найдено заинтересованных лиц: <span className="font-semibold text-foreground">{filteredList.length}</span>
+                                                            Найдено студентов: <span className="font-semibold text-foreground">{filteredList.length}</span>
                                                             {filteredList.length !== flatList.length && <span className="ml-1">из {flatList.length}</span>}
                                                           </div>
                                                           <Dialog open={interestedPersonsFilterDialogOpen} onOpenChange={setInterestedPersonsFilterDialogOpen}>
@@ -17258,7 +17316,7 @@ export default function UniversitiesPage() {
                                                             </DialogTrigger>
                                                             <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
                                                               <DialogHeader className="pb-3">
-                                                                <DialogTitle className="text-lg">Фильтры заинтересованных лиц</DialogTitle>
+                                                                <DialogTitle className="text-lg">Фильтры студентов</DialogTitle>
                                                               </DialogHeader>
                                                               <div className="space-y-4 py-2">
                                                                 <div className="space-y-2">
@@ -17318,7 +17376,7 @@ export default function UniversitiesPage() {
                                                           </div>
                                                         ) : (
                                                           <div className="border rounded-lg p-8 text-center text-muted-foreground">
-                                                            Заинтересованные лица не найдены
+                                                            Студенты не найдены
                                                           </div>
                                                         )}
                                                       </>
@@ -17543,7 +17601,7 @@ export default function UniversitiesPage() {
                                                     </DialogContent>
                                                   </Dialog>
                                                   
-                                                  {/* Модальное окно комментария заинтересованного лица */}
+                                                  {/* Модальное окно комментария студента */}
                                                   <Dialog open={!!commentDialogInterestedPerson} onOpenChange={(open) => !open && setCommentDialogInterestedPerson(null)}>
                                                     <DialogContent className="max-w-md">
                                                       <DialogHeader>
@@ -18764,7 +18822,7 @@ export default function UniversitiesPage() {
                                           return true;
                                         });
                                         const byCooperationLine = { drp: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("drp")).length, bko: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("bko")).length, cntr: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("cntr")).length, ecosystem: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("ecosystem")).length, dkm: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("dkm")).length };
-                                        const byType: Record<EventType, number> = { businessGame: eventsForTypeBlock.filter((e) => e.type === "businessGame").length, diplomaDefense: eventsForTypeBlock.filter((e) => e.type === "diplomaDefense").length, webinar: eventsForTypeBlock.filter((e) => e.type === "webinar").length, lecture: eventsForTypeBlock.filter((e) => e.type === "lecture").length, conference: eventsForTypeBlock.filter((e) => e.type === "conference").length, masterClass: eventsForTypeBlock.filter((e) => e.type === "masterClass").length, contact: eventsForTypeBlock.filter((e) => e.type === "contact").length };
+                                        const byType: Record<EventType, number> = { businessGame: eventsForTypeBlock.filter((e) => e.type === "businessGame").length, diplomaDefense: eventsForTypeBlock.filter((e) => e.type === "diplomaDefense").length, webinar: eventsForTypeBlock.filter((e) => e.type === "webinar").length, lecture: eventsForTypeBlock.filter((e) => e.type === "lecture").length, conference: eventsForTypeBlock.filter((e) => e.type === "conference").length, masterClass: eventsForTypeBlock.filter((e) => e.type === "masterClass").length, contact: eventsForTypeBlock.filter((e) => e.type === "contact").length, meeting: eventsForTypeBlock.filter((e) => e.type === "meeting").length };
                                         const yearsMap = eventsForYearBlock.reduce<Record<number, number>>((acc, e) => { const y = e.date ? parseInt(e.date.slice(0, 4), 10) : 0; if (y) acc[y] = (acc[y] || 0) + 1; return acc; }, {});
                                         const yearsSorted = Object.keys(yearsMap).map(Number).sort((a, b) => a - b);
                                         const byStatus = { planned: eventsForStatusBlock.filter((e) => e.status === "planned").length, in_progress: eventsForStatusBlock.filter((e) => e.status === "in_progress").length, completed: eventsForStatusBlock.filter((e) => e.status === "completed").length, cancelled: eventsForStatusBlock.filter((e) => e.status === "cancelled").length };
@@ -18776,7 +18834,7 @@ export default function UniversitiesPage() {
                                           return true;
                                         });
                                         const eventTypeLabels = EVENT_TYPE_LABELS;
-                                        const getEventTypeBadgeClassName = (type: EventType) => { const m: Record<EventType, string> = { businessGame: "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600", diplomaDefense: "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600", webinar: "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600", lecture: "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600", conference: "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600", masterClass: "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600", contact: "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600" }; return m[type] ?? ""; };
+                                        const getEventTypeBadgeClassName = (type: EventType) => { const m: Record<EventType, string> = { businessGame: "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600", diplomaDefense: "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600", webinar: "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600", lecture: "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600", conference: "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600", masterClass: "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600", contact: "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600", meeting: "!bg-indigo-500 !text-white !border-indigo-500 hover:!bg-indigo-600" }; return m[type] ?? ""; };
                                         const formatDate = (dateString: string) => { if (!dateString) return "Не указано"; const [year, month, day] = dateString.split("-").map(Number); if (isNaN(year) || isNaN(month) || isNaN(day)) return "Неверный формат"; return `${String(day).padStart(2, "0")}.${String(month).padStart(2, "0")}.${year}`; };
                                         return (
                                           <>
@@ -18801,7 +18859,7 @@ export default function UniversitiesPage() {
                                                 <MultiSelect options={([{ value: "planned", label: "Запланировано", count: byStatus.planned }, { value: "in_progress", label: "В процессе", count: byStatus.in_progress }, { value: "completed", label: "Проведено", count: byStatus.completed }, { value: "cancelled", label: "Отменено", count: byStatus.cancelled }] as const).filter((item) => item.count > 0 || ecosystemEventsFeedFilters.status.includes(item.value)).map(({ value, label, count }) => ({ value, label: `${label} (${count})` }))} selected={ecosystemEventsFeedFilters.status} onChange={(selected) => { setEcosystemEventsFeedFilters((p) => ({ ...p, status: selected as Event["status"][] })); setEcosystemEventsFeedCurrentPage(1); }} placeholder="Выберите статусы" />
                                               </div>
                                               <div className="flex items-center h-10">
-                                                <Button size="sm" onClick={() => { setIsEcosystemCabinetEventDialog(true); setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "ecosystem", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] }); setIsEventDialogOpen(true); }} disabled={!selectedUniversity}>
+                                                <Button size="sm" onClick={() => { setIsEcosystemCabinetEventDialog(true); setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "ecosystem", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, participantsCount: 0, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] }); setIsEventDialogOpen(true); }} disabled={!selectedUniversity}>
                                                   <Plus className="h-4 w-4 mr-1" /> Добавить мероприятие
                                                 </Button>
                                               </div>
@@ -18875,7 +18933,7 @@ export default function UniversitiesPage() {
                                                               {event.ecosystemData && (
                                                                 <div className="space-y-2">
                                                                   <div className="flex items-center justify-between">
-                                                                    <span className="text-sm font-medium text-muted-foreground">Заинтересованные лица</span>
+                                                                    <span className="text-sm font-medium text-muted-foreground">Студенты</span>
                                                                     <Button
                                                                       type="button"
                                                                       variant="outline"
@@ -18947,7 +19005,7 @@ export default function UniversitiesPage() {
                                                                   ) : (
                                                                     <div className="flex flex-col items-center justify-center py-4 text-center border rounded-lg bg-muted/20">
                                                                       <Users className="h-6 w-6 text-muted-foreground/50 mb-1" />
-                                                                      <p className="text-sm text-muted-foreground">Заинтересованные лица не добавлены</p>
+                                                                      <p className="text-sm text-muted-foreground">Студенты не добавлены</p>
                                                                     </div>
                                                                   )}
                                                                 </div>
@@ -18968,7 +19026,7 @@ export default function UniversitiesPage() {
                                                   </Card>
                                                 ))}
                                               </div>
-                                            ) : (<div className="text-center py-8 text-muted-foreground"><Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" /><p className="text-base">Мероприятия не найдены по выбранным фильтрам</p></div>)) : (<div className="text-center py-8 text-muted-foreground"><Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" /><p className="text-base">Мероприятия Экосистема не добавлены</p><Button size="sm" className="mt-3" onClick={() => { setIsEcosystemCabinetEventDialog(true); setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "ecosystem", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] }); setIsEventDialogOpen(true); }} disabled={!selectedUniversity}><Plus className="mr-2 h-4 w-4" />Добавить мероприятие</Button></div>)}
+                                            ) : (<div className="text-center py-8 text-muted-foreground"><Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" /><p className="text-base">Мероприятия не найдены по выбранным фильтрам</p></div>)) : (<div className="text-center py-8 text-muted-foreground"><Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" /><p className="text-base">Мероприятия Экосистема не добавлены</p><Button size="sm" className="mt-3" onClick={() => { setIsEcosystemCabinetEventDialog(true); setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "ecosystem", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, participantsCount: 0, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] }); setIsEventDialogOpen(true); }} disabled={!selectedUniversity}><Plus className="mr-2 h-4 w-4" />Добавить мероприятие</Button></div>)}
                                           </>
                                         );
                                       })()}
@@ -19429,7 +19487,7 @@ export default function UniversitiesPage() {
               setEventEcosystemDialogStep(1);
               setEditingEvent(null);
               setEditingCntrEvent(null);
-              setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
+              setNewEvent({ type: "", date: "", endDate: "", status: "planned", comments: "", responsiblePerson: [], mainCooperationLine: "", additionalCooperationLines: [], branch: "", showInEventsFeed: true, universityContact: { name: "", position: "", phone: "", email: "" }, participantsCount: 0, ecosystemMaterials: [], ecosystemUniversityRating: 3, ecosystemEventRating: 3, ecosystemParticipantsCount: 0, ecosystemInterestedPersons: [] });
             }
           }}>
             <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -19443,70 +19501,6 @@ export default function UniversitiesPage() {
                     : "Заполните информацию о мероприятии"}
                 </DialogDescription>
               </DialogHeader>
-              {isEcosystemCabinetEventDialog && (
-                <div className="space-y-4 pb-4 border-b">
-                  <div className="flex items-center gap-2 w-full">
-                    {[
-                      { id: 1, title: "Общая информация" },
-                      { id: 2, title: "Экосистема" },
-                    ].map((step, index) => {
-                      const stepNumber = step.id;
-                      const isCompleted = stepNumber < eventEcosystemDialogStep;
-                      const isCurrent = stepNumber === eventEcosystemDialogStep;
-                      const isAccessible = stepNumber <= eventEcosystemDialogStep;
-                      return (
-                        <div key={step.id} className="flex items-center gap-2 flex-1">
-                          <button
-                            type="button"
-                            onClick={() => isAccessible && setEventEcosystemDialogStep(stepNumber as 1 | 2)}
-                            disabled={!isAccessible}
-                            className={cn(
-                              "flex items-center gap-2 px-3 py-2 rounded-lg transition-all w-full justify-center",
-                              "hover:bg-muted/50 disabled:opacity-50 disabled:cursor-not-allowed",
-                              isCurrent && "bg-primary/10 ring-2 ring-primary shadow-sm",
-                              isCompleted && "bg-green-50 dark:bg-green-950/20 hover:bg-green-100 dark:hover:bg-green-950/30",
-                              !isCurrent && !isCompleted && isAccessible && "hover:bg-muted"
-                            )}
-                          >
-                            <div
-                              className={cn(
-                                "flex items-center justify-center w-7 h-7 rounded-full text-xs font-semibold transition-colors flex-shrink-0",
-                                isCompleted
-                                  ? "bg-green-500 text-white"
-                                  : isCurrent
-                                  ? "bg-primary text-primary-foreground"
-                                  : "bg-muted text-muted-foreground"
-                              )}
-                            >
-                              {isCompleted ? (
-                                <CheckCircle2 className="h-3.5 w-3.5" />
-                              ) : (
-                                stepNumber
-                              )}
-                            </div>
-                            <div className="flex-1 text-left min-w-0">
-                              <div
-                                className={cn(
-                                  "text-base font-medium truncate",
-                                  isCurrent && "text-primary font-semibold",
-                                  isCompleted && "text-green-700 dark:text-green-300",
-                                  !isCurrent && !isCompleted && "text-muted-foreground"
-                                )}
-                                title={step.title}
-                              >
-                                {step.title}
-                              </div>
-                            </div>
-                          </button>
-                          {index < 1 && (
-                            <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
                 <div className="space-y-4 py-4">
                 {(!isEcosystemCabinetEventDialog || eventEcosystemDialogStep === 1) && (
                 <>
@@ -19519,7 +19513,7 @@ export default function UniversitiesPage() {
                           <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Выберите тип мероприятия: Деловая игра, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт</p>
+                          <p>Выберите тип мероприятия: Деловая игра, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт, Встреча</p>
                         </TooltipContent>
                       </Tooltip>
                   </div>
@@ -19768,6 +19762,24 @@ export default function UniversitiesPage() {
                         </div>
                       </div>
                     </div>
+                    {/* Количество участников для ДРП и ЦНТР */}
+                    {(isDrpCabinetEventDialog || isCntrCabinetEventDialog) && (
+                      <div className="space-y-2">
+                        <Label htmlFor="event-participants-count-dialog">Количество участников</Label>
+                        <Input
+                          id="event-participants-count-dialog"
+                          type="number"
+                          min={0}
+                          value={newEvent.participantsCount === 0 ? "" : newEvent.participantsCount}
+                          onChange={(e) => {
+                            const v = e.target.value === "" ? 0 : parseInt(e.target.value, 10);
+                            setNewEvent({ ...newEvent, participantsCount: isNaN(v) ? 0 : Math.max(0, v) });
+                          }}
+                          placeholder="0"
+                          className="w-32"
+                        />
+                      </div>
+                    )}
                     {/* Информационные материалы для ДРП и ЦНТР */}
                     {(isDrpCabinetEventDialog || isCntrCabinetEventDialog) && (
                       <div className="space-y-2">
@@ -19909,84 +19921,68 @@ export default function UniversitiesPage() {
                         onCheckedChange={(checked) => setNewEvent({ ...newEvent, showInEventsFeed: checked })}
                       />
                     </div>
+                    {/* Оценки и количество участников для Экосистемы (перенесены из шага 2 в шаг 1) */}
+                    {isEcosystemCabinetEventDialog && (
+                      <div className="space-y-6">
+                        <div className="grid grid-cols-2 gap-6">
+                          <div className="space-y-3">
+                            <Label>Оценка ВУЗа</Label>
+                            <div className="flex items-center gap-3">
+                              <Slider
+                                value={newEvent.ecosystemUniversityRating}
+                                onValueChange={(v) => setNewEvent({ ...newEvent, ecosystemUniversityRating: v })}
+                                min={1}
+                                max={5}
+                                step={1}
+                                className="flex-1"
+                              />
+                              <span className="text-sm font-medium w-6">{newEvent.ecosystemUniversityRating}</span>
+                            </div>
+                          </div>
+                          <div className="space-y-3">
+                            <Label>Оценка мероприятия</Label>
+                            <div className="flex items-center gap-3">
+                              <Slider
+                                value={newEvent.ecosystemEventRating}
+                                onValueChange={(v) => setNewEvent({ ...newEvent, ecosystemEventRating: v })}
+                                min={1}
+                                max={5}
+                                step={1}
+                                className="flex-1"
+                              />
+                              <span className="text-sm font-medium w-6">{newEvent.ecosystemEventRating}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="ecosystem-participants">Количество участников</Label>
+                          <Input
+                            id="ecosystem-participants"
+                            type="number"
+                            min={0}
+                            value={newEvent.ecosystemParticipantsCount === 0 ? "" : newEvent.ecosystemParticipantsCount}
+                            onChange={(e) => {
+                              const v = e.target.value === "" ? 0 : parseInt(e.target.value, 10);
+                              setNewEvent({ ...newEvent, ecosystemParticipantsCount: isNaN(v) ? 0 : Math.max(0, v) });
+                            }}
+                            placeholder="0"
+                            className="w-32"
+                          />
+                        </div>
+                      </div>
+                    )}
                 </>
                 )}
-                {isEcosystemCabinetEventDialog && eventEcosystemDialogStep === 2 && (
-                  <div className="space-y-6">
-                    {/* Оценки */}
-                    <div className="grid grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <Label>Оценка ВУЗа</Label>
-                        <div className="flex items-center gap-3">
-                          <Slider
-                            value={newEvent.ecosystemUniversityRating}
-                            onValueChange={(v) => setNewEvent({ ...newEvent, ecosystemUniversityRating: v })}
-                            min={1}
-                            max={5}
-                            step={1}
-                            className="flex-1"
-                          />
-                          <span className="text-sm font-medium w-6">{newEvent.ecosystemUniversityRating}</span>
-                        </div>
-                      </div>
-                      <div className="space-y-3">
-                        <Label>Оценка мероприятия</Label>
-                        <div className="flex items-center gap-3">
-                          <Slider
-                            value={newEvent.ecosystemEventRating}
-                            onValueChange={(v) => setNewEvent({ ...newEvent, ecosystemEventRating: v })}
-                            min={1}
-                            max={5}
-                            step={1}
-                            className="flex-1"
-                          />
-                          <span className="text-sm font-medium w-6">{newEvent.ecosystemEventRating}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Количество участников */}
-                    <div className="space-y-2">
-                      <Label htmlFor="ecosystem-participants">Количество участников</Label>
-                      <Input
-                        id="ecosystem-participants"
-                        type="number"
-                        min={0}
-                        value={newEvent.ecosystemParticipantsCount || ""}
-                        onChange={(e) => {
-                          const v = e.target.value === "" ? 0 : parseInt(e.target.value, 10);
-                          setNewEvent({ ...newEvent, ecosystemParticipantsCount: isNaN(v) ? 0 : Math.max(0, v) });
-                        }}
-                        placeholder="0"
-                        className="w-32"
-                      />
-                    </div>
-
-                  </div>
-                )}
                   <DialogFooter>
-                {isEcosystemCabinetEventDialog && eventEcosystemDialogStep === 2 ? (
-                  <Button variant="outline" onClick={() => setEventEcosystemDialogStep(1)}>
-                    Назад
-                  </Button>
-                ) : (
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setIsEventDialogOpen(false);
-                    }}
-                  >
-                    Отмена
-                  </Button>
-                )}
-                {isEcosystemCabinetEventDialog && eventEcosystemDialogStep === 1 ? (
-                  <Button
-                    onClick={() => setEventEcosystemDialogStep(2)}
-                    disabled={!newEvent.type || !newEvent.date.trim() || !newEvent.endDate.trim() || newEvent.responsiblePerson.length === 0}
-                  >
-                    Далее
-                  </Button>
-                ) : editingCntrEvent ? (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setIsEventDialogOpen(false);
+                  }}
+                >
+                  Отмена
+                </Button>
+                {editingCntrEvent ? (
                     <Button
                       onClick={() => handleSaveCntrEvent()}
                       disabled={!newEvent.type || !newEvent.date.trim()}

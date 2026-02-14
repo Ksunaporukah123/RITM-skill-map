@@ -11,6 +11,7 @@ export const EVENT_TYPE_OPTIONS = [
   { value: "conference" as const, label: "Конференция" },
   { value: "masterClass" as const, label: "Мастер-класс" },
   { value: "contact" as const, label: "Контакт" },
+  { value: "meeting" as const, label: "Встреча" },
 ] as const;
 
 export const EVENT_TYPE_LABELS: Record<(typeof EVENT_TYPE_OPTIONS)[number]["value"], string> =

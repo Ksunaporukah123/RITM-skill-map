@@ -41,7 +41,8 @@ export type EventType =
   | "lecture"         // лекция
   | "conference"      // конференция
   | "masterClass"     // мастер-класс
-  | "contact";        // контакт
+  | "contact"         // контакт
+  | "meeting";        // встреча
 
 /** Варианты типа мероприятия и подписи — реэкспорт из lib для надёжной загрузки */
 export { EVENT_TYPE_OPTIONS, EVENT_TYPE_LABELS } from "@/lib/event-types";
@@ -68,6 +69,8 @@ export interface Event {
   addedBy?: string;
   /** Контактное лицо со стороны ВУЗа (ФИО, должность, телефон, email) */
   universityContact?: UniversityContact;
+  /** Количество участников мероприятия */
+  participantsCount?: number;
   /** Данные экосистемы (только для мероприятий линии Экосистема) */
   ecosystemData?: {
     materials?: { id: string; name: string; url: string; uploadedAt: string }[];
@@ -240,6 +243,8 @@ export interface CNTREventItem {
   universityContact?: UniversityContact;
   /** Ответственные со стороны банка (ID), для единообразия с ДРП */
   responsiblePerson?: string[];
+  /** Количество участников мероприятия */
+  participantsCount?: number;
   addedAt?: string;
   addedBy?: string;
 }
