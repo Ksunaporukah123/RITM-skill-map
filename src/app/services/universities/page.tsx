@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Progress } from "@/components/ui/progress";
-import { GraduationCap, ClipboardCheck, Users, Settings, ExternalLink, FileText, Calendar, Link2, Plus, ChevronDown, ChevronRight, Pencil, Trash2, Search, X, ChevronLeft, ChevronsLeft, ChevronsRight, AlertCircle, Mail, Send, CheckCircle2, Clock, MapPin, Building, Building2, Archive, ArchiveRestore, Filter, SortAsc, SortDesc, BarChart3, MessageSquare, History, FileText as FileTextIcon, Edit3, Copy, Tag, Eye, EyeOff, Star, UserCheck, User, ArrowRight, HelpCircle, Handshake, MessageCircle, Phone, LayoutGrid, List, Upload } from "lucide-react";
+import { GraduationCap, ClipboardCheck, Users, Settings, ExternalLink, FileText, Calendar, Link2, Plus, ChevronDown, ChevronRight, Pencil, Trash2, Search, X, ChevronLeft, ChevronsLeft, ChevronsRight, AlertCircle, Mail, Send, CheckCircle2, Clock, MapPin, Building, Building2, Archive, ArchiveRestore, Filter, SortAsc, SortDesc, BarChart3, MessageSquare, History, FileText as FileTextIcon, Edit3, Copy, Tag, Eye, EyeOff, Star, UserCheck, User, ArrowRight, HelpCircle, Handshake, MessageCircle, Phone, LayoutGrid, List, Upload, Trophy } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { MultiSelect } from "@/components/ui/multi-select";
@@ -2697,6 +2697,11 @@ export default function UniversitiesPage() {
   const [scholarInfoDialogOpen, setScholarInfoDialogOpen] = useState(false);
   const [selectedScholarInfo, setSelectedScholarInfo] = useState<{ universityId: string; scholar: NamedScholar } | null>(null);
   
+  // Состояние для модального окна «Кейс-чемпионаты» (блок кадровых показателей)
+  const [caseChampionshipsModalOpen, setCaseChampionshipsModalOpen] = useState(false);
+  const [caseChampionshipsModalUniversityId, setCaseChampionshipsModalUniversityId] = useState<string | null>(null);
+  const [caseChampionshipsModalSelectedEventId, setCaseChampionshipsModalSelectedEventId] = useState<string>("");
+
   // Состояние для модального окна комментария участника кейс-чемпионата
   const [commentDialogParticipantOpen, setCommentDialogParticipantOpen] = useState(false);
   const [commentDialogParticipant, setCommentDialogParticipant] = useState<{ universityId: string; participantId: string; comment: string } | null>(null);
@@ -3068,6 +3073,13 @@ export default function UniversitiesPage() {
   useEffect(() => {
     setParticipantsCurrentPage(1);
   }, [participantsFilters]);
+
+  // Закрытие модального окна кейс-чемпионатов при смене выбранного ВУЗа
+  useEffect(() => {
+    setCaseChampionshipsModalOpen(false);
+    setCaseChampionshipsModalUniversityId(null);
+    setCaseChampionshipsModalSelectedEventId("");
+  }, [selectedUniversity]);
   
   // Сброс страницы при изменении фильтров целевых практикантов
   useEffect(() => {
@@ -5518,6 +5530,7 @@ export default function UniversitiesPage() {
               </CardContent>
             </Card>
           ) : (
+            <>
             <div className="flex gap-4 w-full min-h-0" style={{ height: "calc(100vh - 15rem)" }}>
               {/* Левая колонка - список ВУЗов */}
               <div className="w-[20rem] flex-shrink-0 flex flex-col border rounded-lg overflow-hidden bg-card h-full">
@@ -5766,6 +5779,41 @@ export default function UniversitiesPage() {
                                 <p>Количество практикантов текущего года из данного ВУЗа</p>
                               </TooltipContent>
                             </Tooltip>
+                            <div
+                              role="button"
+                              tabIndex={0}
+                              onClick={() => {
+                                setCaseChampionshipsModalUniversityId(university.id);
+                                setCaseChampionshipsModalSelectedEventId("");
+                                setCaseChampionshipsModalOpen(true);
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                  e.preventDefault();
+                                  setCaseChampionshipsModalUniversityId(university.id);
+                                  setCaseChampionshipsModalSelectedEventId("");
+                                  setCaseChampionshipsModalOpen(true);
+                                }
+                              }}
+                              className="bg-background/80 rounded-md px-3 py-1 text-center cursor-pointer hover:bg-primary/10 transition-colors w-full min-w-0"
+                            >
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <span className="block w-full outline-none">
+                                    <span className="text-base font-bold text-amber-600 dark:text-amber-400 leading-tight block">
+                                      {(() => {
+                                        const eventIds = new Set((university.caseChampionshipParticipants || []).map((p) => p.eventId));
+                                        return eventIds.size;
+                                      })()}
+                                    </span>
+                                    <span className="text-[9px] text-muted-foreground uppercase tracking-wide block">Кейс-чемпионаты</span>
+                                  </span>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>Количество уникальных кейс-чемпионатов, в которых участвовали студенты из данного ВУЗа (практиканты — участники кейс-чемпионатов)</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </div>
                           </div>
                         </div>
                         
@@ -16829,10 +16877,9 @@ export default function UniversitiesPage() {
                                                             <TableRow className="bg-muted/50">
                                                               <TableHead className="w-[300px]">ФИО</TableHead>
                                                               <TableHead className="w-[250px]">Направление</TableHead>
-                                                              <TableHead className="w-[350px]">Кейс-чемпионат</TableHead>
-                                                              <TableHead className="w-[200px]">Период проведения кейс чемпионата</TableHead>
+                                                              <TableHead className="w-[520px]">Кейс-чемпионат</TableHead>
+                                                              <TableHead className="w-[120px] whitespace-normal break-words font-semibold">Период</TableHead>
                                                               <TableHead className="w-[150px] text-center">Статус</TableHead>
-                                                              <TableHead className="w-[80px] text-center">Действия</TableHead>
                                                             </TableRow>
                                                           </TableHeader>
                                                           <TableBody>
@@ -16889,7 +16936,7 @@ export default function UniversitiesPage() {
                                                                       <span className="text-muted-foreground">Мероприятие не найдено</span>
                                                                     )}
                                                                   </TableCell>
-                                                                  <TableCell>
+                                                                  <TableCell className="whitespace-normal break-words">
                                                                     {event ? (
                                                                       <span>{formatDate(event.date)} - {formatDate(event.endDate)}</span>
                                                                     ) : (
@@ -16912,25 +16959,12 @@ export default function UniversitiesPage() {
                                                                       </Button>
                                                                     </div>
                                                                   </TableCell>
-                                                                  <TableCell className="text-center">
-                                                                    <Button
-                                                                      variant="ghost"
-                                                                      size="icon"
-                                                                      className="h-8 w-8"
-                                                                      onClick={(e) => {
-                                                                        e.stopPropagation();
-                                                                        handleStartEditParticipant(university.id, participant);
-                                                                      }}
-                                                                    >
-                                                                      <Pencil className="h-4 w-4" />
-                                                                    </Button>
-                                                                  </TableCell>
                                                                 </TableRow>
                                                               );
                                                                 })
                                                               ) : (
                                                                 <TableRow>
-                                                                  <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
+                                                                  <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
                                                                     Участники не найдены
                                                                   </TableCell>
                                                                 </TableRow>
@@ -19054,6 +19088,84 @@ export default function UniversitiesPage() {
                 )}
                               </div>
                             </div>
+            {/* Модальное окно «Кейс-чемпионаты» — на верхнем уровне, чтобы гарантированно открывалось */}
+            <Dialog open={caseChampionshipsModalOpen} onOpenChange={(open) => { setCaseChampionshipsModalOpen(open); if (!open) { setCaseChampionshipsModalUniversityId(null); setCaseChampionshipsModalSelectedEventId(""); } }}>
+              <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
+                <DialogHeader>
+                  <DialogTitle>Кейс-чемпионаты</DialogTitle>
+                  <DialogDescription>Участники кейс-чемпионатов из вкладки «Практиканты — участники кейс чемпионатов»</DialogDescription>
+                </DialogHeader>
+                {caseChampionshipsModalUniversityId && (() => {
+                  const modalUniversity = universities.find((u) => u.id === caseChampionshipsModalUniversityId);
+                  if (!modalUniversity) return null;
+                  const formatDate = (dateStr: string) => {
+                    const [y, m, d] = dateStr.split("-").map(Number);
+                    return `${String(d).padStart(2, "0")}.${String(m).padStart(2, "0")}.${y}`;
+                  };
+                  const getStatusBadge = (status: string) => {
+                    switch (status) {
+                      case "winner": return <Badge className="bg-yellow-500 text-white">Победитель</Badge>;
+                      case "prize_winner": return <Badge className="bg-amber-500 text-white">Призёр</Badge>;
+                      case "participated": return <Badge variant="secondary">Участвовал</Badge>;
+                      case "registered": return <Badge variant="outline">Зарегистрирован</Badge>;
+                      default: return <Badge variant="outline">{status}</Badge>;
+                    }
+                  };
+                  const eventIds = new Set((modalUniversity.caseChampionshipParticipants || []).map((p) => p.eventId));
+                  const events = (modalUniversity.events || []).filter((e) => eventIds.has(e.id));
+                  const filtered = (modalUniversity.caseChampionshipParticipants || []).filter((p) => {
+                    if (!caseChampionshipsModalSelectedEventId) return true;
+                    return p.eventId === caseChampionshipsModalSelectedEventId;
+                  });
+                  return (
+                    <div className="space-y-4 py-2 flex-1 overflow-hidden flex flex-col min-h-0">
+                      <div className="space-y-2 flex-shrink-0">
+                        <Label className="text-sm font-medium">Кейс-чемпионат</Label>
+                        <Select value={caseChampionshipsModalSelectedEventId || "all"} onValueChange={(v) => setCaseChampionshipsModalSelectedEventId(v === "all" ? "" : v)}>
+                          <SelectTrigger className="w-full"><SelectValue placeholder="Все кейс-чемпионаты" /></SelectTrigger>
+                          <SelectContent className="w-[var(--radix-select-trigger-width)] max-w-[var(--radix-select-trigger-width)]">
+                            <SelectItem value="all" className="whitespace-normal break-words py-2 items-start">Все кейс-чемпионаты</SelectItem>
+                            {events.map((ev) => (
+                              <SelectItem key={ev.id} value={ev.id} className="whitespace-normal break-words py-2 items-start">{ev.comments || "Кейс-чемпионат"}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="border rounded-lg overflow-auto flex-1 min-h-0">
+                        <Table>
+                          <TableHeader>
+                            <TableRow className="bg-muted/50">
+                              <TableHead className="w-[300px]">ФИО</TableHead>
+                              <TableHead className="w-[250px]">Направление</TableHead>
+                              <TableHead className="w-[520px]">Кейс-чемпионат</TableHead>
+                              <TableHead className="w-[120px] whitespace-normal break-words font-semibold">Период</TableHead>
+                              <TableHead className="w-[150px] text-center">Статус</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            {filtered.length > 0 ? filtered.map((participant) => {
+                              const event = modalUniversity.events?.find((e) => e.id === participant.eventId);
+                              return (
+                                <TableRow key={participant.id} className="cursor-pointer hover:bg-muted/50" onClick={() => { setSelectedParticipantInfo({ universityId: modalUniversity.id, participant }); setParticipantInfoDialogOpen(true); }}>
+                                  <TableCell className="font-medium">{participant.employeeName}</TableCell>
+                                  <TableCell>{participant.direction ? <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">{participant.direction}</Badge> : <span className="text-muted-foreground">—</span>}</TableCell>
+                                  <TableCell className="whitespace-normal break-words">{event ? <span>{event.comments || "Кейс-чемпионат"}</span> : <span className="text-muted-foreground">Мероприятие не найдено</span>}</TableCell>
+                                  <TableCell className="whitespace-normal break-words">{event ? <span>{formatDate(event.date)} - {formatDate(event.endDate)}</span> : <span className="text-muted-foreground">—</span>}</TableCell>
+                                  <TableCell className="text-center"><div className="flex items-center justify-center gap-2">{getStatusBadge(participant.status)}</div></TableCell>
+                                </TableRow>
+                              );
+                            }) : (
+                              <TableRow><TableCell colSpan={5} className="text-center text-muted-foreground py-8">Участники не найдены</TableCell></TableRow>
+                            )}
+                          </TableBody>
+                        </Table>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </DialogContent>
+            </Dialog>
+            </>
             )}
           </TabsContent>
 
