@@ -798,6 +798,7 @@ const mockUniversities: University[] = [
       { id: "event-hse-ecosystem-3", type: "businessGame", date: "2025-05-15", endDate: "2025-05-17", status: "planned", responsiblePerson: ["person-5"], comments: "Кейс-чемпионат Экосистема по интеграции API банковских сервисов. Студенты разрабатывают решения для подключения к экосистеме партнёров банка.", cooperationLine: ["ecosystem"], branch: "Головной ВУЗ", addedAt: "2025-04-28", addedBy: "Соколов А.Н.", universityContact: { name: "Орлова Мария Сергеевна", position: "Руководитель департамента карьеры", phone: "+7 (495) 772-95-92", email: "m.orlova@hse.ru" }, ecosystemData: { materials: [{ id: "m2", name: "Регламент кейс-чемпионата.docx", url: "#", uploadedAt: "2025-04-25T14:30:00Z" }, { id: "m3", name: "API-документация.pdf", url: "#", uploadedAt: "2025-04-26T09:00:00Z" }], universityRating: 5, eventRating: 5, participantsCount: 120, interestedPersons: [{ id: "ip4", name: "Орлова Мария Сергеевна", phone: "+7 (495) 772-95-92", comment: "" }, { id: "ip5", name: "Волков Андрей Николаевич", phone: "+7 (495) 772-95-93", comment: "" }] } },
       { id: "event-hse-ecosystem-4", type: "contact", date: "2025-03-18", endDate: "2025-03-18", status: "completed", responsiblePerson: ["person-2"], comments: "Встреча по запуску партнёрской программы Экосистема с ВШЭ. Обсуждение форматов взаимодействия: хакатоны, менторство, доступ к песочнице API.", cooperationLine: ["ecosystem"], branch: "Центральный офис", addedAt: "2025-03-05", addedBy: "Петров А.В.", universityContact: { name: "Волков Андрей Николаевич", position: "Декан факультета", phone: "+7 (495) 772-95-93", email: "a.volkov@hse.ru" }, ecosystemData: { materials: [{ id: "m4", name: "Протокол встречи.pdf", url: "#", uploadedAt: "2025-03-19T11:00:00Z" }], universityRating: 5, eventRating: 5, participantsCount: 12, interestedPersons: [{ id: "ip6", name: "Волков Андрей Николаевич", phone: "+7 (495) 772-95-93", comment: "" }, { id: "ip7", name: "Павлова Ольга", phone: "+7 (495) 772-95-95", comment: "" }] } },
       { id: "event-hse-ecosystem-5", type: "webinar", date: "2025-06-01", endDate: "2025-06-01", status: "planned", responsiblePerson: ["person-4"], comments: "Вебинар о возможностях экосистемы банка для студентов и выпускников ВШЭ. Презентация API Marketplace, программ для разработчиков и стартапов.", cooperationLine: ["ecosystem"], branch: "Московский филиал", addedAt: "2025-05-15", addedBy: "Козлов Д.П.", ecosystemData: { materials: [], universityRating: 4, eventRating: 4, participantsCount: 0, interestedPersons: [] } },
+      { id: "event-hse-ecosystem-6", type: "caseChampionship", date: "2025-06-20", endDate: "2025-06-22", status: "planned", responsiblePerson: ["person-1"], comments: "Кейс-чемпионат Экосистема для студентов ВШЭ. Командное решение бизнес-кейсов по интеграции с экосистемой партнёров банка.", cooperationLine: ["ecosystem"], branch: "Головной ВУЗ", addedAt: "2025-06-01", addedBy: "Иванова Е.С.", universityContact: { name: "Кузнецова Анна Владимировна", position: "Куратор центра карьеры", phone: "+7 (495) 772-95-90", email: "a.kuznetsova@hse.ru" }, ecosystemData: { materials: [{ id: "m5", name: "Регламент кейс-чемпионата.pdf", url: "#", uploadedAt: "2025-06-05T10:00:00Z" }], universityRating: 5, eventRating: 4, participantsCount: 6, interestedPersons: [{ id: "ip8", name: "Иванов Пётр Сергеевич", phone: "+7 (916) 111-22-33", comment: "" }, { id: "ip9", name: "Петрова Мария Александровна", phone: "+7 (916) 222-33-44", comment: "" }, { id: "ip10", name: "Сидоров Алексей Дмитриевич", phone: "+7 (916) 333-44-55", comment: "" }, { id: "ip11", name: "Козлова Елена Викторовна", phone: "+7 (916) 444-55-66", comment: "" }, { id: "ip12", name: "Морозов Денис Игоревич", phone: "+7 (916) 555-66-77", comment: "" }, { id: "ip13", name: "Новикова Анна Сергеевна", phone: "+7 (916) 666-77-88", comment: "" }] } },
     ],
     conference: true,
     diplomaDefense: true,
@@ -4805,13 +4806,14 @@ export default function UniversitiesPage() {
     const university = universities.find(u => u.id === universityId);
     if (!university || !university.events) {
     return {
-        byType: { businessGame: 0, diplomaDefense: 0, webinar: 0, lecture: 0, conference: 0, masterClass: 0, contact: 0 },
+        byType: { businessGame: 0, caseChampionship: 0, diplomaDefense: 0, webinar: 0, lecture: 0, conference: 0, masterClass: 0, contact: 0, meeting: 0 },
         byStatus: { planned: 0, in_progress: 0, completed: 0 },
         total: 0,
       };
     }
     const byType = {
       businessGame: university.events.filter(e => e.type === "businessGame").length,
+      caseChampionship: university.events.filter(e => e.type === "caseChampionship").length,
       diplomaDefense: university.events.filter(e => e.type === "diplomaDefense").length,
       webinar: university.events.filter(e => e.type === "webinar").length,
       lecture: university.events.filter(e => e.type === "lecture").length,
@@ -5779,41 +5781,6 @@ export default function UniversitiesPage() {
                                 <p>Количество практикантов текущего года из данного ВУЗа</p>
                               </TooltipContent>
                             </Tooltip>
-                            <div
-                              role="button"
-                              tabIndex={0}
-                              onClick={() => {
-                                setCaseChampionshipsModalUniversityId(university.id);
-                                setCaseChampionshipsModalSelectedEventId("");
-                                setCaseChampionshipsModalOpen(true);
-                              }}
-                              onKeyDown={(e) => {
-                                if (e.key === "Enter" || e.key === " ") {
-                                  e.preventDefault();
-                                  setCaseChampionshipsModalUniversityId(university.id);
-                                  setCaseChampionshipsModalSelectedEventId("");
-                                  setCaseChampionshipsModalOpen(true);
-                                }
-                              }}
-                              className="bg-background/80 rounded-md px-3 py-1 text-center cursor-pointer hover:bg-primary/10 transition-colors w-full min-w-0"
-                            >
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <span className="block w-full outline-none">
-                                    <span className="text-base font-bold text-amber-600 dark:text-amber-400 leading-tight block">
-                                      {(() => {
-                                        const eventIds = new Set((university.caseChampionshipParticipants || []).map((p) => p.eventId));
-                                        return eventIds.size;
-                                      })()}
-                                    </span>
-                                    <span className="text-[9px] text-muted-foreground uppercase tracking-wide block">Кейс-чемпионаты</span>
-                                  </span>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>Количество уникальных кейс-чемпионатов, в которых участвовали студенты из данного ВУЗа (практиканты — участники кейс-чемпионатов)</p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </div>
                           </div>
                         </div>
                         
@@ -7446,12 +7413,14 @@ export default function UniversitiesPage() {
                               const eventTypeLabels = EVENT_TYPE_LABELS;
                               const eventTypeBadgeColors: Record<EventType, string> = {
                                 businessGame: "bg-blue-100 text-blue-700 border-blue-300 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700",
+                                caseChampionship: "bg-teal-100 text-teal-700 border-teal-300 dark:bg-teal-900 dark:text-teal-200 dark:border-teal-700",
                                 diplomaDefense: "bg-purple-100 text-purple-700 border-purple-300 dark:bg-purple-900 dark:text-purple-200 dark:border-purple-700",
                                 webinar: "bg-cyan-100 text-cyan-700 border-cyan-300 dark:bg-cyan-900 dark:text-cyan-200 dark:border-cyan-700",
                                 lecture: "bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-900 dark:text-amber-200 dark:border-amber-700",
                                 conference: "bg-green-100 text-green-700 border-green-300 dark:bg-green-900 dark:text-green-200 dark:border-green-700",
                                 masterClass: "bg-orange-100 text-orange-700 border-orange-300 dark:bg-orange-900 dark:text-orange-200 dark:border-orange-700",
                                 contact: "bg-gray-100 text-gray-700 border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700",
+                                meeting: "bg-indigo-100 text-indigo-700 border-indigo-300 dark:bg-indigo-900 dark:text-indigo-200 dark:border-indigo-700",
                               };
                               const formatDate = (dateStr: string) => {
                                 if (!dateStr) return "—";
@@ -7508,6 +7477,7 @@ export default function UniversitiesPage() {
                               };
                               const byType: Record<EventType, number> = {
                                 businessGame: eventsForTypeBlock.filter((e) => e.type === "businessGame").length,
+                                caseChampionship: eventsForTypeBlock.filter((e) => e.type === "caseChampionship").length,
                                 diplomaDefense: eventsForTypeBlock.filter((e) => e.type === "diplomaDefense").length,
                                 webinar: eventsForTypeBlock.filter((e) => e.type === "webinar").length,
                                 lecture: eventsForTypeBlock.filter((e) => e.type === "lecture").length,
@@ -8121,7 +8091,7 @@ export default function UniversitiesPage() {
                                   };
                                   const getEventTypeBadgeVariant = (_type: EventType): "outline" => "outline";
                                   const getEventTypeBadgeClassName = (type: EventType) => {
-                                    const map: Record<EventType, string> = { businessGame: "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600", diplomaDefense: "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600", webinar: "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600", lecture: "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600", conference: "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600", masterClass: "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600", contact: "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600", meeting: "!bg-indigo-500 !text-white !border-indigo-500 hover:!bg-indigo-600" };
+                                    const map: Record<EventType, string> = { businessGame: "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600", caseChampionship: "!bg-teal-500 !text-white !border-teal-500 hover:!bg-teal-600", diplomaDefense: "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600", webinar: "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600", lecture: "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600", conference: "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600", masterClass: "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600", contact: "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600", meeting: "!bg-indigo-500 !text-white !border-indigo-500 hover:!bg-indigo-600" };
                                     return map[type] ?? "";
                                   };
                                   return (
@@ -11581,6 +11551,7 @@ export default function UniversitiesPage() {
                                   });
                                   const byTypeCntr: Record<EventType, number> = {
                                     businessGame: eventItems.filter((e) => e.type === "businessGame").length,
+                                    caseChampionship: eventItems.filter((e) => e.type === "caseChampionship").length,
                                     diplomaDefense: eventItems.filter((e) => e.type === "diplomaDefense").length,
                                     webinar: eventItems.filter((e) => e.type === "webinar").length,
                                     lecture: eventItems.filter((e) => e.type === "lecture").length,
@@ -11739,6 +11710,7 @@ export default function UniversitiesPage() {
                                               const getEventTypeBadgeClassName = (type: EventType) => {
                                                 switch (type) {
                                                   case "businessGame": return "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600";
+                                                  case "caseChampionship": return "!bg-teal-500 !text-white !border-teal-500 hover:!bg-teal-600";
                                                   case "diplomaDefense": return "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600";
                                                   case "webinar": return "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600";
                                                   case "lecture": return "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600";
@@ -11932,7 +11904,7 @@ export default function UniversitiesPage() {
                                               <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                              <p>Выберите тип мероприятия: Деловая игра, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт, Встреча</p>
+                                              <p>Выберите тип мероприятия: Деловая игра, Кейс-чемпионат, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт, Встреча</p>
                                             </TooltipContent>
                                           </Tooltip>
                                         </div>
@@ -12144,7 +12116,7 @@ export default function UniversitiesPage() {
                                               <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
                                             </TooltipTrigger>
                                             <TooltipContent>
-                                              <p>Выберите тип мероприятия: Деловая игра, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт, Встреча</p>
+                                              <p>Выберите тип мероприятия: Деловая игра, Кейс-чемпионат, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт, Встреча</p>
                                             </TooltipContent>
                                           </Tooltip>
                                         </div>
@@ -14075,6 +14047,7 @@ export default function UniversitiesPage() {
                                         };
                                         const byType: Record<EventType, number> = {
                                           businessGame: eventsForTypeBlock.filter((e) => e.type === "businessGame").length,
+                                          caseChampionship: eventsForTypeBlock.filter((e) => e.type === "caseChampionship").length,
                                           diplomaDefense: eventsForTypeBlock.filter((e) => e.type === "diplomaDefense").length,
                                           webinar: eventsForTypeBlock.filter((e) => e.type === "webinar").length,
                                           lecture: eventsForTypeBlock.filter((e) => e.type === "lecture").length,
@@ -14239,6 +14212,7 @@ export default function UniversitiesPage() {
                                                   const getEventTypeBadgeClassName = (type: EventType) => {
                                                     switch (type) {
                                                       case "businessGame": return "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600";
+                                                      case "caseChampionship": return "!bg-teal-500 !text-white !border-teal-500 hover:!bg-teal-600";
                                                       case "diplomaDefense": return "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600";
                                                       case "webinar": return "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600";
                                                       case "lecture": return "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600";
@@ -18856,7 +18830,7 @@ export default function UniversitiesPage() {
                                           return true;
                                         });
                                         const byCooperationLine = { drp: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("drp")).length, bko: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("bko")).length, cntr: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("cntr")).length, ecosystem: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("ecosystem")).length, dkm: eventsForLineBlock.filter((e) => e.cooperationLine?.includes("dkm")).length };
-                                        const byType: Record<EventType, number> = { businessGame: eventsForTypeBlock.filter((e) => e.type === "businessGame").length, diplomaDefense: eventsForTypeBlock.filter((e) => e.type === "diplomaDefense").length, webinar: eventsForTypeBlock.filter((e) => e.type === "webinar").length, lecture: eventsForTypeBlock.filter((e) => e.type === "lecture").length, conference: eventsForTypeBlock.filter((e) => e.type === "conference").length, masterClass: eventsForTypeBlock.filter((e) => e.type === "masterClass").length, contact: eventsForTypeBlock.filter((e) => e.type === "contact").length, meeting: eventsForTypeBlock.filter((e) => e.type === "meeting").length };
+                                        const byType: Record<EventType, number> = { businessGame: eventsForTypeBlock.filter((e) => e.type === "businessGame").length, caseChampionship: eventsForTypeBlock.filter((e) => e.type === "caseChampionship").length, diplomaDefense: eventsForTypeBlock.filter((e) => e.type === "diplomaDefense").length, webinar: eventsForTypeBlock.filter((e) => e.type === "webinar").length, lecture: eventsForTypeBlock.filter((e) => e.type === "lecture").length, conference: eventsForTypeBlock.filter((e) => e.type === "conference").length, masterClass: eventsForTypeBlock.filter((e) => e.type === "masterClass").length, contact: eventsForTypeBlock.filter((e) => e.type === "contact").length, meeting: eventsForTypeBlock.filter((e) => e.type === "meeting").length };
                                         const yearsMap = eventsForYearBlock.reduce<Record<number, number>>((acc, e) => { const y = e.date ? parseInt(e.date.slice(0, 4), 10) : 0; if (y) acc[y] = (acc[y] || 0) + 1; return acc; }, {});
                                         const yearsSorted = Object.keys(yearsMap).map(Number).sort((a, b) => a - b);
                                         const byStatus = { planned: eventsForStatusBlock.filter((e) => e.status === "planned").length, in_progress: eventsForStatusBlock.filter((e) => e.status === "in_progress").length, completed: eventsForStatusBlock.filter((e) => e.status === "completed").length, cancelled: eventsForStatusBlock.filter((e) => e.status === "cancelled").length };
@@ -18868,7 +18842,7 @@ export default function UniversitiesPage() {
                                           return true;
                                         });
                                         const eventTypeLabels = EVENT_TYPE_LABELS;
-                                        const getEventTypeBadgeClassName = (type: EventType) => { const m: Record<EventType, string> = { businessGame: "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600", diplomaDefense: "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600", webinar: "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600", lecture: "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600", conference: "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600", masterClass: "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600", contact: "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600", meeting: "!bg-indigo-500 !text-white !border-indigo-500 hover:!bg-indigo-600" }; return m[type] ?? ""; };
+                                        const getEventTypeBadgeClassName = (type: EventType) => { const m: Record<EventType, string> = { businessGame: "!bg-blue-500 !text-white !border-blue-500 hover:!bg-blue-600", caseChampionship: "!bg-teal-500 !text-white !border-teal-500 hover:!bg-teal-600", diplomaDefense: "!bg-purple-500 !text-white !border-purple-500 hover:!bg-purple-600", webinar: "!bg-cyan-500 !text-white !border-cyan-500 hover:!bg-cyan-600", lecture: "!bg-amber-500 !text-white !border-amber-500 hover:!bg-amber-600", conference: "!bg-green-500 !text-white !border-green-500 hover:!bg-green-600", masterClass: "!bg-orange-500 !text-white !border-orange-500 hover:!bg-orange-600", contact: "!bg-gray-500 !text-white !border-gray-500 hover:!bg-gray-600", meeting: "!bg-indigo-500 !text-white !border-indigo-500 hover:!bg-indigo-600" }; return m[type] ?? ""; };
                                         const formatDate = (dateString: string) => { if (!dateString) return "Не указано"; const [year, month, day] = dateString.split("-").map(Number); if (isNaN(year) || isNaN(month) || isNaN(day)) return "Неверный формат"; return `${String(day).padStart(2, "0")}.${String(month).padStart(2, "0")}.${year}`; };
                                         return (
                                           <>
@@ -19625,7 +19599,7 @@ export default function UniversitiesPage() {
                           <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p>Выберите тип мероприятия: Деловая игра, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт, Встреча</p>
+                          <p>Выберите тип мероприятия: Деловая игра, Кейс-чемпионат, Защита диплома, Вебинар, Лекция, Конференция, Мастер-класс, Контакт, Встреча</p>
                         </TooltipContent>
                       </Tooltip>
                   </div>

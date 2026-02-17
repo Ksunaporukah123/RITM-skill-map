@@ -49,7 +49,7 @@ interface Contract {
 
 interface Event {
   id: string;
-  type: "businessGame" | "diplomaDefense" | "webinar" | "lecture" | "conference" | "masterClass" | "contact";
+  type: "businessGame" | "caseChampionship" | "diplomaDefense" | "webinar" | "lecture" | "conference" | "masterClass" | "contact";
   date: string;
   endDate: string;
   status: "planned" | "in_progress" | "completed" | "cancelled";

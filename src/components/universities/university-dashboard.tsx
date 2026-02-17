@@ -46,7 +46,7 @@ interface Contract {
 
 interface Event {
   id: string;
-  type: "businessGame" | "diplomaDefense" | "webinar" | "lecture" | "conference" | "masterClass" | "contact";
+  type: "businessGame" | "caseChampionship" | "diplomaDefense" | "webinar" | "lecture" | "conference" | "masterClass" | "contact";
   date: string;
   status: "planned" | "in_progress" | "completed";
 }
@@ -165,6 +165,7 @@ export function UniversityDashboard({ universities }: UniversityDashboardProps) 
     });
     const eventsByType = {
       businessGame: currentYearEvents.filter(e => e.type === "businessGame").length,
+      caseChampionship: currentYearEvents.filter(e => e.type === "caseChampionship").length,
       diplomaDefense: currentYearEvents.filter(e => e.type === "diplomaDefense").length,
       webinar: currentYearEvents.filter(e => e.type === "webinar").length,
       lecture: currentYearEvents.filter(e => e.type === "lecture").length,
@@ -331,6 +332,7 @@ export function UniversityDashboard({ universities }: UniversityDashboardProps) 
         },
         eventsByType: {
           businessGame: drpEvents.filter(e => e.type === "businessGame").length,
+          caseChampionship: drpEvents.filter(e => e.type === "caseChampionship").length,
           diplomaDefense: drpEvents.filter(e => e.type === "diplomaDefense").length,
           webinar: drpEvents.filter(e => e.type === "webinar").length,
           lecture: drpEvents.filter(e => e.type === "lecture").length,
@@ -558,6 +560,7 @@ export function UniversityDashboard({ universities }: UniversityDashboardProps) 
             <ResponsiveContainer width="100%" height={280}>
               <BarChart data={[
                 { name: "Деловая игра", value: metrics.eventsByType.businessGame },
+                { name: "Кейс-чемпионат", value: metrics.eventsByType.caseChampionship },
                 { name: "Защита диплома", value: metrics.eventsByType.diplomaDefense },
                 { name: "Вебинар", value: metrics.eventsByType.webinar },
                 { name: "Лекция", value: metrics.eventsByType.lecture },
@@ -981,6 +984,7 @@ export function UniversityDashboard({ universities }: UniversityDashboardProps) 
                 <ResponsiveContainer width="100%" height={280}>
                   <BarChart data={[
                     { name: "Деловая игра", value: lineData.drp.eventsByType.businessGame },
+                    { name: "Кейс-чемпионат", value: lineData.drp.eventsByType.caseChampionship },
                     { name: "Защита диплома", value: lineData.drp.eventsByType.diplomaDefense },
                     { name: "Вебинар", value: lineData.drp.eventsByType.webinar },
                     { name: "Лекция", value: lineData.drp.eventsByType.lecture },

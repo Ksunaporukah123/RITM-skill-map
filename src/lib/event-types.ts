@@ -5,6 +5,7 @@
 
 export const EVENT_TYPE_OPTIONS = [
   { value: "businessGame" as const, label: "Деловая игра" },
+  { value: "caseChampionship" as const, label: "Кейс-чемпионат" },
   { value: "diplomaDefense" as const, label: "Защита диплома" },
   { value: "webinar" as const, label: "Вебинар" },
   { value: "lecture" as const, label: "Лекция" },

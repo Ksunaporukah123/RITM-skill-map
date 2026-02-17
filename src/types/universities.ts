@@ -35,14 +35,15 @@ export interface BankDepartment {
 
 // Единый тип мероприятия для ЦНТР, ДРП и Экосистемы
 export type EventType =
-  | "businessGame"    // Деловая игра
-  | "diplomaDefense"  // защита диплома
-  | "webinar"         // вебинар
-  | "lecture"         // лекция
-  | "conference"      // конференция
-  | "masterClass"     // мастер-класс
-  | "contact"         // контакт
-  | "meeting";        // встреча
+  | "businessGame"     // Деловая игра
+  | "caseChampionship" // Кейс-чемпионат
+  | "diplomaDefense"   // защита диплома
+  | "webinar"          // вебинар
+  | "lecture"          // лекция
+  | "conference"       // конференция
+  | "masterClass"      // мастер-класс
+  | "contact"          // контакт
+  | "meeting";         // встреча
 
 /** Варианты типа мероприятия и подписи — реэкспорт из lib для надёжной загрузки */
 export { EVENT_TYPE_OPTIONS, EVENT_TYPE_LABELS } from "@/lib/event-types";
