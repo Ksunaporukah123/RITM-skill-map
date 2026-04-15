@@ -12,11 +12,10 @@ import {
   Crosshair,
   Briefcase,
   Building2,
+  ChartColumn,
   Shield,
   FolderOpen,
   Settings,
-  Users,
-  GraduationCap,
   NotebookPen,
 } from "lucide-react";
 import type { ComponentType } from "react";
@@ -92,14 +91,9 @@ export const menuSections: MenuSection[] = [
         icon: NotebookPen,
       },
       {
-        title: "Преемники",
-        href: "/services/succession",
-        icon: Users,
-      },
-      {
-        title: "Единая платформа по работе с ВУЗами",
-        href: "/services/universities",
-        icon: GraduationCap,
+        title: "Результаты оценок",
+        href: "/services/assessments-overview",
+        icon: ChartColumn,
       },
     ],
   },

@@ -18,7 +18,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { MultiSelect } from "@/components/ui/multi-select";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Target, Users, FileText, Table as TableIcon, Search, X, ChevronDown, ChevronRight, Building2, UserCircle, Plus, Pencil, Trash2, BarChart3, Edit, Filter, GripVertical, FolderOpen, LayoutDashboard, Ruler, Calculator, AlertCircle, ChevronLeft, ChevronsLeft, ChevronsRight, ArrowUp, ArrowDown, Calendar, CheckCircle2, XCircle, Eye, History, Download, Upload, FileSpreadsheet } from "lucide-react";
+import { Target, Users, FileText, Table as TableIcon, Search, X, ChevronDown, ChevronRight, Building2, UserCircle, Plus, Pencil, Trash2, BarChart3, Edit, Filter, GripVertical, FolderOpen, LayoutDashboard, Ruler, Calculator, AlertCircle, ChevronLeft, ChevronsLeft, ChevronsRight, ArrowUp, ArrowDown, Calendar, CheckCircle2, XCircle, Eye, History, Download, Upload, FileSpreadsheet, Info, MousePointer2, ToggleRight, Columns3, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getKPIStatusBadgeVariant, getKPIStatusBadgeClassName } from "@/lib/badge-colors";
 import type { Leader, Stream, Team, KPI, AttachedFile } from "@/types/goals-kold";
@@ -464,6 +464,8 @@ export default function GoalsKoldPage() {
   // Состояние для поиска и фильтров таблицы ПФК
   const [pfkTableSearchQuery, setPfkTableSearchQuery] = useState("");
   const [pfkTableFilterDialogOpen, setPfkTableFilterDialogOpen] = useState(false);
+  const [pfkInfoDialogOpen, setPfkInfoDialogOpen] = useState(false);
+  const [kpiRegistryInfoDialogOpen, setKpiRegistryInfoDialogOpen] = useState(false);
   const [pfkTableFilters, setPfkTableFilters] = useState<{
     streams: string[];
     periods: Array<"annual" | "quarterly">;
@@ -519,6 +521,7 @@ export default function GoalsKoldPage() {
     period: string;
     source: "annual" | "quarterly" | "itLeader";
   } | null>(null);
+
   
   const [unitSortOrder, setUnitSortOrder] = useState<"asc" | "desc">("asc");
   const [formulaSortOrder, setFormulaSortOrder] = useState<"asc" | "desc">("asc");
@@ -1823,6 +1826,368 @@ export default function GoalsKoldPage() {
       </div>
 
       <Tabs defaultValue="streams-teams" className="w-full max-w-full overflow-x-hidden">
+        <Dialog open={pfkInfoDialogOpen} onOpenChange={setPfkInfoDialogOpen}>
+          <DialogContent className="max-w-[1400px] max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2 text-xl">
+                <Info className="h-5 w-5" />
+                Справка: Таблица ПФК
+              </DialogTitle>
+              <DialogDescription>
+                Таблица плановых, фактических и критических значений (ПФК) — центральный инструмент контроля KPI
+                по стримам и командам.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-5 text-sm">
+              {/* 1. Назначение */}
+              <div className="rounded-lg border p-4 space-y-2 bg-muted/30">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <BarChart3 className="h-4 w-4 text-primary" />
+                  Что такое таблица ПФК
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Таблица плановых, фактических и критических значений (далее&nbsp;ПФК) объединяет все КПЭ (ключевые
+                  показатели эффективности) из трёх источников в единую сводку. Здесь вы можете просматривать,
+                  редактировать, согласовывать и отклонять плановые и фактические значения, а также отслеживать
+                  процент выполнения каждого показателя.
+                </p>
+              </div>
+
+              <Separator />
+
+              {/* 2. Источники данных */}
+              <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <FolderOpen className="h-4 w-4 text-primary" />
+                  Источники данных в таблице
+                </h3>
+                <p className="text-muted-foreground">
+                  Таблица ПФК автоматически собирает КПЭ из трёх источников. Каждая строка таблицы содержит информацию
+                  об источнике, что позволяет понять, откуда пришёл показатель:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <div className="rounded-md border p-3 bg-background">
+                    <p className="font-medium text-foreground text-xs mb-1">Годовые КПЭ стримов</p>
+                    <p className="text-xs text-muted-foreground">Годовые ключевые результаты, установленные для каждого стрима на календарный год.</p>
+                  </div>
+                  <div className="rounded-md border p-3 bg-background">
+                    <p className="font-medium text-foreground text-xs mb-1">Квартальные КПЭ стримов</p>
+                    <p className="text-xs text-muted-foreground">Квартальные ключевые результаты стримов, разбитые по кварталам (1Q, 2Q, 3Q, 4Q).</p>
+                  </div>
+                  <div className="rounded-md border p-3 bg-background">
+                    <p className="font-medium text-foreground text-xs mb-1">КПЭ ИТ лидеров</p>
+                    <p className="text-xs text-muted-foreground">Квартальные ключевые результаты ИТ лидеров стримов.</p>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* 3. Роли */}
+              <div className="rounded-lg border p-4 space-y-4 bg-muted/30">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <Users className="h-4 w-4 text-primary" />
+                  Роли и права доступа
+                </h3>
+
+                <div className="space-y-3">
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-foreground flex items-center gap-1.5">
+                      <Edit className="h-3.5 w-3.5" />
+                      Редактирование и согласование
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="outline">Аналитик ПЛАН</Badge>
+                      <Badge variant="outline">Аналитик ФАКТ</Badge>
+                      <Badge variant="outline">Верификатор</Badge>
+                      <Badge variant="outline">Руководитель ГЦ</Badge>
+                    </div>
+                    <p className="text-muted-foreground">
+                      Эти роли могут выставлять и корректировать плановые/фактические значения, согласовывать или
+                      отклонять статусы КПЭ, а также использовать импорт/экспорт данных.
+                    </p>
+                  </div>
+
+                  <Separator />
+
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-foreground flex items-center gap-1.5">
+                      <Eye className="h-3.5 w-3.5" />
+                      Только просмотр
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary">Руководитель</Badge>
+                      <Badge variant="secondary">Координатор</Badge>
+                      <Badge variant="secondary">Методолог ДОМРР</Badge>
+                      <Badge variant="secondary">Методолог ДРП</Badge>
+                    </div>
+                    <p className="text-muted-foreground">
+                      Данные роли имеют доступ ко всем данным таблицы ПФК в режиме чтения без возможности
+                      изменения значений и статусов.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* 4. Режим редактирования */}
+              <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <ToggleRight className="h-4 w-4 text-primary" />
+                  Режим редактирования
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  По умолчанию таблица открывается в режиме просмотра. Чтобы начать вносить изменения:
+                </p>
+                <ol className="list-decimal pl-5 space-y-2 text-muted-foreground">
+                  <li>
+                    Найдите переключатель <span className="font-semibold text-foreground">«Режим редактирования»</span> в
+                    верхней панели инструментов таблицы (справа от кнопки «Экспорт/импорт excel»).
+                  </li>
+                  <li>
+                    Переведите переключатель в активное положение — поля <span className="font-semibold text-foreground">«План»</span> и{" "}
+                    <span className="font-semibold text-foreground">«Факт»</span> станут редактируемыми, а рядом со статусами появятся кнопки
+                    согласования и отклонения.
+                  </li>
+                  <li>
+                    Внесите нужные значения. Допускается ввод десятичных чисел через запятую (например, <code className="bg-muted px-1 rounded text-xs">12,5</code>).
+                    Значение автоматически округляется до 2 знаков после запятой.
+                  </li>
+                  <li>
+                    После завершения работы отключите переключатель, чтобы случайно не изменить данные.
+                  </li>
+                </ol>
+              </div>
+
+              <Separator />
+
+              {/* 5. Столбцы таблицы */}
+              <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <Columns3 className="h-4 w-4 text-primary" />
+                  Описание столбцов таблицы
+                </h3>
+                <div className="space-y-2">
+                  <div className="grid grid-cols-[140px_1fr] gap-x-3 gap-y-2 text-muted-foreground">
+                    <span className="font-medium text-foreground">Наименование КПЭ</span>
+                    <span>Название показателя. Кликните по нему, чтобы открыть карточку КПЭ с подробной информацией.</span>
+
+                    <span className="font-medium text-foreground">Период</span>
+                    <span>Год (например, 2025) для годовых КПЭ или квартал (например, 1Q2025) для квартальных.</span>
+
+                    <span className="font-medium text-foreground">Стрим</span>
+                    <span>Наименование стрима, к которому относится данный КПЭ.</span>
+
+                    <span className="font-medium text-foreground">Команда / IT лидер</span>
+                    <span>Команда стрима или ФИО IT лидера — в зависимости от источника данных.</span>
+
+                    <span className="font-medium text-foreground">План</span>
+                    <span>Плановое значение показателя. В режиме редактирования — поле ввода. Если к плану прикреплён файл, рядом появится иконка документа.</span>
+
+                    <span className="font-medium text-foreground">Статус план</span>
+                    <span>Текущий статус планового значения: <Badge variant="outline" className="text-[10px] px-1.5 py-0">План выставление</Badge> или <Badge variant="outline" className="text-[10px] px-1.5 py-0">План согласован</Badge>. В режиме редактирования доступны кнопки согласования <CheckCircle2 className="inline h-3.5 w-3.5 text-green-600" /> и отклонения <XCircle className="inline h-3.5 w-3.5 text-red-600" />.</span>
+
+                    <span className="font-medium text-foreground">Факт</span>
+                    <span>Фактическое значение показателя. Логика аналогична столбцу «План».</span>
+
+                    <span className="font-medium text-foreground">Статус факт</span>
+                    <span>Текущий статус фактического значения: <Badge variant="outline" className="text-[10px] px-1.5 py-0">Факт выставление</Badge> или <Badge variant="outline" className="text-[10px] px-1.5 py-0">Факт согласован</Badge>.</span>
+
+                    <span className="font-medium text-foreground">Значение выполнения</span>
+                    <span>Автоматически рассчитанный процент выполнения КПЭ на основе плана и факта.</span>
+
+                    <span className="font-medium text-foreground">Действия</span>
+                    <span>Кнопка <History className="inline h-3.5 w-3.5" /> позволяет просмотреть полную историю операций с данным КПЭ (кто, когда и какие изменения вносил).</span>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* 6. Согласование и отклонение */}
+              <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-primary" />
+                  Согласование и отклонение статусов
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  В режиме редактирования рядом со статусами плана и факта отображаются действия:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="rounded-md border p-3 bg-background space-y-1">
+                    <p className="font-medium text-foreground flex items-center gap-1.5 text-xs">
+                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                      Согласовать
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Нажмите зелёную галочку, чтобы перевести статус в «согласован». Действие доступно, если текущий
+                      статус — «выставление».
+                    </p>
+                  </div>
+                  <div className="rounded-md border p-3 bg-background space-y-1">
+                    <p className="font-medium text-foreground flex items-center gap-1.5 text-xs">
+                      <XCircle className="h-4 w-4 text-red-600" />
+                      Отклонить
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Нажмите красный крестик, чтобы отклонить значение. Откроется окно, в которое необходимо
+                      ввести обязательный комментарий с причиной отклонения.
+                    </p>
+                  </div>
+                </div>
+                <p className="text-muted-foreground text-xs">
+                  Комментарий отклонения можно просмотреть, нажав иконку <Eye className="inline h-3.5 w-3.5" /> рядом
+                  со статусом «отклонён».
+                </p>
+              </div>
+
+              <Separator />
+
+              {/* 7. Поиск и фильтрация */}
+              <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <Search className="h-4 w-4 text-primary" />
+                  Поиск и фильтрация
+                </h3>
+
+                <div className="space-y-3">
+                  <div className="space-y-1">
+                    <p className="font-medium text-foreground text-xs">Строка поиска</p>
+                    <p className="text-muted-foreground">
+                      Введите текст в поле поиска, чтобы найти КПЭ по наименованию, названию стрима, команды или
+                      периоду. Поиск работает мгновенно по мере ввода. Для очистки нажмите крестик в поле.
+                    </p>
+                  </div>
+
+                  <Separator />
+
+                  <div className="space-y-2">
+                    <p className="font-medium text-foreground text-xs flex items-center gap-1.5">
+                      <Filter className="h-3.5 w-3.5" />
+                      Расширенные фильтры
+                    </p>
+                    <p className="text-muted-foreground">
+                      Нажмите кнопку <span className="font-semibold text-foreground">«Фильтры»</span> — откроется диалоговое окно
+                      с параметрами фильтрации. Количество активных фильтров отображается бейджем на кнопке.
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-muted-foreground">
+                      <div className="flex items-start gap-2">
+                        <span className="font-medium text-foreground whitespace-nowrap">По стримам:</span>
+                        <span>выберите один или несколько стримов для отображения.</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="font-medium text-foreground whitespace-nowrap">По периодам:</span>
+                        <span>Годовые, Квартальные — отображать только выбранные периоды.</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="font-medium text-foreground whitespace-nowrap">По статусу плана:</span>
+                        <span>«План согласован» или «План выставление».</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="font-medium text-foreground whitespace-nowrap">По статусу факта:</span>
+                        <span>«Факт согласован» или «Факт выставление».</span>
+                      </div>
+                      <div className="flex items-start gap-2 sm:col-span-2">
+                        <span className="font-medium text-foreground whitespace-nowrap">По источнику:</span>
+                        <span>Годовые КПЭ стримов, Квартальные КПЭ стримов, КПЭ IT лидеров.</span>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground text-xs">
+                      Для сброса всех фильтров нажмите <span className="font-semibold text-foreground">«Сбросить фильтры»</span> в
+                      нижней части окна фильтров, затем <span className="font-semibold text-foreground">«Применить»</span>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* 8. Экспорт/импорт */}
+              <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <FileSpreadsheet className="h-4 w-4 text-primary" />
+                  Экспорт и импорт данных (Excel)
+                </h3>
+                <p className="text-muted-foreground">
+                  Кнопка <span className="font-semibold text-foreground">«Экспорт/импорт excel»</span> открывает
+                  выпадающее меню с двумя действиями:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="rounded-md border p-3 bg-background space-y-1">
+                    <p className="font-medium text-foreground flex items-center gap-1.5 text-xs">
+                      <Download className="h-4 w-4" />
+                      Экспорт таблицы ПФК
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Выгрузка всех данных таблицы (с учётом активных фильтров) в файл формата <code className="bg-muted px-1 rounded">.xlsx</code>.
+                      Файл можно открыть в Excel, Google Sheets или LibreOffice.
+                    </p>
+                  </div>
+                  <div className="rounded-md border p-3 bg-background space-y-1">
+                    <p className="font-medium text-foreground flex items-center gap-1.5 text-xs">
+                      <Upload className="h-4 w-4" />
+                      Импорт таблицы ПФК
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Загрузка данных из Excel-файла. Выберите файл <code className="bg-muted px-1 rounded">.xlsx</code> на
+                      компьютере — система обработает данные и обновит значения в таблице.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* 9. Пагинация */}
+              <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <ChevronsRight className="h-4 w-4 text-primary" />
+                  Навигация по страницам
+                </h3>
+                <p className="text-muted-foreground">
+                  Под таблицей расположена панель пагинации. Вы можете:
+                </p>
+                <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+                  <li>Выбрать количество строк на странице: <strong className="text-foreground">10</strong>, <strong className="text-foreground">25</strong>, <strong className="text-foreground">50</strong> или <strong className="text-foreground">100</strong>.</li>
+                  <li>Переключаться между страницами кнопками «вперёд / назад», а также перейти к первой или последней странице.</li>
+                  <li>Видеть общее количество записей и номер текущей страницы.</li>
+                </ul>
+              </div>
+
+              <Separator />
+
+              {/* 10. Карточка КПЭ */}
+              <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <MousePointer2 className="h-4 w-4 text-primary" />
+                  Просмотр детальной информации о КПЭ
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Нажмите на <span className="font-semibold text-foreground">наименование КПЭ</span> в таблице —
+                  откроется модальное окно с полной информацией о показателе: описание, единица измерения, формула
+                  расчёта, плановые и фактические значения, прикреплённые файлы и текущие статусы.
+                </p>
+              </div>
+
+              <Separator />
+
+              {/* 11. Справочные материалы */}
+              <div className="rounded-lg border border-primary/20 p-4 space-y-2 bg-primary/5">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-primary" />
+                  Дополнительная информация
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Для подробного изучения всех инструментов работы с ПФК, бизнес-процессов согласования и ролевой
+                  модели обратитесь к подробной инструкции в разделе <span className="font-semibold text-foreground">«Справочные материалы»</span> системы.
+                </p>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
+
         <TabsList variant="grid5">
           <TabsTrigger value="streams-teams">
             КР стримов и команд
@@ -2157,11 +2522,216 @@ export default function GoalsKoldPage() {
         </TabsContent>
 
         <TabsContent value="kpi-registry" className="mt-4 space-y-6">
+          <Dialog open={kpiRegistryInfoDialogOpen} onOpenChange={setKpiRegistryInfoDialogOpen}>
+            <DialogContent className="max-w-[1400px] max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2 text-xl">
+                  <Info className="h-5 w-5" />
+                  Справка: Реестр КПЭ
+                </DialogTitle>
+                <DialogDescription>
+                  Реестр ключевых показателей эффективности (КПЭ) — единый каталог всех КПЭ, используемых
+                  в целеполагании стримов и команд.
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-5 text-sm">
+                {/* 1. Назначение */}
+                <div className="rounded-lg border p-4 space-y-2 bg-muted/30">
+                  <h3 className="font-semibold text-foreground flex items-center gap-2">
+                    <FileText className="h-4 w-4 text-primary" />
+                    Что такое Реестр КПЭ
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Реестр КПЭ — это централизованный справочник всех ключевых показателей эффективности, которые
+                    назначаются стримам, командам и ИТ лидерам. Реестр обеспечивает единообразие наименований,
+                    формул расчёта и единиц измерения, исключая дублирование и расхождения в данных между различными
+                    источниками целеполагания.
+                  </p>
+                </div>
+
+                <Separator />
+
+                {/* 2. Структура реестра */}
+                <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
+                  <h3 className="font-semibold text-foreground flex items-center gap-2">
+                    <Columns3 className="h-4 w-4 text-primary" />
+                    Структура реестра
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Каждый КПЭ в реестре описывается набором атрибутов, которые определяют его суть и правила расчёта:
+                  </p>
+                  <div className="grid grid-cols-[140px_1fr] gap-x-3 gap-y-2 text-muted-foreground">
+                    <span className="font-medium text-foreground">Наименование</span>
+                    <span>Полное название показателя, однозначно идентифицирующее КПЭ в системе.</span>
+
+                    <span className="font-medium text-foreground">Описание</span>
+                    <span>Развёрнутое пояснение, что измеряет данный показатель и для чего он используется.</span>
+
+                    <span className="font-medium text-foreground">Единица измерения</span>
+                    <span>Единица, в которой выражается значение КПЭ (%, шт., руб. и т.д.). Берётся из справочника единиц измерения.</span>
+
+                    <span className="font-medium text-foreground">Формула расчёта</span>
+                    <span>Математическая формула, по которой вычисляется итоговое значение (из справочника формул).</span>
+
+                    <span className="font-medium text-foreground">Период</span>
+                    <span>Тип периодичности КПЭ: годовой или квартальный.</span>
+
+                    <span className="font-medium text-foreground">Стрим / Команда</span>
+                    <span>Привязка КПЭ к конкретному стриму, команде или ИТ лидеру.</span>
+
+                    <span className="font-medium text-foreground">Весовой коэффициент</span>
+                    <span>Вес показателя в общей оценке стрима/команды (суммарный вес всех КПЭ должен составлять 100%).</span>
+                  </div>
+                </div>
+
+                <Separator />
+
+                {/* 3. Роли */}
+                <div className="rounded-lg border p-4 space-y-4 bg-muted/30">
+                  <h3 className="font-semibold text-foreground flex items-center gap-2">
+                    <Users className="h-4 w-4 text-primary" />
+                    Роли и права доступа
+                  </h3>
+
+                  <div className="space-y-3">
+                    <div className="space-y-2">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-foreground flex items-center gap-1.5">
+                        <Edit className="h-3.5 w-3.5" />
+                        Создание и редактирование КПЭ
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <Badge variant="outline">Методолог ДОМРР</Badge>
+                        <Badge variant="outline">Методолог ДРП</Badge>
+                        <Badge variant="outline">Руководитель ГЦ</Badge>
+                      </div>
+                      <p className="text-muted-foreground">
+                        Эти роли могут добавлять новые КПЭ в реестр, редактировать существующие показатели,
+                        изменять формулы расчёта, единицы измерения и привязки к стримам/командам.
+                      </p>
+                    </div>
+
+                    <Separator />
+
+                    <div className="space-y-2">
+                      <p className="text-xs font-semibold uppercase tracking-wide text-foreground flex items-center gap-1.5">
+                        <Eye className="h-3.5 w-3.5" />
+                        Просмотр реестра
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <Badge variant="secondary">Руководитель</Badge>
+                        <Badge variant="secondary">Координатор</Badge>
+                        <Badge variant="secondary">Аналитик ПЛАН</Badge>
+                        <Badge variant="secondary">Аналитик ФАКТ</Badge>
+                        <Badge variant="secondary">Верификатор</Badge>
+                      </div>
+                      <p className="text-muted-foreground">
+                        Данные роли имеют доступ к полному просмотру реестра КПЭ без возможности изменения записей.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                {/* 4. Связь с таблицей ПФК */}
+                <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
+                  <h3 className="font-semibold text-foreground flex items-center gap-2">
+                    <BarChart3 className="h-4 w-4 text-primary" />
+                    Связь с таблицей ПФК
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Реестр КПЭ является «источником истины» для таблицы ПФК. Когда КПЭ добавляется в годовые или
+                    квартальные ключевые результаты стрима (вкладка «КР стримов и команд»), он автоматически
+                    попадает в таблицу ПФК со значениями плана и факта. Изменение наименования или формулы в реестре
+                    отражается во всех связанных записях ПФК.
+                  </p>
+                </div>
+
+                <Separator />
+
+                {/* 5. Жизненный цикл КПЭ */}
+                <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
+                  <h3 className="font-semibold text-foreground flex items-center gap-2">
+                    <History className="h-4 w-4 text-primary" />
+                    Жизненный цикл КПЭ
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Каждый показатель проходит следующие этапы:
+                  </p>
+                  <ol className="list-decimal pl-5 space-y-2 text-muted-foreground">
+                    <li>
+                      <span className="font-semibold text-foreground">Создание</span> — методолог или руководитель ГЦ
+                      добавляет КПЭ в реестр, указывая все обязательные атрибуты.
+                    </li>
+                    <li>
+                      <span className="font-semibold text-foreground">Назначение</span> — КПЭ привязывается к стриму,
+                      команде или ИТ лидеру через вкладку «КР стримов и команд» (годовые или квартальные КР).
+                    </li>
+                    <li>
+                      <span className="font-semibold text-foreground">Планирование</span> — аналитик ПЛАН выставляет
+                      плановые значения в таблице ПФК и направляет на согласование.
+                    </li>
+                    <li>
+                      <span className="font-semibold text-foreground">Выполнение и факт</span> — аналитик ФАКТ вносит
+                      фактические значения по итогам периода.
+                    </li>
+                    <li>
+                      <span className="font-semibold text-foreground">Согласование</span> — верификатор или руководитель ГЦ
+                      согласовывает или отклоняет план/факт с указанием комментария.
+                    </li>
+                  </ol>
+                </div>
+
+                <Separator />
+
+                {/* 6. Поиск и навигация */}
+                <div className="rounded-lg border p-4 space-y-3 bg-muted/30">
+                  <h3 className="font-semibold text-foreground flex items-center gap-2">
+                    <Search className="h-4 w-4 text-primary" />
+                    Поиск и навигация по реестру
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Для удобства работы с большим количеством КПЭ в реестре предусмотрены:
+                  </p>
+                  <ul className="list-disc pl-5 space-y-1 text-muted-foreground">
+                    <li>Текстовый поиск по наименованию, описанию и привязанному стриму/команде.</li>
+                    <li>Фильтрация по периоду (годовые / квартальные), по стриму и по единице измерения.</li>
+                    <li>Сортировка по наименованию, весу или дате создания.</li>
+                    <li>Пагинация с настраиваемым количеством записей на странице.</li>
+                  </ul>
+                </div>
+
+                <Separator />
+
+                {/* 7. Дополнительная информация */}
+                <div className="rounded-lg border border-primary/20 p-4 space-y-2 bg-primary/5">
+                  <h3 className="font-semibold text-foreground flex items-center gap-2">
+                    <BookOpen className="h-4 w-4 text-primary" />
+                    Дополнительная информация
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Подробное описание методологии формирования КПЭ, правил расчёта весовых коэффициентов
+                    и процедуры согласования доступно в разделе <span className="font-semibold text-foreground">«Справочные материалы»</span> системы.
+                  </p>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5" />
-                Реестр КПЭ
+                <span>Реестр КПЭ</span>
+                <button
+                  type="button"
+                  className="ml-1 flex h-5 w-5 items-center justify-center rounded-full border text-[10px] leading-none"
+                  onClick={() => setKpiRegistryInfoDialogOpen(true)}
+                  aria-label="Информация о реестре КПЭ"
+                >
+                  i
+                </button>
               </CardTitle>
               <CardDescription>
                 Реестр ключевых показателей эффективности
@@ -2182,7 +2752,15 @@ export default function GoalsKoldPage() {
                 <div className="flex-1">
                   <CardTitle className="flex items-center gap-2">
                     <BarChart3 className="h-5 w-5" />
-                    Таблица ПФК
+                    <span>Таблица ПФК</span>
+                    <button
+                      type="button"
+                      className="ml-1 flex h-5 w-5 items-center justify-center rounded-full border text-[10px] leading-none"
+                      onClick={() => setPfkInfoDialogOpen(true)}
+                      aria-label="Информация о таблице ПФК"
+                    >
+                      i
+                    </button>
                   </CardTitle>
                   <CardDescription>
                     Таблица плановых фактических критических значений
