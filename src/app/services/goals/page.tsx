@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -12,7 +12,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Search, Filter, ChevronLeft, ChevronRight, ChevronDown, ChevronsLeft, ChevronsRight, Clock, AlertTriangle, UserPlus, CheckCircle2, StopCircle, Info } from "lucide-react";
+import { Search, Filter, ChevronLeft, ChevronRight, ChevronDown, ChevronsLeft, ChevronsRight, Clock, AlertTriangle, UserPlus, CheckCircle2, StopCircle, Info, FileText, BarChart3 } from "lucide-react";
 
 // --- Делегирование: типы и моковые данные ---
 interface DelegationRoleAction {
@@ -432,9 +432,11 @@ export default function GoalsPage() {
       </div>
 
       <Tabs defaultValue="performance-map" className="w-full">
-        <TabsList variant="grid2" className="w-full">
+        <TabsList variant="grid4" className="w-full">
           <TabsTrigger value="performance-map">Карта результативности</TabsTrigger>
           <TabsTrigger value="delegation">Делегирование</TabsTrigger>
+          <TabsTrigger value="kpi-registry">Реестр КПЭ</TabsTrigger>
+          <TabsTrigger value="pfk-table">Таблица ПФК</TabsTrigger>
         </TabsList>
 
         <TabsContent value="performance-map" className="mt-6">
@@ -1014,6 +1016,44 @@ export default function GoalsPage() {
                   </div>
                 </TabsContent>
               </Tabs>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="kpi-registry" className="mt-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5" />
+                Реестр КПЭ
+              </CardTitle>
+              <CardDescription>
+                Реестр ключевых показателей эффективности
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                Раздел находится в разработке. Здесь будет отображаться реестр ключевых показателей эффективности.
+              </p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="pfk-table" className="mt-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                Таблица ПФК
+              </CardTitle>
+              <CardDescription>
+                Таблица плановых, фактических и критических значений
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                Раздел находится в разработке. Здесь будет отображаться таблица плановых, фактических и критических значений.
+              </p>
             </CardContent>
           </Card>
         </TabsContent>
