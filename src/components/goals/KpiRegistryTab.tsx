@@ -32,150 +32,136 @@ import {
   Search,
   Trash2,
 } from "lucide-react";
+import { GoalsSectionHelpButton } from "@/components/goals/GoalsSectionHelpDialog";
 import { cn } from "@/lib/utils";
+import { KpiCreateForm } from "@/components/goals/KpiCreateForm";
 import {
   GoalsStatusBadge,
   GOALS_LIFECYCLE_STATUS_LABELS,
   GOALS_LIFECYCLE_STATUS_OPTIONS,
   type GoalsLifecycleStatus,
 } from "@/components/goals/GoalsStatusBadge";
-import { GoalsSectionHelpButton } from "@/components/goals/GoalsSectionHelpDialog";
 
-type PerformanceMapStatus = GoalsLifecycleStatus;
+type KpiRegistryStatus = GoalsLifecycleStatus;
 
-interface PerformanceMapRecord {
+interface KpiRegistryRecord {
   id: string;
-  status: PerformanceMapStatus;
+  status: KpiRegistryStatus;
   goalGroup: string;
-  fullName: string;
-  position: string;
-  ssp: string;
-  vsp: string;
-  period: string;
-  performanceScore: number | null;
+  kpiId: string;
+  name: string;
+  kpiType: string;
+  description: string;
+  descriptionIsLink: boolean;
+  responsibilityZone: string;
 }
 
-const BASE_PERFORMANCE_MAPS: Omit<PerformanceMapRecord, "id">[] = [
+const BASE_KPI_REGISTRY: Omit<KpiRegistryRecord, "id">[] = [
   {
-    status: "draft",
-    goalGroup: "HR",
-    fullName: "Терпигорева Ольга Алексеевна",
-    position: "начальник Департамента",
-    ssp: "Департамент по работе с персоналом",
-    vsp: "",
-    period: "2026",
-    performanceScore: null,
-  },
-  {
-    status: "draft",
-    goalGroup: "HR",
-    fullName: "Терпигорева Ольга Алексеевна",
-    position: "начальник Департамента",
-    ssp: "Департамент по работе с персоналом",
-    vsp: "",
-    period: "3Q2026",
-    performanceScore: null,
-  },
-  {
-    status: "development",
-    goalGroup: "HR",
-    fullName: "Терпигорева Ольга Алексеевна",
-    position: "начальник Департамента",
-    ssp: "Департамент по работе с персоналом",
-    vsp: "",
-    period: "1Q2027",
-    performanceScore: null,
-  },
-  {
-    status: "draft",
-    goalGroup: "Клиентские операции на финансовых рынках",
-    fullName: "Терпигорева Ольга Алексеевна",
-    position: "Первый Вице-Президент",
-    ssp: "Руководство",
-    vsp: "",
-    period: "2026",
-    performanceScore: null,
-  },
-  {
-    status: "development",
+    status: "active",
     goalGroup: "Блок ИТ и ЦТ",
-    fullName: "Терпигорева Ольга Алексеевна",
-    position: "главный инженер разработки",
-    ssp: "Департамент информационных технологий",
-    vsp: "Управление открытых систем",
-    period: "2026",
-    performanceScore: null,
+    kpiId: "N004-K0175",
+    name: "15.05.2026",
+    kpiType: "Функциональный",
+    description: "n",
+    descriptionIsLink: false,
+    responsibilityZone: "Группа целеполагания ССП ВСП1",
+  },
+  {
+    status: "draft",
+    goalGroup: "Малый и средний бизнес",
+    kpiId: "N003-K0146",
+    name: "227 1338",
+    kpiType: "Функциональный",
+    description: "Описание КПЭ",
+    descriptionIsLink: true,
+    responsibilityZone: "Банк",
+  },
+  {
+    status: "draft",
+    goalGroup: "Малый и средний бизнес",
+    kpiId: "N003-K0145",
+    name: "КПЭ пипл лог тиест 6",
+    kpiType: "Функциональный",
+    description: "Описание КПЭ",
+    descriptionIsLink: true,
+    responsibilityZone: "Группа целеполагания ССП",
+  },
+  {
+    status: "draft",
+    goalGroup: "Малый и средний бизнес",
+    kpiId: "N003-K0144",
+    name: "14.05.2026",
+    kpiType: "Функциональный",
+    description: "описание аыаыа аыаыа",
+    descriptionIsLink: false,
+    responsibilityZone: "Группа целеполагания ССП",
   },
   {
     status: "development",
-    goalGroup: "Блок ИТ и ЦТ",
-    fullName: "Терпигорева Ольга Алексеевна",
-    position: "главный инженер разработки",
-    ssp: "Департамент информационных технологий",
-    vsp: "Управление открытых систем",
-    period: "3Q2026",
-    performanceScore: null,
+    goalGroup: "Малый и средний бизнес",
+    kpiId: "N003-K0142",
+    name: "КПЭ пипл лог тиест 2",
+    kpiType: "Функциональный",
+    description: "Описание КПЭ",
+    descriptionIsLink: true,
+    responsibilityZone: "Группа целеполагания ССП",
+  },
+  {
+    status: "draft",
+    goalGroup: "Малый и средний бизнес",
+    kpiId: "N003-K0143",
+    name: "КПЭ пипл лог тиест 5",
+    kpiType: "Функциональный",
+    description: "Описание КПЭ",
+    descriptionIsLink: true,
+    responsibilityZone: "Банк",
   },
   {
     status: "active",
     goalGroup: "Блок ИТ и ЦТ",
-    fullName: "Терпигорева Ольга Алексеевна",
-    position: "главный инженер разработки",
-    ssp: "Департамент информационных технологий",
-    vsp: "Управление открытых систем",
-    period: "1Q2027",
-    performanceScore: null,
-  },
-  {
-    status: "draft",
-    goalGroup: "Блок ИТ и ЦТ",
-    fullName: "Терпигорева Ольга Алексеевна",
-    position: "специалист",
-    ssp: "Департамент информационных технологий",
-    vsp: "Управление открытых систем",
-    period: "2026",
-    performanceScore: null,
-  },
-  {
-    status: "development",
-    goalGroup: "Блок ИТ и ЦТ",
-    fullName: "Терпигорева Ольга Алексеевна",
-    position: "специалист",
-    ssp: "Департамент информационных технологий",
-    vsp: "Управление открытых систем",
-    period: "3Q2026",
-    performanceScore: null,
+    kpiId: "N004-K0174",
+    name: "14.05.2026",
+    kpiType: "Функциональный",
+    description: "Описание КПЭ",
+    descriptionIsLink: true,
+    responsibilityZone: "Группа целеполагания ССП ВСП1",
   },
   {
     status: "development-alert",
-    goalGroup: "HR",
-    fullName: "Терпигорева Ольга Алексеевна",
-    position: "начальник Департамента",
-    ssp: "Департамент по работе с персоналом",
-    vsp: "",
-    period: "2Q2026",
-    performanceScore: null,
+    goalGroup: "Малый и средний бизнес",
+    kpiId: "N003-K0141",
+    name: "КПЭ на согласовании",
+    kpiType: "Функциональный",
+    description: "Описание КПЭ",
+    descriptionIsLink: true,
+    responsibilityZone: "Группа целеполагания ССП",
   },
   {
-    status: "active",
+    status: "development",
     goalGroup: "Блок ИТ и ЦТ",
-    fullName: "Терпигорева Ольга Алексеевна",
-    position: "специалист",
-    ssp: "Департамент информационных технологий",
-    vsp: "Управление открытых систем",
-    period: "1Q2027",
-    performanceScore: null,
+    kpiId: "N004-K0173",
+    name: "КПЭ стримовая метрика",
+    kpiType: "Функциональный",
+    description: "Описание КПЭ",
+    descriptionIsLink: true,
+    responsibilityZone: "Группа целеполагания ССП",
   },
 ];
 
-const TOTAL_RECORDS = 375;
+const TOTAL_RECORDS = 182;
 
-const MOCK_PERFORMANCE_MAPS: PerformanceMapRecord[] = Array.from(
+const MOCK_KPI_REGISTRY: KpiRegistryRecord[] = Array.from(
   { length: TOTAL_RECORDS },
-  (_, i) => ({
-    id: String(i + 1),
-    ...BASE_PERFORMANCE_MAPS[i % BASE_PERFORMANCE_MAPS.length],
-  })
+  (_, i) => {
+    const base = BASE_KPI_REGISTRY[i % BASE_KPI_REGISTRY.length];
+    const cycle = Math.floor(i / BASE_KPI_REGISTRY.length);
+    return {
+      id: String(i + 1),
+      ...base,
+      kpiId: cycle === 0 ? base.kpiId : `${base.kpiId}-${cycle}`,
+    };
+  }
 );
 
 const wrapCell =
@@ -225,7 +211,6 @@ function ColumnFilterHead({
   selected,
   onSelectedChange,
   formatOption = (v) => String(v),
-  requiredMark,
 }: {
   label: React.ReactNode;
   className?: string;
@@ -233,7 +218,6 @@ function ColumnFilterHead({
   selected: Set<string>;
   onSelectedChange: (next: Set<string>) => void;
   formatOption?: (value: string) => string;
-  requiredMark?: boolean;
 }) {
   const isActive = selected.size > 0;
 
@@ -245,10 +229,7 @@ function ColumnFilterHead({
             type="button"
             className="flex w-full items-start gap-1 whitespace-normal leading-snug text-left hover:text-foreground"
           >
-            <span>
-              {label}
-              {requiredMark && <span className="text-destructive">*</span>}
-            </span>
+            <span>{label}</span>
             <ListFilter
               className={cn(
                 "h-3.5 w-3.5 shrink-0 mt-0.5",
@@ -373,47 +354,35 @@ const UNIQUE_FILTER_OPTIONS = {
     value: s,
     label: GOALS_LIFECYCLE_STATUS_LABELS[s],
   })),
-  goalGroups: [...new Set(MOCK_PERFORMANCE_MAPS.map((r) => r.goalGroup))].sort(),
-  ssps: [...new Set(MOCK_PERFORMANCE_MAPS.map((r) => r.ssp))].sort(),
-  vsps: [...new Set(MOCK_PERFORMANCE_MAPS.map((r) => r.vsp || ""))].sort(),
-  periods: [...new Set(MOCK_PERFORMANCE_MAPS.map((r) => r.period))].sort(),
+  goalGroups: [...new Set(MOCK_KPI_REGISTRY.map((r) => r.goalGroup))].sort(),
+  kpiTypes: [...new Set(MOCK_KPI_REGISTRY.map((r) => r.kpiType))].sort(),
 };
 
-export function PerformanceMapsTab() {
+export function KpiRegistryTab() {
+  const [createFormOpen, setCreateFormOpen] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [fullView, setFullView] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [statusFilter, setStatusFilter] = useState<Set<string>>(new Set());
   const [goalGroupFilter, setGoalGroupFilter] = useState<Set<string>>(new Set());
-  const [sspFilter, setSspFilter] = useState<Set<string>>(new Set());
-  const [vspFilter, setVspFilter] = useState<Set<string>>(new Set());
-  const [periodFilter, setPeriodFilter] = useState<Set<string>>(new Set());
-  const [fullNameSearch, setFullNameSearch] = useState("");
-  const [positionSearch, setPositionSearch] = useState("");
+  const [kpiTypeFilter, setKpiTypeFilter] = useState<Set<string>>(new Set());
+  const [kpiIdSearch, setKpiIdSearch] = useState("");
+  const [nameSearch, setNameSearch] = useState("");
 
   const filteredData = useMemo(() => {
-    const nameQuery = fullNameSearch.trim().toLowerCase();
-    const positionQuery = positionSearch.trim().toLowerCase();
+    const idQuery = kpiIdSearch.trim().toLowerCase();
+    const nameQuery = nameSearch.trim().toLowerCase();
 
-    return MOCK_PERFORMANCE_MAPS.filter((record) => {
+    return MOCK_KPI_REGISTRY.filter((record) => {
       if (statusFilter.size > 0 && !statusFilter.has(record.status)) return false;
       if (goalGroupFilter.size > 0 && !goalGroupFilter.has(record.goalGroup)) return false;
-      if (sspFilter.size > 0 && !sspFilter.has(record.ssp)) return false;
-      if (vspFilter.size > 0 && !vspFilter.has(record.vsp || "")) return false;
-      if (periodFilter.size > 0 && !periodFilter.has(record.period)) return false;
-      if (nameQuery && !record.fullName.toLowerCase().includes(nameQuery)) return false;
-      if (positionQuery && !record.position.toLowerCase().includes(positionQuery)) return false;
+      if (kpiTypeFilter.size > 0 && !kpiTypeFilter.has(record.kpiType)) return false;
+      if (idQuery && !record.kpiId.toLowerCase().includes(idQuery)) return false;
+      if (nameQuery && !record.name.toLowerCase().includes(nameQuery)) return false;
       return true;
     });
-  }, [
-    statusFilter,
-    goalGroupFilter,
-    sspFilter,
-    vspFilter,
-    periodFilter,
-    fullNameSearch,
-    positionSearch,
-  ]);
+  }, [statusFilter, goalGroupFilter, kpiTypeFilter, kpiIdSearch, nameSearch]);
 
   const totalRecords = filteredData.length;
   const totalPages = Math.max(1, Math.ceil(totalRecords / itemsPerPage));
@@ -451,41 +420,50 @@ export function PerformanceMapsTab() {
   return (
     <Card className="border shadow-sm">
       <CardContent className="p-0">
-        {/* Toolbar */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3">
-          <div className="flex items-center gap-2">
-            <h2 className="text-sm font-semibold tracking-wide uppercase flex items-center gap-1.5">
-              КАРТЫ РЕЗУЛЬТАТИВНОСТИ
-              <GoalsSectionHelpButton sectionId="performance-map" />
-            </h2>
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <h2 className="text-sm font-semibold">Реестр КПЭ</h2>
+              <GoalsSectionHelpButton sectionId="kpi-registry" />
+            </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="h-8 gap-1 text-xs font-normal">
-                  Действия с КР...
+                  Действия с КПЭ
                   <ChevronDown className="h-3.5 w-3.5 opacity-60" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
-                <DropdownMenuItem>Утвердить выбранные</DropdownMenuItem>
-                <DropdownMenuItem>Отправить на доработку</DropdownMenuItem>
+                <DropdownMenuItem>Копировать выбранные</DropdownMenuItem>
+                <DropdownMenuItem>Архивировать выбранные</DropdownMenuItem>
                 <DropdownMenuItem>Экспорт выбранных</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            <label className="flex items-center gap-2 text-xs cursor-pointer select-none">
+              <Checkbox
+                checked={fullView}
+                onCheckedChange={(v) => setFullView(v === true)}
+              />
+              Полный вид
+            </label>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" className="h-8 gap-1.5">
               <Download className="h-4 w-4" />
               Экспорт
             </Button>
-            <Button size="sm" className="h-8">
+            <Button
+              size="sm"
+              className="h-8"
+              onClick={() => setCreateFormOpen(true)}
+            >
               + Создать
             </Button>
           </div>
         </div>
 
-        {/* Table */}
         <div className="overflow-x-auto">
-          <Table className="table-fixed min-w-[1280px]">
+          <Table className={cn("table-fixed min-w-[1200px]", fullView && "min-w-[1400px]")}>
             <TableHeader>
               <TableRow className="bg-muted/40 hover:bg-muted/40 border-b">
                 <TableHead className="w-10 pl-4">
@@ -496,7 +474,7 @@ export function PerformanceMapsTab() {
                   />
                 </TableHead>
                 <ColumnFilterHead
-                  className="w-[100px]"
+                  className="w-[110px]"
                   label="Статус"
                   options={UNIQUE_FILTER_OPTIONS.statuses.map((s) => s.value)}
                   selected={statusFilter}
@@ -505,13 +483,12 @@ export function PerformanceMapsTab() {
                     setCurrentPage(1);
                   }}
                   formatOption={(v) =>
-                    GOALS_LIFECYCLE_STATUS_LABELS[v as PerformanceMapStatus] ?? v
+                    GOALS_LIFECYCLE_STATUS_LABELS[v as KpiRegistryStatus] ?? v
                   }
                 />
                 <ColumnFilterHead
-                  className="w-[150px]"
+                  className="w-[160px]"
                   label="Группа целеполагания"
-                  requiredMark
                   options={UNIQUE_FILTER_OPTIONS.goalGroups}
                   selected={goalGroupFilter}
                   onSelectedChange={(next) => {
@@ -520,60 +497,40 @@ export function PerformanceMapsTab() {
                   }}
                 />
                 <ColumnSearchHead
-                  className="w-[200px]"
-                  label="ФИО"
-                  value={fullNameSearch}
+                  className="w-[120px]"
+                  label="ID КПЭ"
+                  value={kpiIdSearch}
                   onChange={(v) => {
-                    setFullNameSearch(v);
+                    setKpiIdSearch(v);
                     setCurrentPage(1);
                   }}
-                  placeholder="Поиск по ФИО..."
+                  placeholder="Поиск по ID..."
                 />
                 <ColumnSearchHead
-                  className="w-[130px]"
-                  label="Должность"
-                  value={positionSearch}
+                  className="w-[180px]"
+                  label="Наименование КПЭ"
+                  value={nameSearch}
                   onChange={(v) => {
-                    setPositionSearch(v);
+                    setNameSearch(v);
                     setCurrentPage(1);
                   }}
-                  placeholder="Поиск по должности..."
+                  placeholder="Поиск по наименованию..."
                 />
                 <ColumnFilterHead
-                  className="w-[200px]"
-                  label="ССП"
-                  options={UNIQUE_FILTER_OPTIONS.ssps}
-                  selected={sspFilter}
+                  className="w-[130px]"
+                  label="Вид КПЭ"
+                  options={UNIQUE_FILTER_OPTIONS.kpiTypes}
+                  selected={kpiTypeFilter}
                   onSelectedChange={(next) => {
-                    setSspFilter(next);
+                    setKpiTypeFilter(next);
                     setCurrentPage(1);
                   }}
                 />
-                <ColumnFilterHead
-                  className="w-[150px]"
-                  label="ВСП"
-                  options={UNIQUE_FILTER_OPTIONS.vsps}
-                  selected={vspFilter}
-                  onSelectedChange={(next) => {
-                    setVspFilter(next);
-                    setCurrentPage(1);
-                  }}
-                  formatOption={(v) => (v ? v : "—")}
-                />
-                <ColumnFilterHead
-                  className="w-[72px]"
-                  label="Период"
-                  options={UNIQUE_FILTER_OPTIONS.periods}
-                  selected={periodFilter}
-                  onSelectedChange={(next) => {
-                    setPeriodFilter(next);
-                    setCurrentPage(1);
-                  }}
-                />
-                <TableHead className="w-[120px] text-xs font-medium text-muted-foreground">
-                  <span className="whitespace-normal leading-snug">
-                    Оценка результативности, %
-                  </span>
+                <TableHead className="w-[140px] text-xs font-medium text-muted-foreground">
+                  <span className="whitespace-normal leading-snug">Описание КПЭ</span>
+                </TableHead>
+                <TableHead className="w-[200px] text-xs font-medium text-muted-foreground">
+                  <span className="whitespace-normal leading-snug">Зона ответственности</span>
                 </TableHead>
                 <TableHead className="w-[100px] text-xs font-medium text-muted-foreground text-center pr-4">
                   Действие
@@ -584,78 +541,84 @@ export function PerformanceMapsTab() {
               {pageData.length === 0 ? (
                 <TableRow>
                   <TableCell
-                    colSpan={11}
+                    colSpan={9}
                     className="py-10 text-center text-muted-foreground text-sm"
                   >
                     Нет записей по выбранным фильтрам
                   </TableCell>
                 </TableRow>
               ) : (
-              pageData.map((record) => (
-                <TableRow key={record.id} className="hover:bg-muted/20">
-                  <TableCell className="pl-4">
-                    <Checkbox
-                      checked={selectedIds.has(record.id)}
-                      onCheckedChange={(v) => toggleRow(record.id, v === true)}
-                      aria-label={`Выбрать ${record.fullName}`}
-                    />
-                  </TableCell>
-                  <TableCell className={cn("w-[100px]", wrapCell)}>
-                    <GoalsStatusBadge status={record.status} />
-                  </TableCell>
-                  <TableCell className={cn("w-[150px]", wrapCell)}>
-                    {record.goalGroup}
-                  </TableCell>
-                  <TableCell className={cn("w-[200px]", wrapCell)}>
-                    <button
-                      type="button"
-                      className="text-blue-600 hover:text-blue-800 hover:underline text-left whitespace-normal"
-                    >
-                      {record.fullName}
-                    </button>
-                  </TableCell>
-                  <TableCell className={cn("w-[130px]", wrapCell)}>
-                    {record.position}
-                  </TableCell>
-                  <TableCell className={cn("w-[200px] text-muted-foreground", wrapCell)}>
-                    {record.ssp}
-                  </TableCell>
-                  <TableCell className={cn("w-[150px] text-muted-foreground", wrapCell)}>
-                    {record.vsp || ""}
-                  </TableCell>
-                  <TableCell className={cn("w-[72px]", wrapCell)}>
-                    {record.period}
-                  </TableCell>
-                  <TableCell className={cn("w-[120px] text-muted-foreground", wrapCell)}>
-                    {record.performanceScore != null ? `${record.performanceScore}%` : ""}
-                  </TableCell>
-                  <TableCell className="w-[100px] align-top py-3 pr-4">
-                    <div className="flex items-center justify-center gap-1.5">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-7 w-7 border-blue-200 text-blue-600 hover:bg-blue-50"
-                        aria-label="История"
+                pageData.map((record) => (
+                  <TableRow key={record.id} className="hover:bg-muted/20">
+                    <TableCell className="pl-4">
+                      <Checkbox
+                        checked={selectedIds.has(record.id)}
+                        onCheckedChange={(v) => toggleRow(record.id, v === true)}
+                        aria-label={`Выбрать ${record.name}`}
+                      />
+                    </TableCell>
+                    <TableCell className={cn("w-[110px]", wrapCell)}>
+                      <GoalsStatusBadge status={record.status} />
+                    </TableCell>
+                    <TableCell className={cn("w-[160px]", wrapCell)}>
+                      {record.goalGroup}
+                    </TableCell>
+                    <TableCell className={cn("w-[120px] font-mono text-xs", wrapCell)}>
+                      {record.kpiId}
+                    </TableCell>
+                    <TableCell className={cn("w-[180px]", wrapCell)}>
+                      <button
+                        type="button"
+                        className="text-blue-600 hover:text-blue-800 hover:underline text-left whitespace-normal"
                       >
-                        <History className="h-3.5 w-3.5" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-7 w-7 border-red-200 text-red-600 hover:bg-red-50"
-                        aria-label="Удалить"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              )))}
+                        {record.name}
+                      </button>
+                    </TableCell>
+                    <TableCell className={cn("w-[130px]", wrapCell)}>
+                      {record.kpiType}
+                    </TableCell>
+                    <TableCell className={cn("w-[140px]", wrapCell)}>
+                      {record.descriptionIsLink ? (
+                        <button
+                          type="button"
+                          className="text-blue-600 hover:text-blue-800 hover:underline text-left whitespace-normal"
+                        >
+                          {record.description}
+                        </button>
+                      ) : (
+                        <span className="text-muted-foreground">{record.description}</span>
+                      )}
+                    </TableCell>
+                    <TableCell className={cn("w-[200px] text-muted-foreground", wrapCell)}>
+                      {record.responsibilityZone}
+                    </TableCell>
+                    <TableCell className="w-[100px] align-top py-3 pr-4">
+                      <div className="flex items-center justify-center gap-1.5">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="h-7 w-7 border-blue-200 text-blue-600 hover:bg-blue-50"
+                          aria-label="История"
+                        >
+                          <History className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="h-7 w-7 border-red-200 text-red-600 hover:bg-red-50"
+                          aria-label="Удалить"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>
 
-        {/* Pagination */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-t px-4 py-3 text-sm">
           <span className="text-muted-foreground">Всего {totalRecords}</span>
           <div className="flex items-center gap-1">
@@ -709,13 +672,18 @@ export function PerformanceMapsTab() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="10">10/на стран...</SelectItem>
-              <SelectItem value="20">20/на стран...</SelectItem>
-              <SelectItem value="50">50/на стран...</SelectItem>
+              <SelectItem value="10">10 / на стран</SelectItem>
+              <SelectItem value="20">20 / на стран</SelectItem>
+              <SelectItem value="50">50 / на стран</SelectItem>
             </SelectContent>
           </Select>
         </div>
       </CardContent>
+
+      <KpiCreateForm
+        open={createFormOpen}
+        onOpenChange={setCreateFormOpen}
+      />
     </Card>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -11,8 +11,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { ChevronDown, ChevronRight, CheckCircle2, StopCircle, Info, FileText, BarChart3 } from "lucide-react";
+import { ChevronDown, ChevronRight, CheckCircle2, StopCircle, Info } from "lucide-react";
 import { PerformanceMapsTab } from "@/components/goals/PerformanceMapsTab";
+import { KpiRegistryTab } from "@/components/goals/KpiRegistryTab";
+import { PfkTableTab } from "@/components/goals/PfkTableTab";
+import { GoalsSectionHelpButton } from "@/components/goals/GoalsSectionHelpDialog";
 
 // --- Делегирование: типы и моковые данные ---
 interface DelegationRoleAction {
@@ -172,7 +175,13 @@ export default function GoalsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Целеполагание</h1>
+          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
+            Целеполагание
+            <GoalsSectionHelpButton
+              sectionId="overview"
+              className="h-5 w-5 text-[11px]"
+            />
+          </h1>
           <p className="text-muted-foreground">
             Цели, оценка результативности и делегирование
           </p>
@@ -181,10 +190,22 @@ export default function GoalsPage() {
 
       <Tabs defaultValue="performance-map" className="w-full">
         <TabsList variant="grid4" className="w-full">
-          <TabsTrigger value="performance-map">Карты результативности</TabsTrigger>
-          <TabsTrigger value="kpi-registry">Реестр КПЭ</TabsTrigger>
-          <TabsTrigger value="pfk-table">Таблица ПФК</TabsTrigger>
-          <TabsTrigger value="delegation">Делегирование</TabsTrigger>
+          <TabsTrigger value="performance-map" className="gap-1.5">
+            Карты результативности
+            <GoalsSectionHelpButton sectionId="performance-map" />
+          </TabsTrigger>
+          <TabsTrigger value="kpi-registry" className="gap-1.5">
+            Реестр КПЭ
+            <GoalsSectionHelpButton sectionId="kpi-registry" />
+          </TabsTrigger>
+          <TabsTrigger value="pfk-table" className="gap-1.5">
+            Таблица ПФК
+            <GoalsSectionHelpButton sectionId="pfk-table" />
+          </TabsTrigger>
+          <TabsTrigger value="delegation" className="gap-1.5">
+            Делегирование
+            <GoalsSectionHelpButton sectionId="delegation" />
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="performance-map" className="mt-6">
@@ -194,7 +215,10 @@ export default function GoalsPage() {
         <TabsContent value="delegation" className="mt-4">
           <Card className="border rounded-lg">
             <CardHeader className="py-3 px-4">
-              <CardTitle className="text-base">Делегирование</CardTitle>
+              <CardTitle className="text-base flex items-center gap-1.5">
+                Делегирование
+                <GoalsSectionHelpButton sectionId="delegation" />
+              </CardTitle>
             </CardHeader>
             <CardContent className="px-4 pb-4 pt-0">
               <Tabs defaultValue="my-roles" className="w-full">
@@ -448,41 +472,11 @@ export default function GoalsPage() {
         </TabsContent>
 
         <TabsContent value="kpi-registry" className="mt-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5" />
-                Реестр КПЭ
-              </CardTitle>
-              <CardDescription>
-                Реестр ключевых показателей эффективности
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                Раздел находится в разработке. Здесь будет отображаться реестр ключевых показателей эффективности.
-              </p>
-            </CardContent>
-          </Card>
+          <KpiRegistryTab />
         </TabsContent>
 
         <TabsContent value="pfk-table" className="mt-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BarChart3 className="h-5 w-5" />
-                Таблица ПФК
-              </CardTitle>
-              <CardDescription>
-                Таблица плановых, фактических и критических значений
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                Раздел находится в разработке. Здесь будет отображаться таблица плановых, фактических и критических значений.
-              </p>
-            </CardContent>
-          </Card>
+          <PfkTableTab />
         </TabsContent>
       </Tabs>
     </div>

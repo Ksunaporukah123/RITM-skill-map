@@ -352,7 +352,7 @@ export default function IDPPage() {
     managerId: "",
     startDate: "",
     endDate: "",
-    status: "draft" as "draft" | "in-progress" | "completed" | "cancelled",
+    status: "draft" as "draft" | "in-progress" | "completed" | "cancelled" | "pending-approval",
     competencyIds: [] as string[],
     assessmentId: "",
     isVisible: true,
