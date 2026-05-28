@@ -32,9 +32,9 @@ import {
   Search,
   Trash2,
 } from "lucide-react";
-import { GoalsSectionHelpButton } from "@/components/goals/GoalsSectionHelpDialog";
 import { cn } from "@/lib/utils";
 import { KpiCreateForm } from "@/components/goals/KpiCreateForm";
+import { GoalsHelpDialog } from "@/components/goals/GoalsHelpDialog";
 import {
   GoalsStatusBadge,
   GOALS_LIFECYCLE_STATUS_LABELS,
@@ -424,7 +424,7 @@ export function KpiRegistryTab() {
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-1.5">
               <h2 className="text-sm font-semibold">Реестр КПЭ</h2>
-              <GoalsSectionHelpButton sectionId="kpi-registry" />
+              <GoalsHelpDialog section="kpi-registry" />
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

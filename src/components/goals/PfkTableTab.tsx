@@ -33,6 +33,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { GoalsHelpDialog } from "@/components/goals/GoalsHelpDialog";
 import {
   Check,
   ChevronDown,
@@ -45,7 +46,6 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { GoalsSectionHelpButton } from "@/components/goals/GoalsSectionHelpDialog";
 
 type PlanStatus =
   | "plan-approved"
@@ -715,8 +715,8 @@ export function PfkTableTab() {
         <div className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3">
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-1.5">
-              <h2 className="text-sm font-semibold">Таблица ПФК</h2>
-              <GoalsSectionHelpButton sectionId="pfk-table" />
+              <h2 className="text-sm font-semibold">ПФК</h2>
+              <GoalsHelpDialog section="pfk-table" />
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

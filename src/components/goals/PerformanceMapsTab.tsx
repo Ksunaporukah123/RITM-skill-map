@@ -39,7 +39,7 @@ import {
   GOALS_LIFECYCLE_STATUS_OPTIONS,
   type GoalsLifecycleStatus,
 } from "@/components/goals/GoalsStatusBadge";
-import { GoalsSectionHelpButton } from "@/components/goals/GoalsSectionHelpDialog";
+import { GoalsHelpDialog } from "@/components/goals/GoalsHelpDialog";
 
 type PerformanceMapStatus = GoalsLifecycleStatus;
 
@@ -454,10 +454,10 @@ export function PerformanceMapsTab() {
         {/* Toolbar */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3">
           <div className="flex items-center gap-2">
-            <h2 className="text-sm font-semibold tracking-wide uppercase flex items-center gap-1.5">
+            <h2 className="text-sm font-semibold tracking-wide uppercase">
               КАРТЫ РЕЗУЛЬТАТИВНОСТИ
-              <GoalsSectionHelpButton sectionId="performance-map" />
             </h2>
+            <GoalsHelpDialog section="performance-map" />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="h-8 gap-1 text-xs font-normal">

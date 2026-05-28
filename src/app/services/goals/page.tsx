@@ -15,7 +15,7 @@ import { ChevronDown, ChevronRight, CheckCircle2, StopCircle, Info } from "lucid
 import { PerformanceMapsTab } from "@/components/goals/PerformanceMapsTab";
 import { KpiRegistryTab } from "@/components/goals/KpiRegistryTab";
 import { PfkTableTab } from "@/components/goals/PfkTableTab";
-import { GoalsSectionHelpButton } from "@/components/goals/GoalsSectionHelpDialog";
+import { GoalsHelpDialog, GoalsTabLabel } from "@/components/goals/GoalsHelpDialog";
 
 // --- Делегирование: типы и моковые данные ---
 interface DelegationRoleAction {
@@ -175,13 +175,10 @@ export default function GoalsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-            Целеполагание
-            <GoalsSectionHelpButton
-              sectionId="overview"
-              className="h-5 w-5 text-[11px]"
-            />
-          </h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-3xl font-bold tracking-tight">Целеполагание</h1>
+            <GoalsHelpDialog section="overview" size="md" />
+          </div>
           <p className="text-muted-foreground">
             Цели, оценка результативности и делегирование
           </p>
@@ -190,21 +187,17 @@ export default function GoalsPage() {
 
       <Tabs defaultValue="performance-map" className="w-full">
         <TabsList variant="grid4" className="w-full">
-          <TabsTrigger value="performance-map" className="gap-1.5">
-            Карты результативности
-            <GoalsSectionHelpButton sectionId="performance-map" />
+          <TabsTrigger value="performance-map">
+            <GoalsTabLabel label="Карты результативности" section="performance-map" />
           </TabsTrigger>
-          <TabsTrigger value="kpi-registry" className="gap-1.5">
-            Реестр КПЭ
-            <GoalsSectionHelpButton sectionId="kpi-registry" />
+          <TabsTrigger value="kpi-registry">
+            <GoalsTabLabel label="Реестр КПЭ" section="kpi-registry" />
           </TabsTrigger>
-          <TabsTrigger value="pfk-table" className="gap-1.5">
-            Таблица ПФК
-            <GoalsSectionHelpButton sectionId="pfk-table" />
+          <TabsTrigger value="pfk-table">
+            <GoalsTabLabel label="Таблица ПФК" section="pfk-table" />
           </TabsTrigger>
-          <TabsTrigger value="delegation" className="gap-1.5">
-            Делегирование
-            <GoalsSectionHelpButton sectionId="delegation" />
+          <TabsTrigger value="delegation">
+            <GoalsTabLabel label="Делегирование" section="delegation" />
           </TabsTrigger>
         </TabsList>
 
@@ -215,10 +208,7 @@ export default function GoalsPage() {
         <TabsContent value="delegation" className="mt-4">
           <Card className="border rounded-lg">
             <CardHeader className="py-3 px-4">
-              <CardTitle className="text-base flex items-center gap-1.5">
-                Делегирование
-                <GoalsSectionHelpButton sectionId="delegation" />
-              </CardTitle>
+              <CardTitle className="text-base">Делегирование</CardTitle>
             </CardHeader>
             <CardContent className="px-4 pb-4 pt-0">
               <Tabs defaultValue="my-roles" className="w-full">
