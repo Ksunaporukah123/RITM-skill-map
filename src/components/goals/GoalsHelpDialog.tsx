@@ -10,12 +10,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   GOALS_HELP,
-  OVERVIEW_HELP_MODAL_TABS,
   SECTION_HELP_TABS,
   TABBED_GOALS_SECTIONS,
   type GoalsHelpContent,
   type GoalsHelpSection,
-  type OverviewHelpTabValue,
   type SectionHelpTab,
 } from "@/lib/goals/help-content";
 import { cn } from "@/lib/utils";
@@ -231,14 +229,14 @@ const STATUS_VISUAL: Record<string, { accent: string; badge: string; dot: string
     dot: "bg-emerald-500",
   },
   Архивная: {
-    accent: "border-l-violet-400",
-    badge: "bg-violet-100 text-violet-700 border-violet-300 dark:bg-violet-950/50 dark:text-violet-400",
-    dot: "bg-violet-400",
+    accent: "border-l-yellow-500",
+    badge: "bg-yellow-100 text-yellow-800 border-yellow-300 dark:bg-yellow-950/50 dark:text-yellow-400",
+    dot: "bg-yellow-500",
   },
   Архивный: {
-    accent: "border-l-violet-400",
-    badge: "bg-violet-100 text-violet-700 border-violet-300 dark:bg-violet-950/50 dark:text-violet-400",
-    dot: "bg-violet-400",
+    accent: "border-l-yellow-500",
+    badge: "bg-yellow-100 text-yellow-800 border-yellow-300 dark:bg-yellow-950/50 dark:text-yellow-400",
+    dot: "bg-yellow-500",
   },
 };
 
@@ -541,6 +539,12 @@ function SectionHelpTabsBody({
       >
         {SECTION_HELP_TABS.map((tab, index) => {
           const isFirst = index === 0;
+          const label =
+            tab.value === "about" && content.aboutTabLabel
+              ? content.aboutTabLabel
+              : tab.value === "statuses" && content.statusesTabLabel
+                ? content.statusesTabLabel
+                : tab.label;
           return (
             <TabsTrigger
               key={tab.value}
@@ -551,7 +555,7 @@ function SectionHelpTabsBody({
               )}
             >
               {SECTION_TAB_ICONS[tab.value]}
-              <span>{tab.label}</span>
+              <span>{label}</span>
             </TabsTrigger>
           );
         })}
@@ -566,7 +570,7 @@ function SectionHelpTabsBody({
           <div className="space-y-5">
             <div className="rounded-lg border border-sky-100 bg-sky-50/50 px-4 py-3 dark:border-sky-900/50 dark:bg-sky-950/30">
               <p className="text-xs leading-relaxed text-sky-900/90 dark:text-sky-100/90">
-                Пошаговое руководство: следуйте блокам сверху вниз. В каждом блоке — нумерованные
+                Пошаговое руководство: следуйте блокам сверху вниз. В каждом блоке — пронумерованные
                 действия по порядку.
               </p>
             </div>
@@ -638,62 +642,15 @@ function SectionHelpDialogContent({
   );
 }
 
-function OverviewHelpDialogContent({
-  activeTab,
-  onTabChange,
-}: {
-  activeTab: OverviewHelpTabValue;
-  onTabChange: (tab: OverviewHelpTabValue) => void;
-}) {
+function OverviewHelpDialogContent() {
   return (
     <>
-      <DialogHeader className="space-y-1 border-b border-slate-200/80 pb-4 dark:border-slate-800">
+      <DialogHeader className="border-b border-slate-200/80 pb-4 dark:border-slate-800">
         <DialogTitle className="text-xl font-semibold tracking-tight">Справка по сервису</DialogTitle>
-        <p className="text-sm text-muted-foreground">
-          Целеполагание · выберите раздел или вкладку справки
-        </p>
       </DialogHeader>
 
       <div className="pt-4">
-        <Tabs
-          value={activeTab}
-          onValueChange={(v) => onTabChange(v as OverviewHelpTabValue)}
-          className="w-full"
-        >
-          <TabsList
-            variant="grid5"
-            className="mb-1 h-auto gap-1 border-0 bg-slate-100/90 p-1.5 shadow-sm dark:bg-slate-900/80"
-          >
-            {OVERVIEW_HELP_MODAL_TABS.map((tab) => {
-              const isMain = tab.value === "overview";
-              return (
-                <TabsTrigger
-                  key={tab.value}
-                  value={tab.value}
-                  className={cn(
-                    "flex min-w-0 w-full flex-col items-center justify-center gap-1 rounded-lg px-2 py-2.5 text-center text-xs leading-tight whitespace-normal transition-all sm:flex-row",
-                    isMain ? TAB_TRIGGER_ACTIVE_FIRST : TAB_TRIGGER_ACTIVE_OTHER
-                  )}
-                >
-                  {isMain ? (
-                    <Sparkles className="h-3.5 w-3.5 shrink-0" />
-                  ) : (
-                    <span className="shrink-0 [&_svg]:h-3.5 [&_svg]:w-3.5">
-                      {SECTION_HERO_ICONS[tab.value]}
-                    </span>
-                  )}
-                  <span>{tab.label}</span>
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
-
-          {OVERVIEW_HELP_MODAL_TABS.map((tab) => (
-            <TabsContent key={tab.value} value={tab.value} className={HELP_TAB_PANEL}>
-              <SectionHelpTabsBody section={tab.value} embedded />
-            </TabsContent>
-          ))}
-        </Tabs>
+        <SectionHelpTabsBody section="overview" />
       </div>
     </>
   );
@@ -705,7 +662,6 @@ export function GoalsHelpDialog({
   className,
 }: GoalsHelpDialogProps) {
   const [open, setOpen] = useState(false);
-  const [overviewTab, setOverviewTab] = useState<OverviewHelpTabValue>("overview");
   const [sectionSubTab, setSectionSubTab] = useState<SectionHelpTab>("about");
   const content = GOALS_HELP[section];
   const isOverviewModal = section === "overview";
@@ -713,10 +669,7 @@ export function GoalsHelpDialog({
     section !== "overview" && TABBED_GOALS_SECTIONS.includes(section);
 
   useEffect(() => {
-    if (!open) {
-      setOverviewTab("overview");
-      setSectionSubTab("about");
-    }
+    if (!open) setSectionSubTab("about");
   }, [open, section]);
 
   const stopTabActivation = (e: MouseEvent | KeyboardEvent) => {
@@ -758,10 +711,7 @@ export function GoalsHelpDialog({
           )}
         >
           {isOverviewModal ? (
-            <OverviewHelpDialogContent
-              activeTab={overviewTab}
-              onTabChange={setOverviewTab}
-            />
+            <OverviewHelpDialogContent />
           ) : isTabbedSectionModal ? (
             <SectionHelpDialogContent
               section={section}
