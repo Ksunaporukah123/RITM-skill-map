@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState, type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 import {
   Dialog,
@@ -14,15 +15,21 @@ import {
   TABBED_GOALS_SECTIONS,
   type GoalsHelpContent,
   type GoalsHelpSection,
+  type InstructionStep,
   type SectionHelpTab,
 } from "@/lib/goals/help-content";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   AlertTriangle,
   BookOpen,
   CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
   Filter,
+  ImageIcon,
   Info,
+  ZoomIn,
   LayoutGrid,
   Lightbulb,
   ListChecks,
@@ -158,46 +165,184 @@ function WhatYouSeeGrid({ items }: { items: string[] }) {
   );
 }
 
-function InstructionTimeline({
-  sections,
+type InstructionSection = { heading: string; steps: InstructionStep[] };
+
+function getInstructionStepText(step: InstructionStep): string {
+  return typeof step === "string" ? step : step.text;
+}
+
+function InstructionScreenshotTrigger({
+  src,
+  alt,
 }: {
-  sections: { heading: string; steps: string[] }[];
+  src: string;
+  alt: string;
 }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="space-y-0">
-      {sections.map((section, sectionIndex) => (
-        <div key={section.heading} className="relative flex gap-4 pb-8 last:pb-0">
-          {sectionIndex < sections.length - 1 && (
-            <span
-              className="absolute left-[15px] top-9 bottom-0 w-px bg-gradient-to-b from-sky-300 via-sky-200 to-transparent dark:from-sky-700 dark:via-sky-800"
-              aria-hidden
+    <>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen(true);
+        }}
+        className="inline-flex shrink-0 items-center gap-2 rounded-full border border-sky-300 bg-sky-50 px-2.5 py-1 text-left text-[11px] font-medium text-sky-800 shadow-sm transition-colors hover:border-sky-400 hover:bg-sky-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 dark:border-sky-700 dark:bg-sky-950/50 dark:text-sky-200 dark:hover:bg-sky-900/60"
+        aria-label={`Открыть скриншот: ${alt}`}
+      >
+        <span className="relative flex h-8 w-10 shrink-0 overflow-hidden rounded-md border border-sky-200 bg-white dark:border-sky-800 dark:bg-slate-900">
+          <Image
+            src={src}
+            alt=""
+            width={40}
+            height={32}
+            className="h-full w-full object-cover object-top"
+            unoptimized
+            aria-hidden
+          />
+          <span className="absolute inset-0 flex items-center justify-center bg-sky-900/20">
+            <ZoomIn className="h-3 w-3 text-white drop-shadow" />
+          </span>
+        </span>
+        <span className="flex items-center gap-1 pr-0.5">
+          <ImageIcon className="h-3 w-3 shrink-0 opacity-80" />
+          Скриншот
+        </span>
+      </button>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-h-[92vh] max-w-3xl gap-4 overflow-hidden p-4 sm:p-6">
+          <DialogHeader>
+            <DialogTitle className="text-base font-semibold">{alt}</DialogTitle>
+          </DialogHeader>
+          <div className="max-h-[calc(92vh-5rem)] overflow-auto rounded-lg border border-slate-200 bg-slate-50 p-2 dark:border-slate-700 dark:bg-slate-900/50">
+            <Image
+              src={src}
+              alt={alt}
+              width={960}
+              height={720}
+              className="h-auto w-full rounded-md"
+              unoptimized
             />
-          )}
-          <div className="relative z-[1] flex shrink-0 flex-col items-center">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-sky-600 text-xs font-bold text-white shadow-md ring-4 ring-sky-100 dark:ring-sky-950">
-              {sectionIndex + 1}
-            </span>
           </div>
-          <div className="min-w-0 flex-1 pt-0.5">
-            <h4 className="mb-3 text-sm font-semibold leading-snug text-slate-800 dark:text-slate-100">
-              {section.heading}
-            </h4>
-            <div className="space-y-2">
-              {section.steps.map((step, stepIndex) => (
-                <div
-                  key={step}
-                  className="flex gap-3 rounded-lg border border-slate-200/60 bg-white px-3 py-2.5 shadow-sm dark:border-slate-700/60 dark:bg-slate-950/40"
-                >
-                  <span className="mt-0.5 flex h-5 min-w-[20px] items-center justify-center rounded-md bg-slate-100 text-[10px] font-bold tabular-nums text-slate-500 dark:bg-slate-800 dark:text-slate-400">
-                    {stepIndex + 1}
-                  </span>
-                  <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400">{step}</p>
-                </div>
-              ))}
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
+
+function InstructionStepsList({ steps }: { steps: InstructionStep[] }) {
+  return (
+    <div className="space-y-2">
+      {steps.map((step, stepIndex) => {
+        const text = getInstructionStepText(step);
+        const screenshot = typeof step === "string" ? undefined : step.screenshot;
+
+        return (
+          <div
+            key={`${stepIndex}-${text.slice(0, 32)}`}
+            className="flex gap-3 rounded-lg border border-slate-200/60 bg-white px-3 py-2.5 shadow-sm dark:border-slate-700/60 dark:bg-slate-950/40"
+          >
+            <span className="mt-0.5 flex h-5 min-w-[20px] items-center justify-center rounded-md bg-slate-100 text-[10px] font-bold tabular-nums text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+              {stepIndex + 1}
+            </span>
+            <div className="flex min-w-0 flex-1 items-start gap-3">
+              <p className="min-w-0 flex-1 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                {text}
+              </p>
+              {screenshot && (
+                <InstructionScreenshotTrigger src={screenshot.src} alt={screenshot.alt} />
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function InstructionCarousel({ sections }: { sections: InstructionSection[] }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const total = sections.length;
+  const current = sections[activeIndex];
+
+  const goTo = (index: number) => {
+    if (index < 0 || index >= total) return;
+    setActiveIndex(index);
+  };
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div
+        className="relative overflow-hidden rounded-xl border border-slate-200/80 bg-gradient-to-br from-white via-slate-50/80 to-sky-50/40 shadow-sm dark:border-slate-700/80 dark:from-slate-950 dark:via-slate-900/50 dark:to-sky-950/20"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Пошаговая инструкция"
+      >
+        <div className="border-b border-slate-200/70 bg-white/60 px-4 py-3 dark:border-slate-700/70 dark:bg-slate-950/40">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-sky-600 text-sm font-bold text-white shadow-md ring-4 ring-sky-100 dark:ring-sky-950">
+              {activeIndex + 1}
+            </span>
+            <div className="min-w-0">
+              <p className="text-[10px] font-medium uppercase tracking-wider text-sky-600 dark:text-sky-400">
+                Шаг {activeIndex + 1} из {total}
+              </p>
+              <h4 className="text-sm font-semibold leading-snug text-slate-800 dark:text-slate-100">
+                {current.heading}
+              </h4>
             </div>
           </div>
         </div>
-      ))}
+
+        <div className="flex items-stretch gap-1 p-2 sm:gap-2 sm:p-3">
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            className="h-9 w-9 shrink-0 self-center rounded-full border-slate-300 bg-white shadow-sm hover:bg-sky-50 hover:border-sky-300 disabled:opacity-40 dark:border-slate-600 dark:bg-slate-900 dark:hover:bg-sky-950/50"
+            onClick={() => goTo(activeIndex - 1)}
+            disabled={activeIndex === 0}
+            aria-label="Предыдущий блок"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+
+          <div className="min-w-0 flex-1 max-h-[42vh] overflow-y-auto px-1 py-1 sm:px-2">
+            <InstructionStepsList steps={current.steps} />
+          </div>
+
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            className="h-9 w-9 shrink-0 self-center rounded-full border-slate-300 bg-white shadow-sm hover:bg-sky-50 hover:border-sky-300 disabled:opacity-40 dark:border-slate-600 dark:bg-slate-900 dark:hover:bg-sky-950/50"
+            onClick={() => goTo(activeIndex + 1)}
+            disabled={activeIndex === total - 1}
+            aria-label="Следующий блок"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        {sections.map((section, index) => (
+          <button
+            key={section.heading}
+            type="button"
+            onClick={() => goTo(index)}
+            aria-label={`Блок ${index + 1}: ${section.heading}`}
+            aria-current={index === activeIndex ? "step" : undefined}
+            className={cn(
+              "h-2 rounded-full transition-all",
+              index === activeIndex
+                ? "w-6 bg-sky-600 dark:bg-sky-500"
+                : "w-2 bg-slate-300 hover:bg-sky-300 dark:bg-slate-600 dark:hover:bg-sky-700"
+            )}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -570,11 +715,11 @@ function SectionHelpTabsBody({
           <div className="space-y-5">
             <div className="rounded-lg border border-sky-100 bg-sky-50/50 px-4 py-3 dark:border-sky-900/50 dark:bg-sky-950/30">
               <p className="text-xs leading-relaxed text-sky-900/90 dark:text-sky-100/90">
-                Пошаговое руководство: следуйте блокам сверху вниз. В каждом блоке — пронумерованные
-                действия по порядку.
+                Пошаговое руководство: листайте блоки стрелками по бокам или точками внизу. В
+                каждом блоке — пронумерованные действия по порядку.
               </p>
             </div>
-            <InstructionTimeline sections={content.instructionSections} />
+            <InstructionCarousel sections={content.instructionSections} />
           </div>
         ) : content.howTo.length > 0 ? (
           <HelpBlock
